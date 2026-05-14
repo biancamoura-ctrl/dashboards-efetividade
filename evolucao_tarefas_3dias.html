@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evolução de Tarefas — 11 a 13/05/2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f6f8;--surface:#fff;--border:#e3e6ea;--text:#1a1d23;--muted:#6b7280;
+  --blue:#1d4ed8;--blue-lt:#eff6ff;--green:#15803d;--green-lt:#f0fdf4;
+  --amber:#92400e;--amber-lt:#fffbeb;--red:#991b1b;--red-lt:#fef2f2;
+  --gray-lt:#f3f4f6;--radius:10px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --d1:#2563eb;--d2:#d97706;--d3:#16a34a
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px}
+.header h1{font-size:22px;font-weight:700}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-val{font-size:32px;font-weight:700;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.d1 .kpi-val{color:var(--d1)}.kpi.d2 .kpi-val{color:var(--d2)}
+.kpi.d3 .kpi-val{color:var(--d3)}.kpi.var .kpi-val{color:var(--green)}
+.delta{font-size:11px;margin-top:6px;padding:2px 7px;border-radius:4px;display:inline-block;font-weight:600}
+.delta.pos{color:#15803d;background:#dcfce7}.delta.neg{color:#991b1b;background:#fee2e2}.delta.zer{color:#6b7280;background:#f3f4f6}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:600}
+.card-body{padding:18px}
+
+/* Legend */
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* Charts */
+.chart-wrap{position:relative;height:300px}
+.chart-wrap.tall{height:420px}
+.chart-wrap.xlarge{height:560px}
+
+/* Destaques */
+.dest-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dest-box{border-radius:8px;padding:16px 18px}
+.dest-box.pos{background:#f0fdf4;border:1px solid #86efac}
+.dest-box.neg{background:#fef2f2;border:1px solid #fca5a5}
+.dest-title{font-size:12px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px}
+.dest-box.pos .dest-title{color:#15803d}
+.dest-box.neg .dest-title{color:#991b1b}
+.dest-item{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.dest-item:last-child{border-bottom:none}
+.dest-name{font-weight:600;font-size:13px;min-width:130px}
+.dest-prog{font-size:12px;color:var(--muted);font-family:monospace}
+.dest-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:auto}
+.dest-box.pos .dest-badge{background:#dcfce7;color:#15803d}
+.dest-box.neg .dest-badge{background:#fee2e2;color:#991b1b}
+
+/* Filters */
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filters label{font-size:12px;color:var(--muted)}
+select,input[type=text]{font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);outline:none;transition:border-color .15s;cursor:pointer}
+select:hover,select:focus{border-color:#93c5fd}
+.filter-group{display:flex;align-items:center;gap:6px}
+
+/* Table */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:680px}
+thead th{background:#f8f9fb;padding:9px 12px;text-align:left;font-weight:600;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f2f5}
+thead th .si{opacity:.35;margin-left:4px;font-size:10px}
+thead th.sorted .si{opacity:1}
+tbody tr{border-bottom:1px solid #f0f2f5;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f8f9fb}
+tbody td{padding:8px 12px;white-space:nowrap}
+td.nome{white-space:normal;min-width:150px;font-weight:500}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.var-pos{color:var(--green);font-weight:600}
+.var-neg{color:var(--red);font-weight:600}
+.var-zer{color:var(--muted)}
+.ef-high{color:var(--green);font-weight:600}
+.ef-mid{color:var(--amber);font-weight:600}
+.ef-low{color:var(--red);font-weight:600}
+.ef-null{color:#9ca3af}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden;min-width:40px}
+.bar-fill{height:100%;border-radius:3px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:600;color:var(--text)}
+
+/* Tooltip */
+#tooltip{position:fixed;background:rgba(15,23,42,.92);color:#f1f5f9;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:230px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+
+@media(max-width:700px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .dest-grid{grid-template-columns:1fr}
+  .chart-wrap{height:220px}.chart-wrap.tall{height:320px}.chart-wrap.xlarge{height:420px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Header -->
+<div class="header">
+  <h1>Evolução de Tarefas — Time de Consultores</h1>
+  <p>Pipeline: Sucesso do Cliente &nbsp;·&nbsp; Período: 11 a 13/05/2026 &nbsp;·&nbsp; Fontes: tarefas concluídas · efetividade de foco</p>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi d1">
+    <div class="kpi-lbl">Concluídas 11/05</div>
+    <div class="kpi-val">348</div>
+    <div class="kpi-sub">tarefas no dia</div>
+  </div>
+  <div class="kpi d2">
+    <div class="kpi-lbl">Concluídas 12/05</div>
+    <div class="kpi-val">406</div>
+    <div class="kpi-sub">tarefas no dia</div>
+    <span class="delta pos">+58 vs dia 11</span>
+  </div>
+  <div class="kpi d3">
+    <div class="kpi-lbl">Concluídas 13/05</div>
+    <div class="kpi-val">406</div>
+    <div class="kpi-sub">tarefas no dia</div>
+    <span class="delta zer">= vs dia 12</span>
+  </div>
+  <div class="kpi var">
+    <div class="kpi-lbl">Variação 11 → 13</div>
+    <div class="kpi-val">+58</div>
+    <div class="kpi-sub">tarefas a mais</div>
+    <span class="delta pos">+16,7% vs dia 11</span>
+  </div>
+</div>
+
+<!-- Volume por dia -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Volume total de tarefas concluídas por dia</span>
+  </div>
+  <div class="card-body"><div class="chart-wrap"><canvas id="volChart"></canvas></div></div>
+</div>
+
+<!-- Destaques -->
+<div class="card">
+  <div class="card-head"><span class="card-title">Destaques de evolução individual (11/05 → 13/05)</span></div>
+  <div class="card-body">
+    <div class="dest-grid">
+      <div class="dest-box pos">
+        <div class="dest-title">↑ Maiores saltos positivos</div>
+        <div class="dest-item"><span class="dest-name">Sarah Moura</span><span class="dest-prog">0 → 0 → 40</span><span class="dest-badge">+40</span></div>
+        <div class="dest-item"><span class="dest-name">Moreno Loss</span><span class="dest-prog">0 → 0 → 39</span><span class="dest-badge">+39</span></div>
+        <div class="dest-item"><span class="dest-name">Erick Andrade</span><span class="dest-prog">1 → 0 → 24</span><span class="dest-badge">+23</span></div>
+        <div class="dest-item"><span class="dest-name">Giovanna Munhoz</span><span class="dest-prog">0 → 0 → 17</span><span class="dest-badge">+17</span></div>
+        <div class="dest-item"><span class="dest-name">Renata Brandão</span><span class="dest-prog">14 → 19 → 31</span><span class="dest-badge">+17</span></div>
+        <div class="dest-item"><span class="dest-name">Ana Peres</span><span class="dest-prog">15 → 19 → 31</span><span class="dest-badge">+16</span></div>
+      </div>
+      <div class="dest-box neg">
+        <div class="dest-title">↓ Quedas a monitorar</div>
+        <div class="dest-item"><span class="dest-name">Carla Gomes</span><span class="dest-prog">43 → 17 → 5</span><span class="dest-badge">−38</span></div>
+        <div class="dest-item"><span class="dest-name">Maria Carvalho</span><span class="dest-prog">64 → 48 → 28</span><span class="dest-badge">−36</span></div>
+        <div class="dest-item"><span class="dest-name">Talita Panassol</span><span class="dest-prog">41 → 35 → 21</span><span class="dest-badge">−20</span></div>
+        <div class="dest-item"><span class="dest-name">Julia Cordeiro</span><span class="dest-prog">40 → 48 → 26</span><span class="dest-badge">−14</span></div>
+        <div class="dest-item"><span class="dest-name">Shelry Solart</span><span class="dest-prog">28 → 10 → 17</span><span class="dest-badge">−11</span></div>
+        <div class="dest-item"><span class="dest-name">Larissa Freitas</span><span class="dest-prog">2 → 45 → 3</span><span class="dest-badge">pico 12/05</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Top consultores — 3 dias -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Tarefas concluídas por consultor — top 20 (comparativo 3 dias)</span>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--d1)"></span>11/05</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--d2)"></span>12/05</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--d3)"></span>13/05</span>
+    </div>
+  </div>
+  <div class="card-body"><div class="chart-wrap tall"><canvas id="topChart"></canvas></div></div>
+</div>
+
+<!-- Efetividade de foco -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">% Efetividade de foco — 13/05 (consultores com atividade)</span>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:#16a34a"></span>≥ 50% boa</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#d97706"></span>20–49% regular</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#dc2626"></span>&lt; 20% crítico</span>
+    </div>
+  </div>
+  <div class="card-body"><div class="chart-wrap xlarge"><canvas id="efChart"></canvas></div></div>
+</div>
+
+<!-- Tabela completa -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Tabela completa — tarefas concluídas por consultor</span>
+    <div class="filters">
+      <div class="filter-group">
+        <label>Ordenar por</label>
+        <select id="sortSel" onchange="render()">
+          <option value="d13">13/05</option>
+          <option value="d12">12/05</option>
+          <option value="d11">11/05</option>
+          <option value="varTotal">Variação</option>
+          <option value="efFoco">Ef. Foco</option>
+          <option value="total">Total 3 dias</option>
+          <option value="nome">Nome</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <input type="text" id="search" placeholder="Buscar consultor…" oninput="render()" style="width:160px">
+      </div>
+    </div>
+  </div>
+  <div class="card-body" style="padding:0">
+    <div class="tbl-wrap">
+      <table id="tbl">
+        <thead><tr>
+          <th onclick="sortBy('nome')" data-col="nome">Consultor <span class="si">↕</span></th>
+          <th onclick="sortBy('d11')" data-col="d11">11/05 <span class="si">↕</span></th>
+          <th onclick="sortBy('d12')" data-col="d12">12/05 <span class="si">↕</span></th>
+          <th onclick="sortBy('d13')" data-col="d13" class="sorted">13/05 <span class="si">↓</span></th>
+          <th onclick="sortBy('total')" data-col="total">Total <span class="si">↕</span></th>
+          <th onclick="sortBy('varTotal')" data-col="varTotal">Var. 11→13 <span class="si">↕</span></th>
+          <th onclick="sortBy('efFoco')" data-col="efFoco">Ef. Foco 13/05 <span class="si">↕</span></th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="summary-bar" id="summary"></div>
+  </div>
+</div>
+
+</div>
+<div id="tooltip"></div>
+
+<script>
+// ── Dados ──────────────────────────────────────────────────────────────────
+const RAW = [
+  // [nome,          d11, d12, d13, varTotal, efFoco]
+  ['Maria Carvalho',    64,  48,  28,  -36,  50.0],
+  ['Julia Cordeiro',    40,  48,  26,  -14,  37.1],
+  ['Talita Panassol',   41,  35,  21,  -20,  50.0],
+  ['Mariana Santana',   33,  33,  20,  -13,  50.0],
+  ['Carla Gomes',       43,  17,   5,  -38,  16.1],
+  ['Ana Peres',         15,  19,  31,  +16,  83.8],
+  ['Renata Brandão',    14,  19,  31,  +17,  45.5],
+  ['Maria Elvira',      19,  20,  17,   -2,  54.8],
+  ['Pâmela Miranda',    11,  29,  15,   +4,  24.2],
+  ['Shelry Solart',     28,  10,  17,  -11,  20.3],
+  ['Larissa Freitas',    2,  45,   3,   +1,   0.0],
+  ['Kaian Silva',       11,  15,  16,   +5,  55.2],
+  ['Sarah Moura',        0,   0,  40,  +40,  50.6],
+  ['Moreno Loss',        0,   0,  39,  +39,  69.6],
+  ['Vivian Souza',       3,  15,   7,   +4,  17.9],
+  ['Erick Andrade',      1,   0,  24,  +23,  50.0],
+  ['Thayna Bastos',      5,   3,  14,   +9,  18.2],
+  ['Tatiana Portela',    0,  18,   0,    0,  null],
+  ['Stefany Figueredo',  1,  13,   3,   +2,   7.5],
+  ['Indlayse Ferreira',  6,   2,   9,   +3,  11.7],
+  ['Giovanna Munhoz',    0,   0,  17,  +17,  47.2],
+  ['Andreina Ferreira',  6,   2,   4,   -2,   5.1],
+  ['Carla Silva',        2,   3,   5,   +3,  13.2],
+  ['Jennifer Anjos',     3,   6,   1,   -2, 100.0],
+  ['Ana Almeida',        0,   1,   8,   +8,  17.4],
+  ['Claudilene Dias',    0,   0,   5,   +5,  13.5],
+  ['Yolanda Monaco',     0,   4,   0,    0,  null],
+  ['Sara Barcelos',      0,   1,   0,    0,  null],
+  ['Helena Cabral',      0,   0,   0,    0,  null],
+];
+
+const FIELDS = ['nome','d11','d12','d13','varTotal','efFoco'];
+const DATA = RAW.map(r => {
+  const o = Object.fromEntries(FIELDS.map((k,i) => [k, r[i]]));
+  o.total = o.d11 + o.d12 + o.d13;
+  return o;
+});
+
+// ── Table state ────────────────────────────────────────────────────────────
+let sortCol = 'd13', sortDir = -1;
+
+function sortBy(col) {
+  if (sortCol === col) sortDir *= -1; else { sortCol = col; sortDir = -1; }
+  document.querySelectorAll('#tbl thead th').forEach(th => {
+    th.classList.toggle('sorted', th.dataset.col === col);
+    const si = th.querySelector('.si');
+    if (si) si.textContent = th.dataset.col === col ? (sortDir === -1 ? '↓' : '↑') : '↕';
+  });
+  render();
+}
+
+function varClass(v)  { return v > 0 ? 'var-pos' : v < 0 ? 'var-neg' : 'var-zer'; }
+function varStr(v)    { return v > 0 ? `+${v}` : v < 0 ? `${v}` : '0'; }
+function efClass(v)   { return v === null ? 'ef-null' : v >= 50 ? 'ef-high' : v >= 20 ? 'ef-mid' : 'ef-low'; }
+function efStr(v)     { return v === null ? '—' : v.toFixed(1) + '%'; }
+function efColor(v)   { return v === null ? '#e5e7eb' : v >= 50 ? '#16a34a' : v >= 20 ? '#d97706' : '#dc2626'; }
+
+function render() {
+  const s = document.getElementById('search').value.toLowerCase();
+  let rows = DATA.filter(r => r.nome.toLowerCase().includes(s));
+  rows.sort((a, b) => {
+    const av = a[sortCol] ?? -Infinity;
+    const bv = b[sortCol] ?? -Infinity;
+    if (typeof av === 'string') return sortDir * av.localeCompare(bv);
+    return sortDir * (av - bv);
+  });
+  document.getElementById('tbody').innerHTML = rows.length ? rows.map(r => `
+    <tr>
+      <td class="nome">${r.nome}</td>
+      <td class="num">${r.d11}</td>
+      <td class="num">${r.d12}</td>
+      <td class="num" style="font-weight:600">${r.d13}</td>
+      <td class="num" style="color:var(--muted)">${r.total}</td>
+      <td class="num ${varClass(r.varTotal)}">${varStr(r.varTotal)}</td>
+      <td class="num ${efClass(r.efFoco)}">
+        <div class="bar-wrap">
+          <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(r.efFoco ?? 0, 100)}%;background:${efColor(r.efFoco)}"></div></div>
+          ${efStr(r.efFoco)}
+        </div>
+      </td>
+    </tr>`).join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#9ca3af">Nenhum resultado</td></tr>';
+  document.getElementById('summary').innerHTML =
+    `Exibindo <span>${rows.length}</span> de <span>${DATA.length}</span> consultores`;
+}
+
+// ── Chart 1: Volume por dia ────────────────────────────────────────────────
+new Chart(document.getElementById('volChart'), {
+  type: 'bar',
+  data: {
+    labels: ['11/05', '12/05', '13/05'],
+    datasets: [{
+      data: [348, 406, 406],
+      backgroundColor: ['rgba(37,99,235,.8)', 'rgba(217,119,6,.8)', 'rgba(22,163,74,.8)'],
+      borderColor:     ['#2563eb', '#d97706', '#16a34a'],
+      borderWidth: 1.5,
+      borderRadius: 5,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.raw} tarefas concluídas`
+        }
+      },
+      datalabels: false
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 13, weight: '600' } } },
+      y: {
+        min: 280, max: 450,
+        grid: { color: '#f0f2f5' },
+        ticks: { font: { size: 11 } }
+      }
+    },
+    animation: { duration: 400 }
+  },
+  plugins: [{
+    id: 'datalabels',
+    afterDatasetsDraw(chart) {
+      const { ctx, data } = chart;
+      ctx.save();
+      data.datasets[0].data.forEach((val, i) => {
+        const bar = chart.getDatasetMeta(0).data[i];
+        ctx.fillStyle = '#374151';
+        ctx.font = 'bold 14px -apple-system,sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(val, bar.x, bar.y - 8);
+      });
+      ctx.restore();
+    }
+  }]
+});
+
+// ── Chart 2: Top 20 consultores ────────────────────────────────────────────
+const top20 = [...DATA]
+  .sort((a, b) => b.total - a.total)
+  .slice(0, 20);
+
+new Chart(document.getElementById('topChart'), {
+  type: 'bar',
+  data: {
+    labels: top20.map(r => r.nome.split(' ')[0]), // first name only for axis
+    datasets: [
+      { label: '11/05', data: top20.map(r => r.d11), backgroundColor: 'rgba(37,99,235,.75)',  borderColor: '#2563eb', borderWidth: 1, borderRadius: 3 },
+      { label: '12/05', data: top20.map(r => r.d12), backgroundColor: 'rgba(217,119,6,.75)',  borderColor: '#d97706', borderWidth: 1, borderRadius: 3 },
+      { label: '13/05', data: top20.map(r => r.d13), backgroundColor: 'rgba(22,163,74,.75)',  borderColor: '#16a34a', borderWidth: 1, borderRadius: 3 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: (ctx) => top20[ctx[0].dataIndex].nome,
+          label: (ctx) => ` ${ctx.dataset.label}: ${ctx.raw} tarefas`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: '#f0f2f5' }, ticks: { font: { size: 11 } } }
+    },
+    animation: { duration: 400 }
+  }
+});
+
+// ── Chart 3: Efetividade de foco ──────────────────────────────────────────
+const efData = DATA
+  .filter(r => r.efFoco !== null)
+  .sort((a, b) => b.efFoco - a.efFoco);
+
+new Chart(document.getElementById('efChart'), {
+  type: 'bar',
+  data: {
+    labels: efData.map(r => r.nome),
+    datasets: [{
+      data:            efData.map(r => r.efFoco),
+      backgroundColor: efData.map(r => efColor(r.efFoco) + 'cc'),
+      borderColor:     efData.map(r => efColor(r.efFoco)),
+      borderWidth: 1.5,
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.raw.toFixed(1)}% efetividade de foco`
+        }
+      }
+    },
+    scales: {
+      x: {
+        min: 0, max: 110,
+        grid: { color: '#f0f2f5' },
+        ticks: { callback: v => v + '%', font: { size: 11 } }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { font: { size: 11 } }
+      }
+    },
+    animation: { duration: 400 }
+  },
+  plugins: [{
+    id: 'pctLabels',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      ctx.save();
+      chart.getDatasetMeta(0).data.forEach((bar, i) => {
+        const val = efData[i].efFoco;
+        ctx.fillStyle = '#374151';
+        ctx.font = '11px -apple-system,sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(val.toFixed(1) + '%', bar.x + 5, bar.y + 4);
+      });
+      ctx.restore();
+    }
+  }]
+});
+
+// ── 50% reference line plugin ──────────────────────────────────────────────
+Chart.register({
+  id: 'ref50',
+  afterDraw(chart) {
+    if (chart.canvas.id !== 'efChart') return;
+    const { ctx, chartArea, scales } = chart;
+    const x50 = scales.x.getPixelForValue(50);
+    ctx.save();
+    ctx.setLineDash([5, 4]);
+    ctx.strokeStyle = 'rgba(100,116,139,.4)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(x50, chartArea.top);
+    ctx.lineTo(x50, chartArea.bottom);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(100,116,139,.5)';
+    ctx.font = '10px -apple-system,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('50%', x50, chartArea.top - 4);
+    ctx.restore();
+  }
+});
+
+render();
+</script>
+</body>
+</html>
