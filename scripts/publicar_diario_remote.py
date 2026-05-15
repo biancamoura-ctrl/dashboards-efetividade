@@ -1044,6 +1044,7 @@ def main():
     parser = argparse.ArgumentParser(description="Publica análises CS Ops a partir de dados JSON pré-buscados.")
     parser.add_argument("--data-dir", required=True, help="Diretório com os arquivos JSON de dados")
     parser.add_argument("--data-ref", required=True, help="Data de referência YYYY-MM-DD (geralmente ontem)")
+    parser.add_argument("--titulo", default=None, help="Título customizado para a mensagem GChat")
     args = parser.parse_args()
 
     token = os.environ.get("GITHUB_TOKEN", "")
@@ -1096,8 +1097,9 @@ def main():
 
     ref_str  = data_ref.strftime("%d/%m/%Y")
     diretivo = gerar_diretivo(dados_hoje, canal_mix, data_ref, totais)
+    titulo   = args.titulo or f"Dashboards CS Ops atualizados — {ref_str}"
     msg = (
-        f"📊 *Dashboards CS Ops atualizados — {ref_str}*\n"
+        f"📊 *{titulo}*\n"
         f"Efetividade · Esforço · Meta 70% publicados.\n\n"
         f"{diretivo}\n\n"
         f"🔗 {URL_SITE}"
