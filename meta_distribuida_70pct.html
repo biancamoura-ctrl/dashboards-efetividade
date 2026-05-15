@@ -3,340 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meta Distribuída — 70% de Efetividade · 15/05/2026</title>
+<title>Meta Distribuída 70% — 14/05/2026</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#f5f6f8;--surface:#fff;--border:#e3e6ea;--text:#1a1d23;--muted:#6b7280;
-  --blue:#1d4ed8;--green:#15803d;--amber:#92400e;--red:#991b1b;
+  --blue:#1d4ed8;--blue-lt:#eff6ff;--green:#15803d;--green-lt:#f0fdf4;
+  --amber:#92400e;--amber-lt:#fffbeb;--red:#991b1b;--red-lt:#fef2f2;
   --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05)
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
-.page{max-width:1100px;margin:0 auto;padding:28px 20px 52px}
-.header{margin-bottom:24px}
-.header h1{font-size:21px;font-weight:700}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px;text-align:center}
+.header h1{font-size:22px;font-weight:700}
 .header p{font-size:13px;color:var(--muted);margin-top:4px}
-
-/* KPI cards */
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
-.kpi-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.kpi-val{font-size:26px;font-weight:700;line-height:1}
-.kpi-sub{font-size:12px;color:var(--muted);margin-top:5px}
-.kpi.blue .kpi-val{color:var(--blue)}
-.kpi.green .kpi-val{color:var(--green)}
-.kpi.amber .kpi-val{color:var(--amber)}
-
-/* Info box */
-.info-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;font-size:13px;color:#1e3a5f;line-height:1.6}
-.info-box strong{font-weight:600}
-
-/* Card */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
 .card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .card-title{font-size:14px;font-weight:600}
-
-/* Legend */
-.legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
-.leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-
-/* Filters */
-.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.filter-group{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
-select,input[type=text]{font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);outline:none}
-select:hover,select:focus{border-color:#93c5fd}
-.chip{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;user-select:none;transition:all .12s}
-.chip.active{border-color:currentColor}
-.chip-all{background:#f3f4f6;color:#374151}.chip-all.active{background:#e5e7eb}
-.chip-imp{background:#dbeafe;color:#1d4ed8}.chip-imp.active{background:#bfdbfe}
-.chip-ok{background:#dcfce7;color:#15803d}.chip-ok.active{background:#bbf7d0}
-
-/* Table */
+.card-body{padding:18px}
 .tbl-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
-thead th{background:#f8f9fb;padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
-thead th:hover{background:#f0f2f5;color:var(--text)}
-thead th .si{opacity:.35;margin-left:4px;font-size:10px}
-thead th.sorted .si{opacity:1}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+thead th{background:#f8f9fb;padding:9px 12px;text-align:left;font-weight:600;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f2f5}
+.sort-icon{opacity:.35;margin-left:4px;font-size:10px}
+th.sorted .sort-icon{opacity:1}
 tbody tr{border-bottom:1px solid #f0f2f5;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
 tbody tr:hover{background:#f8f9fb}
 tbody td{padding:8px 12px;white-space:nowrap}
-td.nome{white-space:normal;min-width:170px;font-weight:500}
+td.nome{white-space:normal;min-width:160px;font-weight:500}
 td.num{text-align:right;font-variant-numeric:tabular-nums}
-td.muted{text-align:right;color:var(--muted)}
-
-/* Bar */
-.bar-wrap{display:flex;align-items:center;gap:6px}
-.bar-outer{height:8px;border-radius:4px;background:#e5e7eb;overflow:hidden;width:120px;flex-shrink:0;display:flex}
-.bar-cur{height:8px;background:#9ca3af;border-radius:4px 0 0 4px;transition:width .3s}
-.bar-add{height:8px;background:#3b82f6;border-radius:0 4px 4px 0;transition:width .3s}
-.bar-full{height:8px;background:#9ca3af;border-radius:4px}
-.pct-lbl{font-size:11px;color:var(--text);font-variant-numeric:tabular-nums;min-width:38px}
-
-/* Badges */
-.badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
-.badge-ok{background:#dcfce7;color:#15803d}
-.badge-imp{background:#dbeafe;color:#1d4ed8}
-.badge-crit{background:#fee2e2;color:#991b1b}
-
-/* Delta */
-.d-pos{color:#15803d;font-weight:600}
-.d-zero{color:var(--muted)}
-
-/* Summary bar */
-.summary{font-size:12px;color:var(--muted);padding:10px 16px;border-top:1px solid var(--border)}
-.summary span{font-weight:600;color:var(--text)}
-
-/* Priority section */
-.priority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.pri-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
-.pri-card.high{border-left:3px solid #dc2626}
-.pri-card.med{border-left:3px solid #d97706}
-.pri-card.low{border-left:3px solid #16a34a}
-.pri-header{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:10px}
-.pri-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
-.pri-detail{font-size:11px;color:var(--muted)}
-.pri-num{font-size:20px;font-weight:700;color:#1d4ed8;float:right;margin-top:-4px}
-
-@media(max-width:700px){
-  .kpi-row{grid-template-columns:repeat(2,1fr)}
-  .priority-grid{grid-template-columns:1fr}
-}
+.ef-high{color:var(--green);font-weight:600}.ef-mid{color:var(--amber);font-weight:600}.ef-low{color:var(--red);font-weight:600}
+.qbadge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.qbadge.q1{background:#dcfce7;color:#15803d}.qbadge.q2{background:#fee2e2;color:#991b1b}
+.qbadge.q3{background:#dbeafe;color:#1d4ed8}.qbadge.q4{background:#f3f4f6;color:#6b7280}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none}
+.chip.active{border-color:currentColor}
+.chip.all{background:#f3f4f6;color:#374151}.chip.all.active{background:#e5e7eb}
+.chip.q1{background:#dcfce7;color:#15803d}.chip.q1.active{background:#bbf7d0}
+.chip.q2{background:#fee2e2;color:#991b1b}.chip.q2.active{background:#fecaca}
+.chip.q3{background:#dbeafe;color:#1d4ed8}.chip.q3.active{background:#bfdbfe}
+.chip.q4{background:#f3f4f6;color:#6b7280}.chip.q4.active{background:#e5e7eb}
+select,input[type=text]{font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;outline:none}
+select:focus{border-color:#93c5fd}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:6px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:600;color:var(--text)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-val{font-size:28px;font-weight:700;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.blue .kpi-val{color:var(--blue)}.kpi.amber .kpi-val{color:var(--amber)}.kpi.green .kpi-val{color:var(--green)}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:380px}
+#tooltip{position:fixed;background:rgba(15,23,42,.92);color:#f1f5f9;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
 </style>
-<style>.header{text-align:center}.header h1{text-align:center}.header p{text-align:center}h1{text-align:center}</style>
 </head>
 <body>
 <a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;font-weight:600;color:#1a1d23;background:#fff;border:1px solid #e3e6ea;border-radius:8px;padding:7px 12px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.08);z-index:9999;transition:all .15s" onmouseover="this.style.borderColor='#93c5fd'" onmouseout="this.style.borderColor='#e3e6ea'">← Início</a>
-<div class="page">
+<div class="page" style="max-width:900px">
 
 <div class="header">
-  <h1>Distribuição da Meta de Efetividade — 70%</h1>
-  <p>Pipeline: Sucesso do Cliente &nbsp;·&nbsp; País: Brasil &nbsp;·&nbsp; Referência: 15/05/2026 &nbsp;·&nbsp; Base: 1.868 atividades realizadas</p>
+  <h1>Meta Distribuída — 70% de Efetividade</h1>
+  <p>Progresso individual de cada consultor &nbsp;·&nbsp; Referência: 14/05/2026</p>
 </div>
 
-<!-- KPIs -->
 <div class="kpi-row">
-  <div class="kpi blue">
-    <div class="kpi-lbl">Efetividade atual</div>
-    <div class="kpi-val">59,6%</div>
-    <div class="kpi-sub">1.113 efetivas de 1.868</div>
+  <div class="kpi green">
+    <div class="kpi-lbl">Na meta (≥ 70%)</div>
+    <div class="kpi-val">9</div>
+    <div class="kpi-sub">de 30 consultores</div>
   </div>
   <div class="kpi amber">
-    <div class="kpi-lbl">Meta da área</div>
-    <div class="kpi-val">70,0%</div>
-    <div class="kpi-sub">1.308 efetivas necessárias</div>
+    <div class="kpi-lbl">Próximos (50–70%)</div>
+    <div class="kpi-val">12</div>
+    <div class="kpi-sub">alavanca mais rápida</div>
   </div>
   <div class="kpi blue">
-    <div class="kpi-lbl">Gap a fechar</div>
-    <div class="kpi-val">+194</div>
-    <div class="kpi-sub">efetivas adicionais</div>
+    <div class="kpi-lbl">Conversões necessárias</div>
+    <div class="kpi-val">338</div>
+    <div class="kpi-sub">para o time atingir 70%</div>
   </div>
-  <div class="kpi green">
-    <div class="kpi-lbl">Consultores OK</div>
-    <div class="kpi-val">10</div>
-    <div class="kpi-sub">já acima de 70% — mantêm</div>
-  </div>
-</div>
-
-<!-- Info box -->
-<div class="info-box">
-  <strong>Metodologia de distribuição proporcional:</strong>
-  cada consultor abaixo de 70% precisa cobrir <strong>74% do seu gap individual</strong> até a meta.
-  Ninguém precisa chegar exatamente a 70% — apenas dar um passo proporcional ao quanto ainda falta.
-  Os 10 consultores já acima de 70% mantêm o que estão fazendo.
-  O efeito combinado dos +194 efetivas leva a taxa geral a exatamente <strong>70,0%</strong>.
-</div>
-
-<!-- Top prioridades -->
-<div style="margin-bottom:14px">
-  <p style="font-size:13px;font-weight:600;margin-bottom:10px">Top prioridades — maior impacto absoluto</p>
-  <div class="priority-grid">
-    <div class="pri-card high">
-      <div class="pri-header">🔴 Crítico · >20 efetivas</div>
-      <div class="pri-name">Giovanna Munhoz<span class="pri-num">+25</span></div>
-      <div class="pri-detail">27,8% → 59,5% &nbsp;·&nbsp; 79 atv.</div>
-      <div style="margin-top:10px" class="pri-name">Carla Santos da Silva<span class="pri-num">+24</span></div>
-      <div class="pri-detail">32,6% → 60,5% &nbsp;·&nbsp; 86 atv.</div>
-      <div style="margin-top:10px" class="pri-name">Thais Borges<span class="pri-num">+18</span></div>
-      <div class="pri-detail">31,3% → 59,4% &nbsp;·&nbsp; 64 atv.</div>
-    </div>
-    <div class="pri-card med">
-      <div class="pri-header">🟡 Médio · 10–17 efetivas</div>
-      <div class="pri-name">Helena Cabral<span class="pri-num">+13</span></div>
-      <div class="pri-detail">40,0% → 61,7% &nbsp;·&nbsp; 60 atv.</div>
-      <div style="margin-top:10px" class="pri-name">Claudilene Dias<span class="pri-num">+14</span></div>
-      <div class="pri-detail">37,5% → 62,5% &nbsp;·&nbsp; 56 atv.</div>
-      <div style="margin-top:10px" class="pri-name">Shelry Solart<span class="pri-num">+12</span></div>
-      <div class="pri-detail">49,4% → 64,2% &nbsp;·&nbsp; 81 atv.</div>
-    </div>
-    <div class="pri-card low">
-      <div class="pri-header">🟢 Ajuste fino · ≤9 efetivas</div>
-      <div class="pri-name">Ana Cláudia Almeida<span class="pri-num">+11</span></div>
-      <div class="pri-detail">42,9% → 62,5% &nbsp;·&nbsp; 56 atv.</div>
-      <div style="margin-top:10px" class="pri-name">Laura Pagliuzo<span class="pri-num">+9</span></div>
-      <div class="pri-detail">52,8% → 65,3% &nbsp;·&nbsp; 72 atv.</div>
-      <div style="margin-top:10px" class="pri-name">Indlayse Ferreira<span class="pri-num">+9</span></div>
-      <div class="pri-detail">50,8% → 65,1% &nbsp;·&nbsp; 63 atv.</div>
-    </div>
+  <div class="kpi blue">
+    <div class="kpi-lbl">Abaixo de 50%</div>
+    <div class="kpi-val">9</div>
+    <div class="kpi-sub">precisam de atenção urgente</div>
   </div>
 </div>
 
-<!-- Tabela detalhada -->
 <div class="card">
-  <div class="card-head">
-    <span class="card-title">Metas individuais distribuídas</span>
-    <div class="filters">
-      <div style="display:flex;gap:6px">
-        <span class="chip chip-all active" data-f="all" onclick="setF(this)">Todos</span>
-        <span class="chip chip-imp" data-f="imp" onclick="setF(this)">Precisam melhorar</span>
-        <span class="chip chip-ok" data-f="ok" onclick="setF(this)">Já na meta</span>
-      </div>
-      <div class="filter-group">
-        <input type="text" id="search" placeholder="Buscar consultor…" oninput="render()" style="width:150px">
-      </div>
-      <div class="filter-group">
-        <label>Ordenar</label>
-        <select id="sortSel" onchange="render()">
-          <option value="d">+ efetivas (maior primeiro)</option>
-          <option value="c">Efetividade atual</option>
-          <option value="t">Meta %</option>
-          <option value="n">Nome</option>
-          <option value="atv">Atividades</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div style="padding:0">
+  <div class="card-head"><span class="card-title">Progresso individual — meta 70% de efetividade na carteira</span></div>
+  <div class="card-body" style="padding:0">
     <div class="tbl-wrap">
       <table>
-        <thead>
-          <tr>
-            <th onclick="sortBy('n')" data-col="n">Consultor <span class="si">↕</span></th>
-            <th onclick="sortBy('atv')" data-col="atv" style="text-align:right">Atv. <span class="si">↕</span></th>
-            <th onclick="sortBy('ef')" data-col="ef" style="text-align:right">Ef. atual <span class="si">↕</span></th>
-            <th onclick="sortBy('c')" data-col="c" style="text-align:right">% atual <span class="si">↕</span></th>
-            <th onclick="sortBy('t')" data-col="t" style="text-align:right">Meta % <span class="si">↕</span></th>
-            <th onclick="sortBy('d')" data-col="d" class="sorted" style="text-align:right">+ efetivas <span class="si">↓</span></th>
-            <th>Progresso até meta</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
+        <thead><tr>
+          <th>Consultor</th>
+          <th style="text-align:right">Carteira</th>
+          <th style="text-align:right">Efetivas hoje</th>
+          <th style="text-align:right">Meta (70%)</th>
+          <th>% Efetividade atual</th>
+          <th>Status</th>
+        </tr></thead>
+        <tbody>
+<tr><td class="nome">Polliana Almeida</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#16a34a"></div></div><span class="ef-high">100.0%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Mariana Santana<div style="font-size:11px;color:#9ca3af;margin-top:1px">Premium touch</div></td><td class="num">62</td><td class="num">59</td><td class="num">44</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:95%;background:#16a34a"></div></div><span class="ef-high">95.2%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Carla Ferraz Gomes<div style="font-size:11px;color:#9ca3af;margin-top:1px">Premium touch</div></td><td class="num">58</td><td class="num">52</td><td class="num">41</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:#16a34a"></div></div><span class="ef-high">89.7%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Talita Panassol<div style="font-size:11px;color:#9ca3af;margin-top:1px">Premium touch</div></td><td class="num">81</td><td class="num">68</td><td class="num">57</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:84%;background:#16a34a"></div></div><span class="ef-high">84.0%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Larissa Freitas Monteiro<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Renovação</div></td><td class="num">71</td><td class="num">59</td><td class="num">50</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:83%;background:#16a34a"></div></div><span class="ef-high">83.1%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Jennifer dos Anjos<div style="font-size:11px;color:#9ca3af;margin-top:1px">SEDUC</div></td><td class="num">9</td><td class="num">7</td><td class="num">7</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:78%;background:#16a34a"></div></div><span class="ef-high">77.8%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Maria Elvira<div style="font-size:11px;color:#9ca3af;margin-top:1px">Premium touch 40+</div></td><td class="num">56</td><td class="num">43</td><td class="num">40</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:77%;background:#16a34a"></div></div><span class="ef-high">76.8%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Sarah Moura<div style="font-size:11px;color:#9ca3af;margin-top:1px">Redes</div></td><td class="num">116</td><td class="num">87</td><td class="num">82</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:75%;background:#16a34a"></div></div><span class="ef-high">75.0%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Maria Eduarda Carvalho<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Novas</div></td><td class="num">101</td><td class="num">71</td><td class="num">71</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:70%;background:#16a34a"></div></div><span class="ef-high">70.3%</span></div></td><td style="color:#15803d;font-weight:600">✅ Na meta</td></tr>
+<tr><td class="nome">Renata Brandão<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Novas</div></td><td class="num">113</td><td class="num">71</td><td class="num">80</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:63%;background:#d97706"></div></div><span class="ef-mid">62.8%</span></div></td><td style="color:#991b1b;font-weight:600">+9 conv.</td></tr>
+<tr><td class="nome">Tatiana Portela<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Renovação</div></td><td class="num">83</td><td class="num">52</td><td class="num">59</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:63%;background:#d97706"></div></div><span class="ef-mid">62.7%</span></div></td><td style="color:#991b1b;font-weight:600">+7 conv.</td></tr>
+<tr><td class="nome">Ana Clara Peres dos Santos<div style="font-size:11px;color:#9ca3af;margin-top:1px">Medium touch - Renovação</div></td><td class="num">69</td><td class="num">43</td><td class="num">49</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:62%;background:#d97706"></div></div><span class="ef-mid">62.3%</span></div></td><td style="color:#991b1b;font-weight:600">+6 conv.</td></tr>
+<tr><td class="nome">Julia Cordeiro Campos<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Novas</div></td><td class="num">97</td><td class="num">58</td><td class="num">68</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:60%;background:#d97706"></div></div><span class="ef-mid">59.8%</span></div></td><td style="color:#991b1b;font-weight:600">+10 conv.</td></tr>
+<tr><td class="nome">Erick Andrade<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Novas</div></td><td class="num">88</td><td class="num">50</td><td class="num">62</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:57%;background:#d97706"></div></div><span class="ef-mid">56.8%</span></div></td><td style="color:#991b1b;font-weight:600">+12 conv.</td></tr>
+<tr><td class="nome">Pâmela Miranda<div style="font-size:11px;color:#9ca3af;margin-top:1px">Medium touch - Renovação</div></td><td class="num">57</td><td class="num">32</td><td class="num">40</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:56%;background:#d97706"></div></div><span class="ef-mid">56.1%</span></div></td><td style="color:#991b1b;font-weight:600">+8 conv.</td></tr>
+<tr><td class="nome">Thayná Bastos<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Renovação</div></td><td class="num">81</td><td class="num">45</td><td class="num">57</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:56%;background:#d97706"></div></div><span class="ef-mid">55.6%</span></div></td><td style="color:#991b1b;font-weight:600">+12 conv.</td></tr>
+<tr><td class="nome">Andreina Ferreira<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Novas</div></td><td class="num">88</td><td class="num">48</td><td class="num">62</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:54%;background:#d97706"></div></div><span class="ef-mid">54.5%</span></div></td><td style="color:#991b1b;font-weight:600">+14 conv.</td></tr>
+<tr><td class="nome">Stefany Soares Figueredo<div style="font-size:11px;color:#9ca3af;margin-top:1px">Medium touch - Renovação</div></td><td class="num">66</td><td class="num">36</td><td class="num">47</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:54%;background:#d97706"></div></div><span class="ef-mid">54.5%</span></div></td><td style="color:#991b1b;font-weight:600">+11 conv.</td></tr>
+<tr><td class="nome">Kaian Luís<div style="font-size:11px;color:#9ca3af;margin-top:1px">Medium touch - Renovação</div></td><td class="num">61</td><td class="num">33</td><td class="num">43</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:54%;background:#d97706"></div></div><span class="ef-mid">54.1%</span></div></td><td style="color:#991b1b;font-weight:600">+10 conv.</td></tr>
+<tr><td class="nome">Laura Pagliuzo<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Novas</div></td><td class="num">91</td><td class="num">47</td><td class="num">64</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:52%;background:#d97706"></div></div><span class="ef-mid">51.6%</span></div></td><td style="color:#991b1b;font-weight:600">+17 conv.</td></tr>
+<tr><td class="nome">Moreno Loss<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Novas</div></td><td class="num">87</td><td class="num">44</td><td class="num">61</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:51%;background:#d97706"></div></div><span class="ef-mid">50.6%</span></div></td><td style="color:#991b1b;font-weight:600">+17 conv.</td></tr>
+<tr><td class="nome">Shelry Solart<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Renovação</div></td><td class="num">81</td><td class="num">40</td><td class="num">57</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:49%;background:#dc2626"></div></div><span class="ef-low">49.4%</span></div></td><td style="color:#991b1b;font-weight:600">+17 conv.</td></tr>
+<tr><td class="nome">Indy Ferreira<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Renovação</div></td><td class="num">68</td><td class="num">33</td><td class="num">48</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:48%;background:#dc2626"></div></div><span class="ef-low">48.5%</span></div></td><td style="color:#991b1b;font-weight:600">+15 conv.</td></tr>
+<tr><td class="nome">Vivian Cristina<div style="font-size:11px;color:#9ca3af;margin-top:1px">Medium touch - Renovação</div></td><td class="num">70</td><td class="num">33</td><td class="num">49</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:47%;background:#dc2626"></div></div><span class="ef-low">47.1%</span></div></td><td style="color:#991b1b;font-weight:600">+16 conv.</td></tr>
+<tr><td class="nome">Ana Cláudia Santos de Almeida<div style="font-size:11px;color:#9ca3af;margin-top:1px">Medium touch - Renovação</div></td><td class="num">61</td><td class="num">24</td><td class="num">43</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:39%;background:#dc2626"></div></div><span class="ef-low">39.3%</span></div></td><td style="color:#991b1b;font-weight:600">+19 conv.</td></tr>
+<tr><td class="nome">Helena Cabral Sampaio<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Renovação</div></td><td class="num">62</td><td class="num">24</td><td class="num">44</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:39%;background:#dc2626"></div></div><span class="ef-low">38.7%</span></div></td><td style="color:#991b1b;font-weight:600">+20 conv.</td></tr>
+<tr><td class="nome">Claudilene Santos Dias<div style="font-size:11px;color:#9ca3af;margin-top:1px">Medium touch - Renovação</div></td><td class="num">72</td><td class="num">26</td><td class="num">51</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:36%;background:#dc2626"></div></div><span class="ef-low">36.1%</span></div></td><td style="color:#991b1b;font-weight:600">+25 conv.</td></tr>
+<tr><td class="nome">Carla Santos da Silva<div style="font-size:11px;color:#9ca3af;margin-top:1px">High touch - Renovação</div></td><td class="num">89</td><td class="num">31</td><td class="num">63</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:35%;background:#dc2626"></div></div><span class="ef-low">34.8%</span></div></td><td style="color:#991b1b;font-weight:600">+32 conv.</td></tr>
+<tr><td class="nome">Thais Souza<div style="font-size:11px;color:#9ca3af;margin-top:1px">Backup</div></td><td class="num">65</td><td class="num">21</td><td class="num">46</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:32%;background:#dc2626"></div></div><span class="ef-low">32.3%</span></div></td><td style="color:#991b1b;font-weight:600">+25 conv.</td></tr>
+<tr><td class="nome">Giovanna Munhoz<div style="font-size:11px;color:#9ca3af;margin-top:1px">Medium touch - Renovação</div></td><td class="num">84</td><td class="num">23</td><td class="num">59</td><td class="num"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:27%;background:#dc2626"></div></div><span class="ef-low">27.4%</span></div></td><td style="color:#991b1b;font-weight:600">+36 conv.</td></tr>
+        </tbody>
       </table>
     </div>
-    <div class="summary" id="summary"></div>
   </div>
 </div>
 
+<div style="margin-top:8px;padding:13px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);font-size:11.5px;color:var(--muted);line-height:1.6;box-shadow:var(--shadow)">
+  Meta individual = 70% das escolas da carteira com pelo menos uma atividade efetiva.
+  Conversões a recuperar = max(0, ⌈Carteira × 0,70⌉ − Efetivas atuais).
+  Análise gerada automaticamente em 14/05/2026 a partir dos dados do BigQuery.
 </div>
-<script>
-const DATA=[
-  {n:'Giovanna Munhoz',      atv:79,  ef:22,  c:27.8, t:59.5, d:25},
-  {n:'Carla Santos da Silva',atv:86,  ef:28,  c:32.6, t:60.5, d:24},
-  {n:'Thais Borges',         atv:64,  ef:20,  c:31.3, t:59.4, d:18},
-  {n:'Claudilene Dias',      atv:56,  ef:21,  c:37.5, t:62.5, d:14},
-  {n:'Helena Cabral',        atv:60,  ef:24,  c:40.0, t:61.7, d:13},
-  {n:'Shelry Solart',        atv:81,  ef:40,  c:49.4, t:64.2, d:12},
-  {n:'Ana Cláudia Almeida',  atv:56,  ef:24,  c:42.9, t:62.5, d:11},
-  {n:'Laura Pagliuzo',       atv:72,  ef:38,  c:52.8, t:65.3, d:9},
-  {n:'Indlayse Ferreira',    atv:63,  ef:32,  c:50.8, t:65.1, d:9},
-  {n:'Stefany Figueredo',    atv:61,  ef:32,  c:52.5, t:65.6, d:8},
-  {n:'Vivian Cristina Souza',atv:62,  ef:33,  c:53.2, t:66.1, d:8},
-  {n:'Tatiana Portela',      atv:81,  ef:47,  c:58.0, t:66.7, d:7},
-  {n:'Thayna Bastos',        atv:75,  ef:44,  c:58.7, t:66.7, d:6},
-  {n:'Renata Brandao',       atv:68,  ef:40,  c:58.8, t:67.6, d:6},
-  {n:'Moreno Loss',          atv:59,  ef:34,  c:57.6, t:66.1, d:5},
-  {n:'Kaian Silva',          atv:55,  ef:32,  c:58.2, t:67.3, d:5},
-  {n:'Pâmela Miranda',       atv:54,  ef:31,  c:57.4, t:66.7, d:5},
-  {n:'Ana Clara Peres',      atv:60,  ef:38,  c:63.3, t:68.3, d:3},
-  {n:'Erick Andrade',        atv:48,  ef:29,  c:60.4, t:66.7, d:3},
-  {n:'Andreina Ferreira',    atv:71,  ef:47,  c:66.2, t:69.0, d:2},
-  {n:'Isabelle Vasconcelos', atv:1,   ef:0,   c:0.0,  t:100.0,d:1},
-  {n:'Sarah Moura',          atv:113, ef:84,  c:74.3, t:74.3, d:0},
-  {n:'Talita Panassol',      atv:77,  ef:63,  c:81.8, t:81.8, d:0},
-  {n:'Larissa Freitas',      atv:70,  ef:59,  c:84.3, t:84.3, d:0},
-  {n:'Julia Cordeiro',       atv:67,  ef:50,  c:74.6, t:74.6, d:0},
-  {n:'Carla Gomes',          atv:60,  ef:50,  c:83.3, t:83.3, d:0},
-  {n:'Mariana Santana',      atv:59,  ef:56,  c:94.9, t:94.9, d:0},
-  {n:'Maria Elvira',         atv:51,  ef:41,  c:80.4, t:80.4, d:0},
-  {n:'Maria Eduarda Carvalho',atv:49, ef:45,  c:91.8, t:91.8, d:0},
-  {n:'Jennifer Anjos',       atv:8,   ef:7,   c:87.5, t:87.5, d:0},
-  {n:'Janaina Paula',        atv:2,   ef:2,   c:100.0,t:100.0,d:0},
-];
 
-let activeF='all', sortKey='d', sortDir=-1;
-
-function setF(el){
-  document.querySelectorAll('[data-f]').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  activeF=el.dataset.f;
-  render();
-}
-
-function sortBy(col){
-  if(sortKey===col)sortDir*=-1;else{sortKey=col;sortDir=-1;}
-  document.querySelectorAll('thead th').forEach(th=>{
-    th.classList.toggle('sorted',th.dataset.col===col);
-    const si=th.querySelector('.si');
-    if(si)si.textContent=th.dataset.col===col?(sortDir===-1?'↓':'↑'):'↕';
-  });
-  render();
-}
-
-function render(){
-  const sortSel=document.getElementById('sortSel').value;
-  if(sortSel!==sortKey){sortKey=sortSel;sortDir=-1;}
-  const s=document.getElementById('search').value.toLowerCase();
-  let rows=DATA.filter(r=>{
-    if(activeF==='imp'&&r.d===0)return false;
-    if(activeF==='ok'&&r.d>0)return false;
-    return r.n.toLowerCase().includes(s);
-  });
-  rows.sort((a,b)=>{
-    const va=a[sortKey],vb=b[sortKey];
-    return typeof va==='string'?sortDir*va.localeCompare(vb):sortDir*(va-vb);
-  });
-  const BW=120;
-  document.getElementById('tbody').innerHTML=rows.map(r=>{
-    const ok=r.d===0;
-    const curPx=Math.round(r.c/100*BW);
-    const addPx=ok?0:Math.round((r.t-r.c)/100*BW);
-    const bar=ok
-      ?`<div class="bar-outer"><div class="bar-full" style="width:${curPx}px"></div></div>`
-      :`<div class="bar-outer"><div class="bar-cur" style="width:${curPx}px"></div><div class="bar-add" style="width:${addPx}px"></div></div>`;
-    const pctLbl=ok
-      ?`<span class="pct-lbl" style="color:#6b7280">${r.c.toFixed(1)}%</span>`
-      :`<span class="pct-lbl"><b>${r.t.toFixed(1)}%</b></span>`;
-    const badge=ok
-      ?`<span class="badge badge-ok">✓ mantém</span>`
-      :r.d>=18
-        ?`<span class="badge badge-crit">+${r.d} efetivas</span>`
-        :`<span class="badge badge-imp">+${r.d} efetivas</span>`;
-    const deltaColor=ok?'class="d-zero"':'class="d-pos"';
-    const deltaVal=ok?'—':`+${r.d}`;
-    return `<tr>
-      <td class="nome">${r.n}</td>
-      <td class="num">${r.atv}</td>
-      <td class="num">${r.ef}</td>
-      <td class="muted">${r.c.toFixed(1)}%</td>
-      <td class="num" style="font-weight:600">${r.t.toFixed(1)}%</td>
-      <td ${deltaColor} style="text-align:right">${deltaVal}</td>
-      <td><div class="bar-wrap">${bar}${pctLbl}</div></td>
-      <td>${badge}</td>
-    </tr>`;
-  }).join('');
-  const tot=rows.reduce((s,r)=>s+r.d,0);
-  const imp=rows.filter(r=>r.d>0).length;
-  const ok=rows.filter(r=>r.d===0).length;
-  document.getElementById('summary').innerHTML=
-    `Exibindo <span>${rows.length}</span> de <span>${DATA.length}</span> consultores &nbsp;·&nbsp;
-     Precisam melhorar: <span>${imp}</span> &nbsp;·&nbsp;
-     Já na meta: <span>${ok}</span> &nbsp;·&nbsp;
-     Total de efetivas adicionais no filtro: <span>+${tot}</span>`;
-}
-
-render();
-</script>
-</body>
-</html>
+</div>
+</body></html>
