@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Efetividade de Contatos — 14/05/2026</title>
+<title>Efetividade de Contatos — 15/05/2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -75,14 +75,14 @@ select:focus{border-color:#93c5fd}
 
 <div class="header">
   <h1>Efetividade de Contatos por Consultor</h1>
-  <p>Pipeline: Sucesso do Cliente &nbsp;·&nbsp; País: Brasil &nbsp;·&nbsp; Referência: 14/05/2026 &nbsp;·&nbsp; Fontes: atividades · tarefas · retrato de escolas</p>
+  <p>Pipeline: Sucesso do Cliente &nbsp;·&nbsp; País: Brasil &nbsp;·&nbsp; Referência: 15/05/2026 &nbsp;·&nbsp; Fontes: atividades · tarefas · retrato de escolas</p>
 </div>
 
 <div class="kpi-row">
-  <div class="kpi blue"><div class="kpi-lbl">Consultores ativos</div><div class="kpi-val">29</div><div class="kpi-sub">com atividades em 14/05/2026</div></div>
-  <div class="kpi blue"><div class="kpi-lbl">Total de atividades</div><div class="kpi-val">873</div><div class="kpi-sub">realizadas</div></div>
+  <div class="kpi blue"><div class="kpi-lbl">Consultores ativos</div><div class="kpi-val">27</div><div class="kpi-sub">com atividades em 15/05/2026</div></div>
+  <div class="kpi blue"><div class="kpi-lbl">Total de atividades</div><div class="kpi-val">496</div><div class="kpi-sub">realizadas</div></div>
   <div class="kpi amber"><div class="kpi-lbl">Taxa geral de efetividade</div><div class="kpi-val">61.0%</div><div class="kpi-sub">1158 esc. efetivas de 1898 elegíveis</div></div>
-  <div class="kpi green"><div class="kpi-lbl">Tasks concluídas</div><div class="kpi-val">357</div><div class="kpi-sub">de 869 recebidas</div></div>
+  <div class="kpi green"><div class="kpi-lbl">Tasks concluídas</div><div class="kpi-val">121</div><div class="kpi-sub">de 1.450 recebidas</div></div>
 </div>
 
 <div class="card">
@@ -148,7 +148,7 @@ select:focus{border-color:#93c5fd}
 
 <div class="card" id="sec-comp">
   <div class="card-head">
-    <span class="card-title">Comparativo: 14/05/2026 vs. 13/05/2026</span>
+    <span class="card-title">Comparativo: 15/05/2026 vs. 14/05/2026</span>
     <div class="filters">
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <span class="chip all active" data-ct="all" onclick="setCF(this)">Todos</span>
@@ -190,35 +190,35 @@ select:focus{border-color:#93c5fd}
 </div>
 <div id="tooltip"></div>
 <script>
-const RAW=[["Giovanna Munhoz",77,22,27.5,96.2,35,3,80,25,2,8.0,"q2","Julia Loubach","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Andreina Ferreira",66,48,67.6,95.8,40,21,71,23,12,52.2,"q1","Mahane","High touch - Novas","Estagi\u00e1rio"],
-["Indy Ferreira",57,32,47.8,95.5,34,23,67,26,5,19.2,"q2","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
-["Maria Eduarda Carvalho",56,46,90.2,98.0,19,1,51,20,7,35.0,"q1","Mahane","High touch - Novas","Analista"],
-["Renata Brand\u00e3o",55,45,66.2,100.0,34,21,68,21,10,47.6,"q1","Em\u00edlia Alves","High touch - Novas","Analista"],
-["Tatiana Portela",47,53,64.6,100.0,40,10,82,18,4,22.2,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
-["Sarah Moura",43,85,75.2,99.1,40,40,113,31,10,32.3,"q3","Julia Loubach","Redes","Analista"],
-["Laura Pagliuzo",41,43,60.6,80.3,0,0,71,24,6,25.0,"q3","Mahane","High touch - Novas","Estagi\u00e1rio"],
-["P\u00e2mela Miranda",41,32,56.1,87.7,56,19,57,21,7,33.3,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Thayn\u00e1 Bastos",38,45,59.2,92.1,40,21,76,21,8,38.1,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
-["Talita Panassol",34,68,84.0,95.1,28,19,81,28,16,57.1,"q3","Carine Leite","Premium touch","Analista"],
-["Ana Clara Peres dos Santos",34,41,64.1,92.2,23,20,64,18,7,38.9,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Moreno Loss",32,34,57.6,76.3,39,39,59,14,6,42.9,"q3","Em\u00edlia Alves","High touch - Novas","Analista"],
-["Mariana Santana",29,56,94.9,100.0,15,15,59,19,12,63.2,"q3","Carine Leite","Premium touch","Analista"],
-["Julia Cordeiro Campos",29,51,77.3,100.0,39,24,66,21,7,33.3,"q3","Mahane","High touch - Novas","Estagi\u00e1rio"],
-["Erick Andrade",25,34,70.8,95.8,23,1,48,11,7,63.6,"q3","Julia Alves","High touch - Novas","Analista"],
-["Kaian Lu\u00eds",24,32,55.2,89.7,25,6,58,10,6,60.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Claudilene Santos Dias",23,22,37.3,91.5,34,8,59,8,1,12.5,"q4","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Maria Elvira",17,41,75.9,92.6,15,15,54,13,11,84.6,"q3","Carine Leite","Premium touch 40+","Analista"],
-["Ana Cl\u00e1udia Santos de Almeida",17,24,40.7,86.4,50,6,59,7,4,57.1,"q4","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Carla Ferraz Gomes",17,52,91.2,100.0,31,16,57,16,10,62.5,"q3","Carine Leite","Premium touch","Analista"],
-["Thais Souza",17,23,35.9,93.8,0,0,64,7,2,28.6,"q4","\u2014","Backup","Estagi\u00e1rio"],
-["Shelry Solart",14,40,49.4,86.4,41,11,81,9,8,88.9,"q4","Julia Loubach","High touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Carla Santos da Silva",13,30,34.9,90.7,37,7,86,8,5,62.5,"q4","Larissa Garcia","High touch - Renova\u00e7\u00e3o","\u2014"],
-["Stefany Soares Figueredo",13,36,56.2,92.2,27,4,64,6,4,66.7,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Larissa Freitas Monteiro",4,59,83.1,98.6,26,0,71,3,3,100.0,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
-["Vivian Cristina",4,33,51.6,96.9,39,4,64,3,3,100.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
-["Jennifer dos Anjos",3,7,87.5,100.0,3,3,8,2,2,100.0,"q3","Larissa Garcia","SEDUC","Estagi\u00e1rio"],
-["Helena Cabral Sampaio",3,24,40.0,85.0,36,0,60,3,0,0.0,"q4","Julia Loubach","High touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"]];
+const RAW=[["Andreina Ferreira",50,48,67.6,95.8,40,4,71,10,3,30.0,"q1","Mahane","High touch - Novas","Estagi\u00e1rio"],
+["Laura Pagliuzo",31,43,60.6,80.3,0,0,71,18,6,33.3,"q3","Mahane","High touch - Novas","Estagi\u00e1rio"],
+["Ana Clara Peres dos Santos",30,41,64.1,92.2,49,17,64,17,4,23.5,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Sarah Moura",29,85,75.2,99.1,78,0,113,16,10,62.5,"q3","Julia Loubach","Redes","Analista"],
+["Carla Ferraz Gomes",29,52,91.2,100.0,40,10,57,15,4,26.7,"q3","Carine Leite","Premium touch","Analista"],
+["Tatiana Portela",28,53,64.6,100.0,37,3,82,20,5,25.0,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
+["Renata Brand\u00e3o",28,45,66.2,100.0,83,15,68,11,7,63.6,"q3","Em\u00edlia Alves","High touch - Novas","Analista"],
+["Giovanna Munhoz",28,22,27.5,96.2,36,0,80,11,0,0.0,"q4","Julia Loubach","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Julia Cordeiro Campos",25,51,77.3,100.0,56,21,66,22,4,18.2,"q3","Mahane","High touch - Novas","Estagi\u00e1rio"],
+["Talita Panassol",21,68,84.0,95.1,78,0,81,19,5,26.3,"q3","Carine Leite","Premium touch","Analista"],
+["Erick Andrade",19,34,70.8,95.8,46,0,48,19,7,36.8,"q3","Julia Alves","High touch - Novas","Analista"],
+["Maria Eduarda Carvalho",19,46,90.2,98.0,42,1,51,12,1,8.3,"q3","Mahane","High touch - Novas","Analista"],
+["Mariana Santana",18,56,94.9,100.0,60,1,59,10,1,10.0,"q3","Carine Leite","Premium touch","Analista"],
+["Stefany Soares Figueredo",18,36,56.2,92.2,26,2,64,12,3,25.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Maria Elvira",17,41,75.9,92.6,40,17,54,10,3,30.0,"q3","Carine Leite","Premium touch 40+","Analista"],
+["Thais Souza",16,23,35.9,93.8,0,0,64,8,2,25.0,"q4","\u2014","Backup","Estagi\u00e1rio"],
+["Thayn\u00e1 Bastos",15,45,59.2,92.1,75,9,76,9,1,11.1,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
+["Shelry Solart",14,40,49.4,86.4,82,12,81,8,2,25.0,"q4","Julia Loubach","High touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Kaian Lu\u00eds",12,32,55.2,89.7,59,1,58,6,5,83.3,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Ana Cl\u00e1udia Santos de Almeida",12,24,40.7,86.4,49,1,59,7,0,0.0,"q4","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Indy Ferreira",8,32,47.8,95.5,75,0,67,5,1,20.0,"q4","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
+["Jennifer dos Anjos",7,7,87.5,100.0,5,4,8,4,2,50.0,"q3","Larissa Garcia","SEDUC","Estagi\u00e1rio"],
+["Vivian Cristina",7,33,51.6,96.9,75,0,64,5,1,20.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["P\u00e2mela Miranda",6,32,56.1,87.7,54,0,57,4,3,75.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Carla Santos da Silva",5,30,34.9,90.7,39,3,86,4,1,25.0,"q4","Larissa Garcia","High touch - Renova\u00e7\u00e3o","\u2014"],
+["Moreno Loss",3,34,57.6,76.3,49,0,59,3,1,33.3,"q3","Em\u00edlia Alves","High touch - Novas","Analista"],
+["Larissa Freitas Monteiro",1,59,83.1,98.6,54,0,71,1,0,0.0,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
+["Claudilene Santos Dias",0,22,37.3,91.5,46,0,59,0,0,0.0,"q4","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Helena Cabral Sampaio",0,24,40.0,85.0,77,0,60,0,0,0.0,"q4","Julia Loubach","High touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"]];
 const FIELDS=['nome','atv','ef','pef','pab','tasks','conc','cart','esc_atv','esc_ef','pct_ef_esc','quad','lideranca','segmento','cargo'];
 const DATA=RAW.map(r=>Object.fromEntries(FIELDS.map((k,i)=>[k,r[i]])));
 const QL={q1:'Alto esforço + Alta efetiv.',q2:'Alto esforço + Baixa efetiv.',q3:'Baixo esforço + Alta efetiv.',q4:'Baixo esforço + Baixa efetiv.'};
@@ -277,7 +277,7 @@ document.getElementById('scatter').addEventListener('mousemove',evt=>{
   }else tip.style.display='none';
 });
 document.getElementById('scatter').addEventListener('mouseleave',()=>tip.style.display='none');
-const COMP=[{"nome": "Giovanna Munhoz", "quad_hoje": "q2", "quad_ontem": "q4", "pef_hoje": 27.5, "pef_ontem": 27.5, "atv_hoje": 77, "atv_ontem": 44, "delta_ef": 0.0, "delta_atv": 33, "tendencia": "manteve"}, {"nome": "Andreina Ferreira", "quad_hoje": "q1", "quad_ontem": "q3", "pef_hoje": 67.6, "pef_ontem": 67.6, "atv_hoje": 66, "atv_ontem": 26, "delta_ef": 0.0, "delta_atv": 40, "tendencia": "manteve"}, {"nome": "Indy Ferreira", "quad_hoje": "q2", "quad_ontem": "q4", "pef_hoje": 47.8, "pef_ontem": 47.8, "atv_hoje": 57, "atv_ontem": 25, "delta_ef": 0.0, "delta_atv": 32, "tendencia": "manteve"}, {"nome": "Maria Eduarda Carvalho", "quad_hoje": "q1", "quad_ontem": "q1", "pef_hoje": 90.2, "pef_ontem": 90.2, "atv_hoje": 56, "atv_ontem": 52, "delta_ef": 0.0, "delta_atv": 4, "tendencia": "manteve"}, {"nome": "Renata Brand\u00e3o", "quad_hoje": "q1", "quad_ontem": "q1", "pef_hoje": 66.2, "pef_ontem": 66.2, "atv_hoje": 55, "atv_ontem": 53, "delta_ef": 0.0, "delta_atv": 2, "tendencia": "manteve"}, {"nome": "Tatiana Portela", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 64.6, "pef_ontem": 64.6, "atv_hoje": 47, "atv_ontem": 29, "delta_ef": 0.0, "delta_atv": 18, "tendencia": "manteve"}, {"nome": "Sarah Moura", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 75.2, "pef_ontem": 75.2, "atv_hoje": 43, "atv_ontem": 29, "delta_ef": 0.0, "delta_atv": 14, "tendencia": "manteve"}, {"nome": "Laura Pagliuzo", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 60.6, "pef_ontem": 60.6, "atv_hoje": 41, "atv_ontem": 43, "delta_ef": 0.0, "delta_atv": -2, "tendencia": "manteve"}, {"nome": "P\u00e2mela Miranda", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 56.1, "pef_ontem": 56.1, "atv_hoje": 41, "atv_ontem": 34, "delta_ef": 0.0, "delta_atv": 7, "tendencia": "manteve"}, {"nome": "Thayn\u00e1 Bastos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 59.2, "pef_ontem": 59.2, "atv_hoje": 38, "atv_ontem": 33, "delta_ef": 0.0, "delta_atv": 5, "tendencia": "manteve"}, {"nome": "Talita Panassol", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 84.0, "pef_ontem": 84.0, "atv_hoje": 34, "atv_ontem": 15, "delta_ef": 0.0, "delta_atv": 19, "tendencia": "manteve"}, {"nome": "Ana Clara Peres dos Santos", "quad_hoje": "q3", "quad_ontem": "q1", "pef_hoje": 64.1, "pef_ontem": 64.1, "atv_hoje": 34, "atv_ontem": 50, "delta_ef": 0.0, "delta_atv": -16, "tendencia": "manteve"}, {"nome": "Moreno Loss", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 57.6, "pef_ontem": 57.6, "atv_hoje": 32, "atv_ontem": 31, "delta_ef": 0.0, "delta_atv": 1, "tendencia": "manteve"}, {"nome": "Mariana Santana", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 94.9, "pef_ontem": 94.9, "atv_hoje": 29, "atv_ontem": 42, "delta_ef": 0.0, "delta_atv": -13, "tendencia": "manteve"}, {"nome": "Julia Cordeiro Campos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 77.3, "pef_ontem": 77.3, "atv_hoje": 29, "atv_ontem": 15, "delta_ef": 0.0, "delta_atv": 14, "tendencia": "manteve"}, {"nome": "Erick Andrade", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 70.8, "pef_ontem": 70.8, "atv_hoje": 25, "atv_ontem": 22, "delta_ef": 0.0, "delta_atv": 3, "tendencia": "manteve"}, {"nome": "Kaian Lu\u00eds", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 55.2, "pef_ontem": 55.2, "atv_hoje": 24, "atv_ontem": 42, "delta_ef": 0.0, "delta_atv": -18, "tendencia": "manteve"}, {"nome": "Claudilene Santos Dias", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 37.3, "pef_ontem": 37.3, "atv_hoje": 23, "atv_ontem": 27, "delta_ef": 0.0, "delta_atv": -4, "tendencia": "manteve"}, {"nome": "Maria Elvira", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 75.9, "pef_ontem": 75.9, "atv_hoje": 17, "atv_ontem": 19, "delta_ef": 0.0, "delta_atv": -2, "tendencia": "manteve"}, {"nome": "Ana Cl\u00e1udia Santos de Almeida", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 40.7, "pef_ontem": 40.7, "atv_hoje": 17, "atv_ontem": 24, "delta_ef": 0.0, "delta_atv": -7, "tendencia": "manteve"}, {"nome": "Carla Ferraz Gomes", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 91.2, "pef_ontem": 91.2, "atv_hoje": 17, "atv_ontem": 21, "delta_ef": 0.0, "delta_atv": -4, "tendencia": "manteve"}, {"nome": "Thais Souza", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 35.9, "pef_ontem": 35.9, "atv_hoje": 17, "atv_ontem": 31, "delta_ef": 0.0, "delta_atv": -14, "tendencia": "manteve"}, {"nome": "Shelry Solart", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 49.4, "pef_ontem": 49.4, "atv_hoje": 14, "atv_ontem": 23, "delta_ef": 0.0, "delta_atv": -9, "tendencia": "manteve"}, {"nome": "Carla Santos da Silva", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 34.9, "pef_ontem": 34.9, "atv_hoje": 13, "atv_ontem": 10, "delta_ef": 0.0, "delta_atv": 3, "tendencia": "manteve"}, {"nome": "Stefany Soares Figueredo", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 56.2, "pef_ontem": 56.2, "atv_hoje": 13, "atv_ontem": 0, "delta_ef": 0.0, "delta_atv": 13, "tendencia": "manteve"}, {"nome": "Larissa Freitas Monteiro", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 83.1, "pef_ontem": 83.1, "atv_hoje": 4, "atv_ontem": 22, "delta_ef": 0.0, "delta_atv": -18, "tendencia": "manteve"}, {"nome": "Vivian Cristina", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 51.6, "pef_ontem": 51.6, "atv_hoje": 4, "atv_ontem": 15, "delta_ef": 0.0, "delta_atv": -11, "tendencia": "manteve"}, {"nome": "Jennifer dos Anjos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 87.5, "pef_ontem": 87.5, "atv_hoje": 3, "atv_ontem": 2, "delta_ef": 0.0, "delta_atv": 1, "tendencia": "manteve"}, {"nome": "Helena Cabral Sampaio", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 40.0, "pef_ontem": 40.0, "atv_hoje": 3, "atv_ontem": 0, "delta_ef": 0.0, "delta_atv": 3, "tendencia": "manteve"}];
+const COMP=[{"nome": "Andreina Ferreira", "quad_hoje": "q1", "quad_ontem": "q1", "pef_hoje": 67.6, "pef_ontem": 67.6, "atv_hoje": 50, "atv_ontem": 66, "delta_ef": 0.0, "delta_atv": -16, "tendencia": "manteve"}, {"nome": "Laura Pagliuzo", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 60.6, "pef_ontem": 60.6, "atv_hoje": 31, "atv_ontem": 41, "delta_ef": 0.0, "delta_atv": -10, "tendencia": "manteve"}, {"nome": "Ana Clara Peres dos Santos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 64.1, "pef_ontem": 64.1, "atv_hoje": 30, "atv_ontem": 34, "delta_ef": 0.0, "delta_atv": -4, "tendencia": "manteve"}, {"nome": "Sarah Moura", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 75.2, "pef_ontem": 75.2, "atv_hoje": 29, "atv_ontem": 43, "delta_ef": 0.0, "delta_atv": -14, "tendencia": "manteve"}, {"nome": "Carla Ferraz Gomes", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 91.2, "pef_ontem": 91.2, "atv_hoje": 29, "atv_ontem": 17, "delta_ef": 0.0, "delta_atv": 12, "tendencia": "manteve"}, {"nome": "Tatiana Portela", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 64.6, "pef_ontem": 64.6, "atv_hoje": 28, "atv_ontem": 47, "delta_ef": 0.0, "delta_atv": -19, "tendencia": "manteve"}, {"nome": "Renata Brand\u00e3o", "quad_hoje": "q3", "quad_ontem": "q1", "pef_hoje": 66.2, "pef_ontem": 66.2, "atv_hoje": 28, "atv_ontem": 55, "delta_ef": 0.0, "delta_atv": -27, "tendencia": "manteve"}, {"nome": "Giovanna Munhoz", "quad_hoje": "q4", "quad_ontem": "q2", "pef_hoje": 27.5, "pef_ontem": 27.5, "atv_hoje": 28, "atv_ontem": 77, "delta_ef": 0.0, "delta_atv": -49, "tendencia": "manteve"}, {"nome": "Julia Cordeiro Campos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 77.3, "pef_ontem": 77.3, "atv_hoje": 25, "atv_ontem": 29, "delta_ef": 0.0, "delta_atv": -4, "tendencia": "manteve"}, {"nome": "Talita Panassol", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 84.0, "pef_ontem": 84.0, "atv_hoje": 21, "atv_ontem": 34, "delta_ef": 0.0, "delta_atv": -13, "tendencia": "manteve"}, {"nome": "Erick Andrade", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 70.8, "pef_ontem": 70.8, "atv_hoje": 19, "atv_ontem": 25, "delta_ef": 0.0, "delta_atv": -6, "tendencia": "manteve"}, {"nome": "Maria Eduarda Carvalho", "quad_hoje": "q3", "quad_ontem": "q1", "pef_hoje": 90.2, "pef_ontem": 90.2, "atv_hoje": 19, "atv_ontem": 56, "delta_ef": 0.0, "delta_atv": -37, "tendencia": "manteve"}, {"nome": "Mariana Santana", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 94.9, "pef_ontem": 94.9, "atv_hoje": 18, "atv_ontem": 29, "delta_ef": 0.0, "delta_atv": -11, "tendencia": "manteve"}, {"nome": "Stefany Soares Figueredo", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 56.2, "pef_ontem": 56.2, "atv_hoje": 18, "atv_ontem": 13, "delta_ef": 0.0, "delta_atv": 5, "tendencia": "manteve"}, {"nome": "Maria Elvira", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 75.9, "pef_ontem": 75.9, "atv_hoje": 17, "atv_ontem": 17, "delta_ef": 0.0, "delta_atv": 0, "tendencia": "manteve"}, {"nome": "Thais Souza", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 35.9, "pef_ontem": 35.9, "atv_hoje": 16, "atv_ontem": 17, "delta_ef": 0.0, "delta_atv": -1, "tendencia": "manteve"}, {"nome": "Thayn\u00e1 Bastos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 59.2, "pef_ontem": 59.2, "atv_hoje": 15, "atv_ontem": 38, "delta_ef": 0.0, "delta_atv": -23, "tendencia": "manteve"}, {"nome": "Shelry Solart", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 49.4, "pef_ontem": 49.4, "atv_hoje": 14, "atv_ontem": 14, "delta_ef": 0.0, "delta_atv": 0, "tendencia": "manteve"}, {"nome": "Kaian Lu\u00eds", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 55.2, "pef_ontem": 55.2, "atv_hoje": 12, "atv_ontem": 24, "delta_ef": 0.0, "delta_atv": -12, "tendencia": "manteve"}, {"nome": "Ana Cl\u00e1udia Santos de Almeida", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 40.7, "pef_ontem": 40.7, "atv_hoje": 12, "atv_ontem": 17, "delta_ef": 0.0, "delta_atv": -5, "tendencia": "manteve"}, {"nome": "Indy Ferreira", "quad_hoje": "q4", "quad_ontem": "q2", "pef_hoje": 47.8, "pef_ontem": 47.8, "atv_hoje": 8, "atv_ontem": 57, "delta_ef": 0.0, "delta_atv": -49, "tendencia": "manteve"}, {"nome": "Jennifer dos Anjos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 87.5, "pef_ontem": 87.5, "atv_hoje": 7, "atv_ontem": 3, "delta_ef": 0.0, "delta_atv": 4, "tendencia": "manteve"}, {"nome": "Vivian Cristina", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 51.6, "pef_ontem": 51.6, "atv_hoje": 7, "atv_ontem": 4, "delta_ef": 0.0, "delta_atv": 3, "tendencia": "manteve"}, {"nome": "P\u00e2mela Miranda", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 56.1, "pef_ontem": 56.1, "atv_hoje": 6, "atv_ontem": 41, "delta_ef": 0.0, "delta_atv": -35, "tendencia": "manteve"}, {"nome": "Carla Santos da Silva", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 34.9, "pef_ontem": 34.9, "atv_hoje": 5, "atv_ontem": 13, "delta_ef": 0.0, "delta_atv": -8, "tendencia": "manteve"}, {"nome": "Moreno Loss", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 57.6, "pef_ontem": 57.6, "atv_hoje": 3, "atv_ontem": 32, "delta_ef": 0.0, "delta_atv": -29, "tendencia": "manteve"}, {"nome": "Larissa Freitas Monteiro", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 83.1, "pef_ontem": 83.1, "atv_hoje": 1, "atv_ontem": 4, "delta_ef": 0.0, "delta_atv": -3, "tendencia": "manteve"}, {"nome": "Claudilene Santos Dias", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 37.3, "pef_ontem": 37.3, "atv_hoje": 0, "atv_ontem": 23, "delta_ef": 0.0, "delta_atv": -23, "tendencia": "manteve"}, {"nome": "Helena Cabral Sampaio", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 40.0, "pef_ontem": 40.0, "atv_hoje": 0, "atv_ontem": 3, "delta_ef": 0.0, "delta_atv": -3, "tendencia": "manteve"}];
 let compF='all',cSortCol='delta_ef',cSortDir=-1;
 function setCF(el){document.querySelectorAll('[data-ct]').forEach(c=>c.classList.remove('active'));el.classList.add('active');compF=el.dataset.ct;renderComp();}
 function sortComp(col){if(cSortCol===col)cSortDir*=-1;else{cSortCol=col;cSortDir=-1;}renderComp();}
