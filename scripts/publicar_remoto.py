@@ -240,6 +240,55 @@ def diagnostico(ef_row, esf):
             parts.append(f"cobertura: {cob} deals tocados")
     return ". ".join(parts)
 
+
+def diagnostico_dia(r):
+    """Diagnóstico para Tab 1 (Acompanhamento do Dia). r deve ser a linha enriquecida."""
+    atv      = r["atv"]
+    ef_hoje  = r["ef_hoje"]   # escolas com atividade efetiva HOJE
+    tasks    = r["tasks"]
+    conc     = r["conc"]
+    pef      = r["pef"]       # efetividade acumulada
+    meta_dia = r["meta_dia"]
+
+    if atv == 0:
+        return "sem atividades hoje", "alert"
+    if meta_dia > 0 and ef_hoje >= meta_dia:
+        return "meta do dia batida", "success"
+
+    parts = []
+    if tasks > 0 and (conc / tasks) < 0.2:
+        parts.append(f"tarefas: {conc}/{tasks} concluídas")
+    if r["esc_atv"] > 0 and ef_hoje == 0:
+        parts.append("nenhuma efetivação ainda")
+    elif pef < 30 and atv >= 8:
+        parts.append("alto esforço, baixa conversão")
+
+    if not parts:
+        return "andamento normal", "neutral"
+    return " · ".join(parts), "warning"
+
+
+def analise_geral(r, cart_total):
+    """Análise narrativa para Tab 2 (Cenário Geral)."""
+    pef  = r["pef"]
+    cart = cart_total.get(r["email"], r["cart"])
+    atv  = r["atv"]
+    cob  = round(r["esc_atv"] / cart * 100) if cart > 0 else 0
+
+    if pef >= 80:
+        return "alta performance — indicada para apoiar base cruzada"
+    if pef >= 65:
+        if r["tasks"] > 0 and r["conc"] < r["tasks"] * 0.5:
+            return f"bom ritmo — melhorar conclusão de tarefas ({r['conc']}/{r['tasks']})"
+        return "bom ritmo — manter consistência e abrangência"
+    if pef >= 40:
+        if cob < 20:
+            return f"cobriu {cob}% da carteira hoje — aumentar abrangência"
+        return "em desenvolvimento — foco em qualidade das abordagens"
+    if atv < 5:
+        return f"baixo volume ({atv} ativ.) e baixa efetividade ({pef:.0f}%) — checar prioridades"
+    return f"esforço presente ({atv} ativ.) mas conversão baixa ({pef:.0f}%) — revisar canal e abordagem"
+
 # ─── HTML ──────────────────────────────────────────────────────────────────────
 
 CSS_COMUM = """
@@ -1078,6 +1127,281 @@ def gerar_html_meta_distribuida(dados_ef, data_ref, totais=None):
 </body></html>"""
 
 
+# ─── Novo site: Consultores B1 ────────────────────────────────────────────────
+
+_QL_CURTA = {"q1": "alto + efetivo", "q2": "alto + baixo", "q3": "baixo + efetivo", "q4": "baixo + baixo"}
+
+CSS_B1 = CSS_COMUM + """
+.tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border)}
+.tab-btn{padding:10px 22px;border:none;background:none;font-size:14px;font-weight:600;
+  cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;
+  transition:all .15s;border-radius:8px 8px 0 0}
+.tab-btn:hover{color:var(--text);background:#f8f9fb}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);background:none}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.diag-ok{color:#15803d;font-size:12px;font-weight:500}
+.diag-warn{color:#92400e;font-size:12px}
+.diag-alert{color:#991b1b;font-size:12px;font-weight:600}
+.diag-neutral{color:#6b7280;font-size:12px}
+.kpi.red .kpi-val{color:var(--red)}
+"""
+
+
+def _t1_row(r):
+    seg       = r.get("segmento", "")
+    seg_html  = f'<div style="font-size:11px;color:#9ca3af">{seg}</div>' if seg else ""
+    bar_meta  = min(r["pct_meta"], 100)
+    bar_col   = "#16a34a" if r["pct_meta"] >= 100 else "#d97706" if r["pct_meta"] >= 50 else "#dc2626"
+    ef_cls    = "ef-high" if r["pct_meta"] >= 100 else "ef-mid" if r["pct_meta"] >= 50 else "ef-low"
+    task_pct  = round(r["conc"] / r["tasks"] * 100) if r["tasks"] > 0 else 0
+    tc        = "#16a34a" if task_pct >= 70 else "#d97706" if task_pct >= 30 else "#dc2626"
+    sev_cls   = {"success": "diag-ok", "warning": "diag-warn",
+                 "alert": "diag-alert", "neutral": "diag-neutral"}.get(r["severity"], "diag-neutral")
+    pef_cls   = "ef-high" if r["pef"] >= 70 else "ef-mid" if r["pef"] >= 50 else "ef-low"
+    return (
+        f'<tr>'
+        f'<td class="nome">{r["nome"]}{seg_html}</td>'
+        f'<td class="num">{r["atv"]}</td>'
+        f'<td class="num">'
+        f'  <div style="font-size:12px">{r["conc"]}/{r["tasks"]}</div>'
+        f'  <div style="background:#e5e7eb;border-radius:3px;height:4px;margin-top:3px;overflow:hidden">'
+        f'    <div style="background:{tc};width:{task_pct}%;height:100%"></div></div>'
+        f'</td>'
+        f'<td>'
+        f'  <div class="bar-wrap">'
+        f'    <div class="bar-bg"><div class="bar-fill" style="width:{bar_meta}%;background:{bar_col}"></div></div>'
+        f'    <span class="{ef_cls}">{r["ef_hoje"]}/{r["meta_dia"]} ({r["pct_meta"]}%)</span>'
+        f'  </div>'
+        f'</td>'
+        f'<td class="num {pef_cls}">{r["pef"]:.1f}%</td>'
+        f'<td class="{sev_cls}">{r["diag"]}</td>'
+        f'</tr>\n'
+    )
+
+
+def _t2_row(r):
+    seg      = r.get("segmento", "")
+    seg_html = f'<div style="font-size:11px;color:#9ca3af">{seg}</div>' if seg else ""
+    pef_col  = "#15803d" if r["pef"] >= 70 else "#92400e" if r["pef"] >= 50 else "#991b1b"
+    delta    = r.get("delta")
+    if delta is not None:
+        dcol     = "#15803d" if delta > 0 else "#991b1b" if delta < 0 else "#6b7280"
+        arrow    = "↑" if delta > 2 else "↓" if delta < -2 else "→"
+        delta_td = f'<span style="color:{dcol};font-size:11px">{arrow} {abs(delta):.1f}pp</span>'
+    else:
+        delta_td = '<span style="color:#9ca3af;font-size:11px">—</span>'
+    return (
+        f'<tr>'
+        f'<td class="nome">{r["nome"]}{seg_html}</td>'
+        f'<td class="num">{r["cart_total"]}</td>'
+        f'<td class="num"><span style="color:{pef_col};font-weight:600">{r["pef"]:.1f}%</span></td>'
+        f'<td><span class="qbadge {r["quad"]}">{_QL_CURTA.get(r["quad"], "")}</span></td>'
+        f'<td>{delta_td}</td>'
+        f'<td style="font-size:12px;color:#444;min-width:200px">{r["analise"]}</td>'
+        f'</tr>\n'
+    )
+
+
+def gerar_html_consultores_b1(dados_hoje, dados_ontem, carteira_total, totais, data_ref):
+    if not dados_hoje:
+        return ""
+
+    ref_str   = data_ref.strftime("%d/%m/%Y")
+    pef_time  = totais["pef"] if totais else 0
+    pef_cls   = "green" if pef_time >= 70 else "amber" if pef_time >= 50 else "blue"
+
+    # ── Tab 1: enriquecer com meta_dia, diagnóstico ──
+    tab1 = []
+    for r in sorted(dados_hoje, key=lambda x: (-x["atv"], x["nome"])):
+        nao_ef   = max(0, r["prazo"] - r["ef"])
+        meta_dia = math.ceil(nao_ef * 0.50) if nao_ef > 0 else 0
+        ef_hoje  = r["esc_ef"]
+        falta    = max(0, meta_dia - ef_hoje)
+        pct_meta = round(ef_hoje / meta_dia * 100) if meta_dia > 0 else (100 if nao_ef == 0 else 0)
+        enriched = {**r, "nao_ef": nao_ef, "meta_dia": meta_dia,
+                    "ef_hoje": ef_hoje, "falta": falta, "pct_meta": pct_meta}
+        diag, sev = diagnostico_dia(enriched)
+        tab1.append({**enriched, "diag": diag, "severity": sev})
+
+    # ── Tab 2: enriquecer com carteira_total, análise, tendência ──
+    ontem_map = {r["email"]: r for r in dados_ontem}
+    tab2 = []
+    for r in sorted(dados_hoje, key=lambda x: -x["pef"]):
+        cart  = carteira_total.get(r["email"], r["cart"])
+        ontem = ontem_map.get(r["email"])
+        delta = round(r["pef"] - ontem["pef"], 1) if ontem else None
+        tab2.append({**r, "cart_total": cart, "delta": delta,
+                     "analise": analise_geral(r, carteira_total)})
+
+    # KPIs Tab 1
+    total_atv   = sum(r["atv"]   for r in tab1)
+    total_tasks = sum(r["tasks"] for r in tab1)
+    total_conc  = sum(r["conc"]  for r in tab1)
+    n_bateram   = sum(1 for r in tab1 if r["severity"] == "success")
+    n_alert     = sum(1 for r in tab1 if r["severity"] in ("alert", "warning"))
+    task_pct_g  = round(total_conc / total_tasks * 100) if total_tasks > 0 else 0
+    task_cls    = "green" if task_pct_g >= 70 else "amber"
+    task_sub    = f"{task_pct_g}% de conclusão" if total_tasks > 0 else "—"
+
+    # KPIs Tab 2
+    n_alta  = sum(1 for r in tab2 if r["pef"] >= 70)
+    n_media = sum(1 for r in tab2 if 40 <= r["pef"] < 70)
+    n_baixa = sum(1 for r in tab2 if r["pef"] < 40)
+
+    t1_html = "".join(_t1_row(r) for r in tab1)
+    t2_html = "".join(_t2_row(r) for r in tab2)
+
+    ef_total_sub = (f"{totais['efetivas']} de {totais['elegiveis']} escolas"
+                    if totais else "—")
+
+    return f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Consultores B1 — CS Ops</title>
+<style>{CSS_B1}</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <h1>Consultores B1</h1>
+  <p>CS Ops · Estante Mágica &nbsp;·&nbsp; {ref_str}</p>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="sw('dia',this)">📅 Acompanhamento do Dia</button>
+  <button class="tab-btn" onclick="sw('geral',this)">📊 Cenário Geral</button>
+</div>
+
+<!-- ═══ TAB 1: Acompanhamento do Dia ═══ -->
+<div id="tab-dia" class="tab-content active">
+
+<div class="kpi-row">
+  <div class="kpi {pef_cls}">
+    <div class="kpi-lbl">Efetividade do time</div>
+    <div class="kpi-val">{pef_time}%</div>
+    <div class="kpi-sub">meta: 80% &nbsp;·&nbsp; {ef_total_sub}</div>
+  </div>
+  <div class="kpi blue">
+    <div class="kpi-lbl">Total atividades</div>
+    <div class="kpi-val">{total_atv}</div>
+    <div class="kpi-sub">realizadas hoje</div>
+  </div>
+  <div class="kpi {task_cls}">
+    <div class="kpi-lbl">Tasks concluídas</div>
+    <div class="kpi-val">{total_conc}/{total_tasks}</div>
+    <div class="kpi-sub">{task_sub}</div>
+  </div>
+  <div class="kpi {'green' if n_bateram > 0 else 'amber'}">
+    <div class="kpi-lbl">Bateram meta do dia</div>
+    <div class="kpi-val">{n_bateram}</div>
+    <div class="kpi-sub">{n_alert} precisam de atenção</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Acompanhamento individual — {ref_str}</span>
+    <div class="filters">
+      <input type="text" id="s-dia" placeholder="Buscar consultor…" oninput="ft('dia')" style="width:180px">
+    </div>
+  </div>
+  <div class="card-body" style="padding:0">
+    <div class="tbl-wrap">
+      <table id="tbl-dia">
+        <thead><tr>
+          <th>Consultor</th>
+          <th style="text-align:right">Atividades</th>
+          <th style="text-align:right">Tarefas</th>
+          <th>Progresso meta do dia</th>
+          <th style="text-align:right">Efetividade</th>
+          <th>Diagnóstico</th>
+        </tr></thead>
+        <tbody>{t1_html}</tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ═══ TAB 2: Cenário Geral ═══ -->
+<div id="tab-geral" class="tab-content">
+
+<div class="kpi-row">
+  <div class="kpi {pef_cls}">
+    <div class="kpi-lbl">Efetividade do time</div>
+    <div class="kpi-val">{pef_time}%</div>
+    <div class="kpi-sub">{ef_total_sub}</div>
+  </div>
+  <div class="kpi green">
+    <div class="kpi-lbl">Alta performance (≥70%)</div>
+    <div class="kpi-val">{n_alta}</div>
+    <div class="kpi-sub">consultores</div>
+  </div>
+  <div class="kpi amber">
+    <div class="kpi-lbl">Em desenvolvimento (40–70%)</div>
+    <div class="kpi-val">{n_media}</div>
+    <div class="kpi-sub">consultores</div>
+  </div>
+  <div class="kpi {'blue' if n_baixa == 0 else 'red'}">
+    <div class="kpi-lbl">Abaixo de 40%</div>
+    <div class="kpi-val">{n_baixa}</div>
+    <div class="kpi-sub">consultores</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Visão geral por consultor</span>
+    <div class="filters">
+      <input type="text" id="s-geral" placeholder="Buscar consultor…" oninput="ft('geral')" style="width:180px">
+    </div>
+  </div>
+  <div class="card-body" style="padding:0">
+    <div class="tbl-wrap">
+      <table id="tbl-geral">
+        <thead><tr>
+          <th>Consultor</th>
+          <th style="text-align:right">Carteira total</th>
+          <th style="text-align:right">Efetividade</th>
+          <th>Quadrante</th>
+          <th>vs. ontem</th>
+          <th>Análise</th>
+        </tr></thead>
+        <tbody>{t2_html}</tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div style="margin-top:16px;font-size:11px;color:var(--muted);text-align:center;padding:12px">
+  Atualizado em {ref_str} · dados BigQuery lakehouse-378716
+</div>
+
+</div>
+<script>
+function sw(id,btn){{
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}}
+function ft(tab){{
+  const q=document.getElementById('s-'+tab).value.toLowerCase();
+  document.querySelectorAll('#tbl-'+tab+' tbody tr').forEach(tr=>{{
+    tr.style.display=tr.cells[0].textContent.toLowerCase().includes(q)?'':'none';
+  }});
+}}
+</script>
+</body></html>"""
+
+
 # ─── GitHub ────────────────────────────────────────────────────────────────────
 
 def _gh_headers(token):
@@ -1254,31 +1578,21 @@ def main():
     if not dados_hoje:
         sys.exit(f"❌  Nenhum dado encontrado em efetividade_hoje.json")
 
-    print(f"  efetividade total: {totais['pef']}% ({totais['efetivas']} de {totais['elegiveis']} escolas)")
+    pef_time = totais["pef"] if totais else 0
+    print(f"  efetividade total: {pef_time}% ({totais['efetivas'] if totais else '?'} de {totais['elegiveis'] if totais else '?'} escolas)")
 
-    print("  gerando HTMLs...")
-    html_ef   = gerar_html_efetividade(dados_hoje, dados_ontem, data_ref)
-    html_esf  = gerar_html_esforco(dados_hoje, dados_esf, canal_mix, data_ref, totais, carteira_total, base_cruzada)
-    html_meta = gerar_html_meta_distribuida(dados_hoje, data_ref, totais)
-
-    nome_ef  = f"efetividade_{data_ref.strftime('%d_%m')}.html"
-    nome_esf = "analise_de_esforco_time.html"
+    print("  gerando HTML Consultores B1...")
+    html_b1 = gerar_html_consultores_b1(dados_hoje, dados_ontem, carteira_total, totais, data_ref)
 
     print("  publicando no GitHub Pages...")
-    gh_put(token, nome_ef,                       html_ef.encode("utf-8"),   f"Atualiza efetividade {data_ref}")
-    gh_put(token, nome_esf,                       html_esf.encode("utf-8"),  f"Atualiza análise de esforço {data_ref}")
-    gh_put(token, "meta_distribuida_70pct.html", html_meta.encode("utf-8"), f"Atualiza meta distribuída {data_ref}")
-
-    print("  atualizando portal...")
-    _adicionar_links_portal(token, nome_ef, nome_esf, data_ref)
+    gh_put(token, "index.html", html_b1.encode("utf-8"), f"Atualiza Consultores B1 {data_ref}")
 
     ref_str = data_ref.strftime("%d/%m/%Y")
     print(f"\n✅  Publicado com sucesso! {URL_SITE}")
 
     diretivo = gerar_diretivo(dados_hoje, canal_mix, data_ref, totais)
     msg = (
-        f"📊 *Dashboards CS Ops atualizados — {ref_str}*\n"
-        f"Efetividade · Esforço · Meta 70% publicados.\n\n"
+        f"📊 *Consultores B1 atualizado — {ref_str}*\n"
         f"{diretivo}\n\n"
         f"🔗 {URL_SITE}"
     )
