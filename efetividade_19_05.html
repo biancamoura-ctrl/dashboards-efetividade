@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Efetividade de Contatos — 19/05/2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f6f8;--surface:#fff;--border:#e3e6ea;--text:#1a1d23;--muted:#6b7280;
+  --blue:#1d4ed8;--blue-lt:#eff6ff;--green:#15803d;--green-lt:#f0fdf4;
+  --amber:#92400e;--amber-lt:#fffbeb;--red:#991b1b;--red-lt:#fef2f2;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05)
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px;text-align:center}
+.header h1{font-size:22px;font-weight:700}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:600}
+.card-body{padding:18px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+thead th{background:#f8f9fb;padding:9px 12px;text-align:left;font-weight:600;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f2f5}
+.sort-icon{opacity:.35;margin-left:4px;font-size:10px}
+th.sorted .sort-icon{opacity:1}
+tbody tr{border-bottom:1px solid #f0f2f5;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f8f9fb}
+tbody td{padding:8px 12px;white-space:nowrap}
+td.nome{white-space:normal;min-width:160px;font-weight:500}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ef-high{color:var(--green);font-weight:600}.ef-mid{color:var(--amber);font-weight:600}.ef-low{color:var(--red);font-weight:600}
+.qbadge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.qbadge.q1{background:#dcfce7;color:#15803d}.qbadge.q2{background:#fee2e2;color:#991b1b}
+.qbadge.q3{background:#dbeafe;color:#1d4ed8}.qbadge.q4{background:#f3f4f6;color:#6b7280}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none}
+.chip.active{border-color:currentColor}
+.chip.all{background:#f3f4f6;color:#374151}.chip.all.active{background:#e5e7eb}
+.chip.q1{background:#dcfce7;color:#15803d}.chip.q1.active{background:#bbf7d0}
+.chip.q2{background:#fee2e2;color:#991b1b}.chip.q2.active{background:#fecaca}
+.chip.q3{background:#dbeafe;color:#1d4ed8}.chip.q3.active{background:#bfdbfe}
+.chip.q4{background:#f3f4f6;color:#6b7280}.chip.q4.active{background:#e5e7eb}
+select,input[type=text]{font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;outline:none}
+select:focus{border-color:#93c5fd}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:6px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:600;color:var(--text)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-val{font-size:28px;font-weight:700;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.blue .kpi-val{color:var(--blue)}.kpi.amber .kpi-val{color:var(--amber)}.kpi.green .kpi-val{color:var(--green)}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:380px}
+#tooltip{position:fixed;background:rgba(15,23,42,.92);color:#f1f5f9;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;font-weight:600;color:#1a1d23;background:#fff;border:1px solid #e3e6ea;border-radius:8px;padding:7px 12px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.08);z-index:9999;transition:all .15s" onmouseover="this.style.borderColor='#93c5fd'" onmouseout="this.style.borderColor='#e3e6ea'">← Início</a>
+<div class="page">
+
+<div class="header">
+  <h1>Efetividade de Contatos por Consultor</h1>
+  <p>Pipeline: Sucesso do Cliente &nbsp;·&nbsp; País: Brasil &nbsp;·&nbsp; Referência: 19/05/2026 &nbsp;·&nbsp; Fontes: atividades · tarefas · retrato de escolas</p>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi blue"><div class="kpi-lbl">Consultores ativos</div><div class="kpi-val">1</div><div class="kpi-sub">com atividades em 19/05/2026</div></div>
+  <div class="kpi blue"><div class="kpi-lbl">Total de atividades</div><div class="kpi-val">1</div><div class="kpi-sub">realizadas</div></div>
+  <div class="kpi amber"><div class="kpi-lbl">Taxa geral de efetividade</div><div class="kpi-val">57.8%</div><div class="kpi-sub">1109 esc. efetivas de 1919 elegíveis</div></div>
+  <div class="kpi green"><div class="kpi-lbl">Tasks concluídas</div><div class="kpi-val">0</div><div class="kpi-sub">de 1.468 recebidas</div></div>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Esforço × Efetividade</span>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:#16a34a"></span>Alto esforço + alta efetiv.</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#dc2626"></span>Alto esforço + baixa efetiv.</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#2563eb"></span>Baixo esforço + alta efetiv.</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#9ca3af"></span>Baixo esforço + baixa efetiv.</span>
+      <span class="legend-item" style="font-size:11px;color:#9ca3af">● tamanho = tasks recebidas</span>
+    </div>
+  </div>
+  <div class="card-body"><div class="chart-wrap"><canvas id="scatter"></canvas></div></div>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Detalhamento por consultor</span>
+    <div class="filters">
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="chip all active" data-q="all" onclick="setQ(this)">Todos</span>
+        <span class="chip q1" data-q="q1" onclick="setQ(this)">⬆ alto + efetivo</span>
+        <span class="chip q2" data-q="q2" onclick="setQ(this)">⬆ alto + baixo</span>
+        <span class="chip q3" data-q="q3" onclick="setQ(this)">⬇ baixo + efetivo</span>
+        <span class="chip q4" data-q="q4" onclick="setQ(this)">⬇ baixo + baixo</span>
+      </div>
+      <div class="filter-group">
+        <select id="sortSel" onchange="render()">
+          <option value="atv">Atividades</option><option value="ef">Efetividade</option>
+          <option value="tasks">Tasks recebidas</option><option value="conc">Tasks concluídas</option>
+          <option value="cart">Carteira</option><option value="esc">Escolas efetivas %</option>
+        </select>
+      </div>
+      <div class="filter-group"><select id="lidSel" onchange="render()"><option value="">Todas</option><option value="Carine Leite">Carine Leite</option><option value="Emília Alves">Emília Alves</option><option value="Julia Alves">Julia Alves</option><option value="Julia Loubach">Julia Loubach</option><option value="Larissa Garcia">Larissa Garcia</option><option value="Mahane">Mahane</option><option value="—">—</option></select></div>
+      <div class="filter-group">
+        <input type="text" id="search" placeholder="Buscar consultor…" oninput="render()" style="width:160px">
+      </div>
+    </div>
+  </div>
+  <div class="card-body" style="padding:0">
+    <div class="tbl-wrap">
+      <table id="tbl">
+        <thead><tr>
+          <th onclick="sortBy('nome')" data-col="nome">Consultor <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('atv')" data-col="atv" class="sorted">Atividades <span class="sort-icon">↓</span></th>
+          <th onclick="sortBy('ef')" data-col="ef">Esc. efetivas <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('pef')" data-col="pef">% Efetividade <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('pab')" data-col="pab">% Abordagem <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('tasks')" data-col="tasks">Tasks receb. <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('conc')" data-col="conc">Concluídas <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('cart')" data-col="cart">Carteira <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('esc')" data-col="esc">Esc. efetivas % <span class="sort-icon">↕</span></th>
+          <th>Quadrante</th>
+          <th data-col="lideranca" onclick="sortBy('lideranca')">Liderança <span class="sort-icon">↕</span></th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="summary-bar" id="summary"></div>
+  </div>
+</div>
+
+<div class="card" id="sec-comp">
+  <div class="card-head">
+    <span class="card-title">Comparativo: 19/05/2026 vs. 18/05/2026</span>
+    <div class="filters">
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="chip all active" data-ct="all" onclick="setCF(this)">Todos</span>
+        <span class="chip q1" data-ct="melhorou" onclick="setCF(this)">✅ Melhorou</span>
+        <span class="chip q4" data-ct="manteve" onclick="setCF(this)">➖ Manteve</span>
+        <span class="chip q2" data-ct="piorou" onclick="setCF(this)">🔴 Piorou</span>
+        <span class="chip q3" data-ct="novo" onclick="setCF(this)">🆕 Novo</span>
+      </div>
+      <input type="text" id="comp-search" placeholder="Buscar…" oninput="renderComp()" style="width:140px">
+    </div>
+  </div>
+  <div class="card-body" style="padding:16px 18px 8px">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+      <div style="background:#f0fdf4;border:1px solid #86efac;border-top:3px solid #16a34a;border-radius:8px;padding:14px 16px;text-align:center"><div style="font-size:28px;font-weight:800;color:#15803d" id="ck-mel">—</div><div style="font-size:11px;color:#6b7280;margin-top:4px">✅ Melhoraram</div></div>
+      <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-top:3px solid #6b7280;border-radius:8px;padding:14px 16px;text-align:center"><div style="font-size:28px;font-weight:800;color:#6b7280" id="ck-man">—</div><div style="font-size:11px;color:#6b7280;margin-top:4px">➖ Mantiveram</div></div>
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-top:3px solid #dc2626;border-radius:8px;padding:14px 16px;text-align:center"><div style="font-size:28px;font-weight:800;color:#991b1b" id="ck-pio">—</div><div style="font-size:11px;color:#6b7280;margin-top:4px">🔴 Pioraram</div></div>
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-top:3px solid #2563eb;border-radius:8px;padding:14px 16px;text-align:center"><div style="font-size:28px;font-weight:800;color:#1d4ed8" id="ck-nov">—</div><div style="font-size:11px;color:#6b7280;margin-top:4px">🆕 Novos</div></div>
+    </div>
+  </div>
+  <div class="card-body" style="padding:0">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th onclick="sortComp('nome')" data-col="nome">Consultor <span class="sort-icon">↕</span></th>
+          <th onclick="sortComp('pef_hoje')" data-col="pef_hoje">% Ef. Hoje <span class="sort-icon">↕</span></th>
+          <th onclick="sortComp('pef_ontem')" data-col="pef_ontem">% Ef. Anterior <span class="sort-icon">↕</span></th>
+          <th onclick="sortComp('delta_ef')" data-col="delta_ef" class="sorted">Δ Efetividade <span class="sort-icon">↓</span></th>
+          <th onclick="sortComp('atv_hoje')" data-col="atv_hoje">Atv. Hoje <span class="sort-icon">↕</span></th>
+          <th onclick="sortComp('delta_atv')" data-col="delta_atv">Δ Atividades <span class="sort-icon">↕</span></th>
+          <th>Quadrante Hoje</th><th>Tendência</th>
+        </tr></thead>
+        <tbody id="comp-tbody"></tbody>
+      </table>
+    </div>
+    <div class="summary-bar" id="comp-summary"></div>
+  </div>
+</div>
+
+</div>
+<div id="tooltip"></div>
+<script>
+const RAW=[["Larissa Freitas Monteiro",1,42,60.0,81.4,78,0,70,1,0,0.0,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
+["Giovanna Munhoz",0,30,38.0,93.7,36,0,79,0,0,0.0,"q4","Julia Loubach","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Thayn\u00e1 Bastos",0,45,58.4,88.3,74,0,77,0,0,0.0,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
+["Andreina Ferreira",0,48,67.6,100.0,40,0,71,0,0,0.0,"q3","Mahane","High touch - Novas","Estagi\u00e1rio"],
+["Shelry Solart",0,31,38.8,83.8,79,0,80,0,0,0.0,"q4","Julia Loubach","High touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["P\u00e2mela Miranda",0,35,59.3,94.9,64,0,59,0,0,0.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Vivian Cristina",0,34,52.3,93.8,39,0,65,0,0,0.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Claudilene Santos Dias",0,28,46.7,95.0,34,0,60,0,0,0.0,"q4","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Julia Cordeiro Campos",0,43,65.2,92.4,40,0,66,0,0,0.0,"q3","Mahane","High touch - Novas","Estagi\u00e1rio"],
+["Mariana Santana",0,51,85.0,98.3,83,0,60,0,0,0.0,"q3","Carine Leite","Premium touch","Analista"],
+["Moreno Loss",0,39,65.0,90.0,54,0,60,0,0,0.0,"q3","Em\u00edlia Alves","High touch - Novas","Analista"],
+["Laura Pagliuzo",0,50,71.4,94.3,40,0,70,0,0,0.0,"q3","Mahane","High touch - Novas","Estagi\u00e1rio"],
+["Tatiana Portela",0,50,58.8,95.3,40,0,85,0,0,0.0,"q3","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
+["Maria Elvira",0,42,77.8,92.6,52,0,54,0,0,0.0,"q3","Carine Leite","Premium touch 40+","Analista"],
+["Carla Santos da Silva",0,34,39.1,87.4,37,0,87,0,0,0.0,"q4","Larissa Garcia","High touch - Renova\u00e7\u00e3o","\u2014"],
+["Carla Ferraz Gomes",0,51,89.5,100.0,54,0,57,0,0,0.0,"q3","Carine Leite","Premium touch","Analista"],
+["Sarah Moura",0,76,67.3,99.1,78,0,113,0,0,0.0,"q3","Julia Loubach","Redes","Analista"],
+["Ana Cl\u00e1udia Santos de Almeida",0,27,46.6,98.3,52,0,58,0,0,0.0,"q4","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Erick Andrade",0,41,78.8,94.2,43,0,52,0,0,0.0,"q3","Julia Alves","High touch - Novas","Analista"],
+["Helena Cabral Sampaio",0,18,29.5,85.2,40,0,61,0,0,0.0,"q4","Julia Loubach","High touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Thais Souza",0,21,32.3,87.7,40,0,65,0,0,0.0,"q4","\u2014","Backup","Estagi\u00e1rio"],
+["Stefany Soares Figueredo",0,24,38.1,82.5,39,0,63,0,0,0.0,"q4","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Jennifer dos Anjos",0,11,68.8,100.0,8,0,16,0,0,0.0,"q3","Larissa Garcia","SEDUC","Estagi\u00e1rio"],
+["Talita Panassol",0,65,80.2,92.6,53,0,81,0,0,0.0,"q3","Carine Leite","Premium touch","Analista"],
+["Kaian Lu\u00eds",0,32,55.2,98.3,29,0,58,0,0,0.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"],
+["Maria Eduarda Carvalho",0,45,90.0,98.0,48,0,50,0,0,0.0,"q3","Mahane","High touch - Novas","Analista"],
+["Indy Ferreira",0,22,31.4,81.4,75,0,70,0,0,0.0,"q4","Julia Loubach","High touch - Renova\u00e7\u00e3o","Analista"],
+["Renata Brand\u00e3o",0,42,61.8,94.1,81,0,68,0,0,0.0,"q3","Em\u00edlia Alves","High touch - Novas","Analista"],
+["Ana Clara Peres dos Santos",0,32,50.0,87.5,38,0,64,0,0,0.0,"q3","Larissa Garcia","Medium touch - Renova\u00e7\u00e3o","Estagi\u00e1rio"]];
+const FIELDS=['nome','atv','ef','pef','pab','tasks','conc','cart','esc_atv','esc_ef','pct_ef_esc','quad','lideranca','segmento','cargo'];
+const DATA=RAW.map(r=>Object.fromEntries(FIELDS.map((k,i)=>[k,r[i]])));
+const QL={q1:'Alto esforço + Alta efetiv.',q2:'Alto esforço + Baixa efetiv.',q3:'Baixo esforço + Alta efetiv.',q4:'Baixo esforço + Baixa efetiv.'};
+let activeQ='all',sortCol='atv',sortDir=-1;
+function setQ(el){document.querySelectorAll('[data-q]').forEach(c=>c.classList.remove('active'));el.classList.add('active');activeQ=el.dataset.q;render();}
+function sortBy(col){if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=-1;}document.querySelectorAll('#tbl thead th').forEach(th=>{th.classList.toggle('sorted',th.dataset.col===col);if(th.querySelector('.sort-icon'))th.querySelector('.sort-icon').textContent=th.dataset.col===col?(sortDir===-1?'↓':'↑'):'↕';});render();}
+function efC(v){return v>=70?'ef-high':v>=50?'ef-mid':'ef-low';}
+function render(){
+  const s=document.getElementById('search').value.toLowerCase();
+  const lidF=document.getElementById('lidSel')?.value||'';
+  let rows=DATA.filter(r=>(activeQ==='all'||r.quad===activeQ)&&(!lidF||r.lideranca===lidF)&&r.nome.toLowerCase().includes(s));
+  const km={'atv':'atv','ef':'ef','pef':'pef','pab':'pab','tasks':'tasks','conc':'conc','cart':'cart','esc':'pct_ef_esc','nome':'nome','lideranca':'lideranca'};
+  const k=km[sortCol]||sortCol;
+  rows.sort((a,b)=>typeof a[k]==='string'?sortDir*a[k].localeCompare(b[k]):sortDir*(a[k]-b[k]));
+  document.getElementById('tbody').innerHTML=rows.length?rows.map(r=>`
+    <tr>
+      <td class="nome">${r.nome}${r.segmento?'<div style="font-size:11px;color:#9ca3af;font-weight:400;margin-top:1px">'+r.segmento+(r.cargo&&r.cargo!=='—'?' · '+r.cargo:'')+'</div>':''}</td>
+      <td class="num">${r.atv}</td><td class="num">${r.ef}</td>
+      <td class="num ${efC(r.pef)}"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(r.pef,100)}%;background:${r.pef>=70?'#16a34a':r.pef>=50?'#d97706':'#dc2626'}"></div></div>${r.pef.toFixed(1)}%</div></td>
+      <td class="num ${efC(r.pab)}">${r.pab.toFixed(1)}%</td>
+      <td class="num">${r.tasks}</td><td class="num">${r.conc}</td><td class="num">${r.cart}</td>
+      <td class="num ${efC(r.pct_ef_esc)}">${r.pct_ef_esc.toFixed(1)}%</td>
+      <td><span class="qbadge ${r.quad}">${QL[r.quad]}</span></td>
+      ${r.lideranca?'<td class="nome" style="color:#6b7280;font-weight:400">'+r.lideranca+'</td>':''}
+    </tr>`).join(''):'<tr><td colspan="15" style="text-align:center;padding:24px;color:#9ca3af">Nenhum resultado</td></tr>';
+  document.getElementById('summary').innerHTML=`Exibindo <span>${rows.length}</span> de <span>${DATA.length}</span> consultores`;
+}
+const QC={q1:'rgba(22,163,74,.75)',q2:'rgba(220,38,38,.75)',q3:'rgba(37,99,235,.75)',q4:'rgba(156,163,175,.75)'};
+const QB={q1:'#15803d',q2:'#991b1b',q3:'#1d4ed8',q4:'#6b7280'};
+const datasets=['q1','q2','q3','q4'].map(q=>({
+  label:QL[q],
+  data:DATA.filter(r=>r.quad===q).map(r=>({x:r.atv,y:r.pef,r:Math.max(5,Math.min(24,r.tasks*0.28+6)),_d:r})),
+  backgroundColor:QC[q],borderColor:QB[q],borderWidth:1.5
+}));
+const ctx=document.getElementById('scatter').getContext('2d');
+const chart=new Chart(ctx,{
+  type:'bubble',data:{datasets},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},
+    scales:{x:{title:{display:true,text:'Atividades realizadas',font:{size:12}},grid:{color:'#f0f2f5'},ticks:{font:{size:11}}},
+             y:{title:{display:true,text:'% Efetividade',font:{size:12}},min:0,max:105,grid:{color:'#f0f2f5'},ticks:{callback:v=>v+'%',font:{size:11}}}},
+    animation:{duration:400}},
+  plugins:[{id:'rl',afterDraw(c){
+    const{ctx,chartArea,scales}=c;
+    const x50=scales.x.getPixelForValue(50),y50=scales.y.getPixelForValue(50);
+    ctx.save();ctx.setLineDash([5,4]);ctx.strokeStyle='rgba(100,116,139,.35)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(x50,chartArea.top);ctx.lineTo(x50,chartArea.bottom);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(chartArea.left,y50);ctx.lineTo(chartArea.right,y50);ctx.stroke();
+    ctx.restore();
+  }}]
+});
+const tip=document.getElementById('tooltip');
+document.getElementById('scatter').addEventListener('mousemove',evt=>{
+  const pts=chart.getElementsAtEventForMode(evt,'nearest',{intersect:true},false);
+  if(pts.length){const d=pts[0].element.$context.raw._d;tip.style.display='block';tip.style.left=(evt.clientX+14)+'px';tip.style.top=(evt.clientY-10)+'px';
+    tip.innerHTML=`<strong>${d.nome}</strong>${d.segmento?d.segmento+'<br>':''}Atividades: ${d.atv}<br>Esc. efetivas: ${d.ef} (${d.pef.toFixed(1)}%)<br>Abordagem: ${d.pab.toFixed(1)}%<br>Tasks: ${d.tasks} receb. · ${d.conc} concl.<br>Carteira: ${d.cart} escolas`;
+  }else tip.style.display='none';
+});
+document.getElementById('scatter').addEventListener('mouseleave',()=>tip.style.display='none');
+const COMP=[{"nome": "Larissa Freitas Monteiro", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 60.0, "pef_ontem": 60.0, "atv_hoje": 1, "atv_ontem": 23, "delta_ef": 0.0, "delta_atv": -22, "tendencia": "manteve"}, {"nome": "Giovanna Munhoz", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 38.0, "pef_ontem": 38.0, "atv_hoje": 0, "atv_ontem": 16, "delta_ef": 0.0, "delta_atv": -16, "tendencia": "manteve"}, {"nome": "Thayn\u00e1 Bastos", "quad_hoje": "q3", "quad_ontem": "q1", "pef_hoje": 58.4, "pef_ontem": 58.4, "atv_hoje": 0, "atv_ontem": 57, "delta_ef": 0.0, "delta_atv": -57, "tendencia": "manteve"}, {"nome": "Andreina Ferreira", "quad_hoje": "q3", "quad_ontem": "q1", "pef_hoje": 67.6, "pef_ontem": 67.6, "atv_hoje": 0, "atv_ontem": 58, "delta_ef": 0.0, "delta_atv": -58, "tendencia": "manteve"}, {"nome": "Shelry Solart", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 38.8, "pef_ontem": 38.8, "atv_hoje": 0, "atv_ontem": 30, "delta_ef": 0.0, "delta_atv": -30, "tendencia": "manteve"}, {"nome": "P\u00e2mela Miranda", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 59.3, "pef_ontem": 59.3, "atv_hoje": 0, "atv_ontem": 28, "delta_ef": 0.0, "delta_atv": -28, "tendencia": "manteve"}, {"nome": "Vivian Cristina", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 52.3, "pef_ontem": 52.3, "atv_hoje": 0, "atv_ontem": 23, "delta_ef": 0.0, "delta_atv": -23, "tendencia": "manteve"}, {"nome": "Claudilene Santos Dias", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 46.7, "pef_ontem": 46.7, "atv_hoje": 0, "atv_ontem": 13, "delta_ef": 0.0, "delta_atv": -13, "tendencia": "manteve"}, {"nome": "Julia Cordeiro Campos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 65.2, "pef_ontem": 65.2, "atv_hoje": 0, "atv_ontem": 20, "delta_ef": 0.0, "delta_atv": -20, "tendencia": "manteve"}, {"nome": "Mariana Santana", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 85.0, "pef_ontem": 85.0, "atv_hoje": 0, "atv_ontem": 45, "delta_ef": 0.0, "delta_atv": -45, "tendencia": "manteve"}, {"nome": "Moreno Loss", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 65.0, "pef_ontem": 65.0, "atv_hoje": 0, "atv_ontem": 44, "delta_ef": 0.0, "delta_atv": -44, "tendencia": "manteve"}, {"nome": "Laura Pagliuzo", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 71.4, "pef_ontem": 71.4, "atv_hoje": 0, "atv_ontem": 40, "delta_ef": 0.0, "delta_atv": -40, "tendencia": "manteve"}, {"nome": "Tatiana Portela", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 58.8, "pef_ontem": 58.8, "atv_hoje": 0, "atv_ontem": 46, "delta_ef": 0.0, "delta_atv": -46, "tendencia": "manteve"}, {"nome": "Maria Elvira", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 77.8, "pef_ontem": 77.8, "atv_hoje": 0, "atv_ontem": 26, "delta_ef": 0.0, "delta_atv": -26, "tendencia": "manteve"}, {"nome": "Carla Santos da Silva", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 39.1, "pef_ontem": 39.1, "atv_hoje": 0, "atv_ontem": 30, "delta_ef": 0.0, "delta_atv": -30, "tendencia": "manteve"}, {"nome": "Carla Ferraz Gomes", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 89.5, "pef_ontem": 89.5, "atv_hoje": 0, "atv_ontem": 24, "delta_ef": 0.0, "delta_atv": -24, "tendencia": "manteve"}, {"nome": "Sarah Moura", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 67.3, "pef_ontem": 67.3, "atv_hoje": 0, "atv_ontem": 35, "delta_ef": 0.0, "delta_atv": -35, "tendencia": "manteve"}, {"nome": "Ana Cl\u00e1udia Santos de Almeida", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 46.6, "pef_ontem": 46.6, "atv_hoje": 0, "atv_ontem": 24, "delta_ef": 0.0, "delta_atv": -24, "tendencia": "manteve"}, {"nome": "Erick Andrade", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 78.8, "pef_ontem": 78.8, "atv_hoje": 0, "atv_ontem": 9, "delta_ef": 0.0, "delta_atv": -9, "tendencia": "manteve"}, {"nome": "Helena Cabral Sampaio", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 29.5, "pef_ontem": 29.5, "atv_hoje": 0, "atv_ontem": 5, "delta_ef": 0.0, "delta_atv": -5, "tendencia": "manteve"}, {"nome": "Thais Souza", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 32.3, "pef_ontem": 32.3, "atv_hoje": 0, "atv_ontem": 26, "delta_ef": 0.0, "delta_atv": -26, "tendencia": "manteve"}, {"nome": "Stefany Soares Figueredo", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 38.1, "pef_ontem": 38.1, "atv_hoje": 0, "atv_ontem": 35, "delta_ef": 0.0, "delta_atv": -35, "tendencia": "manteve"}, {"nome": "Jennifer dos Anjos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 68.8, "pef_ontem": 68.8, "atv_hoje": 0, "atv_ontem": 6, "delta_ef": 0.0, "delta_atv": -6, "tendencia": "manteve"}, {"nome": "Talita Panassol", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 80.2, "pef_ontem": 80.2, "atv_hoje": 0, "atv_ontem": 24, "delta_ef": 0.0, "delta_atv": -24, "tendencia": "manteve"}, {"nome": "Kaian Lu\u00eds", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 55.2, "pef_ontem": 55.2, "atv_hoje": 0, "atv_ontem": 23, "delta_ef": 0.0, "delta_atv": -23, "tendencia": "manteve"}, {"nome": "Maria Eduarda Carvalho", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 90.0, "pef_ontem": 90.0, "atv_hoje": 0, "atv_ontem": 31, "delta_ef": 0.0, "delta_atv": -31, "tendencia": "manteve"}, {"nome": "Indy Ferreira", "quad_hoje": "q4", "quad_ontem": "q4", "pef_hoje": 31.4, "pef_ontem": 31.4, "atv_hoje": 0, "atv_ontem": 22, "delta_ef": 0.0, "delta_atv": -22, "tendencia": "manteve"}, {"nome": "Renata Brand\u00e3o", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 61.8, "pef_ontem": 61.8, "atv_hoje": 0, "atv_ontem": 4, "delta_ef": 0.0, "delta_atv": -4, "tendencia": "manteve"}, {"nome": "Ana Clara Peres dos Santos", "quad_hoje": "q3", "quad_ontem": "q3", "pef_hoje": 50.0, "pef_ontem": 50.0, "atv_hoje": 0, "atv_ontem": 0, "delta_ef": 0.0, "delta_atv": 0, "tendencia": "manteve"}];
+let compF='all',cSortCol='delta_ef',cSortDir=-1;
+function setCF(el){document.querySelectorAll('[data-ct]').forEach(c=>c.classList.remove('active'));el.classList.add('active');compF=el.dataset.ct;renderComp();}
+function sortComp(col){if(cSortCol===col)cSortDir*=-1;else{cSortCol=col;cSortDir=-1;}renderComp();}
+function renderComp(){
+  const s=(document.getElementById('comp-search').value||'').toLowerCase();
+  let rows=COMP.filter(r=>(compF==='all'||r.tendencia===compF)&&r.nome.toLowerCase().includes(s));
+  rows.sort((a,b)=>{const va=a[cSortCol],vb=b[cSortCol];if(va===null&&vb===null)return 0;if(va===null)return 1;if(vb===null)return -1;return typeof va==='string'?cSortDir*va.localeCompare(vb):cSortDir*(va-vb);});
+  const ti={melhorou:'✅',manteve:'➖',piorou:'🔴',novo:'🆕'};
+  document.getElementById('ck-mel').textContent=COMP.filter(r=>r.tendencia==='melhorou').length;
+  document.getElementById('ck-man').textContent=COMP.filter(r=>r.tendencia==='manteve').length;
+  document.getElementById('ck-pio').textContent=COMP.filter(r=>r.tendencia==='piorou').length;
+  document.getElementById('ck-nov').textContent=COMP.filter(r=>r.tendencia==='novo').length;
+  document.getElementById('comp-tbody').innerHTML=rows.length?rows.map(r=>`
+    <tr>
+      <td class="nome">${r.nome}</td>
+      <td class="num ${r.pef_hoje>=70?'ef-high':r.pef_hoje>=50?'ef-mid':'ef-low'}">${r.pef_hoje.toFixed(1)}%</td>
+      <td class="num">${r.pef_ontem!==null?r.pef_ontem.toFixed(1)+'%':'—'}</td>
+      <td class="num ${r.delta_ef!==null?(r.delta_ef>2?'ef-high':r.delta_ef<-2?'ef-low':''):''}">
+        ${r.delta_ef!==null?(r.delta_ef>0?'+':'')+r.delta_ef.toFixed(1)+'pp':'—'}
+      </td>
+      <td class="num">${r.atv_hoje}</td>
+      <td class="num ${r.delta_atv!==null&&r.delta_atv>0?'ef-high':r.delta_atv!==null&&r.delta_atv<0?'ef-low':''}">
+        ${r.delta_atv!==null?(r.delta_atv>0?'+':'')+r.delta_atv:'—'}
+      </td>
+      <td><span class="qbadge ${r.quad_hoje}">${QL[r.quad_hoje]}</span></td>
+      <td>${ti[r.tendencia]||''} ${r.tendencia}</td>
+    </tr>`).join(''):'<tr><td colspan="8" style="text-align:center;padding:24px;color:#9ca3af">Nenhum resultado</td></tr>';
+  document.getElementById('comp-summary').innerHTML=`Exibindo <span>${rows.length}</span> de <span>${COMP.length}</span> consultores`;
+}
+render(); renderComp();
+</script>
+</body></html>
