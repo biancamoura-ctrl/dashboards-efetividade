@@ -4,54 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Métricas do Time B1 — 20/05/2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f5f6f8;--surface:#fff;--border:#e3e6ea;--text:#1a1d23;--muted:#6b7280;--radius:14px;--shadow:0 2px 8px rgba(0,0,0,.08)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
-.container{width:100%;max-width:600px}
-.header{text-align:center;margin-bottom:28px}
-.header h1{font-size:22px;font-weight:800}
-.header p{font-size:13px;color:var(--muted);margin-top:4px}
-.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow);text-align:center}
-.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+body{font-family:'Montserrat',sans-serif;background:#f7f7f5;color:#595959;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+.container{width:100%;max-width:620px}
+.top-bar{background:#F9DC45;border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.top-bar-title{font-size:20px;font-weight:800;color:#595959}
+.top-bar-sub{font-size:12px;color:#595959;opacity:.7;font-weight:600}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.kpi{background:#fff;border:none;border-top:3px solid #F9DC45;border-radius:12px;padding:16px 14px;box-shadow:0 2px 8px rgba(89,89,89,.08);text-align:center}
+.kpi-lbl{font-size:10px;color:#9a9a9a;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:700}
 .kpi-val{font-size:24px;font-weight:800;line-height:1}
-.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
-.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
-.btn-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);padding:30px 20px;text-decoration:none;color:var(--text);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transition:all .2s}
-.btn-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12);border-color:#3b82f6}
-.btn-card .icon{font-size:40px}
-.btn-card .title{font-size:15px;font-weight:700}
-.btn-card .sub{font-size:12px;color:var(--muted);line-height:1.6}
-.btn-sec{display:block;text-align:center;text-decoration:none;font-size:12px;color:var(--muted);padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);transition:all .15s}
-.btn-sec:hover{border-color:#93c5fd;color:#1d4ed8}
-.back{position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;font-weight:600;color:#1a1d23;background:#fff;border:1px solid #e3e6ea;border-radius:8px;padding:7px 12px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.08);z-index:9999;transition:all .15s}
-.back:hover{border-color:#93c5fd}
+.kpi-sub{font-size:11px;color:#9a9a9a;margin-top:4px;font-weight:600}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
+.btn-card{background:#fff;border:none;border-radius:12px;padding:28px 20px;text-decoration:none;color:#595959;box-shadow:0 2px 8px rgba(89,89,89,.08);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transition:all .2s}
+.btn-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(89,89,89,.16)}
+.btn-card .icon{font-size:38px}
+.btn-card .title{font-size:15px;font-weight:800}
+.btn-card .sub{font-size:12px;color:#9a9a9a;line-height:1.6;font-weight:500}
+.btn-sec{display:block;text-align:center;text-decoration:none;font-size:12px;color:#9a9a9a;padding:10px;border:1px solid #e8e8e4;border-radius:8px;background:#fff;font-weight:600;transition:all .15s}
+.btn-sec:hover{border-color:#F9DC45;color:#595959}
+.back{position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#595959;background:#F9DC45;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(249,220,69,.4);z-index:9999;transition:opacity .15s}
+.back:hover{opacity:.85}
 @media(max-width:480px){.btn-grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <a href="index.html" class="back">← Início</a>
 <div class="container">
-  <div class="header">
-    <h1>Métricas do Time B1</h1>
-    <p>Referência: 20/05/2026</p>
-  </div>
-  <div class="kpi-row">
-    <div class="kpi">
-      <div class="kpi-lbl">Efetividade</div>
-      <div class="kpi-val" style="color:#92400e">65.7%</div>
-      <div class="kpi-sub">meta: 80%</div>
+  <div class="top-bar">
+    <div>
+      <div class="top-bar-title">Métricas do Time B1</div>
+      <div class="top-bar-sub">Referência: 20/05/2026</div>
     </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Escolas efetivas</div>
-      <div class="kpi-val">1242</div>
-      <div class="kpi-sub">de 1891 elegíveis</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Data</div>
-      <div class="kpi-val" style="font-size:17px;margin-top:2px">20/05/2026</div>
-      <div class="kpi-sub">dados de hoje</div>
+    <div style="text-align:right">
+      <div style="font-size:32px;font-weight:800;color:#92400e">65.7%</div>
+      <div style="font-size:11px;color:#595959;opacity:.7;font-weight:600">1242 de 1891 escolas efetivas</div>
     </div>
   </div>
   <div class="btn-grid">
