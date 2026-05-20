@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Métricas do Time B1 — 20/05/2026</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f5f6f8;--surface:#fff;--border:#e3e6ea;--text:#1a1d23;--muted:#6b7280;--radius:14px;--shadow:0 2px 8px rgba(0,0,0,.08)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+.container{width:100%;max-width:600px}
+.header{text-align:center;margin-bottom:28px}
+.header h1{font-size:22px;font-weight:800}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow);text-align:center}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-val{font-size:24px;font-weight:800;line-height:1}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
+.btn-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);padding:30px 20px;text-decoration:none;color:var(--text);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transition:all .2s}
+.btn-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12);border-color:#3b82f6}
+.btn-card .icon{font-size:40px}
+.btn-card .title{font-size:15px;font-weight:700}
+.btn-card .sub{font-size:12px;color:var(--muted);line-height:1.6}
+.btn-sec{display:block;text-align:center;text-decoration:none;font-size:12px;color:var(--muted);padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);transition:all .15s}
+.btn-sec:hover{border-color:#93c5fd;color:#1d4ed8}
+.back{position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;font-weight:600;color:#1a1d23;background:#fff;border:1px solid #e3e6ea;border-radius:8px;padding:7px 12px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.08);z-index:9999;transition:all .15s}
+.back:hover{border-color:#93c5fd}
+@media(max-width:480px){.btn-grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">← Início</a>
+<div class="container">
+  <div class="header">
+    <h1>Métricas do Time B1</h1>
+    <p>Referência: 20/05/2026</p>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-lbl">Efetividade</div>
+      <div class="kpi-val" style="color:#92400e">65.7%</div>
+      <div class="kpi-sub">meta: 80%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Escolas efetivas</div>
+      <div class="kpi-val">1242</div>
+      <div class="kpi-sub">de 1891 elegíveis</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Data</div>
+      <div class="kpi-val" style="font-size:17px;margin-top:2px">20/05/2026</div>
+      <div class="kpi-sub">dados de hoje</div>
+    </div>
+  </div>
+  <div class="btn-grid">
+    <a href="meta_distribuida_70pct.html" class="btn-card">
+      <span class="icon">🎯</span>
+      <div class="title">Meta</div>
+      <div class="sub">Progresso por consultor &nbsp;·&nbsp; Status do dia &nbsp;·&nbsp; Quem bateu a meta</div>
+    </a>
+    <a href="analise_de_esforco_time.html" class="btn-card">
+      <span class="icon">📈</span>
+      <div class="title">Análise de Esforço</div>
+      <div class="sub">Gap &nbsp;·&nbsp; Padrões &nbsp;·&nbsp; Canal mix &nbsp;·&nbsp; Bloco A &nbsp;·&nbsp; Base cruzada</div>
+    </a>
+  </div>
+  <a href="efetividade_20_05.html" class="btn-sec">📋 Ver detalhamento por consultor (scatter + tabela) →</a>
+</div>
+</body></html>
