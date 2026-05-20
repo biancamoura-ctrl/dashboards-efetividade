@@ -3,57 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal CS Ops — Estante Mágica</title>
+<title>CS Ops · Dashboards</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f6f8;color:#1a1d23;min-height:100vh;padding:40px 20px}
-.page{max-width:560px;margin:0 auto}
-.logo{font-size:12px;font-weight:600;color:#6b7280;letter-spacing:.5px;text-transform:uppercase;margin-bottom:32px}
-.logo span{color:#1d4ed8}
-h1{font-size:24px;font-weight:700;margin-bottom:6px}
-.sub{font-size:13px;color:#6b7280;margin-bottom:32px}
-.section{margin-bottom:28px}
-.section-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;padding-left:2px}
-.btn{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #e3e6ea;border-radius:10px;padding:15px 18px;margin-bottom:8px;text-decoration:none;color:#1a1d23;transition:all .15s}
-.btn:hover{border-color:#93c5fd;box-shadow:0 2px 8px rgba(29,78,216,.1);transform:translateY(-1px)}
-.btn-icon{font-size:22px;flex-shrink:0}
-.btn-title{font-size:14px;font-weight:600}
-.btn-sub{font-size:11px;color:#9ca3af;margin-top:2px}
-.footer{font-size:11px;color:#c4c9d4;margin-top:32px;text-align:center}
+:root{--bg:#f5f6f8;--surface:#fff;--border:#e3e6ea;--text:#1a1d23;--muted:#6b7280;--radius:14px;--shadow:0 2px 8px rgba(0,0,0,.08)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.container{width:100%;max-width:560px}
+.header{text-align:center;margin-bottom:40px}
+.header h1{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.header p{font-size:13px;color:var(--muted);margin-top:6px}
+.ef-badge{display:inline-flex;align-items:center;gap:10px;margin-top:16px;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:8px 20px;box-shadow:var(--shadow)}
+.ef-label{font-size:12px;color:var(--muted)}
+.ef-val{font-size:22px;font-weight:800}
+.ef-meta{font-size:11px;color:var(--muted)}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);padding:36px 20px;text-decoration:none;color:var(--text);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;transition:all .2s}
+.btn-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12);border-color:#3b82f6}
+.btn-card .icon{font-size:48px;line-height:1}
+.btn-card .title{font-size:16px;font-weight:700;line-height:1.3}
+.btn-card .sub{font-size:12px;color:var(--muted);line-height:1.6}
+.footer{text-align:center;margin-top:32px;font-size:11px;color:var(--muted)}
+@media(max-width:480px){.btn-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="page">
-  <div class="logo">CS Ops · <span>Estante Mágica</span></div>
-  <h1>📊 Dashboards CS Ops</h1>
-            <a href="efetividade_20_05.html" class="btn">
-      <span class="btn-icon">📈</span>
-      <div><div class="btn-title">Efetividade · 20/05/2026</div><div class="btn-sub">efetividade_20_05.html</div></div>
+<div class="container">
+  <div class="header">
+    <h1>CS Ops · Dashboards</h1>
+    <p>Pipeline Sucesso do Cliente &nbsp;·&nbsp; Brasil &nbsp;·&nbsp; 20/05/2026</p>
+    <div class="ef-badge"><span class="ef-label">Efetividade do time</span><span class="ef-val" style="color:#92400e">65.7%</span><span class="ef-meta">meta: 80%</span></div>
+  </div>
+  <div class="btn-grid">
+    <a href="metricas_b1.html" class="btn-card">
+      <span class="icon">📊</span>
+      <div class="title">Métricas do Time B1</div>
+      <div class="sub">Meta distribuída &nbsp;·&nbsp; Análise de esforço &nbsp;·&nbsp; Efetividade por consultor</div>
     </a>
-<a href="efetividade_19_05.html" class="btn">
-      <span class="btn-icon">📈</span>
-      <div><div class="btn-title">Efetividade · 19/05/2026</div><div class="btn-sub">efetividade_19_05.html</div></div>
-    </a>
-<a href="efetividade_18_05.html" class="btn">
-      <span class="btn-icon">📈</span>
-      <div><div class="btn-title">Efetividade · 18/05/2026</div><div class="btn-sub">efetividade_18_05.html</div></div>
-    </a>
-<a href="efetividade_15_05.html" class="btn">
-      <span class="btn-icon">📋</span>
-      <div><div class="btn-title">Efetividade 15/05</div><div class="btn-sub">efetividade_15_05.html</div></div>
-    </a>
-    <a href="meta_distribuida_70pct.html" class="btn">
-      <span class="btn-icon">🔍</span>
-      <div><div class="btn-title">Meta distribuída</div><div class="btn-sub">meta_distribuida_70pct.html</div></div>
-    </a>
-    <a href="analise_de_esforco_time.html" class="btn">
-      <span class="btn-icon">🚀</span>
-      <div><div class="btn-title">Análise de esforço</div><div class="btn-sub">analise_de_esforco_time.html</div></div>
+    <a href="sugestao_agente.html" class="btn-card">
+      <span class="icon">💡</span>
+      <div class="title">Sugestão do Agente</div>
+      <div class="sub">O que fazer hoje para aumentar a efetividade do time</div>
     </a>
   </div>
-
-  <div class="footer">Pipeline: Sucesso do Cliente · Brasil · biancamoura-ctrl.github.io/dashboards-efetividade</div>
+  <div class="footer">Atualizado automaticamente toda manhã &nbsp;·&nbsp; 20/05/2026</div>
 </div>
-<div id="last-updated" style="position:fixed;bottom:16px;right:16px;font-size:11px;color:#9ca3af;background:rgba(255,255,255,0.92);padding:5px 12px;border-radius:20px;border:1px solid #e3e6ea;box-shadow:0 1px 3px rgba(0,0,0,.06);z-index:9999">Atualizado 20/05/2026 às 13:03</div>
-</body>
-</html>
+</body></html>
