@@ -73,7 +73,10 @@ select:focus{border-color:var(--yellow)}
 .ret-priority strong{color:#E94B56;font-weight:700}
 tbody tr.clickable{cursor:pointer}
 tbody tr.clickable:hover{background:#fff8f8}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.chart-grid{grid-template-columns:1fr}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
 <body>
 <a href="retracao_hub.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Retração</a>
@@ -89,6 +92,22 @@ tbody tr.clickable:hover{background:#fff8f8}
   <div class="kpi" style="border-top-color:#E94B56"><div class="kpi-lbl">Receita em risco</div><div class="kpi-val" style="color:#E94B56;font-size:22px">R$ 529.971</div><div class="kpi-sub">soma receita ano anterior</div></div>
   <div class="kpi amber"><div class="kpi-lbl">Sem motivo</div><div class="kpi-val" style="color:#E94B56">48</div><div class="kpi-sub">cadastro pendente</div></div>
   <div class="kpi blue"><div class="kpi-lbl">Consultores</div><div class="kpi-val">22</div><div class="kpi-sub">responsáveis</div></div>
+</div>
+
+<div class="card">
+  <div class="card-head"><span class="card-title">Escolas por Segmentação</span></div>
+  <div class="card-body">
+    <div class="chart-grid">
+      <div>
+        <p style="font-size:12px;color:#6b7280;margin:0 0 8px 0;font-weight:600">Qtde de escolas</p>
+        <canvas id="chart-count" height="200"></canvas>
+      </div>
+      <div>
+        <p style="font-size:12px;color:#6b7280;margin:0 0 8px 0;font-weight:600">Receita em risco (R$ mil)</p>
+        <canvas id="chart-receita" height="200"></canvas>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="card">
@@ -331,5 +350,19 @@ function render(){
   document.getElementById('summary').innerHTML = `Exibindo <span>${rows.length}</span> de <span>${RAW.length}</span> escolas`;
 }
 render();
+(function(){
+  const labels=["Low touch", "High touch", "Medium touch", "Premium touch", "Premium 40+"];
+  const counts=[83, 55, 24, 4, 2];
+  const receitas=[13.8, 114.9, 180.6, 110.4, 110.2];
+  const baseOpts={indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{display:false},ticks:{font:{size:11}}}}};
+  new Chart(document.getElementById('chart-count'),{
+    type:'bar',
+    data:{labels,datasets:[{label:'Escolas',data:counts,backgroundColor:'#7668AC',borderRadius:4}]},
+    options:Object.assign({},baseOpts,{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.parsed.x+' escola'+(ctx.parsed.x!==1?'s':'')}}}})});
+  new Chart(document.getElementById('chart-receita'),{
+    type:'bar',
+    data:{labels,datasets:[{label:'Receita (R$k)',data:receitas,backgroundColor:'#E94B56',borderRadius:4}]},
+    options:Object.assign({},baseOpts,{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'R$ '+ctx.parsed.x+'k'}}}})});
+})();
 </script>
 </body></html>
