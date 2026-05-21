@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugestão — Retração — 21/05/2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;--green:#008ECF;--green-lt:#e6f4fb;
+  --amber:#7668AC;--amber-lt:#f0eef8;--red:#E94B56;--red-lt:#fef0f1;
+  --yellow:#F9DC45;--purple:#7668AC;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px;text-align:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border-top:3px solid var(--yellow)}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:700}
+.card-body{padding:18px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+thead th{background:#f8f8f6;padding:9px 12px;text-align:left;font-weight:700;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f0ec}
+.sort-icon{opacity:.35;margin-left:4px;font-size:10px}
+th.sorted .sort-icon{opacity:1}
+tbody tr{border-bottom:1px solid #f0f0ec;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fdfdf9}
+tbody td{padding:8px 12px;white-space:nowrap}
+td.nome{white-space:normal;min-width:160px;font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ef-high{color:#008ECF;font-weight:700}.ef-mid{color:#7668AC;font-weight:700}.ef-low{color:#E94B56;font-weight:700}
+.qbadge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.qbadge.q1{background:#e6f4fb;color:#008ECF}.qbadge.q2{background:#fef0f1;color:#E94B56}
+.qbadge.q3{background:#f0eef8;color:#7668AC}.qbadge.q4{background:#f3f3f0;color:#595959}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e8e8e4;border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none}
+.chip.active{border-color:currentColor}
+.chip.all{background:#f3f3f0;color:#595959}.chip.all.active{background:#e8e8e4}
+.chip.q1{background:#e6f4fb;color:#008ECF}.chip.q1.active{background:#c5e8f7}
+.chip.q2{background:#fef0f1;color:#E94B56}.chip.q2.active{background:#fdd8db}
+.chip.q3{background:#f0eef8;color:#7668AC}.chip.q3.active{background:#dddaf0}
+.chip.q4{background:#f3f3f0;color:#595959}.chip.q4.active{background:#e8e8e4}
+select,input[type=text]{font-family:'Montserrat',sans-serif;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;outline:none}
+select:focus{border-color:var(--yellow)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:6px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:700;color:var(--text)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:600}
+.kpi-val{font-size:28px;font-weight:800;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.blue .kpi-val{color:#008ECF}.kpi.amber .kpi-val{color:#7668AC}.kpi.green .kpi-val{color:#008ECF}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:380px}
+#tooltip{position:fixed;background:#595959;color:#fff;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
+
+.alert-card{background:#fef0f1;border:1px solid #fecaca;border-top:3px solid #E94B56;border-radius:10px;padding:20px 22px;margin-bottom:20px}
+.alert-title{font-size:16px;font-weight:800;color:#E94B56;margin-bottom:8px}
+.alert-msg{font-size:13px;color:#595959;line-height:1.7;margin-bottom:14px}
+.tbl-sm table{min-width:400px;font-size:12px}
+.tbl-sm thead th{background:#fef0f1;font-size:10px}
+</style>
+</head>
+<body>
+<a href="retracao_hub.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Retração</a>
+<div class="page">
+
+<div class="header">
+  <h1>🤖 Sugestão do Agente — Retração</h1>
+  <p>Análise e recomendações para as escolas em retração &nbsp;·&nbsp; 21/05/2026</p>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi" style="border-top-color:#E94B56"><div class="kpi-lbl">Receita total em risco</div><div class="kpi-val" style="color:#E94B56;font-size:22px">R$ 529.971</div><div class="kpi-sub">168 escolas</div></div>
+  <div class="kpi amber"><div class="kpi-lbl">Sem motivo</div><div class="kpi-val" style="color:#E94B56">48</div><div class="kpi-sub">R$ 377.902 em risco</div></div>
+  <div class="kpi blue"><div class="kpi-lbl">Maior grupo c/ motivo</div><div class="kpi-val" style="font-size:18px">5</div><div class="kpi-sub">Não quis trazer o motivo</div></div>
+  <div class="kpi blue"><div class="kpi-lbl">Motivos distintos</div><div class="kpi-val">16</div><div class="kpi-sub">catalogados</div></div>
+</div>
+
+<!-- PRIORIDADE MÁXIMA -->
+<div class="alert-card">
+  <div class="alert-title">🚨 Prioridade Máxima — Escolas sem Motivo</div>
+  <div class="alert-msg">48 escolas sem motivo cadastrado respondem por R$ 377.902. Contate imediatamente para entender o que aconteceu e cadastrar o motivo correto no CRM.</div>
+  <div class="tbl-sm">
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr>
+          <th>Escola</th>
+          <th style="text-align:right">Receita</th>
+          <th style="text-align:right">Dias s/ atv</th>
+          <th>Consultor</th>
+        </tr></thead>
+        <tbody>
+<tr>
+  <td style="font-weight:600">1. COLEGIO BATISTA MINEIRO- UNIDADE OURO BRANCO</td>
+  <td style="text-align:right">R$ 57.838</td>
+  <td style="text-align:right">9 dias</td>
+  <td>maria.elvira@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">2. COLEGIO IMACULADA CONCEICAO</td>
+  <td style="text-align:right">R$ 52.368</td>
+  <td style="text-align:right">7 dias</td>
+  <td>maria.elvira@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">3. Escola  Amarelinha Yellow</td>
+  <td style="text-align:right">R$ 41.872</td>
+  <td style="text-align:right">9 dias</td>
+  <td>mariana.santana@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">4. COLEGIO NOSSA SENHORA DA GLORIA</td>
+  <td style="text-align:right">R$ 39.002</td>
+  <td style="text-align:right">5 dias</td>
+  <td>carla.gomes@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">5. EMEF DAGMAR DE LIMA MUCILLO</td>
+  <td style="text-align:right">R$ 24.768</td>
+  <td style="text-align:right">11 dias</td>
+  <td>carla.santosdasilva@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">6. Colégio Everest Internacional - Ud. Asa Norte</td>
+  <td style="text-align:right">R$ 19.574</td>
+  <td style="text-align:right">9 dias</td>
+  <td>mariana.santana@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">7. CENTRO EDUCACIONAL SARAH KALLEY</td>
+  <td style="text-align:right">R$ 18.137</td>
+  <td style="text-align:right">5 dias</td>
+  <td>thayna.bastos@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">8. COLÉGIO GIRASSOL</td>
+  <td style="text-align:right">R$ 11.492</td>
+  <td style="text-align:right">1 dias</td>
+  <td>carla.santosdasilva@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">9. EMEB PROF. EDNA FÁVERO CHOQUETA</td>
+  <td style="text-align:right">R$ 11.078</td>
+  <td style="text-align:right">38 dias</td>
+  <td>thayna.bastos@estantemagica.com.br</td>
+</tr>
+<tr>
+  <td style="font-weight:600">10. Escola Antônio Jovino da Silva</td>
+  <td style="text-align:right">R$ 10.586</td>
+  <td style="text-align:right">41 dias</td>
+  <td>thayna.bastos@estantemagica.com.br</td>
+</tr></tbody>
+      </table>
+    </div>
+    <div style='font-size:11px;color:#9a9a9a;margin-top:8px'>Exibindo top 10 por receita</div>
+  </div>
+</div>
+
+<!-- CARDS POR MOTIVO -->
+<div class="card">
+  <div class="card-head"><span class="card-title">Ação por Grupo de Motivo</span></div>
+  <div class="card-body">
+    
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #E94B56;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Não quis trazer o motivo</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 33.851</div>
+      <div style="font-size:11px;color:#9a9a9a">5 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Motivo superficial — abordar com proposta de valor e facilidades para facilitar o processo.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Escola fechou</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 25.973</div>
+      <div style="font-size:11px;color:#9a9a9a">3 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Irrecuperável — encerrar e registrar para evitar retrabalho.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Falta de tempo</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 14.636</div>
+      <div style="font-size:11px;color:#9a9a9a">10 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Motivo superficial — abordar com proposta de valor e facilidades para facilitar o processo.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Evento passou e escolas sem ebooks</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 14.558</div>
+      <div style="font-size:11px;color:#9a9a9a">35 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Processo encerrado naturalmente — verificar se escola tem interesse no próximo ciclo.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Escola Fechou</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 13.514</div>
+      <div style="font-size:11px;color:#9a9a9a">2 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Irrecuperável — encerrar e registrar para evitar retrabalho.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Escola frustrada com a EM (atendimento)</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 11.031</div>
+      <div style="font-size:11px;color:#9a9a9a">2 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Requer abordagem consultiva — entender o que falhou e propor solução personalizada.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Faltou engajamento dos alunos</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 11.016</div>
+      <div style="font-size:11px;color:#9a9a9a">2 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Requer abordagem consultiva — entender o que falhou e propor solução personalizada.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Fazendo com a concorrência</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 10.189</div>
+      <div style="font-size:11px;color:#9a9a9a">2 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Investigar caso a caso — coletar mais informações antes de definir estratégia.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">faltou_engajamento_da_família</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 6.928</div>
+      <div style="font-size:11px;color:#9a9a9a">1 escola</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Investigar caso a caso — coletar mais informações antes de definir estratégia.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">problemas_pessoais</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 6.197</div>
+      <div style="font-size:11px;color:#9a9a9a">1 escola</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Investigar caso a caso — coletar mais informações antes de definir estratégia.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #9ca3af;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">EG vencido sem aplicação</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">R$ 4.176</div>
+      <div style="font-size:11px;color:#9a9a9a">52 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Processo encerrado naturalmente — verificar se escola tem interesse no próximo ciclo.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #9ca3af;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Fim de cadência</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">—</div>
+      <div style="font-size:11px;color:#9a9a9a">2 escolas</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Investigar caso a caso — coletar mais informações antes de definir estratégia.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #9ca3af;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Retração em ativação</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">—</div>
+      <div style="font-size:11px;color:#9a9a9a">1 escola</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Investigar caso a caso — coletar mais informações antes de definir estratégia.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #9ca3af;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Preço do livro</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">—</div>
+      <div style="font-size:11px;color:#9a9a9a">1 escola</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Investigar caso a caso — coletar mais informações antes de definir estratégia.</div>
+</div>
+<div style="background:#fff;border:1px solid #e3e6ea;border-left:4px solid #9ca3af;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+    <div style="font-weight:700;font-size:14px">Educador saiu da escola</div>
+    <div style="text-align:right;flex-shrink:0">
+      <div style="font-size:13px;font-weight:700;color:#E94B56">—</div>
+      <div style="font-size:11px;color:#9a9a9a">1 escola</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#374151;line-height:1.7">→ Investigar caso a caso — coletar mais informações antes de definir estratégia.</div>
+</div>
+  </div>
+</div>
+
+<!-- TOP CONSULTORES -->
+<div class="card">
+  <div class="card-head"><span class="card-title">Top 5 Consultores por Receita em Retração</span></div>
+  <div class="card-body" style="padding:0">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Consultor</th>
+          <th style="text-align:right">Escolas</th>
+          <th style="text-align:right">Receita em risco</th>
+        </tr></thead>
+        <tbody>
+<tr>
+  <td style="font-weight:600">1. maria.elvira@estantemagica.com.br</td>
+  <td style="text-align:right">2</td>
+  <td style="text-align:right;color:#E94B56;font-weight:700">R$ 110.206</td>
+</tr>
+<tr>
+  <td style="font-weight:600">2. mariana.santana@estantemagica.com.br</td>
+  <td style="text-align:right">3</td>
+  <td style="text-align:right;color:#E94B56;font-weight:700">R$ 71.372</td>
+</tr>
+<tr>
+  <td style="font-weight:600">3. thayna.bastos@estantemagica.com.br</td>
+  <td style="text-align:right">4</td>
+  <td style="text-align:right;color:#E94B56;font-weight:700">R$ 47.608</td>
+</tr>
+<tr>
+  <td style="font-weight:600">4. claudilene.dias@estantemagica.com.br</td>
+  <td style="text-align:right">6</td>
+  <td style="text-align:right;color:#E94B56;font-weight:700">R$ 46.988</td>
+</tr>
+<tr>
+  <td style="font-weight:600">5. carla.santosdasilva@estantemagica.com.br</td>
+  <td style="text-align:right">3</td>
+  <td style="text-align:right;color:#E94B56;font-weight:700">R$ 46.266</td>
+</tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>
+</body></html>
