@@ -33,7 +33,7 @@ body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-heigh
 .team-section{display:none;animation:fadeIn .25s ease}
 .team-section.visible{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.btn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.btn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .btn-card{background:#fff;border:none;border-radius:18px;padding:30px 18px 24px;text-decoration:none;color:#595959;box-shadow:0 8px 32px rgba(0,0,0,.22);display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:all .22s;position:relative;overflow:hidden}
 .btn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:#F9DC45;border-radius:18px 18px 0 0}
 .btn-card:hover{transform:translateY(-5px);box-shadow:0 16px 44px rgba(0,0,0,.3)}
@@ -42,6 +42,7 @@ body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-heigh
 .btn-card .sub{font-size:11px;color:#9a9a9a;line-height:1.6;font-weight:500}
 .empty-msg{text-align:center;padding:32px 0;opacity:.6;font-size:13px;font-weight:600}
 .footer{text-align:center;margin-top:32px;font-size:11px;color:#fff;opacity:.4;font-weight:600}
+@media(max-width:700px){.btn-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:440px){.btn-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -84,6 +85,11 @@ body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-heigh
         <div class="title">Calculadora de Efetividade</div>
         <div class="sub">Simule metas &nbsp;&#183;&nbsp; Proje&#231;&#227;o de chegada</div>
       </a>
+      <a href="retracao_hub.html" class="btn-card">
+        <div style="font-size:52px;width:72px;height:72px;display:flex;align-items:center;justify-content:center;">&#x1F4C9;</div>
+        <div class="title">Escolas em Retra&#231;&#227;o</div>
+        <div class="sub">168 escolas &nbsp;&#183;&nbsp; R$530k em risco &nbsp;&#183;&nbsp; Sugest&#227;o do agente</div>
+      </a>
     </div>
   </div>
 
@@ -91,7 +97,7 @@ body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-heigh
     <div class="empty-msg">Em breve &mdash; dashboards do Time de Ativa&#231;&#227;o</div>
   </div>
 
-  <div class="footer">Atualizado &#224;s 19:58 &nbsp;&#183;&nbsp; 21/05/2026</div>
+  <div class="footer">Atualizado &#224;s 20:08 &nbsp;&#183;&nbsp; 21/05/2026</div>
 </div>
 </div>
 <script>
