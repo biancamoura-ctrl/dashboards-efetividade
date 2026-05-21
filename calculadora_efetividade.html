@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Calculadora de Efetividade — 21/05/2026</title>
+<title>Proje&#231;&#227;o de Efetividade &#8212; 21/05/2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -73,234 +73,202 @@ select:focus{border-color:var(--yellow)}
 @media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
 
 
-.filters-bar{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
-  padding:16px 18px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:20px;
+.controls-bar{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:28px;
   align-items:flex-end;box-shadow:var(--shadow)}
-.filter-group{display:flex;flex-direction:column;gap:6px}
-.filter-label{font-size:10px;font-weight:700;color:var(--muted);
+.ctrl-group{display:flex;flex-direction:column;gap:6px;min-width:140px}
+.ctrl-label{font-size:10px;font-weight:700;color:var(--muted);
   text-transform:uppercase;letter-spacing:.7px}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);
-  background:#f8f8f6;font-size:11px;font-weight:700;cursor:pointer;
-  transition:all .15s;color:var(--text);user-select:none}
-.chip.active{background:#7668AC;border-color:#7668AC;color:#fff}
-.chip:hover:not(.active){border-color:#7668AC;color:#7668AC}
-select.resp-select{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
-  border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;
-  background:#f8f8f6;color:var(--text);min-width:180px;cursor:pointer}
-select.resp-select:focus{outline:none;border-color:#7668AC}
-.slider-wrap{min-width:160px}
-.slider-val{font-size:22px;font-weight:800;color:#7668AC;line-height:1;margin-bottom:4px}
-input[type=range]{accent-color:#7668AC;width:100%;cursor:pointer}
+.ctrl-val{font-size:22px;font-weight:800;color:#7668AC;line-height:1;margin-bottom:2px}
+.ctrl-hint{font-size:10px;color:var(--muted);font-weight:600}
+input[type=range]{accent-color:#7668AC;width:160px;cursor:pointer}
+input.ritmo-input{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;
+  color:#7668AC;border:none;border-bottom:2px solid #7668AC;padding:2px 4px;
+  width:80px;background:transparent;text-align:center}
+input.ritmo-input:focus{outline:none;border-bottom-color:#008ECF;color:#008ECF}
 .kpi-pef-blue .kpi-val{color:#008ECF}
 .kpi-pef-purple .kpi-val{color:#7668AC}
 .kpi-pef-red .kpi-val{color:#E94B56}
 .kpi-purple .kpi-val{color:#7668AC}
-.proj-row-selected{background:#f0eef8!important;font-weight:700}
+.proj-box{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;margin-bottom:20px;box-shadow:var(--shadow);text-align:center}
+.proj-status{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.7px;margin-bottom:8px}
+.proj-dias{font-size:52px;font-weight:900;color:#7668AC;line-height:1}
+.proj-dias.green{color:#008ECF}
+.proj-data{font-size:18px;font-weight:700;color:var(--text);margin-top:6px}
+.proj-detalhe{font-size:12px;color:var(--muted);margin-top:10px;
+  border-top:1px solid var(--border);padding-top:10px}
+.cenario-atual{background:#f0eef8!important;font-weight:700}
 .status-ok{color:#008ECF;font-weight:700}
 .status-no{color:#E94B56;font-weight:700}
 
 </style>
 </head>
 <body>
-<a href="metricas_b1.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">&#8592; M&#233;tricas</a>
+<a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">&#8592; In&#237;cio</a>
 <div class="page">
   <div class="header">
-    <h1>Calculadora de Efetividade</h1>
+    <h1>Proje&#231;&#227;o de Efetividade</h1>
     <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 21/05/2026</p>
   </div>
 
-  <div class="filters-bar">
-    <div class="filter-group">
-      <span class="filter-label">Segmento</span>
-      <div class="chips" id="chips-seg"></div>
+  <div class="controls-bar">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Meta</span>
+      <span class="ctrl-val" id="meta-val">80%</span>
+      <input type="range" id="sl-meta" min="60" max="100" value="80" step="1">
     </div>
-    <div class="filter-group">
-      <span class="filter-label">Respons&#225;vel</span>
-      <select class="resp-select" id="sel-resp">
-        <option value="">Todos</option>
-      </select>
-    </div>
-    <div class="filter-group slider-wrap">
-      <span class="filter-label">Meta</span>
-      <div class="slider-val" id="meta-val">80%</div>
-      <input type="range" id="slider-meta" min="60" max="100" value="80" step="1">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Ritmo (escolas efetivadas/dia)</span>
+      <input class="ritmo-input" type="number" id="in-ritmo" min="1" max="500" value="1">
+      <span class="ctrl-hint">Ritmo de hoje: 212 escolas</span>
     </div>
   </div>
 
   <div class="kpi-row">
     <div class="kpi">
-      <div class="kpi-lbl">Escolas Eleg&#237;veis</div>
-      <div class="kpi-val" id="kpi-total">&#8212;</div>
+      <div class="kpi-lbl">Eleg&#237;veis</div>
+      <div class="kpi-val" id="kpi-el">&#8212;</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Efetivas Hoje</div>
       <div class="kpi-val" id="kpi-ef">&#8212;</div>
     </div>
     <div class="kpi" id="kpi-pef-card">
-      <div class="kpi-lbl">% Efetividade</div>
+      <div class="kpi-lbl">% Atual</div>
       <div class="kpi-val" id="kpi-pef">&#8212;</div>
     </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Alvo (meta)</div>
+      <div class="kpi-val" id="kpi-alvo">&#8212;</div>
+    </div>
     <div class="kpi kpi-purple">
-      <div class="kpi-lbl">Faltam para Meta</div>
+      <div class="kpi-lbl">Faltam</div>
       <div class="kpi-val" id="kpi-faltam">&#8212;</div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-head" style="font-weight:700;font-size:13px">Proje&#231;&#227;o por Meta</div>
-    <div style="overflow-x:auto;padding:0 4px 4px">
-      <table>
-        <thead>
-          <tr>
-            <th>Meta</th>
-            <th class="num">Alvo</th>
-            <th class="num">Efetivas</th>
-            <th class="num">Faltam</th>
-            <th class="num">Ef/dia/B1</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="proj-tbody"></tbody>
-      </table>
-    </div>
+  <div class="proj-box">
+    <div class="proj-status">No ritmo informado, chegamos &#224; meta em</div>
+    <div class="proj-dias" id="proj-dias">&#8212;</div>
+    <div class="proj-data" id="proj-data"></div>
+    <div class="proj-detalhe" id="proj-detalhe"></div>
   </div>
 
   <div class="card">
-    <div class="card-head" style="font-weight:700;font-size:13px">
-      Consultores <span id="count-label" style="font-weight:500;color:#9a9a9a;font-size:12px"></span>
-    </div>
+    <div class="card-head" style="font-weight:700;font-size:13px">Cen&#225;rios de Ritmo</div>
     <div style="overflow-x:auto">
       <table>
         <thead>
           <tr>
-            <th>Nome</th>
-            <th>Segmento</th>
-            <th class="num">Eleg&#237;veis</th>
-            <th class="num">Efetivas</th>
-            <th class="num">% Ef</th>
-            <th>Status</th>
+            <th>Ritmo</th>
+            <th>Ganho/dia</th>
+            <th class="num">Prazo</th>
+            <th>Data prevista</th>
           </tr>
         </thead>
-        <tbody id="cons-tbody"></tbody>
+        <tbody id="cenarios-tbody"></tbody>
       </table>
     </div>
   </div>
 </div>
-<script>const DADOS = [{"nome": "Renata Brandão", "segmento": "High touch - Novas", "ef": 46, "prazo": 68, "pef": 67.6}, {"nome": "Maria Eduarda Carvalho", "segmento": "High touch - Novas", "ef": 46, "prazo": 49, "pef": 93.9}, {"nome": "Andreina Ferreira", "segmento": "High touch - Novas", "ef": 46, "prazo": 60, "pef": 76.7}, {"nome": "Giovanna Munhoz", "segmento": "Medium touch - Renovação", "ef": 31, "prazo": 65, "pef": 47.7}, {"nome": "Indy Ferreira", "segmento": "High touch - Renovação", "ef": 52, "prazo": 71, "pef": 73.2}, {"nome": "Mariana Santana", "segmento": "Premium touch", "ef": 55, "prazo": 60, "pef": 91.7}, {"nome": "Tatiana Portela", "segmento": "High touch - Renovação", "ef": 60, "prazo": 83, "pef": 72.3}, {"nome": "Erick Andrade", "segmento": "High touch - Novas", "ef": 43, "prazo": 51, "pef": 84.3}, {"nome": "Vivian Cristina", "segmento": "Medium touch - Renovação", "ef": 46, "prazo": 65, "pef": 70.8}, {"nome": "Pâmela Miranda", "segmento": "Medium touch - Renovação", "ef": 46, "prazo": 62, "pef": 74.2}, {"nome": "Carla Santos da Silva", "segmento": "High touch - Renovação", "ef": 44, "prazo": 86, "pef": 51.2}, {"nome": "Moreno Loss", "segmento": "High touch - Novas", "ef": 51, "prazo": 62, "pef": 82.3}, {"nome": "Ana Cláudia Santos de Almeida", "segmento": "Medium touch - Renovação", "ef": 33, "prazo": 62, "pef": 53.2}, {"nome": "Thais Souza", "segmento": "Backup", "ef": 28, "prazo": 65, "pef": 43.1}, {"nome": "Maria Elvira", "segmento": "Premium touch 40+", "ef": 42, "prazo": 54, "pef": 77.8}, {"nome": "Ana Clara Peres dos Santos", "segmento": "Medium touch - Renovação", "ef": 43, "prazo": 64, "pef": 67.2}, {"nome": "Stefany Soares Figueredo", "segmento": "Medium touch - Renovação", "ef": 35, "prazo": 62, "pef": 56.5}, {"nome": "Talita Panassol", "segmento": "Premium touch", "ef": 69, "prazo": 80, "pef": 86.2}, {"nome": "Carla Ferraz Gomes", "segmento": "Premium touch", "ef": 52, "prazo": 58, "pef": 89.7}, {"nome": "Kaian Luís", "segmento": "Medium touch - Renovação", "ef": 39, "prazo": 62, "pef": 62.9}, {"nome": "Shelry Solart", "segmento": "High touch - Renovação", "ef": 37, "prazo": 80, "pef": 46.2}, {"nome": "Sarah Moura", "segmento": "Redes", "ef": 85, "prazo": 115, "pef": 73.9}, {"nome": "Thayná Bastos", "segmento": "High touch - Renovação", "ef": 48, "prazo": 79, "pef": 60.8}, {"nome": "Claudilene Santos Dias", "segmento": "Medium touch - Renovação", "ef": 25, "prazo": 58, "pef": 43.1}, {"nome": "Helena Cabral Sampaio", "segmento": "High touch - Renovação", "ef": 27, "prazo": 58, "pef": 46.6}, {"nome": "Larissa Freitas Monteiro", "segmento": "High touch - Renovação", "ef": 58, "prazo": 70, "pef": 82.9}, {"nome": "Julia Cordeiro Campos", "segmento": "High touch - Novas", "ef": 38, "prazo": 61, "pef": 62.3}, {"nome": "Jennifer dos Anjos", "segmento": "SEDUC", "ef": 15, "prazo": 18, "pef": 83.3}, {"nome": "Laura Pagliuzo", "segmento": "High touch - Novas", "ef": 42, "prazo": 60, "pef": 70.0}, {"nome": "Junior Gomes", "segmento": "Squad Reagendamento", "ef": 18, "prazo": 30, "pef": 60.0}];
+<script>const C = {"efetivas": 1300, "elegiveis": 1889, "pef_atual": 68.8, "ritmo_hoje": 212, "data_ref": "2026-05-21"};
 
-const METAS = [65,70,75,80,85,90,95];
-const DIAS_UTEIS = 5;
-
-let activeSegs = new Set();
-let selResp = '';
-let metaTarget = 80;
-
-function init() {
-  const segs = [...new Set(DADOS.map(function(d){ return d.segmento; }).filter(Boolean))].sort();
-  const chipsEl = document.getElementById('chips-seg');
-  segs.forEach(function(s) {
-    const c = document.createElement('span');
-    c.className = 'chip active';
-    c.textContent = s;
-    c.dataset.seg = s;
-    c.onclick = function() {
-      this.classList.toggle('active');
-      if (this.classList.contains('active')) activeSegs.add(s);
-      else activeSegs.delete(s);
-      renderAll();
-    };
-    chipsEl.appendChild(c);
-    activeSegs.add(s);
-  });
-
-  const sel = document.getElementById('sel-resp');
-  const nomes = [...new Set(DADOS.map(function(d){ return d.nome; }))].sort();
-  nomes.forEach(function(n) {
-    const opt = document.createElement('option');
-    opt.value = n; opt.textContent = n;
-    sel.appendChild(opt);
-  });
-  sel.onchange = function() { selResp = this.value; renderAll(); };
-
-  const slider = document.getElementById('slider-meta');
-  slider.oninput = function() {
-    metaTarget = +this.value;
-    document.getElementById('meta-val').textContent = metaTarget + '%';
-    renderAll();
-  };
-
-  renderAll();
+function addDiasUteis(isoDate, n) {
+  var d = new Date(isoDate + 'T12:00:00');
+  var added = 0;
+  while (added < n) {
+    d.setDate(d.getDate() + 1);
+    var dow = d.getDay();
+    if (dow !== 0 && dow !== 6) added++;
+  }
+  return d;
 }
-
-function getFiltered() {
-  return DADOS.filter(function(d) {
-    return (activeSegs.size === 0 || activeSegs.has(d.segmento))
-        && (!selResp || d.nome === selResp);
-  });
+function fmtDate(d) {
+  return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit'});
 }
+function render() {
+  var meta   = +document.getElementById('sl-meta').value;
+  var ritmo  = Math.max(1, +document.getElementById('in-ritmo').value || 1);
+  document.getElementById('meta-val').textContent  = meta + '%';
+  document.getElementById('ritmo-val').textContent = ritmo;
 
-function renderAll() {
-  const rows      = getFiltered();
-  const totalPrazo = rows.reduce(function(s,d){ return s + d.prazo; }, 0);
-  const totalEf    = rows.reduce(function(s,d){ return s + d.ef;    }, 0);
-  const pef        = totalPrazo > 0 ? Math.round(totalEf / totalPrazo * 1000) / 10 : 0;
-  const nCons      = rows.length;
-  const alvoMeta   = Math.ceil(totalPrazo * metaTarget / 100);
-  const faltam     = Math.max(0, alvoMeta - totalEf);
+  var ef  = C.efetivas;
+  var el  = C.elegiveis;
+  var pef = C.pef_atual;
+  var alvo   = Math.ceil(el * meta / 100);
+  var faltam = Math.max(0, alvo - ef);
+  var ganho  = Math.round((meta - pef) * 10) / 10;
 
-  document.getElementById('kpi-total').textContent  = totalPrazo;
-  document.getElementById('kpi-ef').textContent     = totalEf;
+  // KPIs
+  document.getElementById('kpi-ef').textContent     = ef;
+  document.getElementById('kpi-el').textContent     = el;
   document.getElementById('kpi-pef').textContent    = pef + '%';
+  document.getElementById('kpi-alvo').textContent   = alvo;
   document.getElementById('kpi-faltam').textContent = faltam;
+  var pcard = document.getElementById('kpi-pef-card');
+  pcard.className = 'kpi ' + (pef >= 80 ? 'kpi-pef-blue' : pef >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
 
-  var card = document.getElementById('kpi-pef-card');
-  card.className = 'kpi ' + (pef >= 80 ? 'kpi-pef-blue' : pef >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
+  // Painel de projeção principal
+  var projDias = document.getElementById('proj-dias');
+  var projData = document.getElementById('proj-data');
+  var projDet  = document.getElementById('proj-detalhe');
+  if (faltam <= 0) {
+    projDias.textContent = '✅';
+    projDias.className   = 'proj-dias green';
+    projData.textContent = 'Meta já atingida!';
+    projDet.textContent  = ef + ' efetivas ≥ alvo de ' + alvo;
+  } else {
+    var dias = Math.ceil(faltam / ritmo);
+    var dataCheg = addDiasUteis(C.data_ref, dias);
+    projDias.textContent = dias + (dias === 1 ? ' dia útil' : ' dias úteis');
+    projDias.className   = 'proj-dias';
+    projData.textContent = fmtDate(dataCheg);
+    projDet.textContent  = 'Faltam ' + faltam + ' escolas ÷ ' + ritmo + '/dia = ' + dias + ' dias úteis';
+  }
 
-  // Tabela de projeção
-  var tbody = document.getElementById('proj-tbody');
+  // Tabela de cenários
+  var tbody = document.getElementById('cenarios-tbody');
   tbody.innerHTML = '';
-  METAS.forEach(function(m) {
-    var alvo  = Math.ceil(totalPrazo * m / 100);
-    var falt  = Math.max(0, alvo - totalEf);
-    var efDia = (nCons > 0) ? (falt / nCons / DIAS_UTEIS).toFixed(1) : '—';
-    var ok    = totalEf >= alvo;
-    var tr    = document.createElement('tr');
-    if (m === metaTarget) tr.className = 'proj-row-selected';
+  var base = ritmo;
+  var candidatos = [
+    Math.max(1, Math.round(base * 0.5)),
+    Math.max(1, Math.round(base * 0.75)),
+    base,
+    Math.max(1, Math.round(base * 1.25)),
+    Math.max(1, Math.round(base * 1.5)),
+    Math.max(1, Math.round(base * 2)),
+  ];
+  var seen = {}; var ritmos = [];
+  candidatos.forEach(function(r){ seen[r] = true; });
+  Object.keys(seen).forEach(function(k){ ritmos.push(+k); });
+  ritmos.sort(function(a,b){ return a-b; });
+
+  ritmos.forEach(function(r) {
+    var falt = Math.max(0, alvo - ef);
+    var dias = falt <= 0 ? 0 : Math.ceil(falt / r);
+    var data = falt <= 0 ? '—' : fmtDate(addDiasUteis(C.data_ref, dias));
+    var isAtual = (r === base);
+    var ganhoD  = Math.round((r / el) * 100 * 10) / 10;
+    var tr = document.createElement('tr');
+    if (isAtual) tr.className = 'cenario-atual';
     tr.innerHTML =
-      '<td style="font-weight:700">' + m + '%</td>'
-      + '<td class="num">' + alvo + '</td>'
-      + '<td class="num">' + totalEf + '</td>'
-      + '<td class="num" style="font-weight:' + (falt > 0 ? '700' : '400')
-        + ';color:' + (falt > 0 ? '#E94B56' : '#008ECF') + '">' + falt + '</td>'
-      + '<td class="num">' + efDia + '</td>'
-      + '<td class="' + (ok ? 'status-ok' : 'status-no') + '">'
-        + (ok ? '✅ Atingida' : '🔴 Faltam') + '</td>';
+      '<td class="num" style="font-weight:700">' + r + ' escolas/dia</td>'
+      + '<td class="num" style="color:#9a9a9a;font-size:11px">+' + ganhoD + '%/dia</td>'
+      + '<td class="num">' + (falt <= 0 ? '—' : dias + ' dúteis') + '</td>'
+      + '<td>' + data + (isAtual ? ' <span style="font-size:10px;color:#7668AC">◄ atual</span>' : '') + '</td>';
     tbody.appendChild(tr);
   });
-
-  // Tabela de consultores
-  var consTbody = document.getElementById('cons-tbody');
-  consTbody.innerHTML = '';
-  var sorted = rows.slice().sort(function(a,b){ return b.pef - a.pef; });
-  sorted.forEach(function(d) {
-    var ok  = d.pef >= metaTarget;
-    var cls = d.pef >= 80 ? 'ef-high' : (d.pef >= 60 ? 'ef-mid' : 'ef-low');
-    var tr  = document.createElement('tr');
-    tr.innerHTML =
-      '<td class="nome">' + d.nome + '</td>'
-      + '<td>' + (d.segmento || '—') + '</td>'
-      + '<td class="num">' + d.prazo + '</td>'
-      + '<td class="num">' + d.ef + '</td>'
-      + '<td class="num ' + cls + '">' + d.pef + '%</td>'
-      + '<td class="' + (ok ? 'status-ok' : 'status-no') + '">'
-        + (ok ? '✅' : '🔴') + '</td>';
-    consTbody.appendChild(tr);
-  });
-
-  document.getElementById('count-label').textContent = '(' + nCons + ' consultores)';
 }
-
-init();
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('sl-meta').oninput = function(){
+    document.getElementById('meta-val').textContent = this.value + '%';
+    render();
+  };
+  document.getElementById('in-ritmo').oninput = render;
+  document.getElementById('in-ritmo').value = C.ritmo_hoje;
+  render();
+});
 </script>
 </body></html>
