@@ -111,10 +111,10 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
 
   <div class="controls-bar">
     <div class="ctrl-group">
-      <span class="ctrl-label">Horizonte de an&#225;lise</span>
-      <span class="ctrl-val" id="horizonte-val">5 dias &#250;teis</span>
-      <input type="range" id="sl-horizonte" min="1" max="20" value="5" step="1" style="width:200px">
-      <span style="font-size:10px;color:var(--muted);font-weight:600">Dias &#250;teis usados para contar vencimentos</span>
+      <span class="ctrl-label">Meta</span>
+      <span class="ctrl-val" id="meta-val">80%</span>
+      <input type="range" id="sl-meta" min="65" max="95" value="80" step="5" style="width:200px">
+      <span style="font-size:10px;color:var(--muted);font-weight:600">65% &#183; 70% &#183; 75% &#183; 80% &#183; 85% &#183; 90% &#183; 95%</span>
     </div>
   </div>
 
@@ -138,7 +138,7 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
   </div>
 
   <div class="proj-box">
-    <div class="proj-status">Meta 80% &#8212; no ritmo atual, chegamos em</div>
+    <div class="proj-status">No ritmo atual, para a meta selecionada chegamos em</div>
     <div class="proj-dias" id="proj-dias">&#8212;</div>
     <div class="proj-data" id="proj-data"></div>
     <div class="proj-detalhe" id="proj-detalhe"></div>
@@ -195,13 +195,12 @@ function getVencer(h) {
 }
 
 function render() {
-  var h = +document.getElementById('sl-horizonte').value;
-  document.getElementById('horizonte-val').textContent = h + (h === 1 ? ' dia útil' : ' dias úteis');
+  var meta = +document.getElementById('sl-meta').value;
+  document.getElementById('meta-val').textContent = meta + '%';
 
-  var a_vencer = getVencer(h);
+  var H        = 5;  // horizonte fixo: 5 dias úteis para contar vencimentos
+  var a_vencer = getVencer(H);
   var ef_liq   = C.efetivas - a_vencer;
-  var ritmo    = C.ritmo_dia;
-
   var novas    = C.novas_dia;
 
   document.getElementById('kpi-el').textContent    = C.elegiveis;
@@ -211,21 +210,21 @@ function render() {
   var pc = document.getElementById('kpi-pef-card');
   pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-pef-blue' : C.pef_atual >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
 
-  var nec80    = Math.ceil(C.elegiveis * 0.80);
-  var faltam80 = Math.max(0, nec80 - ef_liq);
-  var projDias = document.getElementById('proj-dias');
-  var projData = document.getElementById('proj-data');
-  var projDet  = document.getElementById('proj-detalhe');
-  document.getElementById('proj-a-vencer').textContent = 'A vencer em ' + h + ' d.ú.: ' + a_vencer + ' escolas';
-  document.getElementById('proj-faltam').textContent   = 'Faltam (ajustado): ' + faltam80 + ' escolas';
-  if (C.efetivas >= nec80) {
+  var nec_sel    = Math.ceil(C.elegiveis * meta / 100);
+  var faltam_sel = Math.max(0, nec_sel - ef_liq);
+  var projDias   = document.getElementById('proj-dias');
+  var projData   = document.getElementById('proj-data');
+  var projDet    = document.getElementById('proj-detalhe');
+  document.getElementById('proj-a-vencer').textContent = 'A vencer em 5 d.ú.: ' + a_vencer + ' escolas';
+  document.getElementById('proj-faltam').textContent   = 'Faltam (ajustado): ' + faltam_sel + ' escolas';
+  if (C.efetivas >= nec_sel) {
     projDias.textContent = '✅'; projDias.className = 'proj-dias green';
-    projData.textContent = 'Meta 80% atingida!'; projDet.textContent = '';
+    projData.textContent = 'Meta ' + meta + '% atingida!'; projDet.textContent = '';
   } else if (novas <= 0) {
     projDias.textContent = '—'; projDias.className = 'proj-dias';
     projData.textContent = 'Sem dados de ritmo histórico'; projDet.textContent = '';
   } else {
-    var dias = Math.ceil(faltam80 / novas);
+    var dias = Math.ceil(faltam_sel / novas);
     var dProj = addBusDays(new Date(C.data_ref + 'T12:00:00'), dias);
     projDias.textContent = dias + (dias === 1 ? ' dia útil' : ' dias úteis');
     projDias.className   = 'proj-dias' + (dias <= 10 ? ' green' : dias > 30 ? ' red' : '');
@@ -234,19 +233,20 @@ function render() {
   }
 
   var th_faltam = document.getElementById('th-faltam');
-  if (th_faltam) th_faltam.textContent = 'Faltam (inc. ' + a_vencer + ' a vencer)';
+  if (th_faltam) th_faltam.textContent = 'Faltam (inc. ' + a_vencer + ' a vencer em 5 d.ú.)';
   var tbody = document.getElementById('metas-tbody');
   tbody.innerHTML = '';
   [65, 70, 75, 80, 85, 90, 95].forEach(function(m) {
     var nec    = Math.ceil(C.elegiveis * m / 100);
     var faltam = Math.max(0, nec - ef_liq);
     var ok     = C.efetivas >= nec;
-    var ef_dc  = (faltam > 0 && h > 0) ? (faltam / h / C.n_consultores).toFixed(2) : '—';
+    var ef_dc  = (faltam > 0) ? (faltam / 5 / C.n_consultores).toFixed(2) : '—';
     var dias_p = (!ok && novas > 0) ? Math.ceil(faltam / novas) : null;
+    var isSel  = (m === meta);
     var tr = document.createElement('tr');
-    if (m === 80) tr.className = 'meta-atual';
+    if (isSel) tr.className = 'meta-atual';
     tr.innerHTML =
-      '<td style="font-weight:700">' + m + '%' + (m === 80 ? ' &#9668;' : '') + '</td>'
+      '<td style="font-weight:700">' + m + '%' + (isSel ? ' &#9668;' : '') + '</td>'
       + '<td class="num">' + nec + '</td>'
       + '<td class="num">' + (ok ? '&#8212;' : faltam) + '</td>'
       + '<td class="num">' + (ok ? '&#8212;' : ef_dc) + '</td>'
@@ -259,7 +259,7 @@ function render() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('sl-horizonte').oninput = function() { render(); };
+  document.getElementById('sl-meta').oninput = function() { render(); };
   render();
 });
 </script>
