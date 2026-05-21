@@ -156,8 +156,8 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
           <tr>
             <th>Meta</th>
             <th class="num">Necess&#225;rias</th>
-            <th class="num" id="th-faltam">Faltam (inc. a vencer)</th>
-            <th class="num">Ef/dia/consultor</th>
+            <th class="num">A vencer</th>
+            <th class="num">Faltam</th>
             <th class="num">Proje&#231;&#227;o</th>
             <th>Status</th>
           </tr>
@@ -166,8 +166,8 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
       </table>
     </div>
     <p style="font-size:10px;color:var(--muted);margin-top:10px">
-      <b>Faltam</b>: escolas necess&#225;rias para a meta, j&#225; descontando as que v&#227;o vencer no horizonte &#8212;
-      <b>Ef/dia/consultor</b>: ritmo necess&#225;rio para cobrir o &#8220;faltam&#8221; em exatamente N dias &#250;teis &#8212;
+      <b>A vencer</b>: escolas efetivas que perdem o prazo durante o per&#237;odo da proje&#231;&#227;o &#8212;
+      <b>Faltam</b>: escolas que precisam ser (re)efetivadas = necessárias &#8722; (efetivas &#8722; a vencer) &#8212;
       <b>Proje&#231;&#227;o</b>: dias &#250;teis no ritmo de 113 novas ef/dia (m&#233;d. &#250;lt. 2 semanas)
     </p>
   </div>
@@ -194,14 +194,32 @@ function getVencer(h) {
   return t;
 }
 
+// Simula dia a dia até atingir a meta, retorna {dias, data, a_vencer, faltam} ou null
+function simular(meta_pct) {
+  var nec = Math.ceil(C.elegiveis * meta_pct / 100);
+  if (C.efetivas >= nec) return { dias: 0, data: '', a_vencer: 0, faltam: 0 };
+  if (C.novas_dia <= 0) return null;
+  var ef  = C.efetivas;
+  var churn_total = 0;
+  var d   = new Date(C.data_ref + 'T12:00:00');
+  for (var bday = 1; bday <= 365; bday++) {
+    d = nextBusDay(d);
+    var churn = (bday - 1) < C.expiracoes.length ? (C.expiracoes[bday - 1] || 0) : 0;
+    churn_total += churn;
+    ef = ef - churn + C.novas_dia;
+    if (ef >= nec) {
+      var a_vencer = churn_total;
+      var faltam   = Math.max(0, nec - (C.efetivas - a_vencer));
+      return { dias: bday, data: fmtDate(d), a_vencer: a_vencer, faltam: faltam };
+    }
+  }
+  return null;
+}
+
 function render() {
   var meta = +document.getElementById('sl-meta').value;
   document.getElementById('meta-val').textContent = meta + '%';
-
-  var H        = 5;  // horizonte fixo: 5 dias úteis para contar vencimentos
-  var a_vencer = getVencer(H);
-  var ef_liq   = C.efetivas - a_vencer;
-  var novas    = C.novas_dia;
+  var novas = C.novas_dia;
 
   document.getElementById('kpi-el').textContent    = C.elegiveis;
   document.getElementById('kpi-ef').textContent    = C.efetivas;
@@ -210,47 +228,46 @@ function render() {
   var pc = document.getElementById('kpi-pef-card');
   pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-pef-blue' : C.pef_atual >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
 
-  var nec_sel    = Math.ceil(C.elegiveis * meta / 100);
-  var faltam_sel = Math.max(0, nec_sel - ef_liq);
-  var projDias   = document.getElementById('proj-dias');
-  var projData   = document.getElementById('proj-data');
-  var projDet    = document.getElementById('proj-detalhe');
-  document.getElementById('proj-a-vencer').textContent = 'A vencer em 5 d.ú.: ' + a_vencer + ' escolas';
-  document.getElementById('proj-faltam').textContent   = 'Faltam (ajustado): ' + faltam_sel + ' escolas';
-  if (C.efetivas >= nec_sel) {
-    projDias.textContent = '✅'; projDias.className = 'proj-dias green';
-    projData.textContent = 'Meta ' + meta + '% atingida!'; projDet.textContent = '';
-  } else if (novas <= 0) {
-    projDias.textContent = '—'; projDias.className = 'proj-dias';
-    projData.textContent = 'Sem dados de ritmo histórico'; projDet.textContent = '';
+  var proj     = simular(meta);
+  var projDias = document.getElementById('proj-dias');
+  var projData = document.getElementById('proj-data');
+  var projDet  = document.getElementById('proj-detalhe');
+  if (!proj) {
+    projDias.textContent = '&#8734;'; projDias.className = 'proj-dias red';
+    projData.textContent = 'Não converge — churn supera o ritmo';
+    projDet.textContent  = ''; 
+    document.getElementById('proj-a-vencer').textContent = '';
+    document.getElementById('proj-faltam').textContent   = '';
+  } else if (proj.dias === 0) {
+    projDias.textContent = '&#10003;'; projDias.className = 'proj-dias green';
+    projData.textContent = 'Meta ' + meta + '% atingida!';
+    projDet.textContent  = '';
+    document.getElementById('proj-a-vencer').textContent = '';
+    document.getElementById('proj-faltam').textContent   = '';
   } else {
-    var dias = Math.ceil(faltam_sel / novas);
-    var dProj = addBusDays(new Date(C.data_ref + 'T12:00:00'), dias);
-    projDias.textContent = dias + (dias === 1 ? ' dia útil' : ' dias úteis');
-    projDias.className   = 'proj-dias' + (dias <= 10 ? ' green' : dias > 30 ? ' red' : '');
-    projData.textContent = fmtDate(dProj);
-    projDet.textContent  = 'Novas efetivações/dia: ' + Math.round(novas) + ' (méd. últ. 2 semanas)';
+    projDias.textContent = proj.dias + (proj.dias === 1 ? ' dia útil' : ' dias úteis');
+    projDias.className   = 'proj-dias' + (proj.dias <= 10 ? ' green' : proj.dias > 30 ? ' red' : '');
+    projData.textContent = proj.data;
+    projDet.textContent  = 'Novas ef/dia: ' + Math.round(novas) + ' (méd. últ. 2 semanas)';
+    document.getElementById('proj-a-vencer').textContent = 'A vencer no período: ' + proj.a_vencer + ' escolas';
+    document.getElementById('proj-faltam').textContent   = 'Faltam (ajustado): ' + proj.faltam + ' escolas';
   }
 
-  var th_faltam = document.getElementById('th-faltam');
-  if (th_faltam) th_faltam.textContent = 'Faltam (inc. ' + a_vencer + ' a vencer em 5 d.ú.)';
   var tbody = document.getElementById('metas-tbody');
   tbody.innerHTML = '';
   [65, 70, 75, 80, 85, 90, 95].forEach(function(m) {
     var nec    = Math.ceil(C.elegiveis * m / 100);
-    var faltam = Math.max(0, nec - ef_liq);
     var ok     = C.efetivas >= nec;
-    var ef_dc  = (faltam > 0) ? (faltam / 5 / C.n_consultores).toFixed(2) : '—';
-    var dias_p = (!ok && novas > 0) ? Math.ceil(faltam / novas) : null;
     var isSel  = (m === meta);
+    var p      = ok ? null : simular(m);
     var tr = document.createElement('tr');
     if (isSel) tr.className = 'meta-atual';
     tr.innerHTML =
       '<td style="font-weight:700">' + m + '%' + (isSel ? ' &#9668;' : '') + '</td>'
       + '<td class="num">' + nec + '</td>'
-      + '<td class="num">' + (ok ? '&#8212;' : faltam) + '</td>'
-      + '<td class="num">' + (ok ? '&#8212;' : ef_dc) + '</td>'
-      + '<td class="num">' + (ok ? '&#8212;' : (dias_p !== null ? dias_p + ' d.ú.' : '&#8212;')) + '</td>'
+      + '<td class="num">' + (ok ? '&#8212;' : (p ? p.a_vencer : '&#8212;')) + '</td>'
+      + '<td class="num">' + (ok ? '&#8212;' : (p ? p.faltam   : '&#8212;')) + '</td>'
+      + '<td class="num">' + (ok ? '&#8212;' : (p ? p.dias + ' d.ú.' : '&#8734;')) + '</td>'
       + '<td style="text-align:center">' + (ok
           ? '<span class="status-ok">&#10003;</span>'
           : '<span style="color:#E94B56;font-weight:700">&#9679;</span>') + '</td>';
