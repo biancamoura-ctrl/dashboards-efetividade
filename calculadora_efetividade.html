@@ -81,11 +81,9 @@ select:focus{border-color:var(--yellow)}
   text-transform:uppercase;letter-spacing:.7px}
 .ctrl-val{font-size:22px;font-weight:800;color:#7668AC;line-height:1;margin-bottom:2px}
 .ctrl-hint{font-size:10px;color:var(--muted);font-weight:600}
-input[type=range]{accent-color:#7668AC;width:160px;cursor:pointer}
-input.ritmo-input{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;
-  color:#7668AC;border:none;border-bottom:2px solid #7668AC;padding:2px 4px;
-  width:80px;background:transparent;text-align:center}
-input.ritmo-input:focus{outline:none;border-bottom-color:#008ECF;color:#008ECF}
+input[type=range]{accent-color:#7668AC;cursor:pointer}
+.kpi5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:700px){.kpi5{grid-template-columns:repeat(3,1fr)}}
 .kpi-pef-blue .kpi-val{color:#008ECF}
 .kpi-pef-purple .kpi-val{color:#7668AC}
 .kpi-pef-red .kpi-val{color:#E94B56}
@@ -94,14 +92,15 @@ input.ritmo-input:focus{outline:none;border-bottom-color:#008ECF;color:#008ECF}
   padding:24px;margin-bottom:20px;box-shadow:var(--shadow);text-align:center}
 .proj-status{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;
   letter-spacing:.7px;margin-bottom:8px}
-.proj-dias{font-size:52px;font-weight:900;color:#7668AC;line-height:1}
+.proj-dias{font-size:48px;font-weight:900;color:#7668AC;line-height:1}
 .proj-dias.green{color:#008ECF}
+.proj-dias.red{color:#E94B56}
 .proj-data{font-size:18px;font-weight:700;color:var(--text);margin-top:6px}
 .proj-detalhe{font-size:12px;color:var(--muted);margin-top:10px;
   border-top:1px solid var(--border);padding-top:10px}
+.dow-bar{display:inline-block;height:10px;border-radius:4px;background:#7668AC;min-width:4px;vertical-align:middle}
 .cenario-atual{background:#f0eef8!important;font-weight:700}
 .status-ok{color:#008ECF;font-weight:700}
-.status-no{color:#E94B56;font-weight:700}
 
 </style>
 </head>
@@ -110,23 +109,24 @@ input.ritmo-input:focus{outline:none;border-bottom-color:#008ECF;color:#008ECF}
 <div class="page">
   <div class="header">
     <h1>Proje&#231;&#227;o de Efetividade</h1>
-    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 21/05/2026</p>
+    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 21/05/2026 &#183; Ritmo de hoje: 212 efetivas</p>
   </div>
 
   <div class="controls-bar">
     <div class="ctrl-group">
       <span class="ctrl-label">Meta</span>
       <span class="ctrl-val" id="meta-val">80%</span>
-      <input type="range" id="sl-meta" min="60" max="100" value="80" step="1">
+      <input type="range" id="sl-meta" min="60" max="100" value="80" step="1" style="width:160px">
     </div>
     <div class="ctrl-group">
-      <span class="ctrl-label">Ritmo (escolas efetivadas/dia)</span>
-      <input class="ritmo-input" type="number" id="in-ritmo" min="1" max="500" value="1">
-      <span class="ctrl-hint">Ritmo de hoje: 212 escolas</span>
+      <span class="ctrl-label">Fator de ritmo</span>
+      <span class="ctrl-val" id="fator-val">x1.00</span>
+      <input type="range" id="sl-fator" min="0.25" max="3" value="1" step="0.05" style="width:160px">
+      <span class="ctrl-hint">1x = ritmo hist&#243;rico m&#233;dio</span>
     </div>
   </div>
 
-  <div class="kpi-row">
+  <div class="kpi5">
     <div class="kpi">
       <div class="kpi-lbl">Eleg&#237;veis</div>
       <div class="kpi-val" id="kpi-el">&#8212;</div>
@@ -150,10 +150,31 @@ input.ritmo-input:focus{outline:none;border-bottom-color:#008ECF;color:#008ECF}
   </div>
 
   <div class="proj-box">
-    <div class="proj-status">No ritmo informado, chegamos &#224; meta em</div>
+    <div class="proj-status">No ritmo selecionado, chegamos &#224; meta em</div>
     <div class="proj-dias" id="proj-dias">&#8212;</div>
     <div class="proj-data" id="proj-data"></div>
     <div class="proj-detalhe" id="proj-detalhe"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head" style="font-weight:700;font-size:13px">
+      Padr&#227;o por Dia da Semana
+      <span style="font-size:11px;font-weight:500;color:#9a9a9a">&#160;&#183;&#160;m&#233;dia &#250;ltimas 4 semanas</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Dia</th>
+            <th class="num">Ganho m&#233;dio</th>
+            <th></th>
+            <th class="num">Churn estimado</th>
+            <th class="num">L&#237;quido</th>
+          </tr>
+        </thead>
+        <tbody id="dow-tbody"></tbody>
+      </table>
+    </div>
   </div>
 
   <div class="card">
@@ -162,8 +183,7 @@ input.ritmo-input:focus{outline:none;border-bottom-color:#008ECF;color:#008ECF}
       <table>
         <thead>
           <tr>
-            <th>Ritmo</th>
-            <th>Ganho/dia</th>
+            <th>Fator</th>
             <th class="num">Prazo</th>
             <th>Data prevista</th>
           </tr>
@@ -173,100 +193,127 @@ input.ritmo-input:focus{outline:none;border-bottom-color:#008ECF;color:#008ECF}
     </div>
   </div>
 </div>
-<script>const C = {"efetivas": 1300, "elegiveis": 1889, "pef_atual": 68.8, "ritmo_hoje": 212, "data_ref": "2026-05-21"};
+<script>const C = {"efetivas": 1300, "elegiveis": 1889, "pef_atual": 68.8, "ritmo_hoje": 212, "data_ref": "2026-05-21", "media_dow": [0.0, 252.3, 270.3, 266.3, 216.3, 236.7, 0.0], "expiracoes": [70, 102, 99, 129, 166, 185, 231, 219, 9, 9, 8, 7, 11, 10, 12, 8, 3, 4, 0, 3, 3, 1, 1, 3, 1, 1, 0, 3, 2]};
 
-function addDiasUteis(isoDate, n) {
-  var d = new Date(isoDate + 'T12:00:00');
-  var added = 0;
-  while (added < n) {
-    d.setDate(d.getDate() + 1);
-    var dow = d.getDay();
-    if (dow !== 0 && dow !== 6) added++;
-  }
-  return d;
+var DOW_PT = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
+
+function nextBusDay(d) {
+  var nd = new Date(d.getTime());
+  nd.setDate(nd.getDate() + 1);
+  while (nd.getDay() === 0 || nd.getDay() === 6) nd.setDate(nd.getDate() + 1);
+  return nd;
 }
 function fmtDate(d) {
-  return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit'});
+  return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'short'});
 }
+
+function simular(meta_pct, fator) {
+  var target = Math.ceil(C.elegiveis * meta_pct / 100);
+  var ef = C.efetivas;
+  if (ef >= target) return { dias: 0, data: '' };
+  var d = new Date(C.data_ref + 'T12:00:00');
+  var bday = 0;
+  while (bday < 365) {
+    d = nextBusDay(d);
+    bday++;
+    var dow = d.getDay();
+    var gain  = (C.media_dow[dow] || 0) * fator;
+    var churn = (bday - 1) < C.expiracoes.length ? (C.expiracoes[bday - 1] || 0) : 0;
+    ef = Math.max(0, ef + gain - churn);
+    if (ef >= target) return { dias: bday, data: fmtDate(d) };
+  }
+  return null;
+}
+
 function render() {
-  var meta   = +document.getElementById('sl-meta').value;
-  var ritmo  = Math.max(1, +document.getElementById('in-ritmo').value || 1);
+  var meta  = +document.getElementById('sl-meta').value;
+  var fator = +document.getElementById('sl-fator').value;
   document.getElementById('meta-val').textContent  = meta + '%';
+  document.getElementById('fator-val').textContent = 'x' + fator.toFixed(2);
 
   var ef  = C.efetivas;
   var el  = C.elegiveis;
   var pef = C.pef_atual;
   var alvo   = Math.ceil(el * meta / 100);
   var faltam = Math.max(0, alvo - ef);
-  var ganho  = Math.round((meta - pef) * 10) / 10;
 
-  // KPIs
   document.getElementById('kpi-ef').textContent     = ef;
   document.getElementById('kpi-el').textContent     = el;
   document.getElementById('kpi-pef').textContent    = pef + '%';
   document.getElementById('kpi-alvo').textContent   = alvo;
   document.getElementById('kpi-faltam').textContent = faltam;
-  var pcard = document.getElementById('kpi-pef-card');
-  pcard.className = 'kpi ' + (pef >= 80 ? 'kpi-pef-blue' : pef >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
+  var pc = document.getElementById('kpi-pef-card');
+  pc.className = 'kpi ' + (pef >= 80 ? 'kpi-pef-blue' : pef >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
 
-  // Painel de projeção principal
+  // Painel projeção
   var projDias = document.getElementById('proj-dias');
   var projData = document.getElementById('proj-data');
   var projDet  = document.getElementById('proj-detalhe');
   if (faltam <= 0) {
-    projDias.textContent = '✅';
-    projDias.className   = 'proj-dias green';
-    projData.textContent = 'Meta já atingida!';
-    projDet.textContent  = ef + ' efetivas ≥ alvo de ' + alvo;
+    projDias.textContent = '✅'; projDias.className = 'proj-dias green';
+    projData.textContent = 'Meta atingida!'; projDet.textContent = '';
   } else {
-    var dias = Math.ceil(faltam / ritmo);
-    var dataCheg = addDiasUteis(C.data_ref, dias);
-    projDias.textContent = dias + (dias === 1 ? ' dia útil' : ' dias úteis');
-    projDias.className   = 'proj-dias';
-    projData.textContent = fmtDate(dataCheg);
-    projDet.textContent  = 'Faltam ' + faltam + ' escolas ÷ ' + ritmo + '/dia = ' + dias + ' dias úteis';
+    var proj = simular(meta, fator);
+    if (!proj) {
+      projDias.textContent = '∞'; projDias.className = 'proj-dias red';
+      projData.textContent = 'Não converge — churn supera os ganhos';
+      projDet.textContent  = 'Aumente o fator de ritmo para avançar.';
+    } else {
+      // Estatísticas semanais para o detalhe
+      var ganhoSem = 0;
+      for (var i = 1; i <= 5; i++) ganhoSem += (C.media_dow[i] || 0) * fator;
+      var churnSem = 0;
+      for (var j = 0; j < Math.min(5, C.expiracoes.length); j++) churnSem += (C.expiracoes[j] || 0);
+      projDias.textContent = proj.dias + (proj.dias === 1 ? ' dia útil' : ' dias úteis');
+      projDias.className   = 'proj-dias';
+      projData.textContent = proj.data;
+      projDet.textContent  = 'Ganho médio/semana: ' + ganhoSem.toFixed(0)
+        + ' | Churn médio/semana: ' + churnSem.toFixed(0)
+        + ' | Líquido: ' + (ganhoSem - churnSem).toFixed(0);
+    }
   }
 
-  // Tabela de cenários
+  // Tabela cenários (fatores fixos)
   var tbody = document.getElementById('cenarios-tbody');
   tbody.innerHTML = '';
-  var base = ritmo;
-  var candidatos = [
-    Math.max(1, Math.round(base * 0.5)),
-    Math.max(1, Math.round(base * 0.75)),
-    base,
-    Math.max(1, Math.round(base * 1.25)),
-    Math.max(1, Math.round(base * 1.5)),
-    Math.max(1, Math.round(base * 2)),
-  ];
-  var seen = {}; var ritmos = [];
-  candidatos.forEach(function(r){ seen[r] = true; });
-  Object.keys(seen).forEach(function(k){ ritmos.push(+k); });
-  ritmos.sort(function(a,b){ return a-b; });
-
-  ritmos.forEach(function(r) {
-    var falt = Math.max(0, alvo - ef);
-    var dias = falt <= 0 ? 0 : Math.ceil(falt / r);
-    var data = falt <= 0 ? '—' : fmtDate(addDiasUteis(C.data_ref, dias));
-    var isAtual = (r === base);
-    var ganhoD  = Math.round((r / el) * 100 * 10) / 10;
+  [0.5, 0.75, 1.0, 1.25, 1.5, 2.0].forEach(function(f) {
+    var p = simular(meta, f);
+    var isAtual = Math.abs(f - fator) < 0.05;
     var tr = document.createElement('tr');
     if (isAtual) tr.className = 'cenario-atual';
     tr.innerHTML =
-      '<td class="num" style="font-weight:700">' + r + ' escolas/dia</td>'
-      + '<td class="num" style="color:#9a9a9a;font-size:11px">+' + ganhoD + '%/dia</td>'
-      + '<td class="num">' + (falt <= 0 ? '—' : dias + ' dúteis') + '</td>'
-      + '<td>' + data + (isAtual ? ' <span style="font-size:10px;color:#7668AC">◄ atual</span>' : '') + '</td>';
+      '<td style="font-weight:700">x' + f.toFixed(2) + (isAtual ? ' ◄' : '') + '</td>'
+      + '<td class="num">' + (p ? p.dias + ' d.ú.' : '∞') + '</td>'
+      + '<td>' + (p ? p.data : '—') + '</td>';
     tbody.appendChild(tr);
   });
 }
+
+function renderDOW() {
+  var maxVal = Math.max.apply(null, C.media_dow.filter(function(v){ return v > 0; }));
+  var tbody = document.getElementById('dow-tbody');
+  tbody.innerHTML = '';
+  for (var i = 1; i <= 5; i++) {
+    var v    = C.media_dow[i] || 0;
+    var pct  = maxVal > 0 ? Math.round(v / maxVal * 100) : 0;
+    var chur = i - 1 < C.expiracoes.length ? (C.expiracoes[i - 1] || 0) : 0;
+    var liquido = (v - chur).toFixed(0);
+    var liqColor = (v - chur) >= 0 ? '#008ECF' : '#E94B56';
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="font-weight:700">' + DOW_PT[i] + '</td>'
+      + '<td class="num">' + v.toFixed(0) + '</td>'
+      + '<td><span class="dow-bar" style="width:' + pct + 'px"></span></td>'
+      + '<td class="num">' + chur + '</td>'
+      + '<td class="num" style="font-weight:700;color:' + liqColor + '">' + (liquido > 0 ? '+' : '') + liquido + '</td>';
+    tbody.appendChild(tr);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('sl-meta').oninput = function(){
-    document.getElementById('meta-val').textContent = this.value + '%';
-    render();
-  };
-  document.getElementById('in-ritmo').oninput = render;
-  document.getElementById('in-ritmo').value = C.ritmo_hoje;
+  document.getElementById('sl-meta').oninput  = function(){ document.getElementById('meta-val').textContent  = this.value + '%'; render(); };
+  document.getElementById('sl-fator').oninput = function(){ document.getElementById('fator-val').textContent = 'x' + (+this.value).toFixed(2); render(); };
+  renderDOW();
   render();
 });
 </script>
