@@ -106,7 +106,7 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
 <div class="page">
   <div class="header">
     <h1>Calculadora de Efetividade</h1>
-    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 21/05/2026 &#183; 30 consultores &#183; Novas ef/dia: 113 (m&#233;d. 2 semanas)</p>
+    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 21/05/2026 &#183; 30 consultores &#183; Novas ef/dia: 114 (m&#233;d. 2 semanas)</p>
   </div>
 
   <div class="controls-bar">
@@ -168,11 +168,11 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
     <p style="font-size:10px;color:var(--muted);margin-top:10px">
       <b>A vencer</b>: escolas efetivas que perdem o prazo durante o per&#237;odo da proje&#231;&#227;o &#8212;
       <b>Faltam</b>: escolas que precisam ser (re)efetivadas = necessárias &#8722; (efetivas &#8722; a vencer) &#8212;
-      <b>Proje&#231;&#227;o</b>: dias &#250;teis no ritmo de 113 novas ef/dia (m&#233;d. &#250;lt. 2 semanas)
+      <b>Proje&#231;&#227;o</b>: dias &#250;teis no ritmo de 114 novas ef/dia (m&#233;d. &#250;lt. 2 semanas)
     </p>
   </div>
 </div>
-<script>const C = {"efetivas": 1299, "elegiveis": 1886, "pef_atual": 68.9, "novas_dia": 113.0, "n_consultores": 30, "data_ref": "2026-05-21", "expiracoes": [70, 101, 93, 127, 163, 181, 224, 241, 9, 8, 9, 7, 11, 10, 12, 8, 3, 4, 0, 3, 3, 1, 1, 3, 1, 1, 0, 3, 2]};
+<script>const C = {"efetivas": 1302, "elegiveis": 1886, "pef_atual": 69.0, "novas_dia": 113.5, "n_consultores": 30, "data_ref": "2026-05-21", "expiracoes": [70, 99, 92, 124, 162, 180, 220, 253, 9, 8, 11, 7, 11, 10, 12, 9, 3, 4, 0, 3, 3, 1, 1, 3, 1, 1, 0, 3, 2]};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -280,5 +280,68 @@ document.addEventListener('DOMContentLoaded', function() {
   render();
 });
 </script>
+
+<!-- Botão de ajuda -->
+<button onclick="document.getElementById('modal-ajuda').style.display='flex'"
+  style="position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;
+         background:#7668AC;color:#fff;font-size:20px;font-weight:900;border:none;
+         cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:100;
+         display:flex;align-items:center;justify-content:center;line-height:1">?</button>
+
+<!-- Modal de explicação -->
+<div id="modal-ajuda"
+  style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;
+         align-items:center;justify-content:center;padding:20px"
+  onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:16px;max-width:520px;width:100%;max-height:85vh;
+              overflow-y:auto;padding:28px 28px 24px;color:#333;position:relative">
+    <button onclick="document.getElementById('modal-ajuda').style.display='none'"
+      style="position:absolute;top:14px;right:16px;background:none;border:none;
+             font-size:22px;cursor:pointer;color:#aaa;line-height:1">&#215;</button>
+    <h2 style="font-size:16px;font-weight:900;color:#7668AC;margin-bottom:16px">
+      Como a calculadora funciona
+    </h2>
+    <div style="font-size:13px;line-height:1.8;color:#444">
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#127919; Meta</p>
+      <p style="margin-bottom:14px">Percentual-alvo de efetividade. Mover o slider muda qual linha da tabela fica destacada e atualiza a proje&#231;&#227;o principal.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Novas ef/dia</p>
+      <p style="margin-bottom:14px">M&#233;dia di&#225;ria de <b>novas efetiva&#231;&#245;es reais</b> nas &#250;ltimas 2 semanas: conta apenas atividades efetivas em escolas que estavam <em>n&#227;o-efetivas</em> no momento (&#250;ltimo contato h&#225; mais dias que o prazo da segmenta&#231;&#227;o). Renovar uma escola j&#225; efetiva <b>n&#227;o</b> entra nesse n&#250;mero.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; A vencer</p>
+      <p style="margin-bottom:14px">Escolas efetivas hoje que <b>perder&#227;o</b> o status durante o per&#237;odo projetado — calculado somando as expira&#231;&#245;es dia a dia at&#233; a data estimada de chegada na meta. Muda conforme a meta escolhida.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#9997; Faltam</p>
+      <p style="margin-bottom:14px">Escolas que precisam ser (re)efetivadas:<br>
+        <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">
+          Faltam = Necess&#225;rias &minus; (Efetivas hoje &minus; A vencer)
+        </code><br>
+        J&#225; considera o churn do per&#237;odo, por isso &#233; maior que simplesmente "meta &minus; atual".</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#9200; Proje&#231;&#227;o (dias &#250;teis)</p>
+      <p style="margin-bottom:14px">Simula&#231;&#227;o dia a dia: a cada dia &#250;til, subtra&#237; as escolas que expiram naquele dia espec&#237;fico e adiciona <em>novas ef/dia</em>. Para quando a contagem atinge a meta. Reflete o ritmo hist&#243;rico real do time.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128206; Efetivo no prazo (regra de neg&#243;cio)</p>
+      <p style="margin-bottom:2px">Uma escola &#233; <b>efetiva no prazo</b> quando:</p>
+      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">
+        (dias_uteis_ultima_atividade_efetiva &minus; 1) &le; prazo_da_segmenta&#231;&#227;o
+      </code></p>
+      <table style="width:100%;font-size:12px;border-collapse:collapse">
+        <thead><tr style="background:#f4f2fb">
+          <th style="text-align:left;padding:5px 8px;font-weight:700">Segmenta&#231;&#227;o</th>
+          <th style="text-align:right;padding:5px 8px;font-weight:700">Prazo (d.&#250;.)</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:4px 8px">High, Medium, Premium, Premium 40+</td><td style="text-align:right;padding:4px 8px">7</td></tr>
+          <tr style="background:#fafafa"><td style="padding:4px 8px">Demais</td><td style="text-align:right;padding:4px 8px">15</td></tr>
+          <tr><td style="padding:4px 8px">N&#227;o quer contato ativo</td><td style="text-align:right;padding:4px 8px">30</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px;font-size:11px;color:#aaa">O &minus;1 &#233; uma compensa&#231;&#227;o de 1 dia aplicada na regra original de efetividade.</p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
