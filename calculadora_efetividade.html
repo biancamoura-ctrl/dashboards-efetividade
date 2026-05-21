@@ -106,7 +106,7 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
 <div class="page">
   <div class="header">
     <h1>Calculadora de Efetividade</h1>
-    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 21/05/2026 &#183; 30 consultores &#183; Ritmo hist.: 262 ef/dia</p>
+    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 21/05/2026 &#183; 30 consultores &#183; Novas ef/dia: 113 (m&#233;d. 2 semanas)</p>
   </div>
 
   <div class="controls-bar">
@@ -132,7 +132,7 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
       <div class="kpi-val" id="kpi-pef">&#8212;</div>
     </div>
     <div class="kpi">
-      <div class="kpi-lbl">Ritmo hist&#243;rico</div>
+      <div class="kpi-lbl">Novas ef/dia</div>
       <div class="kpi-val" id="kpi-ritmo">&#8212;</div>
     </div>
   </div>
@@ -168,11 +168,11 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
     <p style="font-size:10px;color:var(--muted);margin-top:10px">
       <b>Faltam</b>: escolas necess&#225;rias para a meta, j&#225; descontando as que v&#227;o vencer no horizonte &#8212;
       <b>Ef/dia/consultor</b>: ritmo necess&#225;rio para cobrir o &#8220;faltam&#8221; em exatamente N dias &#250;teis &#8212;
-      <b>Proje&#231;&#227;o</b>: dias &#250;teis no ritmo hist&#243;rico de 262 ef/dia
+      <b>Proje&#231;&#227;o</b>: dias &#250;teis no ritmo de 113 novas ef/dia (m&#233;d. &#250;lt. 2 semanas)
     </p>
   </div>
 </div>
-<script>const C = {"efetivas": 1299, "elegiveis": 1886, "pef_atual": 68.9, "ritmo_dia": 262.5, "n_consultores": 30, "data_ref": "2026-05-21", "expiracoes": [70, 101, 93, 127, 163, 181, 224, 241, 9, 8, 9, 7, 11, 10, 12, 8, 3, 4, 0, 3, 3, 1, 1, 3, 1, 1, 0, 3, 2]};
+<script>const C = {"efetivas": 1299, "elegiveis": 1886, "pef_atual": 68.9, "novas_dia": 113.0, "n_consultores": 30, "data_ref": "2026-05-21", "expiracoes": [70, 101, 93, 127, 163, 181, 224, 241, 9, 8, 9, 7, 11, 10, 12, 8, 3, 4, 0, 3, 3, 1, 1, 3, 1, 1, 0, 3, 2]};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -202,10 +202,12 @@ function render() {
   var ef_liq   = C.efetivas - a_vencer;
   var ritmo    = C.ritmo_dia;
 
+  var novas    = C.novas_dia;
+
   document.getElementById('kpi-el').textContent    = C.elegiveis;
   document.getElementById('kpi-ef').textContent    = C.efetivas;
   document.getElementById('kpi-pef').textContent   = C.pef_atual + '%';
-  document.getElementById('kpi-ritmo').textContent = ritmo > 0 ? Math.round(ritmo) + ' ef/dia' : '—';
+  document.getElementById('kpi-ritmo').textContent = novas > 0 ? Math.round(novas) + '/dia' : '—';
   var pc = document.getElementById('kpi-pef-card');
   pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-pef-blue' : C.pef_atual >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
 
@@ -219,16 +221,16 @@ function render() {
   if (C.efetivas >= nec80) {
     projDias.textContent = '✅'; projDias.className = 'proj-dias green';
     projData.textContent = 'Meta 80% atingida!'; projDet.textContent = '';
-  } else if (ritmo <= 0) {
+  } else if (novas <= 0) {
     projDias.textContent = '—'; projDias.className = 'proj-dias';
     projData.textContent = 'Sem dados de ritmo histórico'; projDet.textContent = '';
   } else {
-    var dias = Math.ceil(faltam80 / ritmo);
+    var dias = Math.ceil(faltam80 / novas);
     var dProj = addBusDays(new Date(C.data_ref + 'T12:00:00'), dias);
     projDias.textContent = dias + (dias === 1 ? ' dia útil' : ' dias úteis');
     projDias.className   = 'proj-dias' + (dias <= 10 ? ' green' : dias > 30 ? ' red' : '');
     projData.textContent = fmtDate(dProj);
-    projDet.textContent  = 'Ritmo histórico: ' + Math.round(ritmo) + ' ef/dia (últ. 2 semanas)';
+    projDet.textContent  = 'Novas efetivações/dia: ' + Math.round(novas) + ' (méd. últ. 2 semanas)';
   }
 
   var th_faltam = document.getElementById('th-faltam');
@@ -240,7 +242,7 @@ function render() {
     var faltam = Math.max(0, nec - ef_liq);
     var ok     = C.efetivas >= nec;
     var ef_dc  = (faltam > 0 && h > 0) ? (faltam / h / C.n_consultores).toFixed(2) : '—';
-    var dias_p = (!ok && ritmo > 0) ? Math.ceil(faltam / ritmo) : null;
+    var dias_p = (!ok && novas > 0) ? Math.ceil(faltam / novas) : null;
     var tr = document.createElement('tr');
     if (m === 80) tr.className = 'meta-atual';
     tr.innerHTML =
