@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escolas em Retração — 21/05/2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:#f7f7f5;color:#595959;min-height:100vh;padding:56px 20px 48px;position:relative}
+.back{position:fixed;top:14px;left:14px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s}
+.back:hover{opacity:.85}
+.container{width:100%;max-width:640px;margin:0 auto}
+.hero{background:#E94B56;border-radius:20px;padding:28px 28px 24px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero-title{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:2px}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.75);font-weight:600;margin-bottom:16px}
+.hero-kpi{display:flex;align-items:center;gap:16px}
+.hero-pct{font-size:52px;font-weight:900;line-height:1;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.hero-detail{font-size:13px;color:#fff;font-weight:700;line-height:1.6}
+.hero-meta{font-size:11px;color:#F9DC45;font-weight:700;margin-top:2px}
+.sec-label{font-size:10px;font-weight:800;color:#9a9a9a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
+.btn-card{background:#fff;border:none;border-radius:14px;padding:24px 18px;text-decoration:none;color:#595959;box-shadow:0 2px 8px rgba(89,89,89,.08);display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:all .2s;position:relative;overflow:hidden}
+.btn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:#E94B56;border-radius:14px 14px 0 0}
+.btn-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(233,75,86,.2)}
+.btn-card .title{font-size:15px;font-weight:800;color:#595959}
+.btn-card .sub{font-size:11px;color:#9a9a9a;line-height:1.6;font-weight:500}
+@media(max-width:480px){.btn-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">← Início</a>
+<div class="container">
+  <div class="hero">
+    <div class="hero-title">📉 Escolas em Retração</div>
+    <div class="hero-sub">Referência: 21/05/2026 &nbsp;·&nbsp; Brasil &nbsp;·&nbsp; 2026</div>
+    <div class="hero-kpi">
+      <div>
+        <div class="hero-detail">168 escolas em retração</div>
+        <div class="hero-detail">R$530k de receita em risco</div>
+        <div class="hero-meta">ação imediata recomendada</div>
+      </div>
+    </div>
+  </div>
+  <div class="sec-label">Selecione uma análise</div>
+  <div class="btn-grid">
+    <a href="retracao_escolas.html" class="btn-card">
+      <div style="font-size:48px;margin-bottom:4px">📋</div>
+      <div class="title">Escolas em Retração</div>
+      <div class="sub">Lista completa · Receita em risco · Motivos</div>
+    </a>
+    <a href="retracao_sugestao.html" class="btn-card">
+      <div style="font-size:48px;margin-bottom:4px">🤖</div>
+      <div class="title">Sugestão do Agente</div>
+      <div class="sub">O que fazer com cada grupo de escolas</div>
+    </a>
+  </div>
+</div>
+</body></html>
