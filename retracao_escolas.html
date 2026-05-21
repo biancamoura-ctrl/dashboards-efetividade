@@ -73,10 +73,9 @@ select:focus{border-color:var(--yellow)}
 .ret-priority strong{color:#E94B56;font-weight:700}
 tbody tr.clickable{cursor:pointer}
 tbody tr.clickable:hover{background:#fff8f8}
-.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:640px){.chart-grid{grid-template-columns:1fr}}
+.seg-table td.num{text-align:right}
+.seg-table tr:last-child td{border-bottom:none;font-weight:700;background:#f8f7ff}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
 <body>
 <a href="retracao_hub.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Retração</a>
@@ -96,17 +95,11 @@ tbody tr.clickable:hover{background:#fff8f8}
 
 <div class="card">
   <div class="card-head"><span class="card-title">Escolas por Segmentação</span></div>
-  <div class="card-body">
-    <div class="chart-grid">
-      <div>
-        <p style="font-size:12px;color:#6b7280;margin:0 0 8px 0;font-weight:600">Qtde de escolas</p>
-        <canvas id="chart-count" height="200"></canvas>
-      </div>
-      <div>
-        <p style="font-size:12px;color:#6b7280;margin:0 0 8px 0;font-weight:600">Receita ref. ano anterior (R$ mil)</p>
-        <canvas id="chart-receita" height="200"></canvas>
-      </div>
-    </div>
+  <div class="card-body" style="padding:0">
+    <table class="seg-table" style="width:100%">
+      <thead><tr><th>Segmento</th><th class="num">Escolas</th><th class="num">Receita ref. ano ant.</th></tr></thead>
+      <tbody><tr><td>High touch</td><td class="num">55</td><td class="num">R$ 599.225</td></tr><tr><td>Medium touch</td><td class="num">24</td><td class="num">R$ 112.766</td></tr><tr><td>Premium touch</td><td class="num">4</td><td class="num">R$ 112.298</td></tr><tr><td>Premium 40+</td><td class="num">2</td><td class="num">R$ 103.766</td></tr></tbody>
+    </table>
   </div>
 </div>
 
@@ -267,19 +260,5 @@ function render(){
   document.getElementById('summary').innerHTML = `Exibindo <span>${rows.length}</span> de <span>${RAW.length}</span> escolas`;
 }
 render();
-(function(){
-  const labels=["High touch", "Medium touch", "Premium touch", "Premium 40+"];
-  const counts=[55, 24, 4, 2];
-  const receitas=[599.2, 112.8, 112.3, 103.8];
-  const baseOpts={indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{display:false},ticks:{font:{size:11}}}}};
-  new Chart(document.getElementById('chart-count'),{
-    type:'bar',
-    data:{labels,datasets:[{label:'Escolas',data:counts,backgroundColor:'#7668AC',borderRadius:4}]},
-    options:Object.assign({},baseOpts,{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.parsed.x+' escola'+(ctx.parsed.x!==1?'s':'')}}}})});
-  new Chart(document.getElementById('chart-receita'),{
-    type:'bar',
-    data:{labels,datasets:[{label:'Receita (R$k)',data:receitas,backgroundColor:'#E94B56',borderRadius:4}]},
-    options:Object.assign({},baseOpts,{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'R$ '+ctx.parsed.x+'k'}}}})});
-})();
 </script>
 </body></html>
