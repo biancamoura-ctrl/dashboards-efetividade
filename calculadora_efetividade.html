@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Calculadora de Efetividade — 21/05/2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;--green:#008ECF;--green-lt:#e6f4fb;
+  --amber:#7668AC;--amber-lt:#f0eef8;--red:#E94B56;--red-lt:#fef0f1;
+  --yellow:#F9DC45;--purple:#7668AC;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px;text-align:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border-top:3px solid var(--yellow)}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:700}
+.card-body{padding:18px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+thead th{background:#f8f8f6;padding:9px 12px;text-align:left;font-weight:700;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f0ec}
+.sort-icon{opacity:.35;margin-left:4px;font-size:10px}
+th.sorted .sort-icon{opacity:1}
+tbody tr{border-bottom:1px solid #f0f0ec;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fdfdf9}
+tbody td{padding:8px 12px;white-space:nowrap}
+td.nome{white-space:normal;min-width:160px;font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ef-high{color:#008ECF;font-weight:700}.ef-mid{color:#7668AC;font-weight:700}.ef-low{color:#E94B56;font-weight:700}
+.qbadge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.qbadge.q1{background:#e6f4fb;color:#008ECF}.qbadge.q2{background:#fef0f1;color:#E94B56}
+.qbadge.q3{background:#f0eef8;color:#7668AC}.qbadge.q4{background:#f3f3f0;color:#595959}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e8e8e4;border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none}
+.chip.active{border-color:currentColor}
+.chip.all{background:#f3f3f0;color:#595959}.chip.all.active{background:#e8e8e4}
+.chip.q1{background:#e6f4fb;color:#008ECF}.chip.q1.active{background:#c5e8f7}
+.chip.q2{background:#fef0f1;color:#E94B56}.chip.q2.active{background:#fdd8db}
+.chip.q3{background:#f0eef8;color:#7668AC}.chip.q3.active{background:#dddaf0}
+.chip.q4{background:#f3f3f0;color:#595959}.chip.q4.active{background:#e8e8e4}
+select,input[type=text]{font-family:'Montserrat',sans-serif;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;outline:none}
+select:focus{border-color:var(--yellow)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:6px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:700;color:var(--text)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:600}
+.kpi-val{font-size:28px;font-weight:800;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.blue .kpi-val{color:#008ECF}.kpi.amber .kpi-val{color:#7668AC}.kpi.green .kpi-val{color:#008ECF}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:380px}
+#tooltip{position:fixed;background:#595959;color:#fff;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
+
+
+.filters-bar{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:20px;
+  align-items:flex-end;box-shadow:var(--shadow)}
+.filter-group{display:flex;flex-direction:column;gap:6px}
+.filter-label{font-size:10px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.7px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);
+  background:#f8f8f6;font-size:11px;font-weight:700;cursor:pointer;
+  transition:all .15s;color:var(--text);user-select:none}
+.chip.active{background:#7668AC;border-color:#7668AC;color:#fff}
+.chip:hover:not(.active){border-color:#7668AC;color:#7668AC}
+select.resp-select{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
+  border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;
+  background:#f8f8f6;color:var(--text);min-width:180px;cursor:pointer}
+select.resp-select:focus{outline:none;border-color:#7668AC}
+.slider-wrap{min-width:160px}
+.slider-val{font-size:22px;font-weight:800;color:#7668AC;line-height:1;margin-bottom:4px}
+input[type=range]{accent-color:#7668AC;width:100%;cursor:pointer}
+.kpi-pef-blue .kpi-val{color:#008ECF}
+.kpi-pef-purple .kpi-val{color:#7668AC}
+.kpi-pef-red .kpi-val{color:#E94B56}
+.kpi-purple .kpi-val{color:#7668AC}
+.proj-row-selected{background:#f0eef8!important;font-weight:700}
+.status-ok{color:#008ECF;font-weight:700}
+.status-no{color:#E94B56;font-weight:700}
+
+</style>
+</head>
+<body>
+<a href="metricas_b1.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">&#8592; M&#233;tricas</a>
+<div class="page">
+  <div class="header">
+    <h1>Calculadora de Efetividade</h1>
+    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 21/05/2026</p>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <span class="filter-label">Segmento</span>
+      <div class="chips" id="chips-seg"></div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Respons&#225;vel</span>
+      <select class="resp-select" id="sel-resp">
+        <option value="">Todos</option>
+      </select>
+    </div>
+    <div class="filter-group slider-wrap">
+      <span class="filter-label">Meta</span>
+      <div class="slider-val" id="meta-val">80%</div>
+      <input type="range" id="slider-meta" min="60" max="100" value="80" step="1">
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-lbl">Escolas Eleg&#237;veis</div>
+      <div class="kpi-val" id="kpi-total">&#8212;</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Efetivas Hoje</div>
+      <div class="kpi-val" id="kpi-ef">&#8212;</div>
+    </div>
+    <div class="kpi" id="kpi-pef-card">
+      <div class="kpi-lbl">% Efetividade</div>
+      <div class="kpi-val" id="kpi-pef">&#8212;</div>
+    </div>
+    <div class="kpi kpi-purple">
+      <div class="kpi-lbl">Faltam para Meta</div>
+      <div class="kpi-val" id="kpi-faltam">&#8212;</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head" style="font-weight:700;font-size:13px">Proje&#231;&#227;o por Meta</div>
+    <div style="overflow-x:auto;padding:0 4px 4px">
+      <table>
+        <thead>
+          <tr>
+            <th>Meta</th>
+            <th class="num">Alvo</th>
+            <th class="num">Efetivas</th>
+            <th class="num">Faltam</th>
+            <th class="num">Ef/dia/B1</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="proj-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head" style="font-weight:700;font-size:13px">
+      Consultores <span id="count-label" style="font-weight:500;color:#9a9a9a;font-size:12px"></span>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Segmento</th>
+            <th class="num">Eleg&#237;veis</th>
+            <th class="num">Efetivas</th>
+            <th class="num">% Ef</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="cons-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>const DADOS = [{"nome": "Erick Andrade", "segmento": "High touch - Novas", "ef": 40, "prazo": 51, "pef": 78.4}, {"nome": "Maria Elvira", "segmento": "Premium touch 40+", "ef": 40, "prazo": 54, "pef": 74.1}, {"nome": "Sarah Moura", "segmento": "Redes", "ef": 85, "prazo": 115, "pef": 73.9}, {"nome": "Thayná Bastos", "segmento": "High touch - Renovação", "ef": 49, "prazo": 77, "pef": 63.6}, {"nome": "Indy Ferreira", "segmento": "High touch - Renovação", "ef": 49, "prazo": 71, "pef": 69.0}, {"nome": "Jennifer dos Anjos", "segmento": "SEDUC", "ef": 15, "prazo": 16, "pef": 93.8}, {"nome": "Pâmela Miranda", "segmento": "Medium touch - Renovação", "ef": 35, "prazo": 62, "pef": 56.5}, {"nome": "Tatiana Portela", "segmento": "High touch - Renovação", "ef": 52, "prazo": 82, "pef": 63.4}, {"nome": "Maria Eduarda Carvalho", "segmento": "High touch - Novas", "ef": 45, "prazo": 50, "pef": 90.0}, {"nome": "Claudilene Santos Dias", "segmento": "Medium touch - Renovação", "ef": 24, "prazo": 59, "pef": 40.7}, {"nome": "Kaian Luís", "segmento": "Medium touch - Renovação", "ef": 37, "prazo": 62, "pef": 59.7}, {"nome": "Giovanna Munhoz", "segmento": "Medium touch - Renovação", "ef": 23, "prazo": 65, "pef": 35.4}, {"nome": "Moreno Loss", "segmento": "High touch - Novas", "ef": 46, "prazo": 62, "pef": 74.2}, {"nome": "Vivian Cristina", "segmento": "Medium touch - Renovação", "ef": 37, "prazo": 65, "pef": 56.9}, {"nome": "Julia Cordeiro Campos", "segmento": "High touch - Novas", "ef": 35, "prazo": 58, "pef": 60.3}, {"nome": "Talita Panassol", "segmento": "Premium touch", "ef": 62, "prazo": 80, "pef": 77.5}, {"nome": "Helena Cabral Sampaio", "segmento": "High touch - Renovação", "ef": 21, "prazo": 61, "pef": 34.4}, {"nome": "Ana Cláudia Santos de Almeida", "segmento": "Medium touch - Renovação", "ef": 32, "prazo": 62, "pef": 51.6}, {"nome": "Larissa Freitas Monteiro", "segmento": "High touch - Renovação", "ef": 58, "prazo": 70, "pef": 82.9}, {"nome": "Renata Brandão", "segmento": "High touch - Novas", "ef": 44, "prazo": 69, "pef": 63.8}, {"nome": "Ana Clara Peres dos Santos", "segmento": "Medium touch - Renovação", "ef": 33, "prazo": 65, "pef": 50.8}, {"nome": "Carla Ferraz Gomes", "segmento": "Premium touch", "ef": 50, "prazo": 58, "pef": 86.2}, {"nome": "Shelry Solart", "segmento": "High touch - Renovação", "ef": 35, "prazo": 80, "pef": 43.8}, {"nome": "Andreina Ferreira", "segmento": "High touch - Novas", "ef": 43, "prazo": 61, "pef": 70.5}, {"nome": "Stefany Soares Figueredo", "segmento": "Medium touch - Renovação", "ef": 28, "prazo": 63, "pef": 44.4}, {"nome": "Mariana Santana", "segmento": "Premium touch", "ef": 55, "prazo": 60, "pef": 91.7}, {"nome": "Junior Gomes", "segmento": "Squad Reagendamento", "ef": 18, "prazo": 30, "pef": 60.0}, {"nome": "Carla Santos da Silva", "segmento": "High touch - Renovação", "ef": 39, "prazo": 88, "pef": 44.3}, {"nome": "Thais Souza", "segmento": "Backup", "ef": 24, "prazo": 65, "pef": 36.9}, {"nome": "Laura Pagliuzo", "segmento": "High touch - Novas", "ef": 42, "prazo": 60, "pef": 70.0}];
+
+const METAS = [65,70,75,80,85,90,95];
+const DIAS_UTEIS = 5;
+
+let activeSegs = new Set();
+let selResp = '';
+let metaTarget = 80;
+
+function init() {
+  const segs = [...new Set(DADOS.map(function(d){ return d.segmento; }).filter(Boolean))].sort();
+  const chipsEl = document.getElementById('chips-seg');
+  segs.forEach(function(s) {
+    const c = document.createElement('span');
+    c.className = 'chip active';
+    c.textContent = s;
+    c.dataset.seg = s;
+    c.onclick = function() {
+      this.classList.toggle('active');
+      if (this.classList.contains('active')) activeSegs.add(s);
+      else activeSegs.delete(s);
+      renderAll();
+    };
+    chipsEl.appendChild(c);
+    activeSegs.add(s);
+  });
+
+  const sel = document.getElementById('sel-resp');
+  const nomes = [...new Set(DADOS.map(function(d){ return d.nome; }))].sort();
+  nomes.forEach(function(n) {
+    const opt = document.createElement('option');
+    opt.value = n; opt.textContent = n;
+    sel.appendChild(opt);
+  });
+  sel.onchange = function() { selResp = this.value; renderAll(); };
+
+  const slider = document.getElementById('slider-meta');
+  slider.oninput = function() {
+    metaTarget = +this.value;
+    document.getElementById('meta-val').textContent = metaTarget + '%';
+    renderAll();
+  };
+
+  renderAll();
+}
+
+function getFiltered() {
+  return DADOS.filter(function(d) {
+    return (activeSegs.size === 0 || activeSegs.has(d.segmento))
+        && (!selResp || d.nome === selResp);
+  });
+}
+
+function renderAll() {
+  const rows      = getFiltered();
+  const totalPrazo = rows.reduce(function(s,d){ return s + d.prazo; }, 0);
+  const totalEf    = rows.reduce(function(s,d){ return s + d.ef;    }, 0);
+  const pef        = totalPrazo > 0 ? Math.round(totalEf / totalPrazo * 1000) / 10 : 0;
+  const nCons      = rows.length;
+  const alvoMeta   = Math.ceil(totalPrazo * metaTarget / 100);
+  const faltam     = Math.max(0, alvoMeta - totalEf);
+
+  document.getElementById('kpi-total').textContent  = totalPrazo;
+  document.getElementById('kpi-ef').textContent     = totalEf;
+  document.getElementById('kpi-pef').textContent    = pef + '%';
+  document.getElementById('kpi-faltam').textContent = faltam;
+
+  var card = document.getElementById('kpi-pef-card');
+  card.className = 'kpi ' + (pef >= 80 ? 'kpi-pef-blue' : pef >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
+
+  // Tabela de projeção
+  var tbody = document.getElementById('proj-tbody');
+  tbody.innerHTML = '';
+  METAS.forEach(function(m) {
+    var alvo  = Math.ceil(totalPrazo * m / 100);
+    var falt  = Math.max(0, alvo - totalEf);
+    var efDia = (nCons > 0) ? (falt / nCons / DIAS_UTEIS).toFixed(1) : '—';
+    var ok    = totalEf >= alvo;
+    var tr    = document.createElement('tr');
+    if (m === metaTarget) tr.className = 'proj-row-selected';
+    tr.innerHTML =
+      '<td style="font-weight:700">' + m + '%</td>'
+      + '<td class="num">' + alvo + '</td>'
+      + '<td class="num">' + totalEf + '</td>'
+      + '<td class="num" style="font-weight:' + (falt > 0 ? '700' : '400')
+        + ';color:' + (falt > 0 ? '#E94B56' : '#008ECF') + '">' + falt + '</td>'
+      + '<td class="num">' + efDia + '</td>'
+      + '<td class="' + (ok ? 'status-ok' : 'status-no') + '">'
+        + (ok ? '✅ Atingida' : '🔴 Faltam') + '</td>';
+    tbody.appendChild(tr);
+  });
+
+  // Tabela de consultores
+  var consTbody = document.getElementById('cons-tbody');
+  consTbody.innerHTML = '';
+  var sorted = rows.slice().sort(function(a,b){ return b.pef - a.pef; });
+  sorted.forEach(function(d) {
+    var ok  = d.pef >= metaTarget;
+    var cls = d.pef >= 80 ? 'ef-high' : (d.pef >= 60 ? 'ef-mid' : 'ef-low');
+    var tr  = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="nome">' + d.nome + '</td>'
+      + '<td>' + (d.segmento || '—') + '</td>'
+      + '<td class="num">' + d.prazo + '</td>'
+      + '<td class="num">' + d.ef + '</td>'
+      + '<td class="num ' + cls + '">' + d.pef + '%</td>'
+      + '<td class="' + (ok ? 'status-ok' : 'status-no') + '">'
+        + (ok ? '✅' : '🔴') + '</td>';
+    consTbody.appendChild(tr);
+  });
+
+  document.getElementById('count-label').textContent = '(' + nCons + ' consultores)';
+}
+
+init();
+</script>
+</body></html>
