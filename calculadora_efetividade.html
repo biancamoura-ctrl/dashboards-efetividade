@@ -3,15 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<script>
-(function(){
-  if(window.location.pathname.endsWith('login.html')) return;
-  if(!sessionStorage.getItem('cs_ops_auth')){
-    sessionStorage.setItem('cs_ops_redirect', window.location.href);
-    window.location.replace('login.html');
-  }
-})();
-</script>
 <title>Calculadora de Efetividade &#8212; 22/05/2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
