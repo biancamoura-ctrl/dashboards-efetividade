@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funil Normalizado de Sucesso — 22/05/2026</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;--green:#008ECF;--green-lt:#e6f4fb;
+  --amber:#7668AC;--amber-lt:#f0eef8;--red:#E94B56;--red-lt:#fef0f1;
+  --yellow:#F9DC45;--purple:#7668AC;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px;text-align:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border-top:3px solid var(--yellow)}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:700}
+.card-body{padding:18px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+thead th{background:#f8f8f6;padding:9px 12px;text-align:left;font-weight:700;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f0ec}
+.sort-icon{opacity:.35;margin-left:4px;font-size:10px}
+th.sorted .sort-icon{opacity:1}
+tbody tr{border-bottom:1px solid #f0f0ec;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fdfdf9}
+tbody td{padding:8px 12px;white-space:nowrap}
+td.nome{white-space:normal;min-width:160px;font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ef-high{color:#008ECF;font-weight:700}.ef-mid{color:#7668AC;font-weight:700}.ef-low{color:#E94B56;font-weight:700}
+.qbadge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.qbadge.q1{background:#e6f4fb;color:#008ECF}.qbadge.q2{background:#fef0f1;color:#E94B56}
+.qbadge.q3{background:#f0eef8;color:#7668AC}.qbadge.q4{background:#f3f3f0;color:#595959}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e8e8e4;border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none}
+.chip.active{border-color:currentColor}
+.chip.all{background:#f3f3f0;color:#595959}.chip.all.active{background:#e8e8e4}
+.chip.q1{background:#e6f4fb;color:#008ECF}.chip.q1.active{background:#c5e8f7}
+.chip.q2{background:#fef0f1;color:#E94B56}.chip.q2.active{background:#fdd8db}
+.chip.q3{background:#f0eef8;color:#7668AC}.chip.q3.active{background:#dddaf0}
+.chip.q4{background:#f3f3f0;color:#595959}.chip.q4.active{background:#e8e8e4}
+select,input[type=text]{font-family:'Montserrat',sans-serif;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;outline:none}
+select:focus{border-color:var(--yellow)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:6px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:700;color:var(--text)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:600}
+.kpi-val{font-size:28px;font-weight:800;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.blue .kpi-val{color:#008ECF}.kpi.amber .kpi-val{color:#7668AC}.kpi.green .kpi-val{color:#008ECF}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:380px}
+#tooltip{position:fixed;background:#595959;color:#fff;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
+
+.funil-badge{background:#e8eaf6;color:#3949ab;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;display:inline-block;margin-right:6px;margin-top:4px}
+.funil-controls{display:flex;gap:8px;margin-bottom:20px}
+.funil-btn{padding:8px 20px;border:2px solid var(--purple);border-radius:8px;background:#fff;color:var(--purple);font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;transition:all .2s}
+.funil-btn.active{background:var(--purple);color:#fff}
+.funil-btn:hover:not(.active){background:var(--amber-lt)}
+.funil-tbl-wrap{overflow-x:auto;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:20px}
+.funil-tbl{border-collapse:collapse;width:100%;min-width:1100px;background:#fff}
+.funil-tbl th{background:#1a1a2e;color:#fff;padding:10px 12px;font-size:11px;font-weight:600;text-align:center;white-space:nowrap;position:sticky;top:0;z-index:2;font-family:'Montserrat',sans-serif}
+.funil-tbl th.left{text-align:left}
+.funil-tbl th.stage-h{background:#2d2d5e;font-size:10px;max-width:90px;white-space:normal;line-height:1.3}
+.funil-tbl th.total-h{background:#3949ab}
+.funil-tbl td{padding:9px 12px;font-size:12px;text-align:center;border-bottom:1px solid #eee;border-right:1px solid #f0f0f0;font-family:'Montserrat',sans-serif}
+.funil-tbl td.label-seg{font-weight:700;color:#1a1a2e;text-align:left;background:#fafafa}
+.funil-tbl td.label-tipo{color:#555;text-align:left;padding-left:20px;background:#fff}
+.funil-tbl tr.subtotal td{background:#e8eaf6!important;font-weight:700;color:#1a1a2e}
+.funil-tbl tr.subtotal td.label-seg{background:#dde0f5!important}
+.funil-tbl tr.grandtotal td{background:#1a1a2e!important;color:#fff!important;font-weight:700;font-size:13px}
+.funil-tbl tbody tr:hover:not(.subtotal):not(.grandtotal) td{background:#f0f4ff}
+.funil-tbl td.zero{color:#ccc}
+.funil-tbl td.val{font-variant-numeric:tabular-nums}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.c01{background:#7986cb}.c02{background:#64b5f6}.c031{background:#81c784}.c032{background:#ffb74d}
+.c033{background:#e57373}.c04{background:#4db6ac}.c05{background:#9575cd}.c06{background:#4caf50}
+.c071{background:#1976d2}.c072{background:#90caf9}.c08{background:#ef5350}
+.legenda-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.legenda-tbl td{padding:6px 10px;border-bottom:1px solid #f0f0ec}
+.legenda-tbl tr:last-child td{border-bottom:none}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Início</a>
+<div class="page">
+
+<div class="header">
+  <h1>Funil Normalizado de Sucesso</h1>
+  <p>
+    <span class="funil-badge">Brasil</span>
+    <span class="funil-badge">Jornada 2026</span>
+    <span class="funil-badge">Sucesso do Cliente</span>
+    <span class="funil-badge" id="date-badge">—</span>
+  </p>
+</div>
+
+<div class="funil-controls">
+  <button class="funil-btn active" id="btn-qtd" onclick="setMode('qtd')">Qtd Escolas</button>
+  <button class="funil-btn"        id="btn-ref" onclick="setMode('ref')">Ref Ano Anterior V2</button>
+</div>
+
+<div class="funil-tbl-wrap">
+<table class="funil-tbl">
+  <thead>
+    <tr>
+      <th class="left" rowspan="2" style="min-width:140px">Segmentação</th>
+      <th class="left" rowspan="2" style="min-width:100px">Tipo Escola</th>
+      <th class="stage-h"><span class="dot c01"></span>01. Onboarding &amp; BV</th>
+      <th class="stage-h"><span class="dot c02"></span>02. Ag. Cronograma</th>
+      <th class="stage-h"><span class="dot c031"></span>03.1 Crono (no prazo)</th>
+      <th class="stage-h"><span class="dot c032"></span>03.2 Crono (5 dias)</th>
+      <th class="stage-h"><span class="dot c033"></span>03.3 Crono (passou)</th>
+      <th class="stage-h"><span class="dot c04"></span>04. 5% Material</th>
+      <th class="stage-h"><span class="dot c05"></span>05. Com Resp.</th>
+      <th class="stage-h"><span class="dot c06"></span>06. Com Compras</th>
+      <th class="stage-h"><span class="dot c071"></span>07.1 Conc. c/ Compras</th>
+      <th class="stage-h"><span class="dot c072"></span>07.2 Conc. s/ Compras</th>
+      <th class="stage-h"><span class="dot c08"></span>08. Retração</th>
+      <th class="total-h">Total</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+
+<div class="card">
+  <div class="card-head"><span class="card-title">Legenda das Etapas</span></div>
+  <div class="card-body" style="padding:0">
+    <div class="tbl-wrap">
+      <table class="legenda-tbl">
+        <tbody><tr><td style="white-space:nowrap;font-weight:600">01. Onboarding & BV</td><td style="color:#555">HIGH TOUCH aguardando reunião de Boas-Vindas</td></tr><tr><td style="white-space:nowrap;font-weight:600">02. Ag. Cronograma</td><td style="color:#555">Escola convertida aguardando preenchimento do cronograma</td></tr><tr><td style="white-space:nowrap;font-weight:600">03.1 Crono (no prazo)</td><td style="color:#555">Com cronograma, sem material — dentro do prazo</td></tr><tr><td style="white-space:nowrap;font-weight:600">03.2 Crono (5 dias)</td><td style="color:#555">Com cronograma, sem material — faltam até 5 dias</td></tr><tr><td style="white-space:nowrap;font-weight:600">03.3 Crono (passou)</td><td style="color:#555">Com cronograma, sem material — prazo vencido</td></tr><tr><td style="white-space:nowrap;font-weight:600">04. 5% Material</td><td style="color:#555">Com ao menos 5% do material pronto, sem compras</td></tr><tr><td style="white-space:nowrap;font-weight:600">05. Com Resp.</td><td style="color:#555">Com responsáveis cadastrados, sem compras</td></tr><tr><td style="white-space:nowrap;font-weight:600">06. Com Compras</td><td style="color:#555">Com compras em andamento</td></tr><tr><td style="white-space:nowrap;font-weight:600">07.1 Conc. c/ Compras</td><td style="color:#555">Jornada concluída com compras</td></tr><tr><td style="white-space:nowrap;font-weight:600">07.2 Conc. s/ Compras</td><td style="color:#555">Jornada concluída sem compras</td></tr><tr><td style="white-space:nowrap;font-weight:600">08. Retração</td><td style="color:#555">Escola em retração, descarte, revenda ou negócio perdido</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:12px;font-size:11px;color:#9a9a9a">
+  Gerado em <span id="gen-date"></span> &nbsp;·&nbsp;
+  Fonte: site-dados.gold.etl_jornada_escolas_aplicacao × lakehouse-378716.crm_ax_raw.ax_deals_temp_ &nbsp;·&nbsp;
+  Filtro: qtd_alunos &ge; 3
+</div>
+
+</div>
+<script>
+
+const DATA = [{"seg": "HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [170, 117, 761, 1, 3, 89, 48, 215, 374, 8, 190, 1976], "r": [2113027.384642366, 1788650.617451002, 13277323.429260293, 4438.628045251612, 27837.010000000002, 1528408.0341579397, 837292.619162124, 4063545.5977879767, 7813688.247197576, 130006.34990736195, 3163699.3744089785, 34747917.29202087]}, {"seg": "HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [3, 16, 59, 1, 0, 9, 6, 8, 2, 1, 2, 107], "r": [24973.87799685317, 320524.68394106015, 1146372.7171342666, 15218.164597701149, 0.0, 120898.07877281141, 190514.04397061613, 174455.82819273497, 33048.35924204244, 5197.92, 15221.077249508842, 2046424.7510975949]}, {"seg": "HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [173, 133, 820, 2, 3, 98, 54, 223, 376, 9, 192, 2083], "r": [2138001.262639219, 2109175.301392062, 14423696.14639456, 19656.79264295276, 27837.010000000002, 1649306.1129307512, 1027806.6631327402, 4238001.425980711, 7846736.606439618, 135204.26990736194, 3178920.4516584873, 36794342.04311846]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [207, 95, 373, 1, 3, 51, 26, 32, 42, 8, 39, 877], "r": [1047888.9387787967, 680952.460108486, 2208860.046748986, 5439.486937500001, 10231.376656603774, 247409.67594465957, 176218.01459533308, 211683.75768513148, 284433.3783398025, 34715.153999999995, 197964.39163575068, 5105796.6814310495]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [156, 10, 224, 0, 3, 38, 13, 6, 17, 6, 26, 499], "r": [326290.4244252552, 78025.1196061525, 883608.9812322417, 0.0, 3910.4800000000005, 118167.15394551215, 68385.64544170054, 33924.47959001092, 36504.23140293616, 3995.5437837837835, 40868.62926369864, 1593680.6886912917]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [363, 105, 597, 1, 6, 89, 39, 38, 59, 14, 65, 1376], "r": [1374179.363204052, 758977.5797146385, 3092469.0279812277, 5439.486937500001, 14141.856656603773, 365576.8298901717, 244603.6600370336, 245608.2372751424, 320937.60974273866, 38710.69778378378, 238833.02089944933, 6699477.370122341]}, {"seg": "TOTAL", "tipo": "TOTAL", "subtotal": false, "grandtotal": true, "q": [536, 238, 1417, 3, 9, 187, 93, 261, 435, 23, 257, 3459], "r": [3512180.625843271, 2868152.8811067007, 17516165.174375787, 25096.279580452763, 41978.86665660378, 2014882.942820923, 1272410.3231697737, 4483609.6632558545, 8167674.216182357, 173914.96769114572, 3417753.472557937, 43493819.413240805]}];
+
+let mode = 'qtd';
+
+function fmtRef(v) {
+  if (v === 0) return '—';
+  if (v >= 1000000) return 'R$ ' + (v / 1000000).toFixed(2).replace('.', ',') + 'M';
+  if (v >= 1000) return 'R$ ' + Math.round(v / 1000).toLocaleString('pt-BR') + 'k';
+  return 'R$ ' + v.toLocaleString('pt-BR');
+}
+
+function fmtQtd(v) {
+  return v === 0 ? '—' : v.toLocaleString('pt-BR');
+}
+
+function buildTable() {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  DATA.forEach(row => {
+    const tr = document.createElement('tr');
+    if (row.grandtotal) tr.className = 'grandtotal';
+    else if (row.subtotal) tr.className = 'subtotal';
+
+    const vals = mode === 'qtd' ? row.q : row.r;
+    const fmt  = mode === 'qtd' ? fmtQtd : fmtRef;
+
+    const tdSeg  = document.createElement('td');
+    tdSeg.className = 'label-seg';
+    tdSeg.textContent = row.seg;
+    tr.appendChild(tdSeg);
+
+    const tdTipo = document.createElement('td');
+    tdTipo.className = row.grandtotal ? 'label-seg' : 'label-tipo';
+    tdTipo.textContent = row.tipo;
+    tr.appendChild(tdTipo);
+
+    vals.forEach(v => {
+      const td = document.createElement('td');
+      td.className = 'val' + (v === 0 ? ' zero' : '');
+      td.textContent = fmt(v);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('btn-qtd').className = 'btn' + (m === 'qtd' ? ' active' : '');
+  document.getElementById('btn-ref').className = 'btn' + (m === 'ref' ? ' active' : '');
+  buildTable();
+}
+
+const now = new Date();
+document.getElementById('gen-date').textContent = now.toLocaleDateString('pt-BR', {
+  day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+});
+document.getElementById('date-badge').textContent = '🗓️ ' + now.toLocaleDateString('pt-BR');
+
+buildTable();
+
+</script>
+</body></html>
