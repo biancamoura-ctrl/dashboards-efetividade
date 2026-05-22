@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function(){
+  if(window.location.pathname.endsWith('login.html')) return;
+  if(!sessionStorage.getItem('cs_ops_auth')){
+    sessionStorage.setItem('cs_ops_redirect', window.location.href);
+    window.location.replace('login.html');
+  }
+})();
+</script>
 <title>CS Ops · Dashboards</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -102,7 +111,7 @@ body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-heigh
     <div class="empty-msg">Em breve &mdash; dashboards do Time de Ativa&#231;&#227;o</div>
   </div>
 
-  <div class="footer">Atualizado &#224;s 11:00 &nbsp;&#183;&nbsp; 22/05/2026</div>
+  <div class="footer">Atualizado &#224;s 11:10 &nbsp;&#183;&nbsp; 22/05/2026</div>
 </div>
 </div>
 <script>
