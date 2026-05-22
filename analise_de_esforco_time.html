@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function(){
+  if(window.location.pathname.endsWith('login.html')) return;
+  if(!sessionStorage.getItem('cs_ops_auth')){
+    sessionStorage.setItem('cs_ops_redirect', window.location.href);
+    window.location.replace('login.html');
+  }
+})();
+</script>
 <title>Análise de Esforço do Time — 22/05/2026</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
