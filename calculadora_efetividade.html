@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Calculadora de Efetividade &#8212; 22/05/2026</title>
+<title>Calculadora de Efetividade &#8212; 26/05/2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -106,7 +106,7 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
 <div class="page">
   <div class="header">
     <h1>Calculadora de Efetividade</h1>
-    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 22/05/2026 &#183; 30 consultores &#183; Novas ef/dia: 111 (m&#233;d. 2 semanas)</p>
+    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 26/05/2026 &#183; 32 consultores &#183; Novas ef/dia: 132.4 (m&#233;d. semana 18/05–24/05)</p>
   </div>
 
   <div class="controls-bar">
@@ -168,11 +168,11 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
     <p style="font-size:10px;color:var(--muted);margin-top:10px">
       <b>A vencer</b>: escolas efetivas que perdem o prazo durante o per&#237;odo da proje&#231;&#227;o &#8212;
       <b>Faltam</b>: escolas que precisam ser (re)efetivadas = necessárias &#8722; (efetivas &#8722; a vencer) &#8212;
-      <b>Proje&#231;&#227;o</b>: dias &#250;teis no ritmo de 111 novas ef/dia (m&#233;d. &#250;lt. 2 semanas)
+      <b>Proje&#231;&#227;o</b>: dias &#250;teis no ritmo de 132.4 novas ef/dia (m&#233;d. semana 18/05–24/05)
     </p>
   </div>
 </div>
-<script>const C = {"efetivas": 1303, "elegiveis": 1884, "pef_atual": 69.2, "novas_dia": 111.4, "n_consultores": 30, "data_ref": "2026-05-22", "expiracoes": [91, 89, 115, 157, 177, 200, 249, 124, 8, 12, 8, 11, 10, 10, 7, 11, 4, 0, 3, 2, 2, 0, 2, 1, 1, 0, 3, 2, 0, 0, 3]};
+<script>const C = {"efetivas": 1419, "elegiveis": 1887, "pef_atual": 75.2, "novas_dia": 132.4, "n_consultores": 32, "data_ref": "2026-05-26", "expiracoes": [74, 106, 129, 159, 188, 208, 193, 244, 6, 17, 17, 9, 7, 11, 10, 10, 3, 2, 3, 3, 4, 1, 0, 0, 2, 1, 0, 0, 3, 3, 4], "semana_label": "18/05–24/05"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -224,7 +224,7 @@ function render() {
   document.getElementById('kpi-el').textContent    = C.elegiveis;
   document.getElementById('kpi-ef').textContent    = C.efetivas;
   document.getElementById('kpi-pef').textContent   = C.pef_atual + '%';
-  document.getElementById('kpi-ritmo').textContent = novas > 0 ? Math.round(novas) + '/dia' : '—';
+  document.getElementById('kpi-ritmo').textContent = novas > 0 ? novas.toFixed(1) + '/dia' : '—';
   var pc = document.getElementById('kpi-pef-card');
   pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-pef-blue' : C.pef_atual >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
 
@@ -248,7 +248,7 @@ function render() {
     projDias.textContent = proj.dias + (proj.dias === 1 ? ' dia útil' : ' dias úteis');
     projDias.className   = 'proj-dias' + (proj.dias <= 10 ? ' green' : proj.dias > 30 ? ' red' : '');
     projData.textContent = proj.data;
-    projDet.textContent  = 'Novas ef/dia: ' + Math.round(novas) + ' (méd. últ. 2 semanas)';
+    projDet.textContent  = 'Novas ef/dia: ' + novas.toFixed(1) + ' (méd. semana ' + C.semana_label + ')';
     document.getElementById('proj-a-vencer').textContent = 'A vencer no período: ' + proj.a_vencer + ' escolas';
     document.getElementById('proj-faltam').textContent   = 'Faltam (ajustado): ' + proj.faltam + ' escolas';
   }
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <p style="margin-bottom:14px">Percentual-alvo de efetividade. Mover o slider muda qual linha da tabela fica destacada e atualiza a proje&#231;&#227;o principal.</p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Novas ef/dia</p>
-      <p style="margin-bottom:14px">M&#233;dia di&#225;ria de <b>novas efetiva&#231;&#245;es reais</b> nas &#250;ltimas 2 semanas: conta apenas atividades efetivas em escolas que estavam <em>n&#227;o-efetivas</em> no momento (&#250;ltimo contato h&#225; mais dias que o prazo da segmenta&#231;&#227;o). Renovar uma escola j&#225; efetiva <b>n&#227;o</b> entra nesse n&#250;mero.</p>
+      <p style="margin-bottom:14px">M&#233;dia di&#225;ria de <b>novas efetiva&#231;&#245;es reais</b> na semana 18/05–24/05: conta apenas atividades efetivas em escolas que estavam <em>n&#227;o-efetivas</em> no momento (&#250;ltimo contato h&#225; mais dias que o prazo da segmenta&#231;&#227;o). Renovar uma escola j&#225; efetiva <b>n&#227;o</b> entra nesse n&#250;mero.</p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; A vencer</p>
       <p style="margin-bottom:14px">Escolas efetivas hoje que <b>perder&#227;o</b> o status durante o per&#237;odo projetado — calculado somando as expira&#231;&#245;es dia a dia at&#233; a data estimada de chegada na meta. Muda conforme a meta escolhida.</p>
