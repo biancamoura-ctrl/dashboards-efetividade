@@ -265,7 +265,6 @@ tr:hover td{background:#FAFBFC}
       <thead>
         <tr>
           <th>Propriet&aacute;rio B1</th>
-          <th>Segmento do deal</th>
           <th>Time do B1</th>
           <th style="text-align:center;">Escolas</th>
           <th style="text-align:center;">Capacidade individual</th>
@@ -649,13 +648,13 @@ const TIME_COLORS = {
   'Backup':                      { bg:'#F3E5F5', color:'#6A1B9A' },
 };
 
-// Cores por segmento para a pill
+// Cores por segmento para a linha separadora de grupo
 const SEG_COLORS = {
-  'High touch - Novas':     { bg:'#E6F5EE', color:'#1A7A45' },
-  'High touch - Renovação': { bg:'#E8F4FB', color:'#0A6696' },
-  'Medium touch':           { bg:'#FFF3E0', color:'#B35E00' },
-  'Premium touch':          { bg:'#F3E8FF', color:'#6B21A8' },
-  'Premium touch 40+':      { bg:'#FDE8F0', color:'#A2174F' },
+  'High touch - Novas':     { bg:'#E6F5EE', color:'#1A7A45', icon:'🟢' },
+  'High touch - Renovação': { bg:'#E8F4FB', color:'#0A6696', icon:'🔵' },
+  'Medium touch':           { bg:'#FFF3E0', color:'#B35E00', icon:'🟡' },
+  'Premium touch':          { bg:'#F3E8FF', color:'#6B21A8', icon:'🟣' },
+  'Premium touch 40+':      { bg:'#FDE8F0', color:'#A2174F', icon:'🔴' },
 };
 
 function isSemB1OrOutros(nome) {
@@ -692,10 +691,15 @@ function renderB1(modo) {
       else                 { pctColor = '#1A9957'; barColor = '#1A9957'; }
     }
 
-    const sc = SEG_COLORS[seg] || { bg:'#F3F6F9', color:'#595959' };
-    const segPill = segChange
-      ? `<span style="display:inline-block;background:${sc.bg};color:${sc.color};font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;">${seg}</span>`
-      : '';
+    // Linha separadora de grupo ao trocar de segmento
+    if (segChange) {
+      const sc = SEG_COLORS[seg] || { bg:'#F3F6F9', color:'#595959', icon:'' };
+      html += `<tr>
+        <td colspan="5" style="background:${sc.bg};color:${sc.color};font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.08em;padding:9px 14px;border-top:${html !== '' ? '3px solid #D0D7E0' : 'none'};">
+          ${sc.icon ? sc.icon + ' ' : ''}${seg}
+        </td>
+      </tr>`;
+    }
 
     // Coluna "Time do B1": segmento oficial do time_de_sucesso.md
     let timePill = '<span style="color:#9BA8B5;font-size:12px;">—</span>';
@@ -711,16 +715,12 @@ function renderB1(modo) {
       }
     }
 
-    // linha separadora visual entre segmentos (exceto primeira)
-    const borderTop = segChange && html !== '' ? 'border-top:2px solid #E8ECF2;' : '';
-
     const nameStyle = isSpecial
       ? 'color:#9BA8B5;font-style:italic;font-size:12px;'
       : 'font-weight:600;font-size:13px;color:#1D1C1D;';
 
-    html += `<tr style="${borderTop}">
+    html += `<tr>
       <td style="${nameStyle}">${prop}</td>
-      <td>${segPill}</td>
       <td>${timePill}</td>
       <td style="text-align:center;font-weight:700;font-size:14px;">${escolas}</td>
       <td style="text-align:center;color:#9BA8B5;font-size:13px;">${capStr}</td>
