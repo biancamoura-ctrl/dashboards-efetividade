@@ -34,6 +34,21 @@ tr:hover td{background:#FAFBFC}
 .detail-table tr:last-child td{border-bottom:none}
 .detail-table tr:hover td{background:#F8F9FA}
 @media(max-width:700px){.card-grid{grid-template-columns:1fr}.table-wrap{overflow-x:auto}}
+
+/* Toggle button */
+.toggle-wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px;margin-top:28px}
+.toggle-wrap .section-title{margin:0}
+.toggle-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 16px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;cursor:pointer;transition:background .15s,border-color .15s;white-space:nowrap}
+.toggle-btn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.6)}
+.toggle-btn.active{background:#F9DC45;color:#3B2D8F;border-color:#F9DC45}
+.toggle-btn .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
+.view-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 10px;border-radius:999px;margin-bottom:6px}
+.view-badge.atual{background:rgba(255,255,255,.15);color:#fff}
+.view-badge.corrigida{background:#F9DC45;color:#3B2D8F}
+.diff-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.diff-up{background:#FFF3E0;color:#E65100}
+.diff-note{background:rgba(249,220,69,.18);border:1px solid rgba(249,220,69,.4);border-radius:10px;padding:12px 16px;font-size:11.5px;line-height:1.7;color:#fff;opacity:.9;margin-bottom:20px}
+.diff-note strong{color:#F9DC45}
 </style>
 </head>
 <body>
@@ -57,18 +72,33 @@ tr:hover td{background:#FAFBFC}
     <strong>Saldo positivo</strong> = capacidade dispon&iacute;vel &middot; <strong>Saldo negativo</strong> = necessidade de contrata&ccedil;&atilde;o (estimativa: 1 Estagi&aacute;rio = 60 escolas).
   </div>
 
-  <div class="section-title">Resumo por Segmento</div>
-  <div class="card-grid">
+  <!-- Toggle de visão -->
+  <div class="toggle-wrap">
+    <div class="section-title" id="section-resumo-title">Resumo por Segmento</div>
+    <button class="toggle-btn" id="toggleBtn" onclick="toggleView()">
+      <span class="dot"></span>
+      <span id="toggleLabel">Ver ap&oacute;s ajuste de segmenta&ccedil;&atilde;o</span>
+    </button>
+  </div>
+
+  <!-- Nota explicativa (visível só na visão corrigida) -->
+  <div class="diff-note" id="diffNote" style="display:none">
+    <strong>Visão corrigida:</strong> redistribui as escolas pelo segmento real do B1 proprietário (conforme <em>time_de_sucesso.md</em>).
+    Escolas cujo deal está marcado como Medium touch, Premium touch ou Premium touch 40+ mas cujo B1 é de outro time são realocadas para o segmento correto.
+    O total sobe de <strong>1.302</strong> para <strong>1.380</strong> escolas vis&iacute;veis porque alguns deals de B1 fora do escopo t&ecirc;m <em>proprietario_b1_sub_segmento</em> v&aacute;lido e passam a ser contabilizados.
+  </div>
+
+  <div class="card-grid" id="cardGrid">
 
   <!-- High touch - Novas -->
   <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
       <div style="font-weight:800;font-size:14px;color:#1D1C1D;">High touch - Novas</div>
-      <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
+      <span id="badge-htn" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div style="font-size:22px;font-weight:900;color:#008ECF;">446</div>
+        <div id="val-htn-esc" style="font-size:22px;font-weight:900;color:#008ECF;">446</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -76,16 +106,16 @@ tr:hover td{background:#FAFBFC}
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#1A9957;">+174</div>
+        <div id="val-htn-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+174</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:71.9%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-htn" style="height:100%;width:71.9%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) &middot; 5 Estagi&aacute;rios (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">71.9% utilizado</div>
+      <div id="pct-htn" style="font-size:11px;color:#9BA8B5;">71.9% utilizado</div>
     </div>
   </div>
 
@@ -93,11 +123,11 @@ tr:hover td{background:#FAFBFC}
   <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
       <div style="font-weight:800;font-size:14px;color:#1D1C1D;">High touch - Renova&ccedil;&atilde;o</div>
-      <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
+      <span id="badge-htr" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div style="font-size:22px;font-weight:900;color:#008ECF;">343</div>
+        <div id="val-htr-esc" style="font-size:22px;font-weight:900;color:#008ECF;">343</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -105,28 +135,28 @@ tr:hover td{background:#FAFBFC}
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#1A9957;">+217</div>
+        <div id="val-htr-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+217</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:61.3%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-htr" style="height:100%;width:61.3%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) &middot; 4 Estagi&aacute;rios (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">61.3% utilizado</div>
+      <div id="pct-htr" style="font-size:11px;color:#9BA8B5;">61.3% utilizado</div>
     </div>
   </div>
 
   <!-- Medium touch - Renovação -->
-  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
+  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;" id="card-mt">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
       <div style="font-weight:800;font-size:14px;color:#1D1C1D;">Medium touch - Renova&ccedil;&atilde;o</div>
-      <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
+      <span id="badge-mt" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div style="font-size:22px;font-weight:900;color:#008ECF;">272</div>
+        <div id="val-mt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">272</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -134,28 +164,28 @@ tr:hover td{background:#FAFBFC}
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#1A9957;">+208</div>
+        <div id="val-mt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+208</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:56.7%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-mt" style="height:100%;width:56.7%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">0 Analistas &middot; 8 Estagi&aacute;rios (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">56.7% utilizado</div>
+      <div id="pct-mt" style="font-size:11px;color:#9BA8B5;">56.7% utilizado</div>
     </div>
   </div>
 
   <!-- Premium touch -->
-  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #C47A00;">
+  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);" id="card-pt" style="border-left:5px solid #C47A00;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
       <div style="font-weight:800;font-size:14px;color:#1D1C1D;">Premium touch</div>
-      <span style="background:#FFF8E1;color:#C47A00;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Aten&ccedil;&atilde;o</span>
+      <span id="badge-pt" style="background:#FFF8E1;color:#C47A00;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Aten&ccedil;&atilde;o</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div style="font-size:22px;font-weight:900;color:#008ECF;">194</div>
+        <div id="val-pt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">194</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -163,16 +193,16 @@ tr:hover td{background:#FAFBFC}
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#1A9957;">+46</div>
+        <div id="val-pt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+46</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:80.8%;background:#C47A00;border-radius:4px;"></div>
+      <div id="bar-pt" style="height:100%;width:80.8%;background:#C47A00;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">3 Analistas (80 esc.) &middot; 0 Estagi&aacute;rios</div>
-      <div style="font-size:11px;color:#9BA8B5;">80.8% utilizado</div>
+      <div id="pct-pt" style="font-size:11px;color:#9BA8B5;">80.8% utilizado</div>
     </div>
   </div>
 
@@ -180,11 +210,11 @@ tr:hover td{background:#FAFBFC}
   <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
       <div style="font-weight:800;font-size:14px;color:#1D1C1D;">Premium touch 40+</div>
-      <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
+      <span id="badge-pt40" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div style="font-size:22px;font-weight:900;color:#008ECF;">47</div>
+        <div id="val-pt40-esc" style="font-size:22px;font-weight:900;color:#008ECF;">47</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -192,16 +222,16 @@ tr:hover td{background:#FAFBFC}
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#1A9957;">+33</div>
+        <div id="val-pt40-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+33</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:58.8%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-pt40" style="height:100%;width:58.8%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) &middot; 0 Estagi&aacute;rios</div>
-      <div style="font-size:11px;color:#9BA8B5;">58.8% utilizado</div>
+      <div id="pct-pt40" style="font-size:11px;color:#9BA8B5;">58.8% utilizado</div>
     </div>
   </div>
 
@@ -209,7 +239,7 @@ tr:hover td{background:#FAFBFC}
 
   <!-- Tabela consolidada -->
   <div class="table-wrap">
-    <div class="table-title">Tabela Consolidada de Capacidade</div>
+    <div class="table-title" id="tbl-title-resumo">Tabela Consolidada de Capacidade</div>
     <div style="overflow-x:auto;">
     <table>
       <thead>
@@ -222,123 +252,8 @@ tr:hover td{background:#FAFBFC}
           <th style="text-align:center;">Contratar</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div style="font-weight:700;font-size:13px;color:#1D1C1D;">High touch - Novas</div>
-            <div style="font-size:11px;color:#9BA8B5;margin-top:2px;">4 Analistas &middot; 5 Estagi&aacute;rios</div>
-          </td>
-          <td style="text-align:center;font-weight:700;font-size:15px;">446</td>
-          <td style="text-align:center;">
-            <div style="font-weight:700;">620</div>
-            <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;">
-              <div style="height:100%;width:71.9%;background:#1A9957;border-radius:3px;"></div>
-            </div>
-            <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">71.9% utilizado</div>
-          </td>
-          <td style="text-align:center;">
-            <span style="font-weight:800;font-size:16px;color:#1A9957;">+174</span>
-          </td>
-          <td style="text-align:center;">
-            <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">Saud&aacute;vel</span>
-          </td>
-          <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">&#8212;</span></td>
-        </tr>
-        <tr>
-          <td>
-            <div style="font-weight:700;font-size:13px;color:#1D1C1D;">High touch - Renova&ccedil;&atilde;o</div>
-            <div style="font-size:11px;color:#9BA8B5;margin-top:2px;">4 Analistas &middot; 4 Estagi&aacute;rios</div>
-          </td>
-          <td style="text-align:center;font-weight:700;font-size:15px;">343</td>
-          <td style="text-align:center;">
-            <div style="font-weight:700;">560</div>
-            <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;">
-              <div style="height:100%;width:61.3%;background:#1A9957;border-radius:3px;"></div>
-            </div>
-            <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">61.3% utilizado</div>
-          </td>
-          <td style="text-align:center;">
-            <span style="font-weight:800;font-size:16px;color:#1A9957;">+217</span>
-          </td>
-          <td style="text-align:center;">
-            <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">Saud&aacute;vel</span>
-          </td>
-          <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">&#8212;</span></td>
-        </tr>
-        <tr>
-          <td>
-            <div style="font-weight:700;font-size:13px;color:#1D1C1D;">Medium touch - Renova&ccedil;&atilde;o</div>
-            <div style="font-size:11px;color:#9BA8B5;margin-top:2px;">8 Estagi&aacute;rios</div>
-          </td>
-          <td style="text-align:center;font-weight:700;font-size:15px;">272</td>
-          <td style="text-align:center;">
-            <div style="font-weight:700;">480</div>
-            <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;">
-              <div style="height:100%;width:56.7%;background:#1A9957;border-radius:3px;"></div>
-            </div>
-            <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">56.7% utilizado</div>
-          </td>
-          <td style="text-align:center;">
-            <span style="font-weight:800;font-size:16px;color:#1A9957;">+208</span>
-          </td>
-          <td style="text-align:center;">
-            <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">Saud&aacute;vel</span>
-          </td>
-          <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">&#8212;</span></td>
-        </tr>
-        <tr>
-          <td>
-            <div style="font-weight:700;font-size:13px;color:#1D1C1D;">Premium touch</div>
-            <div style="font-size:11px;color:#9BA8B5;margin-top:2px;">3 Analistas</div>
-          </td>
-          <td style="text-align:center;font-weight:700;font-size:15px;">194</td>
-          <td style="text-align:center;">
-            <div style="font-weight:700;">240</div>
-            <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;">
-              <div style="height:100%;width:80.8%;background:#C47A00;border-radius:3px;"></div>
-            </div>
-            <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">80.8% utilizado</div>
-          </td>
-          <td style="text-align:center;">
-            <span style="font-weight:800;font-size:16px;color:#1A9957;">+46</span>
-          </td>
-          <td style="text-align:center;">
-            <span style="background:#FFF8E1;color:#C47A00;padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">Aten&ccedil;&atilde;o</span>
-          </td>
-          <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">&#8212;</span></td>
-        </tr>
-        <tr>
-          <td>
-            <div style="font-weight:700;font-size:13px;color:#1D1C1D;">Premium touch 40+</div>
-            <div style="font-size:11px;color:#9BA8B5;margin-top:2px;">1 Analista</div>
-          </td>
-          <td style="text-align:center;font-weight:700;font-size:15px;">47</td>
-          <td style="text-align:center;">
-            <div style="font-weight:700;">80</div>
-            <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;">
-              <div style="height:100%;width:58.8%;background:#1A9957;border-radius:3px;"></div>
-            </div>
-            <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">58.8% utilizado</div>
-          </td>
-          <td style="text-align:center;">
-            <span style="font-weight:800;font-size:16px;color:#1A9957;">+33</span>
-          </td>
-          <td style="text-align:center;">
-            <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">Saud&aacute;vel</span>
-          </td>
-          <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">&#8212;</span></td>
-        </tr>
-        <tr style="background:#F3F6F9;border-top:2px solid #D0D7E0;">
-          <td style="font-weight:800;font-size:13px;">Total &mdash; 5 segmentos</td>
-          <td style="text-align:center;font-weight:800;font-size:15px;">1302</td>
-          <td style="text-align:center;">
-            <div style="font-weight:800;">1980</div>
-            <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">65.8% utilizado</div>
-          </td>
-          <td style="text-align:center;"><span style="font-weight:800;font-size:16px;color:#1A9957;">+678</span></td>
-          <td style="text-align:center;"><span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">Saud&aacute;vel</span></td>
-          <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">&#8212;</span></td>
-        </tr>
+      <tbody id="tbody-resumo">
+        <!-- gerado pelo JS -->
       </tbody>
     </table>
     </div>
@@ -890,5 +805,148 @@ tr:hover td{background:#FAFBFC}
   <div class="footer">Fonte: BigQuery (ax_deals_temp_) &middot; 27/05/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
 </div>
 </div>
+
+<script>
+// Dados embutidos — visão atual vs corrigida
+const DADOS = {
+  atual: {
+    'htn': { esc: 446, cap: 620, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 5 Estagiários (60 esc.)' },
+    'htr': { esc: 343, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' },
+    'mt':  { esc: 272, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' },
+    'pt':  { esc: 194, cap: 240, cor: '#C47A00', status: 'Atenção',  statusCss: 'background:#FFF8E1;color:#C47A00', linha: '3 Analistas (80 esc.) · 0 Estagiários' },
+    'pt40':{ esc:  47, cap:  80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' },
+  },
+  corrigida: {
+    'htn': { esc: 446, cap: 620, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 5 Estagiários (60 esc.)' },
+    'htr': { esc: 343, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' },
+    'mt':  { esc: 312, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' },
+    'pt':  { esc: 229, cap: 240, cor: '#D32F2F', status: 'Crítico',   statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '3 Analistas (80 esc.) · 0 Estagiários' },
+    'pt40':{ esc:  50, cap:  80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' },
+  }
+};
+
+// Labels das seções para a tabela consolidada
+const SEGS_LABEL = [
+  ['htn', 'High touch - Novas'],
+  ['htr', 'High touch - Renovação'],
+  ['mt',  'Medium touch - Renovação'],
+  ['pt',  'Premium touch'],
+  ['pt40','Premium touch 40+'],
+];
+
+let modoAtual = 'atual';
+
+function statusColor(pct) {
+  if (pct >= 100) return '#D32F2F';
+  if (pct >= 80)  return '#C47A00';
+  return '#1A9957';
+}
+
+function renderTbody(modo) {
+  const d = DADOS[modo];
+  let html = '';
+  let totalEsc = 0, totalCap = 0;
+  for (const [key, label] of SEGS_LABEL) {
+    const v = d[key];
+    const saldo = v.cap - v.esc;
+    const pct = Math.round(v.esc / v.cap * 1000) / 10;
+    const saldoColor = saldo >= 0 ? '#1A9957' : '#D32F2F';
+    const saldoStr = saldo >= 0 ? '+' + saldo : '−' + Math.abs(saldo);
+    const barColor = statusColor(pct);
+    const barW = Math.min(pct, 100);
+    const contratar = saldo < 0 ? Math.ceil(Math.abs(saldo) / 60) + ' Estag.' : '—';
+    totalEsc += v.esc; totalCap += v.cap;
+
+    // Tag de diferenca
+    const dAtual = DADOS.atual[key];
+    const diff = v.esc - dAtual.esc;
+    const diffTag = (modo === 'corrigida' && diff !== 0)
+      ? '<span class="diff-tag diff-up">' + (diff > 0 ? '+' : '') + diff + '</span>'
+      : '';
+
+    html += `<tr>
+      <td>
+        <div style="font-weight:700;font-size:13px;color:#1D1C1D;">${label}${diffTag}</div>
+        <div style="font-size:11px;color:#9BA8B5;margin-top:2px;">${v.linha}</div>
+      </td>
+      <td style="text-align:center;font-weight:700;font-size:15px;">${v.esc}</td>
+      <td style="text-align:center;">
+        <div style="font-weight:700;">${v.cap}</div>
+        <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;">
+          <div style="height:100%;width:${barW}%;background:${barColor};border-radius:3px;"></div>
+        </div>
+        <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">${pct}% utilizado</div>
+      </td>
+      <td style="text-align:center;"><span style="font-weight:800;font-size:16px;color:${saldoColor};">${saldoStr}</span></td>
+      <td style="text-align:center;"><span style="${v.statusCss};padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">${v.status}</span></td>
+      <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">${contratar}</span></td>
+    </tr>`;
+  }
+  const totalSaldo = totalCap - totalEsc;
+  const totalPct = Math.round(totalEsc / totalCap * 1000) / 10;
+  const totalSaldoStr = totalSaldo >= 0 ? '+' + totalSaldo : '−' + Math.abs(totalSaldo);
+  html += `<tr style="background:#F3F6F9;border-top:2px solid #D0D7E0;">
+    <td style="font-weight:800;font-size:13px;">Total — 5 segmentos</td>
+    <td style="text-align:center;font-weight:800;font-size:15px;">${totalEsc}</td>
+    <td style="text-align:center;"><div style="font-weight:800;">${totalCap}</div><div style="font-size:10px;color:#9BA8B5;margin-top:2px;">${totalPct}% utilizado</div></td>
+    <td style="text-align:center;"><span style="font-weight:800;font-size:16px;color:#1A9957;">${totalSaldoStr}</span></td>
+    <td style="text-align:center;"><span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">Saudável</span></td>
+    <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">—</span></td>
+  </tr>`;
+  return html;
+}
+
+function updateCards(modo) {
+  const d = DADOS[modo];
+  for (const [key] of SEGS_LABEL) {
+    const v = d[key];
+    const saldo = v.cap - v.esc;
+    const pct = Math.round(v.esc / v.cap * 1000) / 10;
+    const saldoStr = saldo >= 0 ? '+' + saldo : '−' + Math.abs(saldo);
+    const barColor = statusColor(pct);
+    const saldoColor = saldo >= 0 ? '#1A9957' : '#D32F2F';
+
+    const escEl = document.getElementById('val-' + key + '-esc');
+    const saldoEl = document.getElementById('val-' + key + '-saldo');
+    const barEl = document.getElementById('bar-' + key);
+    const pctEl = document.getElementById('pct-' + key);
+    const badgeEl = document.getElementById('badge-' + key);
+
+    if (escEl) escEl.textContent = v.esc;
+    if (saldoEl) { saldoEl.textContent = saldoStr; saldoEl.style.color = saldoColor; }
+    if (barEl) { barEl.style.width = Math.min(pct, 100) + '%'; barEl.style.background = barColor; }
+    if (pctEl) pctEl.textContent = pct + '% utilizado';
+    if (badgeEl) { badgeEl.setAttribute('style', v.statusCss + ';padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;'); badgeEl.textContent = v.status; }
+  }
+  // Borda do card Premium touch
+  const cardPt = document.getElementById('card-pt');
+  if (cardPt) cardPt.style.borderLeft = '5px solid ' + DADOS[modo]['pt'].cor;
+}
+
+function toggleView() {
+  modoAtual = modoAtual === 'atual' ? 'corrigida' : 'atual';
+  const btn = document.getElementById('toggleBtn');
+  const label = document.getElementById('toggleLabel');
+  const note = document.getElementById('diffNote');
+
+  if (modoAtual === 'corrigida') {
+    btn.classList.add('active');
+    label.textContent = 'Ver distribuição atual';
+    note.style.display = 'block';
+  } else {
+    btn.classList.remove('active');
+    label.innerHTML = 'Ver após ajuste de segmentação';
+    note.style.display = 'none';
+  }
+
+  updateCards(modoAtual);
+  document.getElementById('tbody-resumo').innerHTML = renderTbody(modoAtual);
+}
+
+// Inicializar tabela com visão atual
+document.getElementById('tbody-resumo').innerHTML = renderTbody('atual');
+// Inicializar borda do card PT
+document.getElementById('card-pt').style.borderLeft = '5px solid #C47A00';
+</script>
 </body>
 </html>
