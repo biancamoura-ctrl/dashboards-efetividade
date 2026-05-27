@@ -71,8 +71,7 @@ select:focus{border-color:var(--yellow)}
 
 .ret-priority{background:#fef0f1;border-left:4px solid #E94B56;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#595959;line-height:1.6}
 .ret-priority strong{color:#E94B56;font-weight:700}
-tbody tr.clickable{cursor:pointer}
-tbody tr.clickable:hover{background:#fff8f8}
+
 .seg-table td.num{text-align:right}
 .seg-table tr:last-child td{border-bottom:none;font-weight:700;background:#f8f7ff}
 </style>
@@ -253,11 +252,13 @@ function render(){
     return sortDir*(va||'').localeCompare(vb||'');
   });
   document.getElementById('tbody').innerHTML = rows.length ? rows.map(r => {
-    const link = r[9] ? `onclick="window.open('${r[9]}','_blank')"` : '';
     const cidadeUF = r[1] && r[2] ? r[1]+'/'+r[2] : r[1] || r[2] || '—';
     const motivoStyle = !r[6] ? 'color:#E94B56;font-weight:600' : '';
-    return `<tr class="clickable" ${link}>
-      <td class="nome">${r[0]}</td>
+    const nomeCell = r[9]
+      ? `<a href="${r[9]}" target="_blank" style="color:#5B4FCF;text-decoration:none;font-weight:600" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${r[0]}</a>`
+      : r[0];
+    return `<tr>
+      <td class="nome">${nomeCell}</td>
       <td>${cidadeUF}</td>
       <td>${r[3]||'—'}</td>
       <td>${r[4]||'—'}</td>
