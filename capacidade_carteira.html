@@ -78,13 +78,19 @@ tr:hover td{background:#FAFBFC}
   <!-- Toggle de visão -->
   <div class="toggle-wrap">
     <div class="section-title" id="section-resumo-title">Resumo por Segmento</div>
-    <button class="toggle-btn" id="toggleBtn" onclick="toggleView()">
-      <span class="dot"></span>
-      <span id="toggleLabel">Ver ap&oacute;s ajuste de segmenta&ccedil;&atilde;o</span>
-    </button>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <button class="toggle-btn" id="toggleBtn" onclick="toggleView()">
+        <span class="dot"></span>
+        <span id="toggleLabel">Ver ap&oacute;s ajuste de segmenta&ccedil;&atilde;o</span>
+      </button>
+      <button class="toggle-btn" id="diffInfoBtn" onclick="toggleDiffNota()" style="display:none;font-size:11px;padding:6px 14px;">
+        <span id="diffInfoIcon" style="font-size:13px;">&#9432;</span>
+        <span id="diffInfoLabel">Saiba mais</span>
+      </button>
+    </div>
   </div>
 
-  <!-- Nota explicativa (visível só na visão corrigida) -->
+  <!-- Nota explicativa (visível só na visão corrigida, colapsada por padrão) -->
   <div class="diff-note" id="diffNote" style="display:none">
     <strong>Visão corrigida:</strong> aplica a segmentação calculada pelo BI para as <strong>202 escolas com segmentação divergente hoje</strong>.
     Para essas escolas, substitui o segmento atual do CRM pelo segmento que o BI calcula como correto (baseado em alunos, receita e tipo de escola).
@@ -408,15 +414,24 @@ function toggleView() {
   const btn = document.getElementById('toggleBtn');
   const label = document.getElementById('toggleLabel');
   const note = document.getElementById('diffNote');
+  const infoBtn = document.getElementById('diffInfoBtn');
+  const infoLabel = document.getElementById('diffInfoLabel');
 
   if (modoAtual === 'corrigida') {
     btn.classList.add('active');
     label.textContent = 'Ver distribuição atual';
-    note.style.display = 'block';
+    infoBtn.style.display = 'inline-flex';
+    // nota permanece oculta até clicar em "Saiba mais"
+    note.style.display = 'none';
+    infoLabel.textContent = 'Saiba mais';
+    infoBtn.classList.remove('active');
   } else {
     btn.classList.remove('active');
     label.innerHTML = 'Ver após ajuste de segmentação';
+    infoBtn.style.display = 'none';
     note.style.display = 'none';
+    infoLabel.textContent = 'Saiba mais';
+    infoBtn.classList.remove('active');
   }
 
   updateCards(modoAtual);
@@ -426,6 +441,17 @@ function toggleView() {
     modoAtual === 'corrigida'
       ? 'Escolas por Propriet&aacute;rio B1 &nbsp;&middot;&nbsp; vis&atilde;o corrigida'
       : 'Escolas por Propriet&aacute;rio B1 &nbsp;&middot;&nbsp; vis&atilde;o atual';
+}
+
+function toggleDiffNota() {
+  const note = document.getElementById('diffNote');
+  const btn = document.getElementById('diffInfoBtn');
+  const label = document.getElementById('diffInfoLabel');
+  const isOpen = note.style.display !== 'none';
+  note.style.display = isOpen ? 'none' : 'block';
+  label.textContent = isOpen ? 'Saiba mais' : 'Ocultar';
+  if (isOpen) btn.classList.remove('active');
+  else btn.classList.add('active');
 }
 
 // Inicializar tabela com visão atual
