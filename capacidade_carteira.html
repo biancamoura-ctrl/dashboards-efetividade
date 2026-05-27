@@ -56,7 +56,14 @@ tr:hover td{background:#FAFBFC}
 
   <a href="analises_hub.html" class="back-link">&#8592; Voltar para An&aacute;lises</a>
 
-  <div class="nota-box">
+  <div style="margin-bottom:20px;">
+    <button class="toggle-btn" id="metodoBtn" onclick="toggleMetodologia()" style="font-size:11px;padding:6px 14px;">
+      <span id="metodoIcon" style="font-size:13px;">&#9432;</span>
+      <span id="metodoLabel">Como funciona?</span>
+    </button>
+  </div>
+
+  <div class="nota-box" id="notaBox" style="display:none;">
     <strong>Metodologia:</strong> Capacidade m&aacute;xima por consultor &mdash; <strong>80 escolas para Analistas</strong> e <strong>60 escolas para Estagiários</strong>.
     Considera apenas consultores ativos (excluindo Supervisores e Coordena&ccedil;&atilde;o).
     <br>
@@ -743,6 +750,17 @@ function renderB1(modo) {
 }
 
 document.getElementById('tbody-b1').innerHTML = renderB1('atual');
+
+function toggleMetodologia() {
+  const box = document.getElementById('notaBox');
+  const btn = document.getElementById('metodoBtn');
+  const label = document.getElementById('metodoLabel');
+  const isOpen = box.style.display !== 'none';
+  box.style.display = isOpen ? 'none' : 'block';
+  label.textContent = isOpen ? 'Como funciona?' : 'Ocultar metodologia';
+  if (isOpen) btn.classList.remove('active');
+  else btn.classList.add('active');
+}
 </script>
 </body>
 </html>
