@@ -67,7 +67,7 @@ tr:hover td{background:#FAFBFC}
     <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos, Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas e Ciclo de Eventos &middot; excluindo Low touch.
     High touch e Medium touch exigem <em>data_da_reuniao_bv_concluida</em> preenchida; Premium touch e Premium touch 40+ n&atilde;o t&ecirc;m essa restri&ccedil;&atilde;o.
     <br>
-    Classifica&ccedil;&atilde;o do consultor pelo time (<strong>time_de_sucesso.md</strong>); HT separado em Novas e Renova&ccedil;&atilde;o por <em>proprietario_b1_sub_segmento</em>.
+    Classifica&ccedil;&atilde;o do consultor pelo time (<strong>time_de_sucesso.md</strong>); HT separado em Novas e Renova&ccedil;&atilde;o pelo campo <em>baldinho</em>: <strong>HT Renova&ccedil;&atilde;o</strong> = <em>baldinho = &lsquo;Renova&ccedil;&atilde;o&rsquo;</em> &middot; <strong>HT Novas</strong> = demais valores ou nulo.
     <br><br>
     <strong>Saldo positivo</strong> = capacidade dispon&iacute;vel &middot; <strong>Saldo negativo</strong> = necessidade de contrata&ccedil;&atilde;o (estimativa: 1 Estagi&aacute;rio = 60 escolas).
   </div>
@@ -85,7 +85,7 @@ tr:hover td{background:#FAFBFC}
   <div class="diff-note" id="diffNote" style="display:none">
     <strong>Visão corrigida:</strong> redistribui as escolas pelo segmento real do B1 proprietário (conforme <em>time_de_sucesso.md</em>).
     Escolas cujo deal está marcado como Medium touch, Premium touch ou Premium touch 40+ mas cujo B1 é de outro time são realocadas para o segmento correto.
-    O total sobe de <strong>1.302</strong> para <strong>1.380</strong> escolas vis&iacute;veis porque alguns deals de B1 fora do escopo t&ecirc;m <em>proprietario_b1_sub_segmento</em> v&aacute;lido e passam a ser contabilizados.
+    O total sobe de <strong>1.007</strong> para <strong>1.035</strong> escolas vis&iacute;veis porque alguns deals de B1 fora do escopo t&ecirc;m <em>proprietario_b1_sub_segmento</em> v&aacute;lido e passam a ser contabilizados.
   </div>
 
   <div class="card-grid" id="cardGrid">
@@ -98,24 +98,24 @@ tr:hover td{background:#FAFBFC}
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div id="val-htn-esc" style="font-size:22px;font-weight:900;color:#008ECF;">446</div>
+        <div id="val-htn-esc" style="font-size:22px;font-weight:900;color:#008ECF;">352</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">620</div>
+        <div style="font-size:22px;font-weight:900;color:#7668AC;">560</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div id="val-htn-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+174</div>
+        <div id="val-htn-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+208</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-htn" style="height:100%;width:71.9%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-htn" style="height:100%;width:62.9%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) &middot; 5 Estagi&aacute;rios (60 esc.)</div>
-      <div id="pct-htn" style="font-size:11px;color:#9BA8B5;">71.9% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) &middot; 4 Estagi&aacute;rios (60 esc.)</div>
+      <div id="pct-htn" style="font-size:11px;color:#9BA8B5;">62.9% utilizado</div>
     </div>
   </div>
 
@@ -127,24 +127,24 @@ tr:hover td{background:#FAFBFC}
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div id="val-htr-esc" style="font-size:22px;font-weight:900;color:#008ECF;">343</div>
+        <div id="val-htr-esc" style="font-size:22px;font-weight:900;color:#008ECF;">185</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">560</div>
+        <div style="font-size:22px;font-weight:900;color:#7668AC;">420</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div id="val-htr-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+217</div>
+        <div id="val-htr-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+235</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-htr" style="height:100%;width:61.3%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-htr" style="height:100%;width:44.0%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) &middot; 4 Estagi&aacute;rios (60 esc.)</div>
-      <div id="pct-htr" style="font-size:11px;color:#9BA8B5;">61.3% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">3 Analistas (80 esc.) &middot; 3 Estagi&aacute;rios (60 esc.)</div>
+      <div id="pct-htr" style="font-size:11px;color:#9BA8B5;">44.0% utilizado</div>
     </div>
   </div>
 
@@ -156,36 +156,36 @@ tr:hover td{background:#FAFBFC}
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div id="val-mt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">272</div>
+        <div id="val-mt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">255</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">480</div>
+        <div style="font-size:22px;font-weight:900;color:#7668AC;">420</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div id="val-mt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+208</div>
+        <div id="val-mt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+165</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-mt" style="height:100%;width:56.7%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-mt" style="height:100%;width:60.7%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">0 Analistas &middot; 8 Estagi&aacute;rios (60 esc.)</div>
-      <div id="pct-mt" style="font-size:11px;color:#9BA8B5;">56.7% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">0 Analistas &middot; 7 Estagi&aacute;rios (60 esc.)</div>
+      <div id="pct-mt" style="font-size:11px;color:#9BA8B5;">60.7% utilizado</div>
     </div>
   </div>
 
   <!-- Premium touch -->
-  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);" id="card-pt" style="border-left:5px solid #C47A00;">
+  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;" id="card-pt">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
       <div style="font-weight:800;font-size:14px;color:#1D1C1D;">Premium touch</div>
-      <span id="badge-pt" style="background:#FFF8E1;color:#C47A00;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Aten&ccedil;&atilde;o</span>
+      <span id="badge-pt" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div id="val-pt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">194</div>
+        <div id="val-pt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">176</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -193,16 +193,16 @@ tr:hover td{background:#FAFBFC}
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div id="val-pt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+46</div>
+        <div id="val-pt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+64</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-pt" style="height:100%;width:80.8%;background:#C47A00;border-radius:4px;"></div>
+      <div id="bar-pt" style="height:100%;width:73.3%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">3 Analistas (80 esc.) &middot; 0 Estagi&aacute;rios</div>
-      <div id="pct-pt" style="font-size:11px;color:#9BA8B5;">80.8% utilizado</div>
+      <div id="pct-pt" style="font-size:11px;color:#9BA8B5;">73.3% utilizado</div>
     </div>
   </div>
 
@@ -214,7 +214,7 @@ tr:hover td{background:#FAFBFC}
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div id="val-pt40-esc" style="font-size:22px;font-weight:900;color:#008ECF;">47</div>
+        <div id="val-pt40-esc" style="font-size:22px;font-weight:900;color:#008ECF;">39</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -222,16 +222,16 @@ tr:hover td{background:#FAFBFC}
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div id="val-pt40-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+33</div>
+        <div id="val-pt40-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+41</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-pt40" style="height:100%;width:58.8%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-pt40" style="height:100%;width:48.8%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) &middot; 0 Estagi&aacute;rios</div>
-      <div id="pct-pt40" style="font-size:11px;color:#9BA8B5;">58.8% utilizado</div>
+      <div id="pct-pt40" style="font-size:11px;color:#9BA8B5;">48.8% utilizado</div>
     </div>
   </div>
 
@@ -279,6 +279,21 @@ tr:hover td{background:#FAFBFC}
       </thead>
       <tbody>
         <tr>
+          <td>Renata Brand&atilde;o</td>
+          <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
+          <td style="text-align:center;font-weight:600;">65</td>
+          <td style="text-align:center;color:#9BA8B5;">80</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+15</td>
+          <td style="text-align:center;">
+            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
+                <div style="height:100%;width:81.2%;background:#C47A00;border-radius:3px;"></div>
+              </div>
+              <span style="font-size:11px;color:#9BA8B5;">81.2%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
           <td>Erick Andrade</td>
           <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
           <td style="text-align:center;font-weight:600;">54</td>
@@ -324,17 +339,17 @@ tr:hover td{background:#FAFBFC}
           </td>
         </tr>
         <tr>
-          <td>Renata Brand&atilde;o</td>
-          <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">65</td>
-          <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+15</td>
+          <td>Julia Cordeiro Campos</td>
+          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
+          <td style="text-align:center;font-weight:600;">61</td>
+          <td style="text-align:center;color:#9BA8B5;">60</td>
+          <td style="text-align:center;font-weight:700;color:#D32F2F;">&#8722;1</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:81.2%;background:#C47A00;border-radius:3px;"></div>
+                <div style="height:100%;width:100%;background:#D32F2F;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">81.2%</span>
+              <span style="font-size:11px;color:#D32F2F;">101.7%</span>
             </div>
           </td>
         </tr>
@@ -354,51 +369,6 @@ tr:hover td{background:#FAFBFC}
           </td>
         </tr>
         <tr>
-          <td>Gabriela Ribeiro</td>
-          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">62</td>
-          <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#D32F2F;">&#8722;2</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:100%;background:#D32F2F;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#D32F2F;">103.3%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Julia Cordeiro Campos</td>
-          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">61</td>
-          <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#D32F2F;">&#8722;1</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:100%;background:#D32F2F;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#D32F2F;">101.7%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Junior Gomes</td>
-          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">32</td>
-          <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+28</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:53.3%;background:#1A9957;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#9BA8B5;">53.3%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
           <td>Laura Pagliuzo</td>
           <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
           <td style="text-align:center;font-weight:600;">59</td>
@@ -410,6 +380,21 @@ tr:hover td{background:#FAFBFC}
                 <div style="height:100%;width:98.3%;background:#C47A00;border-radius:3px;"></div>
               </div>
               <span style="font-size:11px;color:#9BA8B5;">98.3%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Yolanda Monaco Rangel</td>
+          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
+          <td style="text-align:center;font-weight:600;">0</td>
+          <td style="text-align:center;color:#9BA8B5;">60</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+60</td>
+          <td style="text-align:center;">
+            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
+                <div style="height:100%;width:0%;background:#9BA8B5;border-radius:3px;"></div>
+              </div>
+              <span style="font-size:11px;color:#9BA8B5;">0.0%</span>
             </div>
           </td>
         </tr>
@@ -435,122 +420,92 @@ tr:hover td{background:#FAFBFC}
       </thead>
       <tbody>
         <tr>
-          <td>Indy Ferreira</td>
-          <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">44</td>
-          <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+36</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:55.0%;background:#1A9957;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#9BA8B5;">55.0%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
           <td>Larissa Freitas Monteiro</td>
           <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">64</td>
+          <td style="text-align:center;font-weight:600;">52</td>
           <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+16</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+28</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:80.0%;background:#C47A00;border-radius:3px;"></div>
+                <div style="height:100%;width:65.0%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">80.0%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Tatiana Portela</td>
-          <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">39</td>
-          <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+41</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:48.8%;background:#1A9957;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#9BA8B5;">48.8%</span>
+              <span style="font-size:11px;color:#9BA8B5;">65.0%</span>
             </div>
           </td>
         </tr>
         <tr>
           <td>Thayn&aacute; Bastos</td>
           <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">63</td>
+          <td style="text-align:center;font-weight:600;">47</td>
           <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+17</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:78.8%;background:#1A9957;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#9BA8B5;">78.8%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Carla S. da Silva</td>
-          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">27</td>
-          <td style="text-align:center;color:#9BA8B5;">60</td>
           <td style="text-align:center;font-weight:700;color:#1A9957;">+33</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:45.0%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:58.8%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">45.0%</span>
+              <span style="font-size:11px;color:#9BA8B5;">58.8%</span>
             </div>
           </td>
         </tr>
         <tr>
-          <td>Helena Cabral Sampaio</td>
-          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">8</td>
-          <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+52</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:13.3%;background:#1A9957;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#9BA8B5;">13.3%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Nicole Cavalcante</td>
-          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
+          <td>Indy Ferreira</td>
+          <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
           <td style="text-align:center;font-weight:600;">35</td>
-          <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+25</td>
+          <td style="text-align:center;color:#9BA8B5;">80</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+45</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:58.3%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:43.8%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">58.3%</span>
+              <span style="font-size:11px;color:#9BA8B5;">43.8%</span>
             </div>
           </td>
         </tr>
         <tr>
           <td>Shelry Solart</td>
           <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">63</td>
+          <td style="text-align:center;font-weight:600;">46</td>
           <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#D32F2F;">&#8722;3</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+14</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:100%;background:#D32F2F;border-radius:3px;"></div>
+                <div style="height:100%;width:76.7%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#D32F2F;">105.0%</span>
+              <span style="font-size:11px;color:#9BA8B5;">76.7%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Helena Cabral Sampaio</td>
+          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
+          <td style="text-align:center;font-weight:600;">5</td>
+          <td style="text-align:center;color:#9BA8B5;">60</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+55</td>
+          <td style="text-align:center;">
+            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
+                <div style="height:100%;width:8.3%;background:#1A9957;border-radius:3px;"></div>
+              </div>
+              <span style="font-size:11px;color:#9BA8B5;">8.3%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Sara Barcelos</td>
+          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
+          <td style="text-align:center;font-weight:600;">0</td>
+          <td style="text-align:center;color:#9BA8B5;">60</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+60</td>
+          <td style="text-align:center;">
+            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
+                <div style="height:100%;width:0%;background:#9BA8B5;border-radius:3px;"></div>
+              </div>
+              <span style="font-size:11px;color:#9BA8B5;">0.0%</span>
             </div>
           </td>
         </tr>
@@ -591,62 +546,47 @@ tr:hover td{background:#FAFBFC}
           </td>
         </tr>
         <tr>
-          <td>Ana Cl&aacute;udia Almeida</td>
+          <td>Vivian Cristina</td>
           <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">30</td>
+          <td style="text-align:center;font-weight:600;">45</td>
           <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+30</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+15</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:50.0%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:75.0%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">50.0%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Claudilene Dias</td>
-          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">20</td>
-          <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+40</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:33.3%;background:#1A9957;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#9BA8B5;">33.3%</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Giovanna Munhoz</td>
-          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">3</td>
-          <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+57</td>
-          <td style="text-align:center;">
-            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
-              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:5.0%;background:#1A9957;border-radius:3px;"></div>
-              </div>
-              <span style="font-size:11px;color:#9BA8B5;">5.0%</span>
+              <span style="font-size:11px;color:#9BA8B5;">75.0%</span>
             </div>
           </td>
         </tr>
         <tr>
           <td>Kaian Lu&iacute;s</td>
           <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">46</td>
+          <td style="text-align:center;font-weight:600;">43</td>
           <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+14</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+17</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:76.7%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:71.7%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">76.7%</span>
+              <span style="font-size:11px;color:#9BA8B5;">71.7%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Stefany Figueredo</td>
+          <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
+          <td style="text-align:center;font-weight:600;">41</td>
+          <td style="text-align:center;color:#9BA8B5;">60</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+19</td>
+          <td style="text-align:center;">
+            <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+              <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
+                <div style="height:100%;width:68.3%;background:#1A9957;border-radius:3px;"></div>
+              </div>
+              <span style="font-size:11px;color:#9BA8B5;">68.3%</span>
             </div>
           </td>
         </tr>
@@ -666,32 +606,32 @@ tr:hover td{background:#FAFBFC}
           </td>
         </tr>
         <tr>
-          <td>Stefany Figueredo</td>
+          <td>Ana Cl&aacute;udia Almeida</td>
           <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">44</td>
+          <td style="text-align:center;font-weight:600;">29</td>
           <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+16</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+31</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:73.3%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:48.3%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">73.3%</span>
+              <span style="font-size:11px;color:#9BA8B5;">48.3%</span>
             </div>
           </td>
         </tr>
         <tr>
-          <td>Vivian Cristina</td>
+          <td>Claudilene Dias</td>
           <td><span style="background:#FFF4E0;color:#B45309;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Estagi&aacute;rio</span></td>
-          <td style="text-align:center;font-weight:600;">47</td>
+          <td style="text-align:center;font-weight:600;">15</td>
           <td style="text-align:center;color:#9BA8B5;">60</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+13</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+45</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:78.3%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:25.0%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">78.3%</span>
+              <span style="font-size:11px;color:#9BA8B5;">25.0%</span>
             </div>
           </td>
         </tr>
@@ -717,47 +657,47 @@ tr:hover td{background:#FAFBFC}
       </thead>
       <tbody>
         <tr>
-          <td>Carla Ferraz Gomes</td>
+          <td>Talita Panassol</td>
           <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">58</td>
+          <td style="text-align:center;font-weight:600;">75</td>
           <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+22</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+5</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:72.5%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:93.8%;background:#C47A00;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">72.5%</span>
+              <span style="font-size:11px;color:#9BA8B5;">93.8%</span>
             </div>
           </td>
         </tr>
         <tr>
           <td>Mariana Santana</td>
           <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">60</td>
+          <td style="text-align:center;font-weight:600;">54</td>
           <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+20</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+26</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:75.0%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:67.5%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">75.0%</span>
+              <span style="font-size:11px;color:#9BA8B5;">67.5%</span>
             </div>
           </td>
         </tr>
         <tr>
-          <td>Talita Panassol</td>
+          <td>Carla Ferraz Gomes</td>
           <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">76</td>
+          <td style="text-align:center;font-weight:600;">47</td>
           <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+4</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+33</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:95.0%;background:#C47A00;border-radius:3px;"></div>
+                <div style="height:100%;width:58.8%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">95.0%</span>
+              <span style="font-size:11px;color:#9BA8B5;">58.8%</span>
             </div>
           </td>
         </tr>
@@ -785,15 +725,15 @@ tr:hover td{background:#FAFBFC}
         <tr>
           <td>Maria Elvira</td>
           <td><span style="background:#EEF2FF;color:#5B6AD0;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Analista</span></td>
-          <td style="text-align:center;font-weight:600;">47</td>
+          <td style="text-align:center;font-weight:600;">39</td>
           <td style="text-align:center;color:#9BA8B5;">80</td>
-          <td style="text-align:center;font-weight:700;color:#1A9957;">+33</td>
+          <td style="text-align:center;font-weight:700;color:#1A9957;">+41</td>
           <td style="text-align:center;">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
               <div style="width:60px;height:5px;background:#E0E6ED;border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:58.8%;background:#1A9957;border-radius:3px;"></div>
+                <div style="height:100%;width:48.8%;background:#1A9957;border-radius:3px;"></div>
               </div>
-              <span style="font-size:11px;color:#9BA8B5;">58.8%</span>
+              <span style="font-size:11px;color:#9BA8B5;">48.8%</span>
             </div>
           </td>
         </tr>
@@ -810,18 +750,18 @@ tr:hover td{background:#FAFBFC}
 // Dados embutidos — visão atual vs corrigida
 const DADOS = {
   atual: {
-    'htn': { esc: 446, cap: 620, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 5 Estagiários (60 esc.)' },
-    'htr': { esc: 343, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' },
-    'mt':  { esc: 272, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' },
-    'pt':  { esc: 194, cap: 240, cor: '#C47A00', status: 'Atenção',  statusCss: 'background:#FFF8E1;color:#C47A00', linha: '3 Analistas (80 esc.) · 0 Estagiários' },
-    'pt40':{ esc:  47, cap:  80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' },
+    'htn': { esc: 352, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' },
+    'htr': { esc: 185, cap: 420, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 3 Estagiários (60 esc.)' },
+    'mt':  { esc: 255, cap: 420, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 7 Estagiários (60 esc.)' },
+    'pt':  { esc: 176, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 0 Estagiários' },
+    'pt40':{ esc:  39, cap:  80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' },
   },
   corrigida: {
-    'htn': { esc: 446, cap: 620, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 5 Estagiários (60 esc.)' },
-    'htr': { esc: 343, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' },
-    'mt':  { esc: 312, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' },
-    'pt':  { esc: 229, cap: 240, cor: '#D32F2F', status: 'Crítico',   statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '3 Analistas (80 esc.) · 0 Estagiários' },
-    'pt40':{ esc:  50, cap:  80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' },
+    'htn': { esc: 384, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' },
+    'htr': { esc: 221, cap: 420, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 3 Estagiários (60 esc.)' },
+    'mt':  { esc: 215, cap: 420, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 7 Estagiários (60 esc.)' },
+    'pt':  { esc: 176, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 0 Estagiários' },
+    'pt40':{ esc:  39, cap:  80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' },
   }
 };
 
@@ -946,7 +886,7 @@ function toggleView() {
 // Inicializar tabela com visão atual
 document.getElementById('tbody-resumo').innerHTML = renderTbody('atual');
 // Inicializar borda do card PT
-document.getElementById('card-pt').style.borderLeft = '5px solid #C47A00';
+document.getElementById('card-pt').style.borderLeft = '5px solid ' + DADOS['atual']['pt'].cor;
 </script>
 </body>
 </html>
