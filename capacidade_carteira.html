@@ -329,5 +329,181 @@ tr:hover td{background:#FAFBFC}
   <div class="footer">Fonte: BigQuery &middot; 27/05/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
 </div>
 </div>
+
+<!-- ── TOGGLE: Visão atual vs. Segmentação corrigida ── -->
+<style>
+.toggle-section{margin-top:32px;margin-bottom:8px}
+.toggle-section .section-title{margin-top:0}
+.toggle-bar{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.toggle-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:8px;border:2px solid #7668AC;
+  background:#7668AC;color:#fff;font-family:'Montserrat',sans-serif;
+  font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;
+  box-shadow:0 2px 6px rgba(118,104,172,.35)
+}
+.toggle-btn.alt{background:#fff;color:#7668AC}
+.toggle-note{
+  font-size:11px;color:#fff;opacity:.75;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  border-radius:8px;padding:7px 14px;flex:1;min-width:200px;line-height:1.6
+}
+.toggle-note strong{color:#F9DC45}
+.seg-table-wrap{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.seg-title{background:#7668AC;color:#fff;padding:16px 22px;font-size:14px;font-weight:800;letter-spacing:.5px}
+.seg-table{width:100%;border-collapse:collapse;font-family:'Montserrat',sans-serif}
+.seg-table th{background:#F3F6F9;color:#595959;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:12px 14px;border-bottom:2px solid #E0E6ED;text-align:right;white-space:nowrap}
+.seg-table th:first-child{text-align:left}
+.seg-table td{padding:13px 14px;border-bottom:1px solid #F0F3F6;font-size:13px;text-align:right;color:#1D1C1D;vertical-align:middle}
+.seg-table td:first-child{text-align:left;font-weight:700}
+.seg-table tr:last-child td{border-bottom:none}
+.seg-table tr:hover td{background:#FAFBFC}
+.seg-table .tot td{background:#F3F6F9;font-weight:800;border-top:2px solid #D0D7E0}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle;flex-shrink:0}
+.saldo-ok{color:#1A9957;font-weight:700}
+.saldo-warn{color:#C47A00;font-weight:700}
+.saldo-bad{color:#C0392B;font-weight:700}
+.diff-pos{color:#C0392B;font-weight:700;font-size:11px}
+.diff-neg{color:#1A9957;font-weight:700;font-size:11px}
+.diff-zero{color:#9BA8B5;font-size:11px}
+.badge-corr{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;background:#E8F5E9;color:#2E7D32;margin-right:6px}
+</style>
+
+<div class="toggle-section">
+  <div class="section-title">Capacidade por Segmento</div>
+  <div class="toggle-bar">
+    <button class="toggle-btn alt" id="seg-toggle-btn" onclick="toggleSegView()">
+      &#x21E8; Ver com segmenta&ccedil;&atilde;o corrigida
+    </button>
+    <div class="toggle-note" id="seg-note">
+      Vis&atilde;o atual: escolas contadas pelo campo <strong>segmentacao_atendimento</strong> de cada deal no CRM.
+    </div>
+  </div>
+  <div class="seg-table-wrap">
+    <div class="seg-title" id="seg-title">Capacidade por Segmento &mdash; Vis&atilde;o Atual</div>
+    <div style="overflow-x:auto">
+    <table class="seg-table" id="seg-table"></table>
+    </div>
+  </div>
+</div>
+
+<script>
+// Dados apurados em 2026-05-27 via BigQuery (crm_ax_raw.ax_deals_temp_)
+// Segmentacao atual  = campo segmentacao_atendimento do deal
+// Segmentacao corrigida = sub_segmento do proprietario B1
+
+const SEG_COLORS = {
+  'High touch - Novas':      '#008ECF',
+  'High touch - Renovação':  '#7668AC',
+  'Medium touch - Renovação':'#1A9957',
+  'Premium touch':            '#C47A00',
+  'Premium touch 40+':        '#C0392B',
+};
+
+// Capacidade: Analista = 80 | Estagiario = 60
+// Fonte: time_de_sucesso.md (27/05/2026)
+const SEG_CAPS = {
+  'High touch - Novas':              {cap:480, desc:'3 Analistas · 4 Estagiários'},
+  'High touch - Renovação':{cap:580, desc:'5 Analistas · 3 Estagiários'},
+  'Medium touch - Renovação':{cap:420, desc:'0 Analistas · 7 Estagiários'},
+  'Premium touch':                   {cap:240, desc:'3 Analistas · 0 Estagiários'},
+  'Premium touch 40+':               {cap:80,  desc:'1 Analista · 0 Estagiários'},
+};
+
+const SEG_ATUAL = [
+  {seg:'High touch - Novas',              escolas:512,  nota:'Estimado pela carteira atual dos B1 de HT Novas'},
+  {seg:'High touch - Renovação',escolas:371,  nota:'Estimado pela carteira atual dos B1 de HT Renovação'},
+  {seg:'Medium touch - Renovação',escolas:409,nota:'B1s de Medium touch com segmentacao_atendimento=Medium touch'},
+  {seg:'Premium touch',                   escolas:176,  nota:'B1s de Premium touch com segmentacao_atendimento=Premium touch'},
+  {seg:'Premium touch 40+',              escolas:39,   nota:'B1s de Premium 40+ com segmentacao_atendimento=Premium touch 40+'},
+];
+
+const SEG_CORRIGIDO = [
+  {seg:'High touch - Novas',              escolas:513,  nota:'Corrigindo deals de Medium/Premium atribuídos a B1s de HT Novas'},
+  {seg:'High touch - Renovação',escolas:475,  nota:'+104 deals migrados de Medium touch e Premium para HT Renovação'},
+  {seg:'Medium touch - Renovação',escolas:429,nota:'Inclui deals hoje marcados como High touch mas com B1 de Medium'},
+  {seg:'Premium touch',                   escolas:200,  nota:'+24 deals de Premium 40+ com B1s de Premium'},
+  {seg:'Premium touch 40+',              escolas:50,   nota:'Após realocar 14 deals para Premium touch e 6 para HT Renovação'},
+];
+
+let segCorrigido = false;
+
+function saldoFmt(escolas, cap){
+  const s = escolas - cap;
+  const cls = s > 40 ? 'saldo-bad' : s > 0 ? 'saldo-warn' : 'saldo-ok';
+  const txt = s > 0 ? '+' + s : String(s);
+  return `<span class="${cls}">${txt}</span>`;
+}
+
+function renderSegTable(){
+  const data = segCorrigido ? SEG_CORRIGIDO : SEG_ATUAL;
+  const dataAlt = segCorrigido ? SEG_ATUAL : SEG_CORRIGIDO;
+  const totalEsc = data.reduce((s,r)=>s+r.escolas,0);
+  const totalCap = Object.values(SEG_CAPS).reduce((s,c)=>s+c.cap,0);
+
+  let html = '<thead><tr>'
+    + '<th>Segmento</th>'
+    + '<th>Escolas</th>'
+    + '<th>Capacidade</th>'
+    + '<th>Saldo</th>'
+    + '<th>Consultores</th>'
+    + (segCorrigido ? '<th>vs. Atual</th>' : '<th>vs. Corrigido</th>')
+    + '</tr></thead><tbody>';
+
+  data.forEach(row => {
+    const ci = SEG_CAPS[row.seg];
+    const cap = ci ? ci.cap : 0;
+    const color = SEG_COLORS[row.seg] || '#888';
+    const alt = dataAlt.find(r => r.seg === row.seg);
+    const diff = alt ? (row.escolas - alt.escolas) : null;
+    const diffStr = diff === null ? '—'
+      : diff > 0 ? '<span class="diff-pos">+' + diff + '</span>'
+      : diff < 0 ? '<span class="diff-neg">' + diff + '</span>'
+      : '<span class="diff-zero">0</span>';
+    html += `<tr title="${row.nota}">
+      <td><span class="dot" style="background:${color}"></span>${row.seg}</td>
+      <td>${row.escolas}</td>
+      <td>${cap}</td>
+      <td>${saldoFmt(row.escolas, cap)}</td>
+      <td style="font-size:11px;color:#9BA8B5">${ci ? ci.desc : '—'}</td>
+      <td>${diffStr}</td>
+    </tr>`;
+  });
+
+  const saldoTotal = totalEsc - totalCap;
+  const saldoCls = saldoTotal > 40 ? 'saldo-bad' : saldoTotal > 0 ? 'saldo-warn' : 'saldo-ok';
+  html += `<tr class="tot">
+    <td>Total (5 segmentos)</td>
+    <td>${totalEsc}</td>
+    <td>${totalCap}</td>
+    <td><span class="${saldoCls}">${saldoTotal > 0 ? '+'+saldoTotal : saldoTotal}</span></td>
+    <td></td><td></td>
+  </tr>`;
+  html += '</tbody>';
+  document.getElementById('seg-table').innerHTML = html;
+}
+
+function toggleSegView(){
+  segCorrigido = !segCorrigido;
+  const btn = document.getElementById('seg-toggle-btn');
+  const note = document.getElementById('seg-note');
+  const title = document.getElementById('seg-title');
+  if(segCorrigido){
+    btn.classList.remove('alt');
+    btn.innerHTML = '⇦ Ver segmentação atual';
+    note.innerHTML = '<span class="badge-corr">✓ Corrigido</span> Segmentação calculada pelo <strong>sub_segmento do B1 proprietário</strong>. Coluna "vs. Atual" mostra a variação de escolas.';
+    title.innerHTML = 'Capacidade por Segmento &mdash; Segmenta&ccedil;&atilde;o Corrigida';
+  } else {
+    btn.classList.add('alt');
+    btn.innerHTML = '⇨ Ver com segmentação corrigida';
+    note.innerHTML = 'Visão atual: escolas contadas pelo campo <strong>segmentacao_atendimento</strong> de cada deal no CRM.';
+    title.innerHTML = 'Capacidade por Segmento &mdash; Visão Atual';
+  }
+  renderSegTable();
+}
+
+renderSegTable();
+</script>
+
 </body>
 </html>
