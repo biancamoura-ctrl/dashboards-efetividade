@@ -259,7 +259,7 @@ tr:hover td{background:#FAFBFC}
   <div class="section-title" style="margin-top:36px;margin-bottom:14px;">Distribui&ccedil;&atilde;o por Propriet&aacute;rio B1</div>
 
   <div class="table-wrap">
-    <div class="table-title">Escolas por Propriet&aacute;rio B1 &nbsp;&middot;&nbsp; vis&atilde;o atual</div>
+    <div class="table-title" id="tbl-title-b1">Escolas por Propriet&aacute;rio B1 &nbsp;&middot;&nbsp; vis&atilde;o atual</div>
     <div style="overflow-x:auto;">
     <table id="tbl-b1">
       <thead>
@@ -414,6 +414,11 @@ function toggleView() {
 
   updateCards(modoAtual);
   document.getElementById('tbody-resumo').innerHTML = renderTbody(modoAtual);
+  document.getElementById('tbody-b1').innerHTML = renderB1(modoAtual);
+  document.getElementById('tbl-title-b1').innerHTML =
+    modoAtual === 'corrigida'
+      ? 'Escolas por Propriet&aacute;rio B1 &nbsp;&middot;&nbsp; vis&atilde;o corrigida'
+      : 'Escolas por Propriet&aacute;rio B1 &nbsp;&middot;&nbsp; vis&atilde;o atual';
 }
 
 // Inicializar tabela com visão atual
@@ -427,7 +432,7 @@ document.getElementById('tbody-resumo').innerHTML = renderTbody('atual');
 // Proprietarios que nao estao no time: capacidade "—"
 // Formato: [proprietario, segmento, escolas, capacidade_individual]
 // capacidade_individual: numero ou null (para exibir "—")
-const DADOS_B1 = [
+const DADOS_B1_ATUAL = [
   // High touch - Novas — membros do time primeiro (desc escolas), depois Sem B1 e outros
   ['Renata Brandao',               'High touch - Novas', 76,  80],  // Analista
   ['Andreina Ferreira',            'High touch - Novas', 69,  60],  // Estagiario
@@ -488,6 +493,104 @@ const DADOS_B1 = [
   ['(outros)',                     'Premium touch 40+', 10, null],
 ];
 
+// Visao corrigida (segmentacao calculada pelo BI)
+const DADOS_B1_CORRIGIDA = [
+  // High touch - Novas
+  ['Renata Brandao',               'High touch - Novas', 71,  80],
+  ['Andreina Ferreira',            'High touch - Novas', 63,  60],
+  ['Julia Cordeiro Campos',        'High touch - Novas', 61,  60],
+  ['Laura Pagliuzo',               'High touch - Novas', 58,  60],
+  ['Erick Andrade',                'High touch - Novas', 55,  80],
+  ['Maria Eduarda Carvalho',       'High touch - Novas', 53,  80],
+  ['Junior Gomes da Silva',        'High touch - Novas', 29,  60],
+  ['Sem B1',                       'High touch - Novas', 62, null],
+  ['Sarah Moura',                  'High touch - Novas', 11, null],
+  ['Tatiana Portela',              'High touch - Novas',  2, null],
+  ['Helena Cabral Sampaio',        'High touch - Novas',  1, null],
+  ['Giovanna Munhoz',              'High touch - Novas',  1, null],
+  ['Mariana Santana',              'High touch - Novas',  1, null],
+  ['Shelry Solart',                'High touch - Novas',  1, null],
+  ['Thais Borges',                 'High touch - Novas',  1, null],
+  ['Kaian Luis',                   'High touch - Novas',  1, null],
+
+  // High touch - Renovacao
+  ['Larissa Freitas Monteiro',     'High touch - Renovação', 53, 80],
+  ['Thayna Bastos',                'High touch - Renovação', 50, 80],
+  ['Shelry Solart',                'High touch - Renovação', 44, 60],
+  ['Thais Borges',                 'High touch - Renovação', 37, 60],
+  ['Indlayse Ferreira',            'High touch - Renovação', 33, 80],
+  ['Tatiana Portela',              'High touch - Renovação', 23, 80],
+  ['Carla Santos da Silva',        'High touch - Renovação', 14, 60],
+  ['Helena Cabral Sampaio',        'High touch - Renovação',  5, 60],
+  ['Sem B1',                       'High touch - Renovação', 37, null],
+  ['Sarah Moura',                  'High touch - Renovação', 28, null],
+  ['Kaian Luis',                   'High touch - Renovação',  5, null],
+  ['Claudilene Santos Dias',       'High touch - Renovação',  4, null],
+  ['Ana Claudia Almeida',          'High touch - Renovação',  4, null],
+  ['Pamela Miranda',               'High touch - Renovação',  3, null],
+  ['Vivian Cristina',              'High touch - Renovação',  3, null],
+  ['Carla Ferraz',                 'High touch - Renovação',  2, null],
+  ['Maria Elvira',                 'High touch - Renovação',  2, null],
+  ['Mariana Santana',              'High touch - Renovação',  1, null],
+  ['Ana Clara Peres',              'High touch - Renovação',  1, null],
+
+  // Medium touch
+  ['Ana Clara Peres',              'Medium touch', 50, 60],
+  ['Vivian Cristina',              'Medium touch', 47, 60],
+  ['Kaian Luis',                   'Medium touch', 41, 60],
+  ['Sarah Moura',                  'Medium touch', 40, null],
+  ['Pamela Miranda',               'Medium touch', 34, 60],
+  ['Ana Claudia Almeida',          'Medium touch', 26, 60],
+  ['Claudilene Santos Dias',       'Medium touch', 16, 60],
+  ['Sem B1',                       'Medium touch', 54, null],
+  ['Shelry Solart',                'Medium touch', 13, null],
+  ['Tatiana Portela',              'Medium touch', 11, null],
+  ['Thayna Bastos',                'Medium touch',  9, null],
+  ['Laura Pagliuzo',               'Medium touch',  7, null],
+  ['Julia Cordeiro Campos',        'Medium touch',  6, null],
+  ['Renata Brandao',               'Medium touch',  5, null],
+  ['Andreina Ferreira',            'Medium touch',  5, null],
+  ['Indlayse Ferreira',            'Medium touch',  4, null],
+  ['Junior Gomes da Silva',        'Medium touch',  3, null],
+  ['Larissa Freitas Monteiro',     'Medium touch',  3, null],
+  ['Maria Eduarda Carvalho',       'Medium touch',  3, null],
+  ['Carla Santos da Silva',        'Medium touch',  3, null],
+  ['Erick Andrade',                'Medium touch',  3, null],
+  ['Thais Borges',                 'Medium touch',  2, null],
+  ['Helena Cabral Sampaio',        'Medium touch',  1, null],
+  ['Giovanna Munhoz',              'Medium touch',  1, null],
+
+  // Premium touch
+  ['Talita Panassol',              'Premium touch', 75, 80],
+  ['Mariana Santana',              'Premium touch', 57, 80],
+  ['Carla Ferraz',                 'Premium touch', 48, 80],
+  ['Sarah Moura',                  'Premium touch', 23, null],
+  ['Thais Borges',                 'Premium touch', 11, null],
+  ['Carla Santos da Silva',        'Premium touch', 10, null],
+  ['Larissa Freitas Monteiro',     'Premium touch',  7, null],
+  ['Maria Elvira',                 'Premium touch',  6, null],
+  ['Sem B1',                       'Premium touch',  6, null],
+  ['Tatiana Portela',              'Premium touch',  5, null],
+  ['Thayna Bastos',                'Premium touch',  5, null],
+  ['Indlayse Ferreira',            'Premium touch',  4, null],
+  ['Shelry Solart',                'Premium touch',  4, null],
+  ['Claudilene Santos Dias',       'Premium touch',  2, null],
+  ['Giovanna Munhoz',              'Premium touch',  1, null],
+  ['Ana Claudia Almeida',          'Premium touch',  1, null],
+
+  // Premium touch 40+
+  ['Maria Elvira',                 'Premium touch 40+', 41, 80],
+  ['Carla Ferraz',                 'Premium touch 40+',  9, null],
+  ['Mariana Santana',              'Premium touch 40+',  4, null],
+  ['Indlayse Ferreira',            'Premium touch 40+',  3, null],
+  ['Thayna Bastos',                'Premium touch 40+',  2, null],
+  ['Sarah Moura',                  'Premium touch 40+',  2, null],
+  ['Talita Panassol',              'Premium touch 40+',  1, null],
+  ['Thais Borges',                 'Premium touch 40+',  1, null],
+  ['Shelry Solart',                'Premium touch 40+',  1, null],
+  ['Larissa Freitas Monteiro',     'Premium touch 40+',  1, null],
+];
+
 // Cores por segmento para a pill
 const SEG_COLORS = {
   'High touch - Novas':     { bg:'#E6F5EE', color:'#1A7A45' },
@@ -501,11 +604,12 @@ function isSemB1OrOutros(nome) {
   return nome === 'Sem B1' || nome.startsWith('(outros');
 }
 
-function renderB1() {
+function renderB1(modo) {
+  const dados = modo === 'corrigida' ? DADOS_B1_CORRIGIDA : DADOS_B1_ATUAL;
   let html = '';
   let lastSeg = null;
 
-  for (const [prop, seg, escolas, cap] of DADOS_B1) {
+  for (const [prop, seg, escolas, cap] of dados) {
     const isSpecial = isSemB1OrOutros(prop);
     const segChange = seg !== lastSeg;
     lastSeg = seg;
@@ -560,7 +664,7 @@ function renderB1() {
   return html;
 }
 
-document.getElementById('tbody-b1').innerHTML = renderB1();
+document.getElementById('tbody-b1').innerHTML = renderB1('atual');
 </script>
 </body>
 </html>
