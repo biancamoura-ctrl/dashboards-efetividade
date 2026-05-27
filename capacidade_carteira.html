@@ -265,7 +265,8 @@ tr:hover td{background:#FAFBFC}
       <thead>
         <tr>
           <th>Propriet&aacute;rio B1</th>
-          <th>Segmento</th>
+          <th>Segmento do deal</th>
+          <th>Time do B1</th>
           <th style="text-align:center;">Escolas</th>
           <th style="text-align:center;">Capacidade individual</th>
           <th style="text-align:center;">% ocupa&ccedil;&atilde;o</th>
@@ -591,6 +592,63 @@ const DADOS_B1_CORRIGIDA = [
   ['Larissa Freitas Monteiro',     'Premium touch 40+',  1, null],
 ];
 
+// Mapa: nome do B1 (como aparece nos dados) -> segmento oficial no time
+// Fonte: time_de_sucesso.md (atualizado em 27/05/2026)
+const SEGMENTO_OFICIAL = {
+  'Renata Brandao':            'High touch - Novas',
+  'Andreina Ferreira':         'High touch - Novas',
+  'Julia Cordeiro Campos':     'High touch - Novas',
+  'Laura Pagliuzo':            'High touch - Novas',
+  'Erick Andrade':             'High touch - Novas',
+  'Maria Eduarda Carvalho':    'High touch - Novas',
+  'Junior Gomes da Silva':     'High touch - Novas',
+  'Moreno Loss':               'High touch - Novas',
+  'Gabriela Ribeiro':          'High touch - Novas',
+  'Tatiana Portela':           'High touch - Renovação',
+  'Larissa Freitas Monteiro':  'High touch - Renovação',
+  'Thayna Bastos':             'High touch - Renovação',
+  'Shelry Solart':             'High touch - Renovação',
+  'Indlayse Ferreira':         'High touch - Renovação',
+  'Carla Santos da Silva':     'High touch - Renovação',
+  'Helena Cabral Sampaio':     'High touch - Renovação',
+  'Nicole Cavalcante':         'High touch - Renovação',
+  'Ana Clara Peres':           'Medium touch - Renovação',
+  'Vivian Cristina':           'Medium touch - Renovação',
+  'Kaian Luis':                'Medium touch - Renovação',
+  'Pamela Miranda':            'Medium touch - Renovação',
+  'Ana Claudia Almeida':       'Medium touch - Renovação',
+  'Claudilene Santos Dias':    'Medium touch - Renovação',
+  'Giovanna Munhoz':           'Medium touch - Renovação',
+  'Stefany Figueredo':         'Medium touch - Renovação',
+  'Talita Panassol':           'Premium touch',
+  'Mariana Santana':           'Premium touch',
+  'Carla Ferraz':              'Premium touch',
+  'Carine Leite':              'Premium touch',
+  'Julia Loubach':             'Premium touch 40+',
+  'Maria Elvira':              'Premium touch 40+',
+  'Sarah Moura':               'Redes',
+  'Jennifer dos Anjos':        'SEDUC',
+  'Veronica Carvalho':         'Squad Confirmação',
+  'Agatha Cruz':               'Squad Reagendamento',
+  'Mariana Mazzero':           'Squad Reagendamento',
+  'Maria Clara Lima':          'Backup',
+  'Thais Borges':              'Backup',
+};
+
+// Cores por segmento para a pill do "Time do B1"
+const TIME_COLORS = {
+  'High touch - Novas':          { bg:'#E6F5EE', color:'#1A7A45' },
+  'High touch - Renovação':  { bg:'#E8F4FB', color:'#0A6696' },
+  'Medium touch - Renovação':{ bg:'#FFF3E0', color:'#B35E00' },
+  'Premium touch':               { bg:'#F3E8FF', color:'#6B21A8' },
+  'Premium touch 40+':           { bg:'#FDE8F0', color:'#A2174F' },
+  'Redes':                       { bg:'#E8F5E9', color:'#2E7D32' },
+  'SEDUC':                       { bg:'#E3F2FD', color:'#1565C0' },
+  'Squad Confirmação':{ bg:'#FFF8E1', color:'#F57F17' },
+  'Squad Reagendamento':         { bg:'#FCE4EC', color:'#880E4F' },
+  'Backup':                      { bg:'#F3E5F5', color:'#6A1B9A' },
+};
+
 // Cores por segmento para a pill
 const SEG_COLORS = {
   'High touch - Novas':     { bg:'#E6F5EE', color:'#1A7A45' },
@@ -602,6 +660,11 @@ const SEG_COLORS = {
 
 function isSemB1OrOutros(nome) {
   return nome === 'Sem B1' || nome.startsWith('(outros');
+}
+
+// Normaliza segmento para comparar compatibilidade (ex: "Medium touch" ~ "Medium touch - Renovação")
+function normalSeg(s) {
+  return s.replace(' - Renovação', '').replace(' - Novas', '');
 }
 
 function renderB1(modo) {
@@ -634,6 +697,20 @@ function renderB1(modo) {
       ? `<span style="display:inline-block;background:${sc.bg};color:${sc.color};font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;">${seg}</span>`
       : '';
 
+    // Coluna "Time do B1": segmento oficial do time_de_sucesso.md
+    let timePill = '<span style="color:#9BA8B5;font-size:12px;">—</span>';
+    if (!isSpecial) {
+      const segOficial = SEGMENTO_OFICIAL[prop];
+      if (segOficial) {
+        const tc = TIME_COLORS[segOficial] || { bg:'#F3F6F9', color:'#595959' };
+        // Destaque visual quando o segmento do deal diverge do time oficial do B1
+        // Normaliza para comparar: "Medium touch - Renovação" e "Medium touch" são considerados compatíveis
+        const diverge = normalSeg(segOficial) !== normalSeg(seg);
+        const borderStyle = diverge ? `border:1.5px solid ${tc.color};` : '';
+        timePill = `<span style="display:inline-block;background:${tc.bg};color:${tc.color};font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;${borderStyle}">${segOficial}</span>`;
+      }
+    }
+
     // linha separadora visual entre segmentos (exceto primeira)
     const borderTop = segChange && html !== '' ? 'border-top:2px solid #E8ECF2;' : '';
 
@@ -644,6 +721,7 @@ function renderB1(modo) {
     html += `<tr style="${borderTop}">
       <td style="${nameStyle}">${prop}</td>
       <td>${segPill}</td>
+      <td>${timePill}</td>
       <td style="text-align:center;font-weight:700;font-size:14px;">${escolas}</td>
       <td style="text-align:center;color:#9BA8B5;font-size:13px;">${capStr}</td>
       <td style="text-align:center;">`;
