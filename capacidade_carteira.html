@@ -79,9 +79,9 @@ tr:hover td{background:#FAFBFC}
 
   <!-- Nota explicativa (visível só na visão corrigida) -->
   <div class="diff-note" id="diffNote" style="display:none">
-    <strong>Visão corrigida:</strong> redistribui as escolas pelo segmento real do B1 proprietário (conforme <em>time_de_sucesso.md</em>).
-    Escolas cujo deal está marcado como Medium touch, Premium touch ou Premium touch 40+ mas cujo B1 é de outro time são realocadas para o segmento correto.
-    O total de <strong>1.539</strong> escolas distribui-se conforme o segmento do deal no BigQuery.
+    <strong>Visão corrigida:</strong> aplica a segmentação calculada pelo BI para as <strong>202 escolas com segmentação divergente hoje</strong>.
+    Para essas escolas, substitui o segmento atual do CRM pelo segmento que o BI calcula como correto (baseado em alunos, receita e tipo de escola).
+    As demais escolas mantêm a segmentação atual.
   </div>
 
   <div class="card-grid" id="cardGrid">
