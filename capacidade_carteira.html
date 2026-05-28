@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saúde de Carteiras &middot; Relacionamento &mdash; 27/05/2026</title>
+<title>Sa&uacute;de de Carteiras &middot; Relacionamento &mdash; 28/05/2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -30,17 +30,12 @@ tr:hover td{background:#FAFBFC}
 .nota-box strong{color:#F9DC45}
 .footer{text-align:center;margin-top:32px;font-size:11px;color:#fff;opacity:.4;font-weight:600}
 @media(max-width:700px){.card-grid{grid-template-columns:1fr}.table-wrap{overflow-x:auto}}
-
-/* Toggle button */
 .toggle-wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px;margin-top:28px}
 .toggle-wrap .section-title{margin:0}
 .toggle-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 16px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;cursor:pointer;transition:background .15s,border-color .15s;white-space:nowrap}
 .toggle-btn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.6)}
 .toggle-btn.active{background:#F9DC45;color:#3B2D8F;border-color:#F9DC45}
 .toggle-btn .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
-.view-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 10px;border-radius:999px;margin-bottom:6px}
-.view-badge.atual{background:rgba(255,255,255,.15);color:#fff}
-.view-badge.corrigida{background:#F9DC45;color:#3B2D8F}
 .diff-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle}
 .diff-up{background:#FFF3E0;color:#E65100}
 .diff-note{background:rgba(249,220,69,.18);border:1px solid rgba(249,220,69,.4);border-radius:10px;padding:12px 16px;font-size:11.5px;line-height:1.7;color:#fff;opacity:.9;margin-bottom:20px}
@@ -52,7 +47,7 @@ tr:hover td{background:#FAFBFC}
 <div class="container">
   <div class="brand-name">Estante <span>M&aacute;gica</span></div>
   <div class="tagline">CS Ops &nbsp;&middot;&nbsp; Relacionamento</div>
-  <div class="date-line">Saúde de Carteiras &nbsp;&middot;&nbsp; 27/05/2026</div>
+  <div class="date-line">Sa&uacute;de de Carteiras &nbsp;&middot;&nbsp; 28/05/2026</div>
 
   <a href="analises_hub.html" class="back-link">&#8592; Voltar para An&aacute;lises</a>
 
@@ -64,18 +59,17 @@ tr:hover td{background:#FAFBFC}
   </div>
 
   <div class="nota-box" id="notaBox" style="display:none;">
-    <strong>Metodologia:</strong> Capacidade m&aacute;xima por consultor &mdash; <strong>80 escolas para Analistas</strong> e <strong>60 escolas para Estagiários</strong>.
+    <strong>Metodologia:</strong> Capacidade m&aacute;xima por consultor &mdash; <strong>80 escolas para Analistas</strong> e <strong>60 escolas para Estagi&aacute;rios</strong>.
     Considera apenas consultores ativos (excluindo Supervisores e Coordena&ccedil;&atilde;o).
     <br>
     <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos, Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas, Ciclo de Eventos e Retra&ccedil;&atilde;o &middot; excluindo Low touch.
-    High touch e Medium touch exigem <em>data_da_reuniao_bv_concluida</em> preenchida; Premium touch e Premium touch 40+ n&atilde;o t&ecirc;m essa restri&ccedil;&atilde;o.
+    High touch e Medium touch exigem <em>data_da_reuniao_bv_concluida</em> preenchida ou baldinho Renova&ccedil;&atilde;o; Premium touch n&atilde;o t&ecirc;m essa restri&ccedil;&atilde;o.
     <br>
-    Classifica&ccedil;&atilde;o do consultor pelo time (<strong>time_de_sucesso.md</strong>); HT separado em Novas e Renova&ccedil;&atilde;o pelo campo <em>baldinho</em>: <strong>HT Renova&ccedil;&atilde;o</strong> = <em>baldinho = &lsquo;Renova&ccedil;&atilde;o&rsquo;</em> &middot; <strong>HT Novas</strong> = demais valores ou nulo.
+    <strong>Vis&atilde;o corrigida:</strong> substitu&iacute; o segmento do CRM pelo segmento registrado no CSV do time (Time de sucesso - Time.csv) para cada consultor.
     <br><br>
     <strong>Saldo positivo</strong> = capacidade dispon&iacute;vel &middot; <strong>Saldo negativo</strong> = necessidade de contrata&ccedil;&atilde;o (estimativa: 1 Estagi&aacute;rio = 60 escolas).
   </div>
 
-  <!-- Toggle de visão -->
   <div class="toggle-wrap">
     <div class="section-title" id="section-resumo-title">Resumo por Segmento</div>
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -90,163 +84,14 @@ tr:hover td{background:#FAFBFC}
     </div>
   </div>
 
-  <!-- Nota explicativa (visível só na visão corrigida, colapsada por padrão) -->
   <div class="diff-note" id="diffNote" style="display:none">
-    <strong>Visão corrigida:</strong> aplica a segmentação calculada pelo BI para as <strong>202 escolas com segmentação divergente hoje</strong>.
-    Para essas escolas, substitui o segmento atual do CRM pelo segmento que o BI calcula como correto (baseado em alunos, receita e tipo de escola).
-    As demais escolas mantêm a segmentação atual.
+    <strong>Vis&atilde;o corrigida:</strong> aplica a segmenta&ccedil;&atilde;o do CSV do time para os consultores cadastrados.
+    Para esses consultores, substitu&iacute; o segmento atual do CRM pelo segmento registrado no arquivo <em>Time de sucesso - Time.csv</em>.
+    As demais escolas (sem B1 no time ou segmento n&atilde;o mapeado) mantêm a segmenta&ccedil;&atilde;o atual.
   </div>
 
-  <div class="card-grid" id="cardGrid">
+  <div class="card-grid" id="cardGrid"></div>
 
-  <!-- High touch - Novas -->
-  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-      <div style="font-weight:800;font-size:14px;color:#1D1C1D;">High touch - Novas</div>
-      <span id="badge-htn" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div>
-        <div id="val-htn-esc" style="font-size:22px;font-weight:900;color:#008ECF;">515</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
-      </div>
-      <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">620</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
-      </div>
-      <div>
-        <div id="val-htn-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+105</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
-      </div>
-    </div>
-    <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-htn" style="height:100%;width:83.1%;background:#C47A00;border-radius:4px;"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) &middot; 5 Estagi&aacute;rios (60 esc.)</div>
-      <div id="pct-htn" style="font-size:11px;color:#9BA8B5;">83.1% utilizado</div>
-    </div>
-  </div>
-
-  <!-- High touch - Renovação -->
-  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-      <div style="font-weight:800;font-size:14px;color:#1D1C1D;">High touch - Renova&ccedil;&atilde;o</div>
-      <span id="badge-htr" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div>
-        <div id="val-htr-esc" style="font-size:22px;font-weight:900;color:#008ECF;">340</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
-      </div>
-      <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">560</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
-      </div>
-      <div>
-        <div id="val-htr-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+220</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
-      </div>
-    </div>
-    <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-htr" style="height:100%;width:60.7%;background:#1A9957;border-radius:4px;"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) &middot; 4 Estagi&aacute;rios (60 esc.)</div>
-      <div id="pct-htr" style="font-size:11px;color:#9BA8B5;">60.7% utilizado</div>
-    </div>
-  </div>
-
-  <!-- Medium touch -->
-  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;" id="card-mt">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-      <div style="font-weight:800;font-size:14px;color:#1D1C1D;">Medium touch</div>
-      <span id="badge-mt" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div>
-        <div id="val-mt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">358</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
-      </div>
-      <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">480</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
-      </div>
-      <div>
-        <div id="val-mt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+122</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
-      </div>
-    </div>
-    <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-mt" style="height:100%;width:74.6%;background:#1A9957;border-radius:4px;"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">0 Analistas &middot; 8 Estagi&aacute;rios (60 esc.)</div>
-      <div id="pct-mt" style="font-size:11px;color:#9BA8B5;">74.6% utilizado</div>
-    </div>
-  </div>
-
-  <!-- Premium touch -->
-  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #D32F2F;" id="card-pt">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-      <div style="font-weight:800;font-size:14px;color:#1D1C1D;">Premium touch</div>
-      <span id="badge-pt" style="background:#FFEBEE;color:#D32F2F;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Acima da capacidade</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div>
-        <div id="val-pt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">262</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
-      </div>
-      <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">240</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
-      </div>
-      <div>
-        <div id="val-pt-saldo" style="font-size:22px;font-weight:900;color:#D32F2F;">&#8722;22</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
-      </div>
-    </div>
-    <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-pt" style="height:100%;width:100%;background:#D32F2F;border-radius:4px;"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">3 Analistas (80 esc.) &middot; 0 Estagi&aacute;rios</div>
-      <div id="pct-pt" style="font-size:11px;color:#D32F2F;">109.2% utilizado</div>
-    </div>
-  </div>
-
-  <!-- Premium touch 40+ -->
-  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-      <div style="font-weight:800;font-size:14px;color:#1D1C1D;">Premium touch 40+</div>
-      <span id="badge-pt40" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saud&aacute;vel</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div>
-        <div id="val-pt40-esc" style="font-size:22px;font-weight:900;color:#008ECF;">64</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
-      </div>
-      <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">80</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
-      </div>
-      <div>
-        <div id="val-pt40-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+16</div>
-        <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
-      </div>
-    </div>
-    <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-pt40" style="height:100%;width:80.0%;background:#C47A00;border-radius:4px;"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) &middot; 0 Estagi&aacute;rios</div>
-      <div id="pct-pt40" style="font-size:11px;color:#9BA8B5;">80.0% utilizado</div>
-    </div>
-  </div>
-
-  </div>
-
-  <!-- Tabela consolidada -->
   <div class="table-wrap">
     <div class="table-title" id="tbl-title-resumo">Tabela Consolidada de Capacidade</div>
     <div style="overflow-x:auto;">
@@ -261,14 +106,11 @@ tr:hover td{background:#FAFBFC}
           <th style="text-align:center;">Contratar</th>
         </tr>
       </thead>
-      <tbody id="tbody-resumo">
-        <!-- gerado pelo JS -->
-      </tbody>
+      <tbody id="tbody-resumo"></tbody>
     </table>
     </div>
   </div>
 
-  <!-- Tabela distribuicao por proprietario B1 -->
   <div class="section-title" style="margin-top:36px;margin-bottom:14px;">Distribui&ccedil;&atilde;o por Propriet&aacute;rio B1</div>
 
   <div class="table-wrap">
@@ -284,98 +126,135 @@ tr:hover td{background:#FAFBFC}
           <th style="text-align:center;">% ocupa&ccedil;&atilde;o</th>
         </tr>
       </thead>
-      <tbody id="tbody-b1">
-        <!-- gerado pelo JS -->
-      </tbody>
+      <tbody id="tbody-b1"></tbody>
     </table>
     </div>
   </div>
 
-  <div class="footer">Fonte: BigQuery (ax_deals_temp_) &middot; 27/05/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
+  <div class="footer">Fonte: BigQuery (ax_deals_temp_) + Time de sucesso - Time.csv &middot; 28/05/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
 </div>
 </div>
 
 <script>
-// Dados embutidos — visão atual vs corrigida
 const DADOS = {
-  atual: {
-    'htn': { esc: 515, cap: 620, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 5 Estagiários (60 esc.)' },
-    'htr': { esc: 340, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' },
-    'mt':  { esc: 358, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' },
-    'pt':  { esc: 262, cap: 240, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '3 Analistas (80 esc.) · 0 Estagiários' },
-    'pt40':{ esc:  64, cap:  80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' },
-  },
-  corrigida: {
-    'htn': { esc: 471, cap: 620, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 5 Estagiários (60 esc.)' },
-    'htr': { esc: 349, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' },
-    'mt':  { esc: 387, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' },
-    'pt':  { esc: 265, cap: 240, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '3 Analistas (80 esc.) · 0 Estagiários' },
-    'pt40':{ esc:  65, cap:  80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' },
-  }
+  atual:    {"htn": {"esc": 1087, "cap": 1240, "cor": "#C47A00", "status": "Atenção", "statusCss": "background:#FFF5D6;color:#C47A00", "linha": "8 Analistas (80 esc.) · 10 Estagiários (60 esc.)"}, "htr": {"esc": 53, "cap": 140, "cor": "#1A9957", "status": "Saudável", "statusCss": "background:#E6F5EE;color:#1A9957", "linha": "1 Analista (80 esc.) · 1 Estagiário (60 esc.)"}, "mt": {"esc": 567, "cap": 620, "cor": "#C47A00", "status": "Atenção", "statusCss": "background:#FFF5D6;color:#C47A00", "linha": "1 Analista (80 esc.) · 9 Estagiários (60 esc.)"}, "pt": {"esc": 221, "cap": 380, "cor": "#1A9957", "status": "Saudável", "statusCss": "background:#E6F5EE;color:#1A9957", "linha": "4 Analistas (80 esc.) · 1 Estagiário (60 esc.)"}, "pt40": {"esc": 54, "cap": 160, "cor": "#1A9957", "status": "Saudável", "statusCss": "background:#E6F5EE;color:#1A9957", "linha": "2 Analistas (80 esc.)"}},
+  corrigida:{"htn": {"esc": 1087, "cap": 1240, "cor": "#C47A00", "status": "Atenção", "statusCss": "background:#FFF5D6;color:#C47A00", "linha": "8 Analistas (80 esc.) · 10 Estagiários (60 esc.)"}, "htr": {"esc": 53, "cap": 140, "cor": "#1A9957", "status": "Saudável", "statusCss": "background:#E6F5EE;color:#1A9957", "linha": "1 Analista (80 esc.) · 1 Estagiário (60 esc.)"}, "mt": {"esc": 567, "cap": 620, "cor": "#C47A00", "status": "Atenção", "statusCss": "background:#FFF5D6;color:#C47A00", "linha": "1 Analista (80 esc.) · 9 Estagiários (60 esc.)"}, "pt": {"esc": 221, "cap": 380, "cor": "#1A9957", "status": "Saudável", "statusCss": "background:#E6F5EE;color:#1A9957", "linha": "4 Analistas (80 esc.) · 1 Estagiário (60 esc.)"}, "pt40": {"esc": 54, "cap": 160, "cor": "#1A9957", "status": "Saudável", "statusCss": "background:#E6F5EE;color:#1A9957", "linha": "2 Analistas (80 esc.)"}},
+};
+const DADOS_B1 = {
+  atual:    [{"nome": "carla.santosdasilva@estantemagica.com.br", "email": "carla.santosdasilva@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Estagiário", "escolas": 85, "cap": 60}, {"nome": "tatiana.portela@estantemagica.com.br", "email": "tatiana.portela@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Analista", "escolas": 83, "cap": 80}, {"nome": "thayna.bastos@estantemagica.com.br", "email": "thayna.bastos@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Analista", "escolas": 82, "cap": 80}, {"nome": "shelry.solart@estantemagica.com.br", "email": "shelry.solart@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Estagiário", "escolas": 79, "cap": 60}, {"nome": "renata.brandao@estantemagica.com.br", "email": "renata.brandao@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Analista", "escolas": 76, "cap": 80}, {"nome": "larissa.freitas@estantemagica.com.br", "email": "larissa.freitas@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Analista", "escolas": 73, "cap": 80}, {"nome": "indlayse.ferreira@estantemagica.com.br", "email": "indlayse.ferreira@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Analista", "escolas": 71, "cap": 80}, {"nome": "andreina.ferreira@estantemagica.com.br", "email": "andreina.ferreira@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 69, "cap": 60}, {"nome": "julia.cordeiro@estantemagica.com.br", "email": "julia.cordeiro@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 67, "cap": 60}, {"nome": "laura.pagliuzo@estantemagica.com.br", "email": "laura.pagliuzo@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 65, "cap": 60}, {"nome": "gabriela.ribeiro@estantemagica.com.br", "email": "gabriela.ribeiro@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 64, "cap": 60}, {"nome": "thais.borges@estantemagica.com.br", "email": "thais.borges@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Estagiário", "escolas": 61, "cap": 60}, {"nome": "erick.andrade@estantemagica.com.br", "email": "erick.andrade@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Analista", "escolas": 59, "cap": 80}, {"nome": "mariaeduarda.carvalho@estantemagica.com.br", "email": "mariaeduarda.carvalho@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Analista", "escolas": 57, "cap": 80}, {"nome": "nicole.cavalcante@estantemagica.com.br", "email": "nicole.cavalcante@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Estagiário", "escolas": 44, "cap": 60}, {"nome": "junior.gomes@estantemagica.com.br", "email": "junior.gomes@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 34, "cap": 60}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "Redes", "cargo": "Analista", "escolas": 17, "cap": 80}, {"nome": "jennifer.anjos@estantemagica.com.br", "email": "jennifer.anjos@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "SEDUC", "cargo": "Estagiário", "escolas": 1, "cap": 60}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "High touch - Renovação", "segOficial": "Redes", "cargo": "Analista", "escolas": 36, "cap": 80}, {"nome": "helena.cabral@estantemagica.com.br", "email": "helena.cabral@estantemagica.com.br", "seg": "High touch - Renovação", "segOficial": "", "cargo": "", "escolas": 11, "cap": null}, {"nome": "jennifer.anjos@estantemagica.com.br", "email": "jennifer.anjos@estantemagica.com.br", "seg": "High touch - Renovação", "segOficial": "SEDUC", "cargo": "Estagiário", "escolas": 6, "cap": 60}, {"nome": "viviancristina.souza@estantemagica.com.br", "email": "viviancristina.souza@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 71, "cap": 60}, {"nome": "anaclara.peres@estantemagica.com.br", "email": "anaclara.peres@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 68, "cap": 60}, {"nome": "giovanna.munhoz@estantemagica.com.br", "email": "giovanna.munhoz@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 66, "cap": 60}, {"nome": "pamela.miranda@estantemagica.com.br", "email": "pamela.miranda@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 66, "cap": 60}, {"nome": "kaian.silva@estantemagica.com.br", "email": "kaian.silva@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 64, "cap": 60}, {"nome": "claudilene.dias@estantemagica.com.br", "email": "claudilene.dias@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 62, "cap": 60}, {"nome": "stefany.figueredo@estantemagica.com.br", "email": "stefany.figueredo@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 62, "cap": 60}, {"nome": "anaclaudia.almeida@estantemagica.com.br", "email": "anaclaudia.almeida@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 61, "cap": 60}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Redes", "cargo": "Analista", "escolas": 36, "cap": 80}, {"nome": "jennifer.anjos@estantemagica.com.br", "email": "jennifer.anjos@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "SEDUC", "cargo": "Estagiário", "escolas": 9, "cap": 60}, {"nome": "helena.cabral@estantemagica.com.br", "email": "helena.cabral@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "", "cargo": "", "escolas": 2, "cap": null}, {"nome": "talita.panassol@estantemagica.com.br", "email": "talita.panassol@estantemagica.com.br", "seg": "Premium touch", "segOficial": "Premium touch", "cargo": "Analista", "escolas": 76, "cap": 80}, {"nome": "mariana.santana@estantemagica.com.br", "email": "mariana.santana@estantemagica.com.br", "seg": "Premium touch", "segOficial": "Premium touch", "cargo": "Analista", "escolas": 63, "cap": 80}, {"nome": "carla.gomes@estantemagica.com.br", "email": "carla.gomes@estantemagica.com.br", "seg": "Premium touch", "segOficial": "Premium touch", "cargo": "Analista", "escolas": 59, "cap": 80}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "Premium touch", "segOficial": "Redes", "cargo": "Analista", "escolas": 22, "cap": 80}, {"nome": "jennifer.anjos@estantemagica.com.br", "email": "jennifer.anjos@estantemagica.com.br", "seg": "Premium touch", "segOficial": "SEDUC", "cargo": "Estagiário", "escolas": 1, "cap": 60}, {"nome": "maria.elvira@estantemagica.com.br", "email": "maria.elvira@estantemagica.com.br", "seg": "Premium touch 40+", "segOficial": "Premium touch 40+", "cargo": "Analista", "escolas": 52, "cap": 80}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "Premium touch 40+", "segOficial": "Redes", "cargo": "Analista", "escolas": 2, "cap": 80}],
+  corrigida:[{"nome": "carla.santosdasilva@estantemagica.com.br", "email": "carla.santosdasilva@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Estagiário", "escolas": 85, "cap": 60}, {"nome": "tatiana.portela@estantemagica.com.br", "email": "tatiana.portela@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Analista", "escolas": 83, "cap": 80}, {"nome": "thayna.bastos@estantemagica.com.br", "email": "thayna.bastos@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Analista", "escolas": 82, "cap": 80}, {"nome": "shelry.solart@estantemagica.com.br", "email": "shelry.solart@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Estagiário", "escolas": 79, "cap": 60}, {"nome": "renata.brandao@estantemagica.com.br", "email": "renata.brandao@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Analista", "escolas": 76, "cap": 80}, {"nome": "larissa.freitas@estantemagica.com.br", "email": "larissa.freitas@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Analista", "escolas": 73, "cap": 80}, {"nome": "indlayse.ferreira@estantemagica.com.br", "email": "indlayse.ferreira@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Analista", "escolas": 71, "cap": 80}, {"nome": "andreina.ferreira@estantemagica.com.br", "email": "andreina.ferreira@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 69, "cap": 60}, {"nome": "julia.cordeiro@estantemagica.com.br", "email": "julia.cordeiro@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 67, "cap": 60}, {"nome": "laura.pagliuzo@estantemagica.com.br", "email": "laura.pagliuzo@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 65, "cap": 60}, {"nome": "gabriela.ribeiro@estantemagica.com.br", "email": "gabriela.ribeiro@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 64, "cap": 60}, {"nome": "thais.borges@estantemagica.com.br", "email": "thais.borges@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Estagiário", "escolas": 61, "cap": 60}, {"nome": "erick.andrade@estantemagica.com.br", "email": "erick.andrade@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Analista", "escolas": 59, "cap": 80}, {"nome": "mariaeduarda.carvalho@estantemagica.com.br", "email": "mariaeduarda.carvalho@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Analista", "escolas": 57, "cap": 80}, {"nome": "nicole.cavalcante@estantemagica.com.br", "email": "nicole.cavalcante@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Renovação", "cargo": "Estagiário", "escolas": 44, "cap": 60}, {"nome": "junior.gomes@estantemagica.com.br", "email": "junior.gomes@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "High touch - Novas", "cargo": "Estagiário", "escolas": 34, "cap": 60}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "Redes", "cargo": "Analista", "escolas": 17, "cap": 80}, {"nome": "jennifer.anjos@estantemagica.com.br", "email": "jennifer.anjos@estantemagica.com.br", "seg": "High touch - Novas", "segOficial": "SEDUC", "cargo": "Estagiário", "escolas": 1, "cap": 60}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "High touch - Renovação", "segOficial": "Redes", "cargo": "Analista", "escolas": 36, "cap": 80}, {"nome": "helena.cabral@estantemagica.com.br", "email": "helena.cabral@estantemagica.com.br", "seg": "High touch - Renovação", "segOficial": "", "cargo": "", "escolas": 11, "cap": null}, {"nome": "jennifer.anjos@estantemagica.com.br", "email": "jennifer.anjos@estantemagica.com.br", "seg": "High touch - Renovação", "segOficial": "SEDUC", "cargo": "Estagiário", "escolas": 6, "cap": 60}, {"nome": "viviancristina.souza@estantemagica.com.br", "email": "viviancristina.souza@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 71, "cap": 60}, {"nome": "anaclara.peres@estantemagica.com.br", "email": "anaclara.peres@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 68, "cap": 60}, {"nome": "giovanna.munhoz@estantemagica.com.br", "email": "giovanna.munhoz@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 66, "cap": 60}, {"nome": "pamela.miranda@estantemagica.com.br", "email": "pamela.miranda@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 66, "cap": 60}, {"nome": "kaian.silva@estantemagica.com.br", "email": "kaian.silva@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 64, "cap": 60}, {"nome": "claudilene.dias@estantemagica.com.br", "email": "claudilene.dias@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 62, "cap": 60}, {"nome": "stefany.figueredo@estantemagica.com.br", "email": "stefany.figueredo@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 62, "cap": 60}, {"nome": "anaclaudia.almeida@estantemagica.com.br", "email": "anaclaudia.almeida@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Medium touch - Renovação", "cargo": "Estagiário", "escolas": 61, "cap": 60}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "Redes", "cargo": "Analista", "escolas": 36, "cap": 80}, {"nome": "jennifer.anjos@estantemagica.com.br", "email": "jennifer.anjos@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "SEDUC", "cargo": "Estagiário", "escolas": 9, "cap": 60}, {"nome": "helena.cabral@estantemagica.com.br", "email": "helena.cabral@estantemagica.com.br", "seg": "Medium touch - Renovação", "segOficial": "", "cargo": "", "escolas": 2, "cap": null}, {"nome": "talita.panassol@estantemagica.com.br", "email": "talita.panassol@estantemagica.com.br", "seg": "Premium touch", "segOficial": "Premium touch", "cargo": "Analista", "escolas": 76, "cap": 80}, {"nome": "mariana.santana@estantemagica.com.br", "email": "mariana.santana@estantemagica.com.br", "seg": "Premium touch", "segOficial": "Premium touch", "cargo": "Analista", "escolas": 63, "cap": 80}, {"nome": "carla.gomes@estantemagica.com.br", "email": "carla.gomes@estantemagica.com.br", "seg": "Premium touch", "segOficial": "Premium touch", "cargo": "Analista", "escolas": 59, "cap": 80}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "Premium touch", "segOficial": "Redes", "cargo": "Analista", "escolas": 22, "cap": 80}, {"nome": "jennifer.anjos@estantemagica.com.br", "email": "jennifer.anjos@estantemagica.com.br", "seg": "Premium touch", "segOficial": "SEDUC", "cargo": "Estagiário", "escolas": 1, "cap": 60}, {"nome": "maria.elvira@estantemagica.com.br", "email": "maria.elvira@estantemagica.com.br", "seg": "Premium touch 40+", "segOficial": "Premium touch 40+", "cargo": "Analista", "escolas": 52, "cap": 80}, {"nome": "sarah.moura@estantemagica.com.br", "email": "sarah.moura@estantemagica.com.br", "seg": "Premium touch 40+", "segOficial": "Redes", "cargo": "Analista", "escolas": 2, "cap": 80}],
 };
 
-// Labels das seções para a tabela consolidada
 const SEGS_LABEL = [
-  ['htn', 'High touch - Novas'],
-  ['htr', 'High touch - Renovação'],
-  ['mt',  'Medium touch - Renovação'],
-  ['pt',  'Premium touch'],
+  ['htn','High touch - Novas'],
+  ['htr','High touch - Renoção'],
+  ['mt', 'Medium touch - Renovação'],
+  ['pt', 'Premium touch'],
   ['pt40','Premium touch 40+'],
 ];
+
+const SEG_COLORS = {
+  'htn':  {bg:'#E6F5EE',color:'#1A7A45'},
+  'htr':  {bg:'#E8F4FB',color:'#0A6696'},
+  'mt':   {bg:'#FFF3E0',color:'#B35E00'},
+  'pt':   {bg:'#F3E8FF',color:'#6B21A8'},
+  'pt40': {bg:'#FDE8F0',color:'#A2174F'},
+};
+const TIME_COLORS = {
+  'High touch - Novas':         {bg:'#E6F5EE',color:'#1A7A45'},
+  'High touch - Renoção':  {bg:'#E8F4FB',color:'#0A6696'},
+  'Medium touch - Renovação':{bg:'#FFF3E0',color:'#B35E00'},
+  'Premium touch':              {bg:'#F3E8FF',color:'#6B21A8'},
+  'Premium touch 40+':          {bg:'#FDE8F0',color:'#A2174F'},
+  'Redes':                      {bg:'#E8F5E9',color:'#2E7D32'},
+  'SEDUC':                      {bg:'#E3F2FD',color:'#1565C0'},
+  'Squad Confirmação':{bg:'#FFF8E1',color:'#F57F17'},
+  'Squad Reagendamento':        {bg:'#FCE4EC',color:'#880E4F'},
+};
 
 let modoAtual = 'atual';
 
 function statusColor(pct) {
-  if (pct >= 100) return '#D32F2F';
-  if (pct >= 80)  return '#C47A00';
+  if(pct>=100) return '#D32F2F';
+  if(pct>=80)  return '#C47A00';
   return '#1A9957';
+}
+
+function renderCards(modo) {
+  const d = DADOS[modo];
+  let html = '';
+  const segColors = {'htn':'#1A9957','htr':'#1A9957','mt':'#1A9957','pt':'#D32F2F','pt40':'#1A9957'};
+  for(const [key,label] of SEGS_LABEL) {
+    const v = d[key];
+    if(!v) continue;
+    const saldo = v.cap - v.esc;
+    const pct   = v.cap>0 ? Math.round(v.esc/v.cap*1000)/10 : 0;
+    const pctStr = pct+'% utilizado';
+    const saldoColor = saldo>=0?'#1A9957':'#D32F2F';
+    const saldoStr   = saldo>=0?'+'+saldo:'−'+Math.abs(saldo);
+    const barColor   = statusColor(pct);
+    const barW       = Math.min(pct,100);
+    const statusTxt  = pct>=100?'Acima da capacidade':pct>=80?'Atenção':'Saudável';
+    const statusCss  = pct>=100?'background:#FFEBEE;color:#D32F2F':pct>=80?'background:#FFF5D6;color:#C47A00':'background:#E6F5EE;color:#1A9957';
+    const borderColor = barColor;
+    html += `<div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid ${borderColor};">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-weight:800;font-size:14px;color:#1D1C1D;">${label}</div>
+        <span style="${statusCss};padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">${statusTxt}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
+        <div><div style="font-size:22px;font-weight:900;color:#008ECF;">${v.esc}</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+        <div><div style="font-size:22px;font-weight:900;color:#7668AC;">${v.cap}</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
+        <div><div style="font-size:22px;font-weight:900;color:${saldoColor};">${saldoStr}</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      </div>
+      <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
+        <div style="height:100%;width:${barW}%;background:${barColor};border-radius:4px;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:5px;">
+        <div style="font-size:11px;color:#9BA8B5;">${v.linha}</div>
+        <div style="font-size:11px;color:#9BA8B5;">${pctStr}</div>
+      </div>
+    </div>`;
+  }
+  document.getElementById('cardGrid').innerHTML = html;
 }
 
 function renderTbody(modo) {
   const d = DADOS[modo];
-  let html = '';
-  let totalEsc = 0, totalCap = 0;
-  for (const [key, label] of SEGS_LABEL) {
-    const v = d[key];
+  let html = '', totalEsc=0, totalCap=0;
+  for(const [key,label] of SEGS_LABEL) {
+    const v = d[key]; if(!v) continue;
     const saldo = v.cap - v.esc;
-    const pct = Math.round(v.esc / v.cap * 1000) / 10;
-    const saldoColor = saldo >= 0 ? '#1A9957' : '#D32F2F';
-    const saldoStr = saldo >= 0 ? '+' + saldo : '−' + Math.abs(saldo);
-    const barColor = statusColor(pct);
-    const barW = Math.min(pct, 100);
-    const contratar = saldo < 0 ? Math.ceil(Math.abs(saldo) / 60) + ' Estag.' : '—';
-    totalEsc += v.esc; totalCap += v.cap;
-
-    // Tag de diferenca
+    const pct   = v.cap>0?Math.round(v.esc/v.cap*1000)/10:0;
+    const saldoColor = saldo>=0?'#1A9957':'#D32F2F';
+    const saldoStr   = saldo>=0?'+'+saldo:'−'+Math.abs(saldo);
+    const barColor   = statusColor(pct);
+    const barW       = Math.min(pct,100);
+    const contratar  = saldo<0?Math.ceil(Math.abs(saldo)/60)+' Estag.':'—';
+    totalEsc+=v.esc; totalCap+=v.cap;
     const dAtual = DADOS.atual[key];
-    const diff = v.esc - dAtual.esc;
-    const diffTag = (modo === 'corrigida' && diff !== 0)
-      ? '<span class="diff-tag diff-up">' + (diff > 0 ? '+' : '') + diff + '</span>'
-      : '';
-
+    const diff = v.esc - (dAtual?.esc||0);
+    const diffTag = (modo==='corrigida'&&diff!==0)
+      ? `<span class="diff-tag diff-up">${diff>0?'+':''}${diff}</span>` : '';
     html += `<tr>
-      <td>
-        <div style="font-weight:700;font-size:13px;color:#1D1C1D;">${label}${diffTag}</div>
-        <div style="font-size:11px;color:#9BA8B5;margin-top:2px;">${v.linha}</div>
-      </td>
+      <td><div style="font-weight:700;font-size:13px;color:#1D1C1D;">${label}${diffTag}</div>
+          <div style="font-size:11px;color:#9BA8B5;margin-top:2px;">${v.linha}</div></td>
       <td style="text-align:center;font-weight:700;font-size:15px;">${v.esc}</td>
-      <td style="text-align:center;">
-        <div style="font-weight:700;">${v.cap}</div>
-        <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;">
-          <div style="height:100%;width:${barW}%;background:${barColor};border-radius:3px;"></div>
-        </div>
-        <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">${pct}% utilizado</div>
-      </td>
+      <td style="text-align:center;"><div style="font-weight:700;">${v.cap}</div>
+          <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;">
+            <div style="height:100%;width:${barW}%;background:${barColor};border-radius:3px;"></div>
+          </div>
+          <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">${pct}% utilizado</div></td>
       <td style="text-align:center;"><span style="font-weight:800;font-size:16px;color:${saldoColor};">${saldoStr}</span></td>
       <td style="text-align:center;"><span style="${v.statusCss};padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">${v.status}</span></td>
       <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">${contratar}</span></td>
     </tr>`;
   }
-  const totalSaldo = totalCap - totalEsc;
-  const totalPct = Math.round(totalEsc / totalCap * 1000) / 10;
-  const totalSaldoStr = totalSaldo >= 0 ? '+' + totalSaldo : '−' + Math.abs(totalSaldo);
+  const totalSaldo = totalCap-totalEsc;
+  const totalPct   = totalCap>0?Math.round(totalEsc/totalCap*1000)/10:0;
+  const totalSaldoStr = totalSaldo>=0?'+'+totalSaldo:'−'+Math.abs(totalSaldo);
   html += `<tr style="background:#F3F6F9;border-top:2px solid #D0D7E0;">
-    <td style="font-weight:800;font-size:13px;">Total — 5 segmentos</td>
+    <td style="font-weight:800;font-size:13px;">Total &mdash; 5 segmentos</td>
     <td style="text-align:center;font-weight:800;font-size:15px;">${totalEsc}</td>
     <td style="text-align:center;"><div style="font-weight:800;">${totalCap}</div><div style="font-size:10px;color:#9BA8B5;margin-top:2px;">${totalPct}% utilizado</div></td>
     <td style="text-align:center;"><span style="font-weight:800;font-size:16px;color:#1A9957;">${totalSaldoStr}</span></td>
@@ -385,408 +264,118 @@ function renderTbody(modo) {
   return html;
 }
 
-function updateCards(modo) {
-  const d = DADOS[modo];
-  for (const [key] of SEGS_LABEL) {
-    const v = d[key];
-    const saldo = v.cap - v.esc;
-    const pct = Math.round(v.esc / v.cap * 1000) / 10;
-    const saldoStr = saldo >= 0 ? '+' + saldo : '−' + Math.abs(saldo);
-    const barColor = statusColor(pct);
-    const saldoColor = saldo >= 0 ? '#1A9957' : '#D32F2F';
-
-    const escEl = document.getElementById('val-' + key + '-esc');
-    const saldoEl = document.getElementById('val-' + key + '-saldo');
-    const barEl = document.getElementById('bar-' + key);
-    const pctEl = document.getElementById('pct-' + key);
-    const badgeEl = document.getElementById('badge-' + key);
-
-    if (escEl) escEl.textContent = v.esc;
-    if (saldoEl) { saldoEl.textContent = saldoStr; saldoEl.style.color = saldoColor; }
-    if (barEl) { barEl.style.width = Math.min(pct, 100) + '%'; barEl.style.background = barColor; }
-    if (pctEl) pctEl.textContent = pct + '% utilizado';
-    if (badgeEl) { badgeEl.setAttribute('style', v.statusCss + ';padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;'); badgeEl.textContent = v.status; }
-  }
-}
-
-function toggleView() {
-  modoAtual = modoAtual === 'atual' ? 'corrigida' : 'atual';
-  const btn = document.getElementById('toggleBtn');
-  const label = document.getElementById('toggleLabel');
-  const note = document.getElementById('diffNote');
-  const infoBtn = document.getElementById('diffInfoBtn');
-  const infoLabel = document.getElementById('diffInfoLabel');
-
-  if (modoAtual === 'corrigida') {
-    btn.classList.add('active');
-    label.textContent = 'Ver distribuição atual';
-    infoBtn.style.display = 'inline-flex';
-    // nota permanece oculta até clicar em "Saiba mais"
-    note.style.display = 'none';
-    infoLabel.textContent = 'Saiba mais';
-    infoBtn.classList.remove('active');
-  } else {
-    btn.classList.remove('active');
-    label.innerHTML = 'Ver após ajuste de segmentação';
-    infoBtn.style.display = 'none';
-    note.style.display = 'none';
-    infoLabel.textContent = 'Saiba mais';
-    infoBtn.classList.remove('active');
-  }
-
-  updateCards(modoAtual);
-  document.getElementById('tbody-resumo').innerHTML = renderTbody(modoAtual);
-  document.getElementById('tbody-b1').innerHTML = renderB1(modoAtual);
-  document.getElementById('tbl-title-b1').innerHTML =
-    modoAtual === 'corrigida'
-      ? 'Escolas por Propriet&aacute;rio B1 &nbsp;&middot;&nbsp; vis&atilde;o corrigida'
-      : 'Escolas por Propriet&aacute;rio B1 &nbsp;&middot;&nbsp; vis&atilde;o atual';
-}
-
-function toggleDiffNota() {
-  const note = document.getElementById('diffNote');
-  const btn = document.getElementById('diffInfoBtn');
-  const label = document.getElementById('diffInfoLabel');
-  const isOpen = note.style.display !== 'none';
-  note.style.display = isOpen ? 'none' : 'block';
-  label.textContent = isOpen ? 'Saiba mais' : 'Ocultar';
-  if (isOpen) btn.classList.remove('active');
-  else btn.classList.add('active');
-}
-
-// Inicializar tabela com visão atual
-document.getElementById('tbody-resumo').innerHTML = renderTbody('atual');
-
-// ---------------------------------------------------------------
-// Tabela de distribuicao por proprietario B1
-// ---------------------------------------------------------------
-
-// Capacidade individual por cargo (Analista=80, Estagiario=60)
-// Proprietarios que nao estao no time: capacidade "—"
-// Formato: [proprietario, segmento, escolas, capacidade_individual]
-// capacidade_individual: numero ou null (para exibir "—")
-const DADOS_B1_ATUAL = [
-  // High touch - Novas — membros do time primeiro (desc escolas), depois Sem B1 e outros
-  ['Renata Brandao',               'High touch - Novas', 76,  80],  // Analista
-  ['Andreina Ferreira',            'High touch - Novas', 69,  60],  // Estagiario
-  ['Julia Cordeiro Campos',        'High touch - Novas', 67,  60],  // Estagiario
-  ['Laura Pagliuzo',               'High touch - Novas', 65,  60],  // Estagiario
-  ['Erick Andrade',                'High touch - Novas', 58,  80],  // Analista
-  ['Maria Eduarda Carvalho',       'High touch - Novas', 56,  80],  // Analista
-  ['Junior Gomes da Silva',        'High touch - Novas', 32,  60],  // Estagiario
-  ['Sem B1',                       'High touch - Novas', 66, null],
-  ['Sarah Moura',                  'High touch - Novas', 17, null],  // Redes — fora do time HT Novas
-  ['Tatiana Portela',              'High touch - Novas',  2, null],  // HT Renov — fora do time HT Novas
-  ['(outros fora do time HT Novas)','High touch - Novas', 7, null],
-
-  // High touch - Renovacao — membros do time primeiro, depois Sem B1 e outros
-  ['Larissa Freitas Monteiro',     'High touch - Renovação', 52, 80],  // Analista
-  ['Thayna Bastos',                'High touch - Renovação', 49, 80],  // Analista
-  ['Shelry Solart',                'High touch - Renovação', 46, 60],  // Estagiario
-  ['Thais Borges',                 'High touch - Renovação', 39, 60],  // Estagiario (Thais Souza / Tata)
-  ['Indlayse Ferreira',            'High touch - Renovação', 36, 80],  // Analista
-  ['Tatiana Portela',              'High touch - Renovação', 22, 80],  // Analista
-  ['Carla Santos da Silva',        'High touch - Renovação', 15, 60],  // Estagiario
-  ['Helena Cabral Sampaio',        'High touch - Renovação',  5, 60],  // Estagiario
-  ['Sem B1',                       'High touch - Renovação', 35, null],
-  ['Sarah Moura',                  'High touch - Renovação', 28, null],  // Redes — fora do time HT Renov
-  ['(outros fora do time HT Renov)','High touch - Renovação',13, null],
-
-  // Medium touch — membros do time primeiro, depois Sem B1 e outros
-  ['Ana Clara Peres',              'Medium touch', 51, 60],  // Estagiario
-  ['Vivian Cristina',              'Medium touch', 48, 60],  // Estagiario
-  ['Kaian Luis',                   'Medium touch', 44, 60],  // Estagiario
-  ['Pamela Miranda',               'Medium touch', 37, 60],  // Estagiario
-  ['Ana Claudia Almeida',          'Medium touch', 29, 60],  // Estagiario
-  ['Claudilene Santos Dias',       'Medium touch', 17, 60],  // Estagiario
-  ['Sem B1',                       'Medium touch', 52, null],
-  ['Sarah Moura',                  'Medium touch', 34, null],  // Redes — fora do time MT
-  ['Tatiana Portela',              'Medium touch', 13, null],  // HT Renov — fora do time MT
-  ['Shelry Solart',                'Medium touch', 12, null],  // HT Renov — fora do time MT
-  ['Thayna Bastos',                'Medium touch', 10, null],  // HT Renov — fora do time MT
-  ['Larissa Freitas Monteiro',     'Medium touch',  4, null],  // HT Renov — fora do time MT
-  ['(outros)',                     'Medium touch',  5, null],
-
-  // Premium touch — membros do time primeiro, depois Sem B1 e outros
-  ['Talita Panassol',              'Premium touch', 75, 80],  // Analista
-  ['Mariana Santana',              'Premium touch', 57, 80],  // Analista
-  ['Carla Ferraz',                 'Premium touch', 48, 80],  // Analista
-  ['Sarah Moura',                  'Premium touch', 23, null],  // Redes — fora do time PT
-  ['Thais Borges',                 'Premium touch', 10, null],  // Backup — fora do time PT
-  ['Carla Santos da Silva',        'Premium touch', 10, null],  // HT Renov — fora do time PT
-  ['Larissa Freitas Monteiro',     'Premium touch',  7, null],  // HT Renov — fora do time PT
-  ['Maria Elvira',                 'Premium touch',  6, null],  // PT40+ — fora do time PT
-  ['Sem B1',                       'Premium touch',  6, null],
-  ['(outros)',                     'Premium touch', 20, null],
-
-  // Premium touch 40+ — membros do time primeiro, depois outros
-  ['Maria Elvira',                 'Premium touch 40+', 41, 80],  // Analista
-  ['Carla Ferraz',                 'Premium touch 40+',  9, null],  // PT — fora do time PT40+
-  ['Mariana Santana',              'Premium touch 40+',  4, null],  // PT — fora do time PT40+
-  ['(outros)',                     'Premium touch 40+', 10, null],
-];
-
-// Visao corrigida (segmentacao calculada pelo BI)
-const DADOS_B1_CORRIGIDA = [
-  // High touch - Novas
-  ['Renata Brandao',               'High touch - Novas', 71,  80],
-  ['Andreina Ferreira',            'High touch - Novas', 63,  60],
-  ['Julia Cordeiro Campos',        'High touch - Novas', 61,  60],
-  ['Laura Pagliuzo',               'High touch - Novas', 58,  60],
-  ['Erick Andrade',                'High touch - Novas', 55,  80],
-  ['Maria Eduarda Carvalho',       'High touch - Novas', 53,  80],
-  ['Junior Gomes da Silva',        'High touch - Novas', 29,  60],
-  ['Sem B1',                       'High touch - Novas', 62, null],
-  ['Sarah Moura',                  'High touch - Novas', 11, null],
-  ['Tatiana Portela',              'High touch - Novas',  2, null],
-  ['Helena Cabral Sampaio',        'High touch - Novas',  1, null],
-  ['Giovanna Munhoz',              'High touch - Novas',  1, null],
-  ['Mariana Santana',              'High touch - Novas',  1, null],
-  ['Shelry Solart',                'High touch - Novas',  1, null],
-  ['Thais Borges',                 'High touch - Novas',  1, null],
-  ['Kaian Luis',                   'High touch - Novas',  1, null],
-
-  // High touch - Renovacao
-  ['Larissa Freitas Monteiro',     'High touch - Renovação', 53, 80],
-  ['Thayna Bastos',                'High touch - Renovação', 50, 80],
-  ['Shelry Solart',                'High touch - Renovação', 44, 60],
-  ['Thais Borges',                 'High touch - Renovação', 37, 60],
-  ['Indlayse Ferreira',            'High touch - Renovação', 33, 80],
-  ['Tatiana Portela',              'High touch - Renovação', 23, 80],
-  ['Carla Santos da Silva',        'High touch - Renovação', 14, 60],
-  ['Helena Cabral Sampaio',        'High touch - Renovação',  5, 60],
-  ['Sem B1',                       'High touch - Renovação', 37, null],
-  ['Sarah Moura',                  'High touch - Renovação', 28, null],
-  ['Kaian Luis',                   'High touch - Renovação',  5, null],
-  ['Claudilene Santos Dias',       'High touch - Renovação',  4, null],
-  ['Ana Claudia Almeida',          'High touch - Renovação',  4, null],
-  ['Pamela Miranda',               'High touch - Renovação',  3, null],
-  ['Vivian Cristina',              'High touch - Renovação',  3, null],
-  ['Carla Ferraz',                 'High touch - Renovação',  2, null],
-  ['Maria Elvira',                 'High touch - Renovação',  2, null],
-  ['Mariana Santana',              'High touch - Renovação',  1, null],
-  ['Ana Clara Peres',              'High touch - Renovação',  1, null],
-
-  // Medium touch
-  ['Ana Clara Peres',              'Medium touch', 50, 60],
-  ['Vivian Cristina',              'Medium touch', 47, 60],
-  ['Kaian Luis',                   'Medium touch', 41, 60],
-  ['Sarah Moura',                  'Medium touch', 40, null],
-  ['Pamela Miranda',               'Medium touch', 34, 60],
-  ['Ana Claudia Almeida',          'Medium touch', 26, 60],
-  ['Claudilene Santos Dias',       'Medium touch', 16, 60],
-  ['Sem B1',                       'Medium touch', 54, null],
-  ['Shelry Solart',                'Medium touch', 13, null],
-  ['Tatiana Portela',              'Medium touch', 11, null],
-  ['Thayna Bastos',                'Medium touch',  9, null],
-  ['Laura Pagliuzo',               'Medium touch',  7, null],
-  ['Julia Cordeiro Campos',        'Medium touch',  6, null],
-  ['Renata Brandao',               'Medium touch',  5, null],
-  ['Andreina Ferreira',            'Medium touch',  5, null],
-  ['Indlayse Ferreira',            'Medium touch',  4, null],
-  ['Junior Gomes da Silva',        'Medium touch',  3, null],
-  ['Larissa Freitas Monteiro',     'Medium touch',  3, null],
-  ['Maria Eduarda Carvalho',       'Medium touch',  3, null],
-  ['Carla Santos da Silva',        'Medium touch',  3, null],
-  ['Erick Andrade',                'Medium touch',  3, null],
-  ['Thais Borges',                 'Medium touch',  2, null],
-  ['Helena Cabral Sampaio',        'Medium touch',  1, null],
-  ['Giovanna Munhoz',              'Medium touch',  1, null],
-
-  // Premium touch
-  ['Talita Panassol',              'Premium touch', 75, 80],
-  ['Mariana Santana',              'Premium touch', 57, 80],
-  ['Carla Ferraz',                 'Premium touch', 48, 80],
-  ['Sarah Moura',                  'Premium touch', 23, null],
-  ['Thais Borges',                 'Premium touch', 11, null],
-  ['Carla Santos da Silva',        'Premium touch', 10, null],
-  ['Larissa Freitas Monteiro',     'Premium touch',  7, null],
-  ['Maria Elvira',                 'Premium touch',  6, null],
-  ['Sem B1',                       'Premium touch',  6, null],
-  ['Tatiana Portela',              'Premium touch',  5, null],
-  ['Thayna Bastos',                'Premium touch',  5, null],
-  ['Indlayse Ferreira',            'Premium touch',  4, null],
-  ['Shelry Solart',                'Premium touch',  4, null],
-  ['Claudilene Santos Dias',       'Premium touch',  2, null],
-  ['Giovanna Munhoz',              'Premium touch',  1, null],
-  ['Ana Claudia Almeida',          'Premium touch',  1, null],
-
-  // Premium touch 40+
-  ['Maria Elvira',                 'Premium touch 40+', 41, 80],
-  ['Carla Ferraz',                 'Premium touch 40+',  9, null],
-  ['Mariana Santana',              'Premium touch 40+',  4, null],
-  ['Indlayse Ferreira',            'Premium touch 40+',  3, null],
-  ['Thayna Bastos',                'Premium touch 40+',  2, null],
-  ['Sarah Moura',                  'Premium touch 40+',  2, null],
-  ['Talita Panassol',              'Premium touch 40+',  1, null],
-  ['Thais Borges',                 'Premium touch 40+',  1, null],
-  ['Shelry Solart',                'Premium touch 40+',  1, null],
-  ['Larissa Freitas Monteiro',     'Premium touch 40+',  1, null],
-];
-
-// Mapa: nome do B1 (como aparece nos dados) -> segmento oficial no time
-// Fonte: time_de_sucesso.md (atualizado em 27/05/2026)
-const SEGMENTO_OFICIAL = {
-  'Renata Brandao':            'High touch - Novas',
-  'Andreina Ferreira':         'High touch - Novas',
-  'Julia Cordeiro Campos':     'High touch - Novas',
-  'Laura Pagliuzo':            'High touch - Novas',
-  'Erick Andrade':             'High touch - Novas',
-  'Maria Eduarda Carvalho':    'High touch - Novas',
-  'Junior Gomes da Silva':     'High touch - Novas',
-  'Moreno Loss':               'High touch - Novas',
-  'Gabriela Ribeiro':          'High touch - Novas',
-  'Tatiana Portela':           'High touch - Renovação',
-  'Larissa Freitas Monteiro':  'High touch - Renovação',
-  'Thayna Bastos':             'High touch - Renovação',
-  'Shelry Solart':             'High touch - Renovação',
-  'Indlayse Ferreira':         'High touch - Renovação',
-  'Carla Santos da Silva':     'High touch - Renovação',
-  'Helena Cabral Sampaio':     'High touch - Renovação',
-  'Nicole Cavalcante':         'High touch - Renovação',
-  'Ana Clara Peres':           'Medium touch - Renovação',
-  'Vivian Cristina':           'Medium touch - Renovação',
-  'Kaian Luis':                'Medium touch - Renovação',
-  'Pamela Miranda':            'Medium touch - Renovação',
-  'Ana Claudia Almeida':       'Medium touch - Renovação',
-  'Claudilene Santos Dias':    'Medium touch - Renovação',
-  'Giovanna Munhoz':           'Medium touch - Renovação',
-  'Stefany Figueredo':         'Medium touch - Renovação',
-  'Talita Panassol':           'Premium touch',
-  'Mariana Santana':           'Premium touch',
-  'Carla Ferraz':              'Premium touch',
-  'Carine Leite':              'Premium touch',
-  'Julia Loubach':             'Premium touch 40+',
-  'Maria Elvira':              'Premium touch 40+',
-  'Sarah Moura':               'Redes',
-  'Jennifer dos Anjos':        'SEDUC',
-  'Veronica Carvalho':         'Squad Confirmação',
-  'Agatha Cruz':               'Squad Reagendamento',
-  'Mariana Mazzero':           'Squad Reagendamento',
-  'Maria Clara Lima':          'Backup',
-  'Thais Borges':              'Backup',
-};
-
-// Cores por segmento para a pill do "Time do B1"
-const TIME_COLORS = {
-  'High touch - Novas':          { bg:'#E6F5EE', color:'#1A7A45' },
-  'High touch - Renovação':  { bg:'#E8F4FB', color:'#0A6696' },
-  'Medium touch - Renovação':{ bg:'#FFF3E0', color:'#B35E00' },
-  'Premium touch':               { bg:'#F3E8FF', color:'#6B21A8' },
-  'Premium touch 40+':           { bg:'#FDE8F0', color:'#A2174F' },
-  'Redes':                       { bg:'#E8F5E9', color:'#2E7D32' },
-  'SEDUC':                       { bg:'#E3F2FD', color:'#1565C0' },
-  'Squad Confirmação':{ bg:'#FFF8E1', color:'#F57F17' },
-  'Squad Reagendamento':         { bg:'#FCE4EC', color:'#880E4F' },
-  'Backup':                      { bg:'#F3E5F5', color:'#6A1B9A' },
-};
-
-// Cores por segmento para a linha separadora de grupo
-const SEG_COLORS = {
-  'High touch - Novas':     { bg:'#E6F5EE', color:'#1A7A45', icon:'🟢' },
-  'High touch - Renovação': { bg:'#E8F4FB', color:'#0A6696', icon:'🔵' },
-  'Medium touch':           { bg:'#FFF3E0', color:'#B35E00', icon:'🟡' },
-  'Premium touch':          { bg:'#F3E8FF', color:'#6B21A8', icon:'🟣' },
-  'Premium touch 40+':      { bg:'#FDE8F0', color:'#A2174F', icon:'🔴' },
-};
-
-function isSemB1OrOutros(nome) {
-  return nome === 'Sem B1' || nome.startsWith('(outros');
-}
-
-// Normaliza segmento para comparar compatibilidade (ex: "Medium touch" ~ "Medium touch - Renovação")
-function normalSeg(s) {
-  return s.replace(' - Renovação', '').replace(' - Novas', '');
-}
+const SEG_KEY_LABEL = Object.fromEntries(SEGS_LABEL.map(([k,l])=>[k,l]));
 
 function renderB1(modo) {
-  const dados = modo === 'corrigida' ? DADOS_B1_CORRIGIDA : DADOS_B1_ATUAL;
+  const dados = DADOS_B1[modo];
   let html = '';
   let lastSeg = null;
-
-  for (const [prop, seg, escolas, cap] of dados) {
-    const isSpecial = isSemB1OrOutros(prop);
-    const segChange = seg !== lastSeg;
-    lastSeg = seg;
-
-    const capStr = cap !== null ? cap : '—';
-
-    let pctStr = '—';
-    let pctColor = '#9BA8B5';
-    let barW = 0;
-    let barColor = '#E0E6ED';
-    if (cap !== null) {
-      const pct = Math.round(escolas / cap * 1000) / 10;
-      pctStr = pct + '%';
-      barW = Math.min(pct, 100);
-      if (pct >= 100)      { pctColor = '#D32F2F'; barColor = '#D32F2F'; }
-      else if (pct >= 80)  { pctColor = '#C47A00'; barColor = '#C47A00'; }
-      else                 { pctColor = '#1A9957'; barColor = '#1A9957'; }
+  for(const r of dados) {
+    const key = r.seg || '';
+    const segLabel = SEG_KEY_LABEL[key] || r.seg || '—';
+    if(segLabel!==lastSeg) {
+      const sc = SEG_COLORS[key] || {bg:'#F3F6F9',color:'#595959'};
+      html += `<tr><td colspan="5" style="background:${sc.bg};color:${sc.color};font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.08em;padding:9px 14px;border-top:${html!==''?'3px solid #D0D7E0':'none'};">
+        ${segLabel}
+      </td></tr>`;
+      lastSeg=segLabel;
     }
-
-    // Linha separadora de grupo ao trocar de segmento
-    if (segChange) {
-      const sc = SEG_COLORS[seg] || { bg:'#F3F6F9', color:'#595959', icon:'' };
-      html += `<tr>
-        <td colspan="5" style="background:${sc.bg};color:${sc.color};font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.08em;padding:9px 14px;border-top:${html !== '' ? '3px solid #D0D7E0' : 'none'};">
-          ${sc.icon ? sc.icon + ' ' : ''}${seg}
-        </td>
-      </tr>`;
+    const cap   = r.cap;
+    const capStr = cap!==null?cap:'—';
+    let pctStr='—', pctColor='#9BA8B5', barW=0, barColor='#E0E6ED';
+    if(cap!==null){
+      const pct=Math.round(r.escolas/cap*1000)/10;
+      pctStr=pct+'%';
+      barW=Math.min(pct,100);
+      if(pct>=100){pctColor='#D32F2F';barColor='#D32F2F';}
+      else if(pct>=80){pctColor='#C47A00';barColor='#C47A00';}
+      else{pctColor='#1A9957';barColor='#1A9957';}
     }
-
-    // Coluna "Time do B1": segmento oficial do time_de_sucesso.md
-    let timePill = '<span style="color:#9BA8B5;font-size:12px;">—</span>';
-    if (!isSpecial) {
-      const segOficial = SEGMENTO_OFICIAL[prop];
-      if (segOficial) {
-        const tc = TIME_COLORS[segOficial] || { bg:'#F3F6F9', color:'#595959' };
-        // Destaque visual quando o segmento do deal diverge do time oficial do B1
-        // Normaliza para comparar: "Medium touch - Renovação" e "Medium touch" são considerados compatíveis
-        const diverge = normalSeg(segOficial) !== normalSeg(seg);
-        const borderStyle = diverge ? `border:1.5px solid ${tc.color};` : '';
-        timePill = `<span style="display:inline-block;background:${tc.bg};color:${tc.color};font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;${borderStyle}">${segOficial}</span>`;
-      }
+    let timePill='<span style="color:#9BA8B5;font-size:12px;">—</span>';
+    if(r.segOficial){
+      const tc=TIME_COLORS[r.segOficial]||{bg:'#F3F6F9',color:'#595959'};
+      // Destaque de divergência: segmento oficial difere do segmento da linha atual
+      const segLabelNorm = segLabel.replace(' - Renovação','').replace(' - Novas','');
+      const segOfNorm    = r.segOficial.replace(' - Renovação','').replace(' - Novas','');
+      const diverge = segLabelNorm!==segOfNorm;
+      const border  = diverge?`border:1.5px solid ${tc.color};`:'';
+      timePill=`<span style="display:inline-block;background:${tc.bg};color:${tc.color};font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;${border}">${r.segOficial}</span>`;
     }
-
-    const nameStyle = isSpecial
-      ? 'color:#9BA8B5;font-style:italic;font-size:12px;'
-      : 'font-weight:600;font-size:13px;color:#1D1C1D;';
-
-    html += `<tr>
-      <td style="${nameStyle}">${prop}</td>
+    const nameStyle = r.cargo?'font-weight:600;font-size:13px;color:#1D1C1D;':'color:#9BA8B5;font-style:italic;font-size:12px;';
+    html+=`<tr>
+      <td style="${nameStyle}">${r.nome||r.email}</td>
       <td>${timePill}</td>
-      <td style="text-align:center;font-weight:700;font-size:14px;">${escolas}</td>
+      <td style="text-align:center;font-weight:700;font-size:14px;">${r.escolas}</td>
       <td style="text-align:center;color:#9BA8B5;font-size:13px;">${capStr}</td>
       <td style="text-align:center;">`;
-
-    if (cap !== null) {
-      html += `<div style="display:flex;align-items:center;gap:8px;justify-content:center;">
+    if(cap!==null){
+      html+=`<div style="display:flex;align-items:center;gap:8px;justify-content:center;">
         <div style="width:64px;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;flex-shrink:0;">
           <div style="height:100%;width:${barW}%;background:${barColor};border-radius:3px;"></div>
         </div>
         <span style="font-size:12px;font-weight:700;color:${pctColor};white-space:nowrap;">${pctStr}</span>
       </div>`;
     } else {
-      html += `<span style="color:#9BA8B5;font-size:12px;">—</span>`;
+      html+='<span style="color:#9BA8B5;font-size:12px;">—</span>';
     }
-
-    html += `</td></tr>`;
+    html+='</td></tr>';
   }
   return html;
 }
 
-document.getElementById('tbody-b1').innerHTML = renderB1('atual');
+function toggleView() {
+  modoAtual = modoAtual==='atual'?'corrigida':'atual';
+  const btn=document.getElementById('toggleBtn');
+  const label=document.getElementById('toggleLabel');
+  const note=document.getElementById('diffNote');
+  const infoBtn=document.getElementById('diffInfoBtn');
+  if(modoAtual==='corrigida'){
+    btn.classList.add('active');
+    label.textContent='Ver distribuição atual';
+    infoBtn.style.display='inline-flex';
+    note.style.display='none';
+  } else {
+    btn.classList.remove('active');
+    label.innerHTML='Ver após ajuste de segmentação';
+    infoBtn.style.display='none';
+    note.style.display='none';
+    infoBtn.classList.remove('active');
+    document.getElementById('diffInfoLabel').textContent='Saiba mais';
+  }
+  renderCards(modoAtual);
+  document.getElementById('tbody-resumo').innerHTML=renderTbody(modoAtual);
+  document.getElementById('tbody-b1').innerHTML=renderB1(modoAtual);
+  document.getElementById('tbl-title-b1').innerHTML=
+    modoAtual==='corrigida'
+      ?'Escolas por Proprietário B1 &nbsp;&middot;&nbsp; visão corrigida'
+      :'Escolas por Proprietário B1 &nbsp;&middot;&nbsp; visão atual';
+}
 
-function toggleMetodologia() {
-  const box = document.getElementById('notaBox');
-  const btn = document.getElementById('metodoBtn');
-  const label = document.getElementById('metodoLabel');
-  const isOpen = box.style.display !== 'none';
-  box.style.display = isOpen ? 'none' : 'block';
-  label.textContent = isOpen ? 'Como funciona?' : 'Ocultar metodologia';
-  if (isOpen) btn.classList.remove('active');
+function toggleDiffNota() {
+  const note=document.getElementById('diffNote');
+  const btn=document.getElementById('diffInfoBtn');
+  const label=document.getElementById('diffInfoLabel');
+  const isOpen=note.style.display!=='none';
+  note.style.display=isOpen?'none':'block';
+  label.textContent=isOpen?'Saiba mais':'Ocultar';
+  if(isOpen) btn.classList.remove('active');
   else btn.classList.add('active');
 }
+
+function toggleMetodologia() {
+  const box=document.getElementById('notaBox');
+  const btn=document.getElementById('metodoBtn');
+  const label=document.getElementById('metodoLabel');
+  const isOpen=box.style.display!=='none';
+  box.style.display=isOpen?'none':'block';
+  label.textContent=isOpen?'Como funciona?':'Ocultar metodologia';
+  if(isOpen) btn.classList.remove('active');
+  else btn.classList.add('active');
+}
+
+renderCards('atual');
+document.getElementById('tbody-resumo').innerHTML=renderTbody('atual');
+document.getElementById('tbody-b1').innerHTML=renderB1('atual');
 </script>
 </body>
 </html>
