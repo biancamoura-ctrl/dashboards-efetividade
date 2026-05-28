@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análise de Esforço do Time — 28/05/2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;--green:#008ECF;--green-lt:#e6f4fb;
+  --amber:#7668AC;--amber-lt:#f0eef8;--red:#E94B56;--red-lt:#fef0f1;
+  --yellow:#F9DC45;--purple:#7668AC;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px;text-align:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border-top:3px solid var(--yellow)}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:700}
+.card-body{padding:18px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+thead th{background:#f8f8f6;padding:9px 12px;text-align:left;font-weight:700;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f0ec}
+.sort-icon{opacity:.35;margin-left:4px;font-size:10px}
+th.sorted .sort-icon{opacity:1}
+tbody tr{border-bottom:1px solid #f0f0ec;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fdfdf9}
+tbody td{padding:8px 12px;white-space:nowrap}
+td.nome{white-space:normal;min-width:160px;font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ef-high{color:#008ECF;font-weight:700}.ef-mid{color:#7668AC;font-weight:700}.ef-low{color:#E94B56;font-weight:700}
+.qbadge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.qbadge.q1{background:#e6f4fb;color:#008ECF}.qbadge.q2{background:#fef0f1;color:#E94B56}
+.qbadge.q3{background:#f0eef8;color:#7668AC}.qbadge.q4{background:#f3f3f0;color:#595959}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e8e8e4;border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none}
+.chip.active{border-color:currentColor}
+.chip.all{background:#f3f3f0;color:#595959}.chip.all.active{background:#e8e8e4}
+.chip.q1{background:#e6f4fb;color:#008ECF}.chip.q1.active{background:#c5e8f7}
+.chip.q2{background:#fef0f1;color:#E94B56}.chip.q2.active{background:#fdd8db}
+.chip.q3{background:#f0eef8;color:#7668AC}.chip.q3.active{background:#dddaf0}
+.chip.q4{background:#f3f3f0;color:#595959}.chip.q4.active{background:#e8e8e4}
+select,input[type=text]{font-family:'Montserrat',sans-serif;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;outline:none}
+select:focus{border-color:var(--yellow)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:6px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:700;color:var(--text)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:600}
+.kpi-val{font-size:28px;font-weight:800;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.blue .kpi-val{color:#008ECF}.kpi.amber .kpi-val{color:#7668AC}.kpi.green .kpi-val{color:#008ECF}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:380px}
+#tooltip{position:fixed;background:#595959;color:#fff;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
+
+.diff-green{display:inline-block;background:#e6f4fb;color:#008ECF;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.diff-red{display:inline-block;background:#fef0f1;color:#E94B56;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.diff-gray{display:inline-block;background:#f3f3f0;color:#595959;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.badge-conv{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#F9DC45;color:#595959}
+.note-box{background:#f8f8f6;border:1px solid var(--border);border-radius:8px;padding:13px 16px;margin-top:12px;font-size:13px;color:#595959;line-height:1.65}
+.insight-box{border-left:4px solid #F9DC45;background:#fffef0;padding:13px 16px;border-radius:0 8px 8px 0;font-size:13px;color:#595959;margin-top:12px;line-height:1.65}
+.insight-box strong{color:#595959;font-weight:700;display:block;margin-bottom:3px}
+.canal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.canal-card{border:1px solid var(--border);border-top:3px solid var(--yellow);border-radius:8px;padding:16px}
+.canal-card-title{font-weight:700;font-size:13px;margin-bottom:3px}
+.canal-card-sub{font-size:11px;color:var(--muted);margin-bottom:14px}
+.canal-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.canal-bar-label{font-size:12px;width:105px;flex-shrink:0}
+.canal-bar-wrap{flex:1;background:#e8e8e4;border-radius:3px;height:7px;overflow:hidden}
+.canal-bar-fill{height:100%;border-radius:3px}
+.bar-wh{background:#008ECF}.bar-ch{background:#7668AC}.bar-re{background:#F9DC45}.bar-em{background:#E94B56}
+.canal-bar-pct{font-size:11px;color:var(--muted);width:32px;text-align:right;flex-shrink:0}
+.bloco-list{padding-left:20px;margin-top:10px}
+.bloco-list li{margin-bottom:8px;font-size:13px;color:#595959;line-height:1.6}
+.patterns-list{padding-left:0;list-style:none;counter-reset:pc}
+.patterns-list li{counter-increment:pc;display:flex;gap:12px;margin-bottom:14px;font-size:13px;color:#595959;line-height:1.65}
+.patterns-list li::before{content:counter(pc)".";font-weight:800;color:#F9DC45;flex-shrink:0;width:16px}
+table{min-width:600px}
+@media(max-width:640px){.canal-grid{grid-template-columns:1fr}}
+.snav-btn{flex-shrink:0;text-decoration:none;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:20px;padding:5px 14px;transition:opacity .15s}
+.snav-btn:hover{opacity:.8}
+</style>
+</head>
+<body>
+<a href="metricas_b1.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Métricas B1</a>
+<div class="page" style="max-width:1100px">
+
+<div class="header">
+  <h1>Análise de Esforço do Time</h1>
+  <p>Análise da carteira atual + atividades de ontem &nbsp;·&nbsp; Referência: 28/05/2026</p>
+</div>
+
+<nav style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+  <a href="#sec1" class="snav-btn">1. Gap</a>
+  <a href="#sec2" class="snav-btn">2. Alta vs. Baixa</a>
+  <a href="#sec3" class="snav-btn">3. Padrões</a>
+  <a href="#bloco-a" class="snav-btn">Bloco A</a>
+  <a href="#bloco-b" class="snav-btn">Bloco B</a>
+</nav>
+
+
+<!-- SEÇÃO 1: Gap -->
+<div class="card" id="sec1">
+  <div class="card-head"><span class="card-title">1. Onde está o gap (e quem pode fechá-lo)</span></div>
+  <div class="card-body">
+    <p style="font-size:13px;color:#333;margin-bottom:16px;line-height:1.65">
+      As 8 maiores alavancas concentram a maior parte das 113 conversões necessárias — atacar essas linhas resolve a meta agregada.
+    </p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Consultor (foco)</th>
+          <th style="text-align:right">Carteira</th>
+          <th style="text-align:right">Efetivas hoje</th>
+          <th style="text-align:right">% atual</th>
+          <th style="text-align:right">Para 70%</th>
+          <th style="text-align:right">Conv. a recuperar</th>
+          <th>Diagnóstico de ontem</th>
+        </tr></thead>
+        <tbody><tr><td class="nome"><strong>Claudilene Santos Dias</strong></td><td class="num">64</td><td class="num">22</td><td class="num ef-low">39.3%</td><td class="num">40</td><td class="num"><span class="badge-conv">+18</span></td><td>32% chamada · 68% WhatsApp. cobertura: 17/64 deals tocados</td></tr>
+<tr><td class="nome"><strong>Carla Santos da Silva</strong></td><td class="num">81</td><td class="num">39</td><td class="num ef-low">48.8%</td><td class="num">56</td><td class="num"><span class="badge-conv">+17</span></td><td>58% chamada · 36% WhatsApp. cobertura: 17/81 deals tocados</td></tr>
+<tr><td class="nome"><strong>Shelry Solart</strong></td><td class="num">79</td><td class="num">41</td><td class="num ef-mid">51.9%</td><td class="num">56</td><td class="num"><span class="badge-conv">+15</span></td><td>11% chamada · 89% WhatsApp. cobertura: 18/79 deals tocados</td></tr>
+<tr><td class="nome"><strong>Julia Cordeiro Campos</strong></td><td class="num">87</td><td class="num">31</td><td class="num ef-mid">50.8%</td><td class="num">43</td><td class="num"><span class="badge-conv">+12</span></td><td>29% chamada · 62% WhatsApp. cobertura: 17/87 deals tocados</td></tr>
+<tr><td class="nome"><strong>Giovanna Munhoz</strong></td><td class="num">63</td><td class="num">31</td><td class="num ef-mid">51.7%</td><td class="num">42</td><td class="num"><span class="badge-conv">+11</span></td><td>38% chamada · 62% WhatsApp. cobertura: 16/63 deals tocados</td></tr>
+<tr><td class="nome"><strong>Thais Souza</strong></td><td class="num">60</td><td class="num">33</td><td class="num ef-mid">55.0%</td><td class="num">42</td><td class="num"><span class="badge-conv">+9</span></td><td>67% chamada · 27% WhatsApp. cobertura: 13/60 deals tocados</td></tr>
+<tr><td class="nome"><strong>Nicole Cavalcante</strong></td><td class="num">43</td><td class="num">23</td><td class="num ef-mid">53.5%</td><td class="num">31</td><td class="num"><span class="badge-conv">+8</span></td><td>73% chamada · 27% WhatsApp. cobertura: 16/43 deals tocados</td></tr>
+<tr><td class="nome"><strong>Junior Gomes</strong></td><td class="num">52</td><td class="num">15</td><td class="num ef-low">46.9%</td><td class="num">23</td><td class="num"><span class="badge-conv">+8</span></td><td>50% chamada · 38% WhatsApp. cobertura crítica: 3/52 deals tocados (6%)</td></tr>
+<tr><td class="nome">Erick Andrade</td><td class="num">87</td><td class="num">32</td><td class="num ef-mid">59.3%</td><td class="num">38</td><td class="num"><span class="badge-conv">+6</span></td><td>50% chamada · 25% WhatsApp. cobertura crítica: 1/87 deals tocados (1%)</td></tr>
+<tr><td class="nome">Helena Cabral Sampaio</td><td class="num">12</td><td class="num">5</td><td class="num ef-low">41.7%</td><td class="num">9</td><td class="num"><span class="badge-conv">+4</span></td><td>0% chamada · 100% WhatsApp. cobertura: 7/12 deals tocados</td></tr>
+<tr><td class="nome">Ana Cláudia Santos de Almeida</td><td class="num">60</td><td class="num">40</td><td class="num ef-mid">67.8%</td><td class="num">42</td><td class="num"><span class="badge-conv">+2</span></td><td>39% chamada · 61% WhatsApp. cobertura: 18/60 deals tocados</td></tr>
+<tr><td class="nome">Gabriela Ribeiro</td><td class="num">78</td><td class="num">42</td><td class="num ef-mid">67.7%</td><td class="num">44</td><td class="num"><span class="badge-conv">+2</span></td><td>não fez atividade ontem</td></tr>
+<tr><td class="nome">Stefany Soares Figueredo</td><td class="num">61</td><td class="num">42</td><td class="num ef-mid">68.9%</td><td class="num">43</td><td class="num"><span class="badge-conv">+1</span></td><td>7% chamada · 93% WhatsApp. cobertura: 18/61 deals tocados</td></tr></tbody>
+      </table>
+    </div>
+    <div class="note-box">
+      <strong>Como ler:</strong> "Conv. a recuperar" = quantas efetivas a mais para chegar a 70% individualmente.
+      Como a meta é <em>agregada</em>, basta concentrar energia nas primeiras linhas.
+    </div>
+  </div>
+</div>
+
+<!-- SEÇÃO 2: Alta vs Baixa perf -->
+<div class="card" id="sec2">
+  <div class="card-head"><span class="card-title">2. O que os top consultores fazem (e os baixos não)</span></div>
+  <div class="card-body">
+    <p style="font-size:13px;color:#333;margin-bottom:16px;line-height:1.65">
+      Comparativo agregado entre os 18 consultores com efetividade ≥70% e os 10 com efetividade &lt;60%, baseado nas atividades de ontem:
+    </p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Comportamento</th>
+          <th style="text-align:right">Alta perf. (≥70%)</th>
+          <th style="text-align:right">Baixa perf. (&lt;60%)</th>
+          <th>Diferença</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Cobertura (deals tocados / carteira)</td><td class="num">29.1%</td><td class="num">23.9%</td>
+            <td><span class="diff-green">+5.2 p.p. a favor da alta</span></td></tr>
+          <tr><td>Conversão por deal tocado</td><td class="num">75.3%</td><td class="num">57.1%</td>
+            <td><span class="diff-green">+18.2 p.p.</span></td></tr>
+          <tr><td>% atividades em WhatsApp</td><td class="num">62.2%</td><td class="num">53.3%</td>
+            <td><span class="diff-green">+8.9 p.p.</span></td></tr>
+          <tr><td>% atividades em Chamada</td><td class="num">29.3%</td><td class="num">40.7%</td>
+            <td><span class="diff-green">−11.4 p.p. baixa super-indexa</span></td></tr>
+          <tr><td>Sentimento negativo registrado</td><td class="num">0</td><td class="num">0</td>
+            <td><span class="diff-gray">similar</span></td></tr>
+          <tr><td>Sentimento positivo (%)</td><td class="num">0.0%</td><td class="num">0.0%</td>
+            <td><span class="diff-red">0.0 p.p.</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:12px;font-weight:600;color:#333;margin:20px 0 10px">Mix de canal: deals que viraram efetivos vs não viraram</p>
+    <div class="canal-grid">
+      <div class="canal-card">
+        <div class="canal-card-title">Deals que VIRARAM efetivos</div>
+        <div class="canal-card-sub">349 deals com pelo menos 1 atividade efetiva ontem.</div>
+        <div class="canal-bar-row"><span class="canal-bar-label">WhatsApp 68%</span><div class="canal-bar-wrap"><div class="canal-bar-fill bar-wh" style="width:68%"></div></div><span class="canal-bar-pct">68%</span></div><div class="canal-bar-row"><span class="canal-bar-label">Chamada 29%</span><div class="canal-bar-wrap"><div class="canal-bar-fill bar-ch" style="width:29%"></div></div><span class="canal-bar-pct">29%</span></div><div class="canal-bar-row"><span class="canal-bar-label">Reunião 3%</span><div class="canal-bar-wrap"><div class="canal-bar-fill bar-re" style="width:3%"></div></div><span class="canal-bar-pct">3%</span></div><div class="canal-bar-row"><span class="canal-bar-label">Email 0%</span><div class="canal-bar-wrap"><div class="canal-bar-fill bar-em" style="width:0%"></div></div><span class="canal-bar-pct">0%</span></div>
+      </div>
+      <div class="canal-card">
+        <div class="canal-card-title">Deals tocados que NÃO viraram</div>
+        <div class="canal-card-sub">458 deals com atividade mas sem nenhuma efetiva.</div>
+        <div class="canal-bar-row"><span class="canal-bar-label">WhatsApp 55%</span><div class="canal-bar-wrap"><div class="canal-bar-fill bar-wh" style="width:55%"></div></div><span class="canal-bar-pct">55%</span></div><div class="canal-bar-row"><span class="canal-bar-label">Chamada 43%</span><div class="canal-bar-wrap"><div class="canal-bar-fill bar-ch" style="width:43%"></div></div><span class="canal-bar-pct">43%</span></div><div class="canal-bar-row"><span class="canal-bar-label">Reunião 2%</span><div class="canal-bar-wrap"><div class="canal-bar-fill bar-re" style="width:2%"></div></div><span class="canal-bar-pct">2%</span></div><div class="canal-bar-row"><span class="canal-bar-label">Email 0%</span><div class="canal-bar-wrap"><div class="canal-bar-fill bar-em" style="width:0%"></div></div><span class="canal-bar-pct">0%</span></div>
+      </div>
+    </div>
+    <div class="insight-box">
+      <strong>Insight central</strong>
+      WhatsApp (68% nos efetivos) é o canal de conversão; chamada isolada (43% nos não efetivos) é o canal de desperdício.
+      Quando um consultor de baixa performance encosta no telefone repetidamente sem migrar para WhatsApp, o deal não fecha.
+    </div>
+  </div>
+</div>
+
+<!-- SEÇÃO 3: Padrões -->
+<div class="card" id="sec3">
+  <div class="card-head"><span class="card-title">3. Padrões ganhadores — comportamentos para replicar hoje</span></div>
+  <div class="card-body">
+    <ol class="patterns-list">
+      <li><span><strong>Combinar WhatsApp + chamada na mesma escola, com WhatsApp puxando o fechamento.</strong>
+        Em deals efetivos o WhatsApp aparece em 68% das atividades; nos que não converteram, chamada domina com 43%.
+        Regra prática: depois de ligar e não fechar, mande WhatsApp no mesmo dia.</span></li>
+      <li><span><strong>Cobertura horizontal vence intensidade vertical.</strong>
+        Top performers tocam 29.1% da carteira por dia; baixos só 23.9%.
+        Tocar mais escolas diferentes supera insistir várias vezes na mesma.</span></li>
+      <li><span><strong>Sentimento negativo é um veto de fechamento.</strong>
+        Zero registros negativos nos top consultores; 0 nos baixos.
+        Quando o sentimento sai negativo, pause o contato por 24h e retome via WhatsApp leve.</span></li>
+      <li><span><strong>Não existe "chamada-only" funcionando.</strong>
+        Consultores com &gt;80% chamada sistematicamente apresentam efetividade abaixo de 50%.
+        Quem mantém mix equilibrado (40–60% WhatsApp) converte mais.</span></li>
+      <li><span><strong>Quem tem cobertura 100% e não fecha precisa de qualidade, não volume.</strong>
+        Revisar o conteúdo do contato — script, tom e canal — antes de fazer mais atividades.</span></li>
+    </ol>
+  </div>
+</div>
+
+<!-- BLOCO A -->
+<div class="card" id="bloco-a">
+  <div class="card-head">
+    <span class="card-title">Bloco A — Recuperação de gap
+      <span style="font-size:11px;font-weight:500;color:var(--red);margin-left:6px">prioridade máxima</span>
+    </span>
+  </div>
+  <div class="card-body">
+    <p style="font-size:13px;color:#444;margin-bottom:14px">
+      Foco nas 8 consultoras abaixo. Cada ação foi gerada com base no canal e cobertura de ontem.
+    </p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Consultor</th>
+          <th style="text-align:right">Meta hoje</th>
+          <th>Ação específica</th>
+        </tr></thead>
+        <tbody><tr><td class="nome"><strong>Claudilene Santos Dias</strong></td><td class="num"><span class="badge-conv">+18 conv.</span></td><td>Manter ritmo e refinar canal para elevar conversão por toque.</td></tr>
+<tr><td class="nome"><strong>Carla Santos da Silva</strong></td><td class="num"><span class="badge-conv">+17 conv.</span></td><td>Aumentar WhatsApp (atual 36%). Meta: 60% WhatsApp / 40% chamada.</td></tr>
+<tr><td class="nome"><strong>Shelry Solart</strong></td><td class="num"><span class="badge-conv">+15 conv.</span></td><td>Manter ritmo e refinar canal para elevar conversão por toque.</td></tr>
+<tr><td class="nome"><strong>Julia Cordeiro Campos</strong></td><td class="num"><span class="badge-conv">+12 conv.</span></td><td>Expandir cobertura: só tocou 17 de 87 (20%). Meta: 20% da carteira.</td></tr>
+<tr><td class="nome"><strong>Giovanna Munhoz</strong></td><td class="num"><span class="badge-conv">+11 conv.</span></td><td>Manter ritmo e refinar canal para elevar conversão por toque.</td></tr>
+<tr><td class="nome"><strong>Thais Souza</strong></td><td class="num"><span class="badge-conv">+9 conv.</span></td><td>Aumentar WhatsApp (atual 27%). Meta: 60% WhatsApp / 40% chamada.</td></tr>
+<tr><td class="nome"><strong>Nicole Cavalcante</strong></td><td class="num"><span class="badge-conv">+8 conv.</span></td><td>Reduzir chamada de 73% para 50%. Migrar para WhatsApp.</td></tr>
+<tr><td class="nome"><strong>Junior Gomes</strong></td><td class="num"><span class="badge-conv">+8 conv.</span></td><td>Aumentar WhatsApp (atual 38%). Meta: 60% WhatsApp / 40% chamada. Expandir cobertura: só tocou 3 de 52 (6%). Meta: 20% da carteira.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCO B -->
+<div class="card" id="bloco-b">
+  <div class="card-head"><span class="card-title">Bloco B — Padrão de execução do dia (todos)</span></div>
+  <div class="card-body">
+    <ul class="bloco-list">
+      <li>Toda escola que não fechar na chamada recebe WhatsApp no mesmo dia (regra do duplo toque).</li>
+      <li>Toda escola com sentimento negativo registrado entra em "esfriamento" — não receber novo contato por 24h.</li>
+      <li>Meta de cobertura mínima: 20% da carteira tocada por consultor hoje.</li>
+      <li>Check-in de meio-dia: revisar quem está abaixo de 10% de cobertura às 12h e redistribuir abordagem.</li>
+    </ul>
+  </div>
+</div>
+
+<div style="margin-top:8px;padding:13px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);font-size:11.5px;color:var(--muted);line-height:1.6;box-shadow:var(--shadow)">
+  Análise gerada automaticamente em 28/05/2026 a partir dos dados do BigQuery.
+  Comparativos calculados sobre 18 consultores com efetividade ≥70% e 10 com efetividade &lt;60%.
+  Conversões a recuperar = max(0, ceil(Carteira × 0,70) − Efetivas atuais).
+</div>
+
+
+</div>
+</body></html>
