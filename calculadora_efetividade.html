@@ -106,7 +106,13 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
 <div class="page">
   <div class="header">
     <h1>Calculadora de Efetividade</h1>
-    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 28/05/2026 &#183; 31 consultores &#183; Novas ef/dia: 132.8 (m&#233;d. semana 18/05–24/05)</p>
+    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 28/05/2026 &#183; 31 consultores &#183; 1225 escolas vencem nos pr&#243;ximos 7 d.&#250;.</p>
+  </div>
+
+  <!-- Alerta de tendência negativa (exibido via JS quando delta < 0) -->
+  <div id="alerta-tendencia"
+    style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:10px;
+           padding:12px 16px;margin-bottom:16px;font-size:12px;font-weight:600;color:#7a5800">
   </div>
 
   <div class="controls-bar">
@@ -131,34 +137,32 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
       <div class="kpi-lbl">% Atual</div>
       <div class="kpi-val" id="kpi-pef">&#8212;</div>
     </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Novas ef/dia</div>
-      <div class="kpi-val" id="kpi-ritmo">&#8212;</div>
+    <div class="kpi" id="kpi-delta-card">
+      <div class="kpi-lbl">Tend&#234;ncia (7 d.&#250;.)</div>
+      <div class="kpi-val" id="kpi-delta">&#8212;</div>
     </div>
   </div>
 
   <div class="proj-box">
-    <div class="proj-status">No ritmo atual, para a meta selecionada chegamos em</div>
+    <div class="proj-status">No ritmo dos &#250;ltimos 7 dias &#250;teis, para a meta selecionada chegamos em</div>
     <div class="proj-dias" id="proj-dias">&#8212;</div>
     <div class="proj-data" id="proj-data"></div>
     <div class="proj-detalhe" id="proj-detalhe"></div>
     <div style="margin-top:10px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap">
-      <span id="proj-a-vencer" style="font-size:12px;color:var(--muted)"></span>
       <span id="proj-faltam" style="font-size:12px;color:#7668AC;font-weight:700"></span>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-head" style="font-weight:700;font-size:13px">Simula&#231;&#227;o por Meta</div>
+    <div class="card-head" style="font-weight:700;font-size:13px">Proje&#231;&#227;o por Meta</div>
     <div style="overflow-x:auto">
       <table>
         <thead>
           <tr>
             <th>Meta</th>
-            <th style="text-align:right">Necessárias</th>
-            <th style="text-align:right">A vencer</th>
+            <th style="text-align:right">Necess&#225;rias</th>
             <th style="text-align:right">Faltam</th>
-            <th style="text-align:right">Projeção</th>
+            <th style="text-align:right">Proje&#231;&#227;o</th>
             <th style="text-align:center">Status</th>
           </tr>
         </thead>
@@ -166,13 +170,13 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
       </table>
     </div>
     <p style="font-size:10px;color:var(--muted);margin-top:10px">
-      <b>A vencer</b>: escolas efetivas que perdem o prazo durante o per&#237;odo da proje&#231;&#227;o &#8212;
-      <b>Faltam</b>: escolas que precisam ser (re)efetivadas = necessárias &#8722; (efetivas &#8722; a vencer) &#8212;
-      <b>Proje&#231;&#227;o</b>: dias &#250;teis no ritmo de 132.8 novas ef/dia (m&#233;d. semana 18/05–24/05)
+      <b>Tend&#234;ncia</b>: varia&#231;&#227;o m&#233;dia de escolas efetivas/dia nos &#250;ltimos 7 dias &#250;teis (considera tanto novas efetiva&#231;&#245;es quanto expiracoes reais) &#8212;
+      <b>Faltam</b>: necessárias &#8722; efetivas hoje &#8212;
+      <b>Proje&#231;&#227;o</b>: faltam &#247; tend&#234;ncia (s&#243; v&#225;lido com tend&#234;ncia positiva)
     </p>
   </div>
 </div>
-<script>const C = {"efetivas": 1358, "elegiveis": 1886, "pef_atual": 72.0, "novas_dia": 132.8, "n_consultores": 31, "data_ref": "2026-05-28", "expiracoes": [109, 147, 161, 187, 166, 211, 244, 24, 17, 13, 7, 10, 11, 9, 7, 2, 2, 2, 5, 4, 0, 0, 1, 1, 0, 1, 3, 2, 4, 7], "semana_label": "18/05–24/05"};
+<script>const C = {"efetivas": 1358, "elegiveis": 1886, "pef_atual": 72.0, "novas_dia": 132.8, "delta_ef_obs": -40.1, "ef_historico": [1638, 1593, 1539, 1444, 1357], "n_consultores": 31, "data_ref": "2026-05-28", "expiracoes": [109, 147, 161, 187, 166, 211, 244, 24, 17, 13, 7, 10, 11, 9, 7, 2, 2, 2, 5, 4, 0, 0, 1, 1, 0, 1, 3, 2, 4, 7], "a_vencer_7du": 1225, "semana_label": "18/05–24/05"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -188,69 +192,67 @@ function addBusDays(d, n) {
 function fmtDate(d) {
   return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'short'});
 }
-function getVencer(h) {
-  var t = 0;
-  for (var i = 0; i < Math.min(h, C.expiracoes.length); i++) t += (C.expiracoes[i] || 0);
-  return t;
-}
 
-// Simula dia a dia até atingir a meta, retorna {dias, data, a_vencer, faltam} ou null
-function simular(meta_pct) {
+// Projeção usando delta observado (variação real de efetivas/dia nos últimos 7 d.u.)
+// Retorna {dias, data, faltam} ou null se não convergir
+function projetar(meta_pct) {
   var nec = Math.ceil(C.elegiveis * meta_pct / 100);
-  if (C.efetivas >= nec) return { dias: 0, data: '', a_vencer: 0, faltam: 0 };
-  if (C.novas_dia <= 0) return null;
-  var ef  = C.efetivas;
-  var churn_total = 0;
-  var d   = new Date(C.data_ref + 'T12:00:00');
-  for (var bday = 1; bday <= 365; bday++) {
-    d = nextBusDay(d);
-    var churn = (bday - 1) < C.expiracoes.length ? (C.expiracoes[bday - 1] || 0) : 0;
-    churn_total += churn;
-    ef = ef - churn + C.novas_dia;
-    if (ef >= nec) {
-      var a_vencer = churn_total;
-      var faltam   = Math.max(0, nec - (C.efetivas - a_vencer));
-      return { dias: bday, data: fmtDate(d), a_vencer: a_vencer, faltam: faltam };
-    }
-  }
-  return null;
+  if (C.efetivas >= nec) return { dias: 0, data: '', faltam: 0 };
+  if (C.delta_ef_obs <= 0) return null;  // tendência negativa — não converge
+  var faltam = nec - C.efetivas;
+  var dias = Math.ceil(faltam / C.delta_ef_obs);
+  if (dias > 365) return null;
+  var d = new Date(C.data_ref + 'T12:00:00');
+  d = addBusDays(d, dias);
+  return { dias: dias, data: fmtDate(d), faltam: faltam };
 }
 
 function render() {
   var meta = +document.getElementById('sl-meta').value;
   document.getElementById('meta-val').textContent = meta + '%';
-  var novas = C.novas_dia;
 
   document.getElementById('kpi-el').textContent    = C.elegiveis;
   document.getElementById('kpi-ef').textContent    = C.efetivas;
   document.getElementById('kpi-pef').textContent   = C.pef_atual + '%';
-  document.getElementById('kpi-ritmo').textContent = novas > 0 ? novas.toFixed(1) + '/dia' : '—';
+  var deltaSign = C.delta_ef_obs > 0 ? '+' : '';
+  document.getElementById('kpi-delta').textContent = deltaSign + C.delta_ef_obs.toFixed(1) + '/dia';
+  var dc = document.getElementById('kpi-delta-card');
+  dc.className = 'kpi ' + (C.delta_ef_obs > 5 ? 'kpi-pef-blue' : C.delta_ef_obs < 0 ? 'kpi-pef-red' : 'kpi-pef-purple');
   var pc = document.getElementById('kpi-pef-card');
   pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-pef-blue' : C.pef_atual >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
 
-  var proj     = simular(meta);
+  var proj     = projetar(meta);
   var projDias = document.getElementById('proj-dias');
   var projData = document.getElementById('proj-data');
   var projDet  = document.getElementById('proj-detalhe');
+
+  // Alerta de tendência negativa
+  var alertEl = document.getElementById('alerta-tendencia');
+  if (C.delta_ef_obs < 0) {
+    alertEl.style.display = 'block';
+    alertEl.textContent   = 'Atenção: a efetividade está caindo ' + Math.abs(C.delta_ef_obs).toFixed(1) + ' escolas/dia nos últimos 7 dias úteis. Para a meta ser atingível, o time precisa reverter essa tendência.';
+  } else {
+    alertEl.style.display = 'none';
+  }
+
   if (!proj) {
-    projDias.textContent = '&#8734;'; projDias.className = 'proj-dias red';
-    projData.textContent = 'Não converge — churn supera o ritmo';
-    projDet.textContent  = ''; 
-    document.getElementById('proj-a-vencer').textContent = '';
-    document.getElementById('proj-faltam').textContent   = '';
+    projDias.innerHTML  = '&#8734;'; projDias.className = 'proj-dias red';
+    projData.textContent = C.delta_ef_obs <= 0
+      ? 'Tendência atual: efetividade em queda'
+      : 'Não converge no período';
+    projDet.textContent  = '';
+    document.getElementById('proj-faltam').textContent = '';
   } else if (proj.dias === 0) {
-    projDias.textContent = '&#10003;'; projDias.className = 'proj-dias green';
+    projDias.innerHTML  = '&#10003;'; projDias.className = 'proj-dias green';
     projData.textContent = 'Meta ' + meta + '% atingida!';
     projDet.textContent  = '';
-    document.getElementById('proj-a-vencer').textContent = '';
-    document.getElementById('proj-faltam').textContent   = '';
+    document.getElementById('proj-faltam').textContent = '';
   } else {
     projDias.textContent = proj.dias + (proj.dias === 1 ? ' dia útil' : ' dias úteis');
-    projDias.className   = 'proj-dias' + (proj.dias <= 10 ? ' green' : proj.dias > 30 ? ' red' : '');
+    projDias.className   = 'proj-dias' + (proj.dias <= 5 ? ' green' : proj.dias > 15 ? ' red' : '');
     projData.textContent = proj.data;
-    projDet.textContent  = 'Novas ef/dia: ' + novas.toFixed(1) + ' (méd. semana ' + C.semana_label + ')';
-    document.getElementById('proj-a-vencer').textContent = 'A vencer no período: ' + proj.a_vencer + ' escolas';
-    document.getElementById('proj-faltam').textContent   = 'Faltam (ajustado): ' + proj.faltam + ' escolas';
+    projDet.textContent  = 'Ritmo: Δ' + (C.delta_ef_obs > 0 ? '+' : '') + C.delta_ef_obs.toFixed(1) + ' ef/dia (obs. últ. 7 d.ú.) · ' + C.a_vencer_7du + ' escolas vencem nos próximos 7 d.ú.';
+    document.getElementById('proj-faltam').textContent = 'Faltam: ' + proj.faltam + ' escolas';
   }
 
   var tbody = document.getElementById('metas-tbody');
@@ -259,15 +261,15 @@ function render() {
     var nec    = Math.ceil(C.elegiveis * m / 100);
     var ok     = C.efetivas >= nec;
     var isSel  = (m === meta);
-    var p      = ok ? null : simular(m);
+    var p      = ok ? null : projetar(m);
     var tr = document.createElement('tr');
     if (isSel) tr.className = 'meta-atual';
+    var projTxt = ok ? '&#8212;' : (p ? p.dias + ' d.ú.' : '&#8734;');
     tr.innerHTML =
       '<td style="font-weight:700">' + m + '%' + (isSel ? ' &#9668;' : '') + '</td>'
       + '<td class="num">' + nec + '</td>'
-      + '<td class="num">' + (ok ? '&#8212;' : (p ? p.a_vencer : '&#8212;')) + '</td>'
-      + '<td class="num">' + (ok ? '&#8212;' : (p ? p.faltam   : '&#8212;')) + '</td>'
-      + '<td class="num">' + (ok ? '&#8212;' : (p ? p.dias + ' d.ú.' : '&#8734;')) + '</td>'
+      + '<td class="num">' + (ok ? '&#8212;' : (p ? p.faltam : '&#8212;')) + '</td>'
+      + '<td class="num">' + projTxt + '</td>'
       + '<td style="text-align:center">' + (ok
           ? '<span class="status-ok">&#10003;</span>'
           : '<span style="color:#E94B56;font-weight:700">&#9679;</span>') + '</td>';
@@ -306,21 +308,21 @@ document.addEventListener('DOMContentLoaded', function() {
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#127919; Meta</p>
       <p style="margin-bottom:14px">Percentual-alvo de efetividade. Mover o slider muda qual linha da tabela fica destacada e atualiza a proje&#231;&#227;o principal.</p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Novas ef/dia</p>
-      <p style="margin-bottom:14px">M&#233;dia di&#225;ria de <b>novas efetiva&#231;&#245;es reais</b> na semana 18/05–24/05: conta apenas atividades efetivas em escolas que estavam <em>n&#227;o-efetivas</em> no momento (&#250;ltimo contato h&#225; mais dias que o prazo da segmenta&#231;&#227;o). Renovar uma escola j&#225; efetiva <b>n&#227;o</b> entra nesse n&#250;mero.</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Tend&#234;ncia (&#916; ef/dia)</p>
+      <p style="margin-bottom:14px">Varia&#231;&#227;o m&#233;dia de escolas efetivas por dia nos <b>&#250;ltimos 7 dias &#250;teis</b>. Calculada comparando o total de efetivas hoje com o total de 7 dias &#250;teis atr&#225;s (usando o campo de dias desde &#250;ltima atividade efetiva como prox). Valor positivo = efetividade subindo; negativo = caindo. Este &#233; o indicador mais fiel do ritmo atual do time, pois incorpora tanto novas efetiva&#231;&#245;es quanto o churn real.</p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; A vencer</p>
-      <p style="margin-bottom:14px">Escolas efetivas hoje que <b>perder&#227;o</b> o status durante o per&#237;odo projetado — calculado somando as expira&#231;&#245;es dia a dia at&#233; a data estimada de chegada na meta. Muda conforme a meta escolhida.</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; Vencem em 7 d.&#250;.</p>
+      <p style="margin-bottom:14px">Escolas efetivas hoje que <b>atingir&#227;o o prazo</b> nos pr&#243;ximos 7 dias &#250;teis. Informativo: mostra a press&#227;o de renova&#231;&#227;o da semana.</p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#9997; Faltam</p>
-      <p style="margin-bottom:14px">Escolas que precisam ser (re)efetivadas:<br>
+      <p style="margin-bottom:14px">Escolas que precisam ser conquistadas para atingir a meta:<br>
         <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">
-          Faltam = Necess&#225;rias &minus; (Efetivas hoje &minus; A vencer)
-        </code><br>
-        J&#225; considera o churn do per&#237;odo, por isso &#233; maior que simplesmente "meta &minus; atual".</p>
+          Faltam = Necess&#225;rias &minus; Efetivas hoje
+        </code>
+      </p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#9200; Proje&#231;&#227;o (dias &#250;teis)</p>
-      <p style="margin-bottom:14px">Simula&#231;&#227;o dia a dia: a cada dia &#250;til, subtra&#237; as escolas que expiram naquele dia espec&#237;fico e adiciona <em>novas ef/dia</em>. Para quando a contagem atinge a meta. Reflete o ritmo hist&#243;rico real do time.</p>
+      <p style="margin-bottom:14px">C&#225;lculo direto: <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; Tend&#234;ncia</code>. S&#243; exibido quando a tend&#234;ncia &#233; positiva. Se negativa, o painel mostra um alerta — o time precisa inverter o ritmo para que a meta seja ating&#237;vel.</p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#128206; Efetivo no prazo (regra de neg&#243;cio)</p>
       <p style="margin-bottom:2px">Uma escola &#233; <b>efetiva no prazo</b> quando:</p>
