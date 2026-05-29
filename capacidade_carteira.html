@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saúde de Carteiras &middot; Relacionamento &mdash; 27/05/2026</title>
+<title>Saúde de Carteiras &middot; Relacionamento</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -52,7 +52,7 @@ tr:hover td{background:#FAFBFC}
 <div class="container">
   <div class="brand-name">Estante <span>M&aacute;gica</span></div>
   <div class="tagline">CS Ops &nbsp;&middot;&nbsp; Relacionamento</div>
-  <div class="date-line">Saúde de Carteiras &nbsp;&middot;&nbsp; 27/05/2026</div>
+  <div class="date-line">Sa&uacute;de de Carteiras &nbsp;&middot;&nbsp; <span id="data-hoje"></span></div>
 
   <a href="analises_hub.html" class="back-link">&#8592; Voltar para An&aacute;lises</a>
 
@@ -67,8 +67,8 @@ tr:hover td{background:#FAFBFC}
     <strong>Metodologia:</strong> Capacidade m&aacute;xima por consultor &mdash; <strong>80 escolas para Analistas</strong> e <strong>60 escolas para Estagiários</strong>.
     Considera apenas consultores ativos (excluindo Supervisores e Coordena&ccedil;&atilde;o).
     <br>
-    <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos, Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas, Ciclo de Eventos e Retra&ccedil;&atilde;o &middot; excluindo Low touch.
-    High touch e Medium touch exigem <em>data_da_reuniao_bv_concluida</em> preenchida; Premium touch e Premium touch 40+ n&atilde;o t&ecirc;m essa restri&ccedil;&atilde;o.
+    <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos (self service), Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas e Ciclo de Eventos &middot; excluindo Low touch.
+    High touch e Medium touch exigem <em>data_da_reuniao_bv_concluida</em> preenchida; Premium touch e Premium touch 40+ n&atilde;o t&ecirc;m essa restri&ccedil;&atilde;o. Escolas com evento de aut&oacute;grafos j&aacute; realizado s&atilde;o exclu&iacute;das.
     <br>
     Classifica&ccedil;&atilde;o do consultor pelo time (<strong>time_de_sucesso.md</strong>); HT separado em Novas e Renova&ccedil;&atilde;o pelo campo <em>baldinho</em>: <strong>HT Renova&ccedil;&atilde;o</strong> = <em>baldinho = &lsquo;Renova&ccedil;&atilde;o&rsquo;</em> &middot; <strong>HT Novas</strong> = demais valores ou nulo.
     <br><br>
@@ -111,20 +111,20 @@ tr:hover td{background:#FAFBFC}
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#7668AC;">620</div>
+        <div style="font-size:22px;font-weight:900;color:#7668AC;">540</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div id="val-htn-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+105</div>
+        <div id="val-htn-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+25</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-htn" style="height:100%;width:83.1%;background:#C47A00;border-radius:4px;"></div>
+      <div id="bar-htn" style="height:100%;width:95.4%;background:#C47A00;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) &middot; 5 Estagi&aacute;rios (60 esc.)</div>
-      <div id="pct-htn" style="font-size:11px;color:#9BA8B5;">83.1% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">3 Analistas (80 esc.) &middot; 5 Estagi&aacute;rios (60 esc.)</div>
+      <div id="pct-htn" style="font-size:11px;color:#9BA8B5;">95.4% utilizado</div>
     </div>
   </div>
 
@@ -291,7 +291,7 @@ tr:hover td{background:#FAFBFC}
     </div>
   </div>
 
-  <div class="footer">Fonte: BigQuery (ax_deals_temp_) &middot; 27/05/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
+  <div class="footer">Fonte: BigQuery (ax_deals_temp_) &middot; <span id="footer-data"></span> &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
 </div>
 </div>
 
@@ -625,7 +625,7 @@ const DADOS_B1_CORRIGIDA = [
 ];
 
 // Mapa: nome do B1 (como aparece nos dados) -> segmento oficial no time
-// Fonte: time_de_sucesso.md (atualizado em 27/05/2026)
+// Fonte: time_de_sucesso.md (atualizado em 28/05/2026)
 const SEGMENTO_OFICIAL = {
   'Renata Brandao':            'High touch - Novas',
   'Andreina Ferreira':         'High touch - Novas',
@@ -634,16 +634,16 @@ const SEGMENTO_OFICIAL = {
   'Erick Andrade':             'High touch - Novas',
   'Maria Eduarda Carvalho':    'High touch - Novas',
   'Junior Gomes da Silva':     'High touch - Novas',
-  'Moreno Loss':               'High touch - Novas',
   'Gabriela Ribeiro':          'High touch - Novas',
+  'Moreno Loss':               'High touch - Renovação',
   'Tatiana Portela':           'High touch - Renovação',
   'Larissa Freitas Monteiro':  'High touch - Renovação',
   'Thayna Bastos':             'High touch - Renovação',
   'Shelry Solart':             'High touch - Renovação',
   'Indlayse Ferreira':         'High touch - Renovação',
   'Carla Santos da Silva':     'High touch - Renovação',
-  'Helena Cabral Sampaio':     'High touch - Renovação',
   'Nicole Cavalcante':         'High touch - Renovação',
+  'Thais Borges':              'High touch - Renovação',
   'Ana Clara Peres':           'Medium touch - Renovação',
   'Vivian Cristina':           'Medium touch - Renovação',
   'Kaian Luis':                'Medium touch - Renovação',
@@ -663,8 +663,6 @@ const SEGMENTO_OFICIAL = {
   'Veronica Carvalho':         'Squad Confirmação',
   'Agatha Cruz':               'Squad Reagendamento',
   'Mariana Mazzero':           'Squad Reagendamento',
-  'Maria Clara Lima':          'Backup',
-  'Thais Borges':              'Backup',
 };
 
 // Cores por segmento para a pill do "Time do B1"
@@ -683,11 +681,11 @@ const TIME_COLORS = {
 
 // Cores por segmento para a linha separadora de grupo
 const SEG_COLORS = {
-  'High touch - Novas':     { bg:'#E6F5EE', color:'#1A7A45', icon:'🟢' },
-  'High touch - Renovação': { bg:'#E8F4FB', color:'#0A6696', icon:'🔵' },
-  'Medium touch':           { bg:'#FFF3E0', color:'#B35E00', icon:'🟡' },
-  'Premium touch':          { bg:'#F3E8FF', color:'#6B21A8', icon:'🟣' },
-  'Premium touch 40+':      { bg:'#FDE8F0', color:'#A2174F', icon:'🔴' },
+  'High touch - Novas':     { bg:'#E6F5EE', color:'#1A7A45', icon:'' },
+  'High touch - Renovação': { bg:'#E8F4FB', color:'#0A6696', icon:'' },
+  'Medium touch':           { bg:'#FFF3E0', color:'#B35E00', icon:'' },
+  'Premium touch':          { bg:'#F3E8FF', color:'#6B21A8', icon:'' },
+  'Premium touch 40+':      { bg:'#FDE8F0', color:'#A2174F', icon:'' },
 };
 
 function isSemB1OrOutros(nome) {
@@ -787,6 +785,19 @@ function toggleMetodologia() {
   if (isOpen) btn.classList.remove('active');
   else btn.classList.add('active');
 }
+
+// Data dinâmica
+(function() {
+  const agora = new Date();
+  const d = agora.toLocaleDateString('pt-BR', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    timeZone: 'America/Sao_Paulo'
+  });
+  const el1 = document.getElementById('data-hoje');
+  const el2 = document.getElementById('footer-data');
+  if (el1) el1.textContent = d;
+  if (el2) el2.textContent = d;
+})();
 </script>
 </body>
 </html>
