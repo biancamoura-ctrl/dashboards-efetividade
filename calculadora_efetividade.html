@@ -178,36 +178,37 @@ input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
     </div>
   </div>
 
-  <div class="controls-bar">
-    <div class="ctrl-group">
-      <span class="ctrl-label">Meta</span>
-      <span class="ctrl-val" id="meta-val">80%</span>
-      <input type="range" id="sl-meta" min="65" max="95" value="80" step="5">
-      <span style="font-size:9px;color:var(--muted);font-weight:600">65 &middot; 70 &middot; 75 &middot; 80 &middot; 85 &middot; 90 &middot; 95</span>
+  <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;margin-bottom:20px;align-items:stretch">
+    <div class="controls-bar" style="margin-bottom:0;align-self:stretch">
+      <div class="ctrl-group">
+        <span class="ctrl-label">Meta</span>
+        <span class="ctrl-val" id="meta-val">80%</span>
+        <input type="range" id="sl-meta" min="65" max="95" value="80" step="5">
+        <span style="font-size:9px;color:var(--muted);font-weight:600">65 &middot; 70 &middot; 75 &middot; 80 &middot; 85 &middot; 90 &middot; 95</span>
+      </div>
+      <div class="ctrl-group">
+        <span class="ctrl-label">Janela de proje&#231;&#227;o</span>
+        <span class="ctrl-val" id="dias-val">5 d.&#250;.</span>
+        <input type="range" id="sl-dias" min="1" max="30" value="5" step="1">
+        <span style="font-size:9px;color:var(--muted);font-weight:600">dias &#250;teis para ef/dia/B1</span>
+      </div>
     </div>
-    <div class="ctrl-group">
-      <span class="ctrl-label">Janela de proje&#231;&#227;o</span>
-      <span class="ctrl-val" id="dias-val">5 d.&#250;.</span>
-      <input type="range" id="sl-dias" min="1" max="30" value="5" step="1">
-      <span style="font-size:9px;color:var(--muted);font-weight:600">dias &#250;teis para ef/dia/B1</span>
-    </div>
-  </div>
-
-  <div class="kpi9" style="grid-template-columns:repeat(3,1fr)">
-    <div class="kpi-c c-blue">
-      <div class="kc-lbl">Ritmo atual (ef/dia)</div>
-      <div class="kc-val" id="kpi-delta">&#8212;</div>
-      <div class="kc-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
-    </div>
-    <div class="kpi-c c-violet">
-      <div class="kc-lbl">Ef/dia/B1 hist&#243;rico</div>
-      <div class="kc-val" id="kpi-b1h">&#8212;</div>
-      <div class="kc-sub">ritmo &#247; consultores</div>
-    </div>
-    <div class="kpi-c c-yellow">
-      <div class="kc-lbl">Ef/dia/B1 necess&#225;rio</div>
-      <div class="kc-val" id="kpi-b1p">&#8212;</div>
-      <div class="kc-sub">faltam &#247; janela &#247; B1</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <div class="kpi-c c-blue">
+        <div class="kc-lbl">Ritmo atual (ef/dia)</div>
+        <div class="kc-val" id="kpi-delta">&#8212;</div>
+        <div class="kc-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
+      </div>
+      <div class="kpi-c c-violet">
+        <div class="kc-lbl">Ef/dia/B1 hist&#243;rico</div>
+        <div class="kc-val" id="kpi-b1h">&#8212;</div>
+        <div class="kc-sub">ritmo &#247; consultores</div>
+      </div>
+      <div class="kpi-c c-yellow">
+        <div class="kc-lbl">Ef/dia/B1 necess&#225;rio</div>
+        <div class="kc-val" id="kpi-b1p">&#8212;</div>
+        <div class="kc-sub">faltam &#247; janela &#247; B1</div>
+      </div>
     </div>
   </div>
 
@@ -282,18 +283,17 @@ function render() {
   var b1_proj     = (faltam_adj > 0 && dias_proj > 0 && C.n_consultores > 0)
                       ? faltam_adj / dias_proj / C.n_consultores : 0;
 
-  // KPI cards
-  var pefClass = C.pef_atual >= 80 ? 'v-blue' : C.pef_atual >= 70 ? '' : 'v-red';
-  document.getElementById('kpi-pef').className      = 'kc-val ' + pefClass;
+  // KPI hero (sempre branco — dentro do gradiente)
   document.getElementById('kpi-pef').textContent    = C.pef_atual + '%';
   document.getElementById('kpi-faltam').textContent = faltam_adj.toLocaleString('pt-BR');
+  document.getElementById('kpi-meta-alvo').textContent = nec_meta.toLocaleString('pt-BR');
+  document.getElementById('kpi-consultores').textContent = C.n_consultores;
+  // KPI cards (fora do hero — cores dinâmicas)
   var deltaClass = C.delta_ef_obs >= 5 ? 'v-blue' : C.delta_ef_obs < 0 ? 'v-red' : '';
   document.getElementById('kpi-delta').className    = 'kc-val ' + deltaClass;
   document.getElementById('kpi-delta').textContent  = (C.delta_ef_obs > 0 ? '+' : '') + C.delta_ef_obs.toFixed(1) + '/dia';
   document.getElementById('kpi-b1h').textContent    = b1_hist.toFixed(2) + '/B1';
   document.getElementById('kpi-b1p').textContent    = faltam_adj <= 0 ? '—' : b1_proj.toFixed(2) + '/B1';
-  document.getElementById('kpi-meta-alvo').textContent = nec_meta.toLocaleString('pt-BR');
-  document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
   // Caixa de projeção
   var projDias = document.getElementById('proj-dias');
