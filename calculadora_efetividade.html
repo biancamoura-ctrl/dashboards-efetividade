@@ -73,79 +73,83 @@ select:focus{border-color:var(--yellow)}
 @media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
 
 
-/* ── Hero header ── */
-.calc-hero{background:linear-gradient(135deg,#5a509e 0%,#7668AC 55%,#9b8fd4 100%);
-  border-radius:20px;padding:28px 28px 24px;margin-bottom:16px;color:#fff;
-  position:relative;overflow:hidden}
-.calc-hero::before{content:'';position:absolute;top:-80px;right:-80px;
-  width:260px;height:260px;border-radius:50%;background:rgba(249,220,69,.10)}
-.calc-hero::after{content:'';position:absolute;bottom:-50px;left:-50px;
-  width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04)}
+/* ── Fundo geral ── */
+body{background:linear-gradient(160deg,#f5f3ff 0%,#fdfcff 60%,#f0f4ff 100%)!important;min-height:100vh}
+/* ── Estrelinhas decorativas ── */
+.page{position:relative}
+.page::before{content:'★';position:fixed;top:80px;left:30px;font-size:28px;color:#F9DC45;opacity:.35;pointer-events:none}
+.page::after{content:'★';position:fixed;bottom:120px;right:40px;font-size:20px;color:#F9DC45;opacity:.25;pointer-events:none}
+/* ── Hero ── */
+.calc-hero{background:linear-gradient(135deg,#7668AC 0%,#9b8fd4 100%);
+  border-radius:24px;padding:28px 28px 24px;margin-bottom:20px;color:#fff;
+  position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(118,104,172,.30)}
+.calc-hero::before{content:'★';position:absolute;top:16px;right:28px;
+  font-size:40px;color:rgba(249,220,69,.25);line-height:1}
 .hero-inner{position:relative;z-index:1}
-.hero-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:4px}
-.hero-sub{font-size:13px;color:rgba(255,255,255,.65);font-weight:500;margin-bottom:20px}
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.hero-tag{display:inline-block;background:#F9DC45;color:#595959;font-size:9px;
+  font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;
+  border-radius:20px;margin-bottom:12px}
+.hero-title{font-size:24px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:4px}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.70);font-weight:500;margin-bottom:20px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
-.hs{background:rgba(255,255,255,.15);border-radius:12px;padding:14px 16px;backdrop-filter:blur(4px)}
-.hs-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px}
+.hs{background:rgba(255,255,255,.18);border-radius:14px;padding:14px 16px;border:1px solid rgba(255,255,255,.20)}
+.hs-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
 .hs-val{font-size:26px;font-weight:900;color:#fff;line-height:1}
 .hs-val.hs-yellow{color:#F9DC45}
-/* ── Controls bar ── */
-.controls-bar{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
-  padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:28px;
-  align-items:flex-end;box-shadow:var(--shadow)}
+/* ── Controls ── */
+.controls-bar{background:#fff;border-radius:18px;padding:18px 22px;margin-bottom:16px;
+  display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end;
+  box-shadow:0 2px 16px rgba(118,104,172,.10);border:1px solid rgba(118,104,172,.12)}
 .ctrl-group{display:flex;flex-direction:column;gap:5px;min-width:150px}
-.ctrl-label{font-size:9px;font-weight:700;color:var(--muted);
-  text-transform:uppercase;letter-spacing:.8px}
+.ctrl-label{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.8px}
 .ctrl-val{font-size:20px;font-weight:900;color:#7668AC;line-height:1;margin-bottom:2px}
 input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
-/* ── Cards ── */
-.kpi9{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
-@media(max-width:900px){.kpi9{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:560px){.kpi9{grid-template-columns:repeat(2,1fr)}}
-.kpi-c{background:#fff;border-radius:14px;padding:18px 16px 14px;
-  box-shadow:0 2px 12px rgba(67,69,140,.09);border-top:4px solid #e8e8e4;
-  display:flex;flex-direction:column;gap:4px;transition:transform .15s,box-shadow .15s}
-.kpi-c:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(67,69,140,.14)}
-.kpi-c.c-purple{border-top-color:#7668AC}
-.kpi-c.c-yellow{border-top-color:#F9DC45}
-.kpi-c.c-blue{border-top-color:#008ECF}
-.kpi-c.c-red{border-top-color:#E94B56}
-.kpi-c.c-violet{border-top-color:#7668AC}
-.kc-lbl{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.7px}
+/* ── KPI cards ── */
+.kpi9{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:560px){.kpi9{grid-template-columns:1fr}}
+.kpi-c{background:#fff;border-radius:18px;padding:20px 18px 16px;
+  box-shadow:0 2px 16px rgba(118,104,172,.09);
+  display:flex;flex-direction:column;gap:5px;transition:transform .15s,box-shadow .15s;
+  border:1px solid rgba(118,104,172,.10)}
+.kpi-c:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(118,104,172,.16)}
+.kc-icon{font-size:20px;margin-bottom:4px}
+.kc-lbl{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.6px}
 .kc-val{font-size:30px;font-weight:900;line-height:1.1;color:#7668AC}
-.kc-val.v-blue{color:#008ECF}.kc-val.v-red{color:#E94B56}.kc-val.v-green{color:#008ECF}
-.kc-sub{font-size:10px;color:#b0b0b0;margin-top:2px}
-/* ── Projection hero ── */
-.proj-hero{background:linear-gradient(135deg,#5a509e 0%,#7668AC 100%);
-  border-radius:20px;padding:36px 28px 28px;margin-bottom:20px;text-align:center;
-  color:#fff;box-shadow:0 8px 32px rgba(67,69,140,.25);position:relative;overflow:hidden}
-.proj-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;
-  border-radius:50%;background:rgba(249,220,69,.08)}
-.ph-status{font-size:10px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;
-  letter-spacing:1px;margin-bottom:12px;position:relative}
-.ph-dias{font-size:64px;font-weight:900;color:#F9DC45;line-height:1;position:relative}
-.ph-dias.ph-green{color:#4ade80}
+.kc-val.v-blue{color:#008ECF}.kc-val.v-red{color:#E94B56}
+.kc-sub{font-size:10px;color:#c0b8d8;margin-top:2px}
+/* ── Info grid ── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+/* ── Projeção ── */
+.proj-hero{background:linear-gradient(135deg,#7668AC 0%,#9b8fd4 100%);
+  border-radius:24px;padding:36px 28px 28px;margin-bottom:20px;text-align:center;
+  color:#fff;box-shadow:0 8px 32px rgba(118,104,172,.28);position:relative;overflow:hidden}
+.proj-hero::before{content:'★';position:absolute;bottom:20px;left:24px;
+  font-size:32px;color:rgba(249,220,69,.20);line-height:1}
+.ph-status{font-size:10px;font-weight:700;color:rgba(255,255,255,.60);text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:14px}
+.ph-dias{font-size:64px;font-weight:900;color:#F9DC45;line-height:1}
+.ph-dias.ph-green{color:#a3e635}
 .ph-dias.ph-red{color:#fb7185}
 .ph-data{font-size:20px;font-weight:700;color:#fff;margin-top:8px}
 .ph-detail{font-size:11px;color:rgba(255,255,255,.55);margin-top:12px;
-  border-top:1px solid rgba(255,255,255,.15);padding-top:12px}
+  border-top:1px solid rgba(255,255,255,.18);padding-top:12px}
 .ph-faltam{font-size:13px;font-weight:700;color:#F9DC45;margin-top:8px}
-/* ── Table header ── */
+/* ── Cards tabela/gráfico ── */
+.card{border-radius:18px!important;border:1px solid rgba(118,104,172,.12)!important;
+  box-shadow:0 2px 16px rgba(118,104,172,.09)!important}
 .card thead th{background:#7668AC!important;color:#fff!important;font-size:10px}
 .card thead th:hover{background:#6459a0!important}
-.meta-atual{background:#f0eef8!important}
-.status-ok{color:#008ECF;font-weight:700}
-/* ── Bar chart ── */
+.meta-atual{background:#f5f3ff!important}
+.status-ok{color:#7668AC;font-weight:700}
+/* ── Gráfico ── */
 .ev-chart-wrap{display:flex;align-items:flex-end;gap:8px;height:100px;padding-top:24px}
 .ev-col{flex:1;display:flex;flex-direction:column;align-items:center}
 .ev-bar{width:100%;border-radius:6px 6px 0 0;position:relative;min-height:3px;
-  background:linear-gradient(180deg,#9b8fd4 0%,#7668AC 100%)}
+  background:linear-gradient(180deg,#b8aee0 0%,#7668AC 100%)}
 .ev-bar-val{position:absolute;top:-20px;left:50%;transform:translateX(-50%);
   font-size:9px;font-weight:800;color:#7668AC;white-space:nowrap}
 .ev-lbl{font-size:9px;color:#9a9a9a;margin-top:5px;text-align:center;font-weight:600}
-/* ── Info cards extra ── */
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
 
 </style>
 </head>
@@ -155,7 +159,8 @@ input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
 
   <div class="calc-hero">
     <div class="hero-inner">
-      <div class="hero-title">&#128200; Calculadora de Efetividade</div>
+      <div class="hero-tag">&#11088; Estante M&#225;gica &middot; CS Ops</div>
+      <div class="hero-title">Calculadora de Efetividade</div>
       <div class="hero-sub">Refer&#234;ncia: 01/06/2026 &nbsp;&#183;&nbsp; 31 consultores</div>
       <div class="hero-stats">
         <div class="hs">
@@ -194,17 +199,20 @@ input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
       </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-      <div class="kpi-c c-blue">
+      <div class="kpi-c">
+        <div class="kc-icon">&#128200;</div>
         <div class="kc-lbl">Ritmo atual (ef/dia)</div>
         <div class="kc-val" id="kpi-delta">&#8212;</div>
         <div class="kc-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
       </div>
-      <div class="kpi-c c-violet">
+      <div class="kpi-c">
+        <div class="kc-icon">&#128101;</div>
         <div class="kc-lbl">Ef/dia/B1 hist&#243;rico</div>
         <div class="kc-val" id="kpi-b1h">&#8212;</div>
         <div class="kc-sub">ritmo &#247; consultores</div>
       </div>
-      <div class="kpi-c c-yellow">
+      <div class="kpi-c">
+        <div class="kc-icon">&#127919;</div>
         <div class="kc-lbl">Ef/dia/B1 necess&#225;rio</div>
         <div class="kc-val" id="kpi-b1p">&#8212;</div>
         <div class="kc-sub">faltam &#247; janela &#247; B1</div>
