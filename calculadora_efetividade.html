@@ -192,10 +192,10 @@ input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
         <span style="font-size:9px;color:var(--muted);font-weight:600">65 &middot; 70 &middot; 75 &middot; 80 &middot; 85 &middot; 90 &middot; 95</span>
       </div>
       <div class="ctrl-group">
-        <span class="ctrl-label">Janela de proje&#231;&#227;o</span>
-        <span class="ctrl-val" id="dias-val">5 d.&#250;.</span>
-        <input type="range" id="sl-dias" min="1" max="30" value="5" step="1">
-        <span style="font-size:9px;color:var(--muted);font-weight:600">dias &#250;teis para ef/dia/B1</span>
+        <span class="ctrl-label">Ef/dia/B1 necessário</span>
+        <span class="ctrl-val" id="b1-val">2.0/B1</span>
+        <input type="range" id="sl-b1" min="0.5" max="10" value="2" step="0.5">
+        <span style="font-size:9px;color:var(--muted);font-weight:600">efetividades por dia por consultor</span>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
@@ -237,7 +237,6 @@ input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
             <th>Meta</th>
             <th style="text-align:right">Necess&#225;rias</th>
             <th style="text-align:right">Faltam</th>
-            <th style="text-align:right">Ef/dia/B1</th>
             <th style="text-align:right">Proje&#231;&#227;o</th>
             <th style="text-align:center">Status</th>
           </tr>
@@ -278,18 +277,18 @@ function fmtDate(d) {
 }
 
 function render() {
-  var meta      = +document.getElementById('sl-meta').value;
-  var dias_proj = +document.getElementById('sl-dias').value;
-  document.getElementById('meta-val').textContent  = meta + '%';
-  document.getElementById('dias-val').textContent  = dias_proj + ' d.ú.';
+  var meta   = +document.getElementById('sl-meta').value;
+  var b1_alvo = +document.getElementById('sl-b1').value;
+  document.getElementById('meta-val').textContent = meta + '%';
+  document.getElementById('b1-val').textContent   = b1_alvo.toFixed(1) + '/B1';
 
-  // Cálculos principais (mesma lógica da calculadora de referência)
-  var mantidas    = Math.max(0, C.efetivas - C.a_vencer_7du);
-  var nec_meta    = Math.ceil(C.elegiveis * meta / 100);
-  var faltam_adj  = Math.max(0, nec_meta - mantidas);
-  var b1_hist     = C.n_consultores > 0 ? C.delta_ef_obs / C.n_consultores : 0;
-  var b1_proj     = (faltam_adj > 0 && dias_proj > 0 && C.n_consultores > 0)
-                      ? faltam_adj / dias_proj / C.n_consultores : 0;
+  // Cálculos principais
+  var mantidas   = Math.max(0, C.efetivas - C.a_vencer_7du);
+  var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
+  var faltam_adj = Math.max(0, nec_meta - mantidas);
+  var b1_hist    = C.n_consultores > 0 ? C.delta_ef_obs / C.n_consultores : 0;
+  // Janela calculada a partir do ef/dia/B1 alvo
+  var b1_proj    = b1_alvo;
 
   // KPI hero (sempre branco — dentro do gradiente)
   document.getElementById('kpi-pef').textContent    = C.pef_atual + '%';
@@ -310,21 +309,20 @@ function render() {
   var statusEl = document.getElementById('proj-status');
   var faltamEl = document.getElementById('proj-faltam');
 
+  // Projeção pelo ef/dia/B1 alvo selecionado
+  var ritmo_alvo = b1_alvo * C.n_consultores; // ef/dia total ao ritmo alvo
   if (faltam_adj <= 0) {
     statusEl.textContent  = 'Meta ' + meta + '% atingida!';
     projDias.innerHTML    = '&#10003;'; projDias.className = 'ph-dias ph-green';
     projData.textContent  = 'Efetivas mantidas: ' + mantidas.toLocaleString('pt-BR');
     projDet.textContent   = ''; faltamEl.textContent = '';
-  } else if (C.delta_ef_obs <= 0) {
-    statusEl.textContent  = 'Para atingir a meta ' + meta + '%, o time precisa de';
-    projDias.textContent  = b1_proj.toFixed(2) + ' ef/dia/B1';
-    projDias.className    = 'ph-dias ph-red';
-    projData.innerHTML    = 'em ' + dias_proj + ' dias &uacute;teis';
-    projDet.textContent   = 'Ritmo atual: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia';
-    faltamEl.textContent  = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
+  } else if (ritmo_alvo <= 0) {
+    statusEl.textContent  = 'Defina um ef/dia/B1 acima de zero';
+    projDias.innerHTML    = '&#8212;'; projDias.className = 'ph-dias';
+    projData.textContent  = ''; projDet.textContent = ''; faltamEl.textContent = '';
   } else {
-    var dp = Math.ceil(faltam_adj / C.delta_ef_obs);
-    statusEl.textContent  = 'No ritmo atual, para a meta ' + meta + '% chegamos em';
+    var dp = Math.ceil(faltam_adj / ritmo_alvo);
+    statusEl.textContent  = 'Com ' + b1_alvo.toFixed(1) + ' ef/dia por B1, para a meta ' + meta + '% chegamos em';
     if (dp > 365) {
       projDias.innerHTML  = '&#8734;'; projDias.className = 'ph-dias ph-red';
       projData.textContent = 'Não converge no período';
@@ -334,7 +332,7 @@ function render() {
       projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
       projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
       projData.textContent = fmtDate(d);
-      projDet.textContent  = 'Ritmo: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia (' + b1_hist.toFixed(2) + '/B1) · ' + C.a_vencer_7du + ' vencem nos próximos 7 d.ú.';
+      projDet.textContent  = 'Ritmo selecionado: ' + b1_alvo.toFixed(1) + '/B1 (' + ritmo_alvo.toFixed(0) + ' ef/dia) · Ritmo atual: ' + b1_hist.toFixed(1) + '/B1';
       faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
     }
   }
@@ -347,18 +345,15 @@ function render() {
     var falt  = Math.max(0, nec - mantidas);
     var ok    = falt <= 0;
     var isSel = (m === meta);
-    var ef_b1 = (!ok && C.n_consultores > 0 && dias_proj > 0)
-                  ? (falt / dias_proj / C.n_consultores).toFixed(2) : '&#8212;';
-    var dp_m  = (!ok && C.delta_ef_obs > 0) ? Math.ceil(falt / C.delta_ef_obs) : null;
-    var proj_txt = ok ? '&#8212;'
-      : (dp_m && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
+    // dias para atingir essa meta ao ritmo selecionado
+    var dp_m  = (!ok && ritmo_alvo > 0) ? Math.ceil(falt / ritmo_alvo) : null;
+    var proj_txt = ok ? '&#8212;' : (dp_m && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
     var tr = document.createElement('tr');
     if (isSel) tr.className = 'meta-atual';
     tr.innerHTML =
       '<td style="font-weight:700">' + m + '%' + (isSel ? ' &#9668;' : '') + '</td>'
       + '<td class="num">' + nec + '</td>'
       + '<td class="num">' + (ok ? '&#8212;' : falt) + '</td>'
-      + '<td class="num">' + ef_b1 + '</td>'
       + '<td class="num">' + proj_txt + '</td>'
       + '<td style="text-align:center">' + (ok
           ? '<span class="status-ok">&#10003;</span>'
@@ -388,7 +383,7 @@ function render() {
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('sl-meta').oninput = function() { render(); };
-  document.getElementById('sl-dias').oninput = function() { render(); };
+  document.getElementById('sl-b1').oninput   = function() { render(); };
   render();
 });
 </script>
