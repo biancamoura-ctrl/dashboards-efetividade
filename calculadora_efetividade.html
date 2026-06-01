@@ -73,116 +73,151 @@ select:focus{border-color:var(--yellow)}
 @media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
 
 
-.controls-bar{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
-  padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:28px;
-  align-items:flex-end;box-shadow:var(--shadow)}
-.ctrl-group{display:flex;flex-direction:column;gap:6px;min-width:140px}
-.ctrl-label{font-size:10px;font-weight:700;color:var(--muted);
-  text-transform:uppercase;letter-spacing:.7px}
-.ctrl-val{font-size:22px;font-weight:800;color:#7668AC;line-height:1;margin-bottom:2px}
-input[type=range]{accent-color:#7668AC;cursor:pointer}
-.kpi9{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-@media(max-width:640px){.kpi9{grid-template-columns:repeat(2,1fr)}}
-.kpi-blue .kpi-val{color:#008ECF}
-.kpi-purple .kpi-val{color:#7668AC}
-.kpi-red .kpi-val{color:#E94B56}
-.proj-box{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
-  padding:24px;margin-bottom:20px;box-shadow:var(--shadow);text-align:center}
-.proj-status{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;
-  letter-spacing:.7px;margin-bottom:8px}
-.proj-dias{font-size:48px;font-weight:900;color:#7668AC;line-height:1}
-.proj-dias.green{color:#008ECF}
-.proj-dias.red{color:#E94B56}
-.proj-data{font-size:18px;font-weight:700;color:var(--text);margin-top:6px}
-.proj-detalhe{font-size:12px;color:var(--muted);margin-top:10px;
-  border-top:1px solid var(--border);padding-top:10px}
+/* ── Hero header ── */
+.calc-hero{background:linear-gradient(135deg,#1e1f4a 0%,#43458C 55%,#7668AC 100%);
+  border-radius:20px;padding:32px 28px 28px;margin-bottom:24px;color:#fff;
+  position:relative;overflow:hidden}
+.calc-hero::before{content:'';position:absolute;top:-80px;right:-80px;
+  width:260px;height:260px;border-radius:50%;background:rgba(249,220,69,.10)}
+.calc-hero::after{content:'';position:absolute;bottom:-50px;left:-50px;
+  width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;
+  flex-wrap:wrap;gap:20px;position:relative;z-index:1}
+.hero-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:4px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.65);font-weight:500}
+.hero-controls{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end}
+.ctrl-group{display:flex;flex-direction:column;gap:5px;min-width:150px}
+.ctrl-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.55);
+  text-transform:uppercase;letter-spacing:.8px}
+.ctrl-val{font-size:20px;font-weight:900;color:#F9DC45;line-height:1;margin-bottom:2px}
+input[type=range]{accent-color:#F9DC45;cursor:pointer;width:160px}
+/* ── Cards ── */
+.kpi9{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:900px){.kpi9{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.kpi9{grid-template-columns:repeat(2,1fr)}}
+.kpi-c{background:#fff;border-radius:14px;padding:18px 16px 14px;
+  box-shadow:0 2px 12px rgba(67,69,140,.09);border-top:4px solid #e8e8e4;
+  display:flex;flex-direction:column;gap:4px;transition:transform .15s,box-shadow .15s}
+.kpi-c:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(67,69,140,.14)}
+.kpi-c.c-purple{border-top-color:#43458C}
+.kpi-c.c-yellow{border-top-color:#F9DC45}
+.kpi-c.c-blue{border-top-color:#008ECF}
+.kpi-c.c-red{border-top-color:#E94B56}
+.kpi-c.c-violet{border-top-color:#7668AC}
+.kc-lbl{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.7px}
+.kc-val{font-size:30px;font-weight:900;line-height:1.1;color:#43458C}
+.kc-val.v-blue{color:#008ECF}.kc-val.v-red{color:#E94B56}.kc-val.v-green{color:#008ECF}
+.kc-sub{font-size:10px;color:#b0b0b0;margin-top:2px}
+/* ── Projection hero ── */
+.proj-hero{background:linear-gradient(135deg,#1e1f4a 0%,#43458C 100%);
+  border-radius:20px;padding:36px 28px 28px;margin-bottom:20px;text-align:center;
+  color:#fff;box-shadow:0 8px 32px rgba(67,69,140,.25);position:relative;overflow:hidden}
+.proj-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;
+  border-radius:50%;background:rgba(249,220,69,.08)}
+.ph-status{font-size:10px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:12px;position:relative}
+.ph-dias{font-size:64px;font-weight:900;color:#F9DC45;line-height:1;position:relative}
+.ph-dias.ph-green{color:#4ade80}
+.ph-dias.ph-red{color:#fb7185}
+.ph-data{font-size:20px;font-weight:700;color:#fff;margin-top:8px}
+.ph-detail{font-size:11px;color:rgba(255,255,255,.55);margin-top:12px;
+  border-top:1px solid rgba(255,255,255,.15);padding-top:12px}
+.ph-faltam{font-size:13px;font-weight:700;color:#F9DC45;margin-top:8px}
+/* ── Table header ── */
+.card thead th{background:#43458C!important;color:#fff!important;font-size:10px}
+.card thead th:hover{background:#3a3c7a!important}
 .meta-atual{background:#f0eef8!important}
 .status-ok{color:#008ECF;font-weight:700}
-.chart-wrap{display:flex;align-items:flex-end;gap:6px;height:80px;padding-top:20px}
-.chart-col{flex:1;display:flex;flex-direction:column;align-items:center}
-.chart-bar{width:100%;background:#7668AC;border-radius:4px 4px 0 0;position:relative;min-height:2px}
-.chart-bar-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);
-  font-size:9px;font-weight:700;color:#7668AC;white-space:nowrap}
-.chart-bar-lbl{font-size:9px;color:var(--muted);margin-top:4px;text-align:center}
+/* ── Bar chart ── */
+.ev-chart-wrap{display:flex;align-items:flex-end;gap:8px;height:100px;padding-top:24px}
+.ev-col{flex:1;display:flex;flex-direction:column;align-items:center}
+.ev-bar{width:100%;border-radius:6px 6px 0 0;position:relative;min-height:3px;
+  background:linear-gradient(180deg,#7668AC 0%,#43458C 100%)}
+.ev-bar-val{position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  font-size:9px;font-weight:800;color:#43458C;white-space:nowrap}
+.ev-lbl{font-size:9px;color:#9a9a9a;margin-top:5px;text-align:center;font-weight:600}
+/* ── Info cards extra ── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
 
 </style>
 </head>
 <body>
 <a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">&#8592; In&#237;cio</a>
 <div class="page">
-  <div class="header">
-    <h1>Calculadora de Efetividade</h1>
-    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 01/06/2026 &nbsp;&#183;&nbsp; 31 consultores</p>
-  </div>
 
-  <div class="controls-bar">
-    <div class="ctrl-group">
-      <span class="ctrl-label">Meta</span>
-      <span class="ctrl-val" id="meta-val">80%</span>
-      <input type="range" id="sl-meta" min="65" max="95" value="80" step="5" style="width:180px">
-      <span style="font-size:10px;color:var(--muted);font-weight:600">65% &#183; 70% &#183; 75% &#183; 80% &#183; 85% &#183; 90% &#183; 95%</span>
-    </div>
-    <div class="ctrl-group">
-      <span class="ctrl-label">Janela de proje&#231;&#227;o</span>
-      <span class="ctrl-val" id="dias-val">5 d.&#250;.</span>
-      <input type="range" id="sl-dias" min="1" max="30" value="5" step="1" style="width:180px">
-      <span style="font-size:10px;color:var(--muted);font-weight:600">dias &#250;teis para calcular ef/dia/B1 necess&#225;rio</span>
+  <div class="calc-hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-title">&#128200; Calculadora de Efetividade</div>
+        <div class="hero-sub">Refer&#234;ncia: 01/06/2026 &nbsp;&#183;&nbsp; 31 consultores</div>
+      </div>
+      <div class="hero-controls">
+        <div class="ctrl-group">
+          <span class="ctrl-label">Meta</span>
+          <span class="ctrl-val" id="meta-val">80%</span>
+          <input type="range" id="sl-meta" min="65" max="95" value="80" step="5">
+          <span style="font-size:9px;color:rgba(255,255,255,.4);font-weight:600">65 &middot; 70 &middot; 75 &middot; 80 &middot; 85 &middot; 90 &middot; 95</span>
+        </div>
+        <div class="ctrl-group">
+          <span class="ctrl-label">Janela de proje&#231;&#227;o</span>
+          <span class="ctrl-val" id="dias-val">5 d.&#250;.</span>
+          <input type="range" id="sl-dias" min="1" max="30" value="5" step="1">
+          <span style="font-size:9px;color:rgba(255,255,255,.4);font-weight:600">dias &#250;teis para ef/dia/B1</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="kpi9">
-    <div class="kpi" id="kpi-pef-card">
-      <div class="kpi-lbl">% Efetividade</div>
-      <div class="kpi-val" id="kpi-pef">&#8212;</div>
+    <div class="kpi-c c-purple">
+      <div class="kc-lbl">% Efetividade</div>
+      <div class="kc-val" id="kpi-pef">&#8212;</div>
     </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Faltam p/ Meta</div>
-      <div class="kpi-val" id="kpi-faltam">&#8212;</div>
-      <div class="kpi-sub">necess&#225;rias &minus; mantidas</div>
+    <div class="kpi-c c-red">
+      <div class="kc-lbl">Faltam p/ Meta</div>
+      <div class="kc-val" id="kpi-faltam">&#8212;</div>
+      <div class="kc-sub">necess&#225;rias &minus; mantidas</div>
     </div>
-    <div class="kpi" id="kpi-delta-card">
-      <div class="kpi-lbl">Ritmo atual (ef/dia)</div>
-      <div class="kpi-val" id="kpi-delta">&#8212;</div>
-      <div class="kpi-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
+    <div class="kpi-c c-blue">
+      <div class="kc-lbl">Ritmo atual (ef/dia)</div>
+      <div class="kc-val" id="kpi-delta">&#8212;</div>
+      <div class="kc-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
     </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Ef/dia/B1 hist&#243;rico</div>
-      <div class="kpi-val" id="kpi-b1h">&#8212;</div>
-      <div class="kpi-sub">ritmo &#247; consultores</div>
+    <div class="kpi-c c-violet">
+      <div class="kc-lbl">Ef/dia/B1 hist&#243;rico</div>
+      <div class="kc-val" id="kpi-b1h">&#8212;</div>
+      <div class="kc-sub">ritmo &#247; consultores</div>
     </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Ef/dia/B1 necess&#225;rio</div>
-      <div class="kpi-val" id="kpi-b1p">&#8212;</div>
-      <div class="kpi-sub">faltam &#247; janela &#247; B1</div>
-    </div>
-  </div>
-
-  <!-- Cards informativos fixos -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
-    <div class="kpi">
-      <div class="kpi-lbl">Meta alvo (escolas)</div>
-      <div class="kpi-val" id="kpi-meta-alvo">&#8212;</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Consultores</div>
-      <div class="kpi-val" id="kpi-consultores">&#8212;</div>
+    <div class="kpi-c c-yellow">
+      <div class="kc-lbl">Ef/dia/B1 necess&#225;rio</div>
+      <div class="kc-val" id="kpi-b1p">&#8212;</div>
+      <div class="kc-sub">faltam &#247; janela &#247; B1</div>
     </div>
   </div>
 
-  <div class="proj-box">
-    <div class="proj-status" id="proj-status">No ritmo atual, para a meta selecionada chegamos em</div>
-    <div class="proj-dias" id="proj-dias">&#8212;</div>
-    <div class="proj-data" id="proj-data"></div>
-    <div class="proj-detalhe" id="proj-detalhe"></div>
-    <div style="margin-top:10px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap">
-      <span id="proj-faltam" style="font-size:12px;color:#7668AC;font-weight:700"></span>
+  <div class="info-grid">
+    <div class="kpi-c c-purple">
+      <div class="kc-lbl">Meta alvo (escolas)</div>
+      <div class="kc-val" id="kpi-meta-alvo">&#8212;</div>
     </div>
+    <div class="kpi-c c-violet">
+      <div class="kc-lbl">Consultores</div>
+      <div class="kc-val" id="kpi-consultores">&#8212;</div>
+    </div>
+  </div>
+
+  <div class="proj-hero">
+    <div class="ph-status" id="proj-status">No ritmo atual, para a meta selecionada chegamos em</div>
+    <div class="ph-dias" id="proj-dias">&#8212;</div>
+    <div class="ph-data" id="proj-data"></div>
+    <div class="ph-detail" id="proj-detalhe"></div>
+    <div class="ph-faltam" id="proj-faltam"></div>
   </div>
 
   <div class="card">
-    <div class="card-head" style="font-weight:700;font-size:13px">Proje&#231;&#227;o por Meta</div>
-    <div style="overflow-x:auto">
-      <table>
+    <div class="card-head"><span class="card-title">Proje&#231;&#227;o por Meta</span></div>
+    <div class="tbl-wrap">
+      <table style="min-width:500px">
         <thead>
           <tr>
             <th>Meta</th>
@@ -196,17 +231,20 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
         <tbody id="metas-tbody"></tbody>
       </table>
     </div>
-    <p style="font-size:10px;color:var(--muted);margin-top:10px">
-      <b>Faltam</b>: necess&#225;rias &minus; efetivas mantidas (j&#225; desconta a&#nbsp;vencer) &#8212;
-      <b>Ef/dia/B1</b>: faltam &#247; janela &#247; n&#186; consultores &#8212;
-      <b>Proje&#231;&#227;o</b>: faltam &#247; ritmo atual (dias &#250;teis)
+    <p style="font-size:10px;color:var(--muted);padding:10px 18px 14px">
+      <b>Faltam</b>: necess&#225;rias &minus; mantidas (desconta a vencer) &#8212;
+      <b>Ef/dia/B1</b>: faltam &#247; janela &#247; consultores &#8212;
+      <b>Proje&#231;&#227;o</b>: faltam &#247; ritmo atual
     </p>
   </div>
 
   <div class="card">
-    <div class="card-head" style="font-weight:700;font-size:13px">Evolu&#231;&#227;o semanal &mdash; efetividades por dia (22/05–01/06)</div>
-    <div id="chart-bars" class="chart-wrap"></div>
+    <div class="card-head"><span class="card-title">Evolu&#231;&#227;o &mdash; efetividades/dia (22/05–01/06)</span></div>
+    <div style="padding:0 18px 18px">
+      <div id="chart-bars" class="ev-chart-wrap"></div>
+    </div>
   </div>
+
 </div>
 <script>const C = {"efetivas": 1373, "elegiveis": 1868, "pef_atual": 73.5, "novas_dia": 108.2, "delta_ef_obs": 170.1, "ef_historico": [142, 154, 193, 200, 174, 220, 108], "n_consultores": 31, "data_ref": "2026-06-01", "expiracoes": [121, 131, 142, 173, 190, 174, 225, 115, 9, 13, 11, 10, 6, 10, 6, 6, 4, 2, 2, 2, 1, 1, 0, 1, 3, 2, 4, 6, 1, 2], "a_vencer_7du": 1156, "semana_label": "22/05–01/06"};
 
@@ -240,15 +278,15 @@ function render() {
                       ? faltam_adj / dias_proj / C.n_consultores : 0;
 
   // KPI cards
-  var pc = document.getElementById('kpi-pef-card');
-  pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-blue' : C.pef_atual >= 70 ? 'kpi-purple' : 'kpi-red');
+  var pefClass = C.pef_atual >= 80 ? 'v-blue' : C.pef_atual >= 70 ? '' : 'v-red';
+  document.getElementById('kpi-pef').className      = 'kc-val ' + pefClass;
   document.getElementById('kpi-pef').textContent    = C.pef_atual + '%';
   document.getElementById('kpi-faltam').textContent = faltam_adj.toLocaleString('pt-BR');
-  var dc = document.getElementById('kpi-delta-card');
-  dc.className = 'kpi ' + (C.delta_ef_obs >= 5 ? 'kpi-blue' : C.delta_ef_obs < 0 ? 'kpi-red' : 'kpi-purple');
-  document.getElementById('kpi-delta').textContent   = (C.delta_ef_obs > 0 ? '+' : '') + C.delta_ef_obs.toFixed(1) + '/dia';
-  document.getElementById('kpi-b1h').textContent     = b1_hist.toFixed(2) + '/B1';
-  document.getElementById('kpi-b1p').textContent     = faltam_adj <= 0 ? '&#8212;' : b1_proj.toFixed(2) + '/B1';
+  var deltaClass = C.delta_ef_obs >= 5 ? 'v-blue' : C.delta_ef_obs < 0 ? 'v-red' : '';
+  document.getElementById('kpi-delta').className    = 'kc-val ' + deltaClass;
+  document.getElementById('kpi-delta').textContent  = (C.delta_ef_obs > 0 ? '+' : '') + C.delta_ef_obs.toFixed(1) + '/dia';
+  document.getElementById('kpi-b1h').textContent    = b1_hist.toFixed(2) + '/B1';
+  document.getElementById('kpi-b1p').textContent    = faltam_adj <= 0 ? '—' : b1_proj.toFixed(2) + '/B1';
   document.getElementById('kpi-meta-alvo').textContent = nec_meta.toLocaleString('pt-BR');
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
@@ -260,31 +298,31 @@ function render() {
   var faltamEl = document.getElementById('proj-faltam');
 
   if (faltam_adj <= 0) {
-    statusEl.textContent = 'Meta atingida!';
-    projDias.innerHTML = '&#10003;'; projDias.className = 'proj-dias green';
-    projData.textContent = 'Meta ' + meta + '% atingida · mantidas: ' + mantidas.toLocaleString('pt-BR');
-    projDet.textContent = ''; faltamEl.textContent = '';
+    statusEl.textContent  = 'Meta ' + meta + '% atingida!';
+    projDias.innerHTML    = '&#10003;'; projDias.className = 'ph-dias ph-green';
+    projData.textContent  = 'Efetivas mantidas: ' + mantidas.toLocaleString('pt-BR');
+    projDet.textContent   = ''; faltamEl.textContent = '';
   } else if (C.delta_ef_obs <= 0) {
-    statusEl.textContent = 'Para atingir a meta ' + meta + '%, o time precisa de';
-    projDias.textContent = b1_proj.toFixed(2) + ' ef/dia/B1';
-    projDias.className = 'proj-dias red';
-    projData.innerHTML   = 'em ' + dias_proj + ' dias &uacute;teis';
-    projDet.textContent = 'Ritmo atual: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia';
-    faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
+    statusEl.textContent  = 'Para atingir a meta ' + meta + '%, o time precisa de';
+    projDias.textContent  = b1_proj.toFixed(2) + ' ef/dia/B1';
+    projDias.className    = 'ph-dias ph-red';
+    projData.innerHTML    = 'em ' + dias_proj + ' dias &uacute;teis';
+    projDet.textContent   = 'Ritmo atual: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia';
+    faltamEl.textContent  = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
   } else {
     var dp = Math.ceil(faltam_adj / C.delta_ef_obs);
-    statusEl.textContent = 'No ritmo atual, para a meta ' + meta + '% chegamos em';
+    statusEl.textContent  = 'No ritmo atual, para a meta ' + meta + '% chegamos em';
     if (dp > 365) {
-      projDias.innerHTML = '&#8734;'; projDias.className = 'proj-dias red';
-      projData.textContent = 'N&#227;o converge no per&#237;odo';
+      projDias.innerHTML  = '&#8734;'; projDias.className = 'ph-dias ph-red';
+      projData.textContent = 'Não converge no período';
       projDet.textContent = ''; faltamEl.textContent = '';
     } else {
       var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
-      projDias.innerHTML    = dp + (dp === 1 ? ' dia &uacute;til' : ' dias &uacute;teis');
-      projDias.className    = 'proj-dias' + (dp <= 5 ? ' green' : dp > 15 ? ' red' : '');
-      projData.textContent  = fmtDate(d);
-      projDet.textContent   = 'Ritmo: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia (' + b1_hist.toFixed(2) + '/B1) · ' + C.a_vencer_7du + ' vencem nos pr&#243;ximos 7 d.&#250;.';
-      faltamEl.textContent  = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
+      projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
+      projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
+      projData.textContent = fmtDate(d);
+      projDet.textContent  = 'Ritmo: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia (' + b1_hist.toFixed(2) + '/B1) · ' + C.a_vencer_7du + ' vencem nos próximos 7 d.ú.';
+      faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
     }
   }
 
@@ -325,11 +363,11 @@ function render() {
       var pct = Math.round(v / maxV * 100);
       var lbl = i === n - 1 ? 'hoje' : '-' + (n - 1 - i) + 'd';
       var col = document.createElement('div');
-      col.className = 'chart-col';
+      col.className = 'ev-col';
       col.innerHTML =
-        '<div class="chart-bar" style="height:' + pct + '%">'
-        + '<span class="chart-bar-val">' + v + '</span></div>'
-        + '<div class="chart-bar-lbl">' + lbl + '</div>';
+        '<div class="ev-bar" style="height:' + pct + '%">'
+        + '<span class="ev-bar-val">' + v + '</span></div>'
+        + '<div class="ev-lbl">' + lbl + '</div>';
       wrap.appendChild(col);
     });
   }
