@@ -130,36 +130,16 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
     </div>
   </div>
 
-  <!-- Linha 1: vol. -->
   <div class="kpi9">
-    <div class="kpi">
-      <div class="kpi-lbl">Total Eleg&#237;veis</div>
-      <div class="kpi-val" id="kpi-el">&#8212;</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Efetivas Hoje</div>
-      <div class="kpi-val" id="kpi-ef">&#8212;</div>
-    </div>
     <div class="kpi" id="kpi-pef-card">
       <div class="kpi-lbl">% Efetividade</div>
       <div class="kpi-val" id="kpi-pef">&#8212;</div>
-    </div>
-    <!-- Linha 2: vencimentos -->
-    <div class="kpi">
-      <div class="kpi-lbl">A Vencer (7 d.&#250;.)</div>
-      <div class="kpi-val" id="kpi-avencer">&#8212;</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Efetivas Mantidas</div>
-      <div class="kpi-val" id="kpi-mantidas">&#8212;</div>
-      <div class="kpi-sub">efetivas &minus; a&nbsp;vencer</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Faltam p/ Meta</div>
       <div class="kpi-val" id="kpi-faltam">&#8212;</div>
       <div class="kpi-sub">necess&#225;rias &minus; mantidas</div>
     </div>
-    <!-- Linha 3: ritmo -->
     <div class="kpi" id="kpi-delta-card">
       <div class="kpi-lbl">Ritmo atual (ef/dia)</div>
       <div class="kpi-val" id="kpi-delta">&#8212;</div>
@@ -259,17 +239,11 @@ function render() {
   var b1_proj     = (faltam_adj > 0 && dias_proj > 0 && C.n_consultores > 0)
                       ? faltam_adj / dias_proj / C.n_consultores : 0;
 
-  // KPI cards — linha 1
-  document.getElementById('kpi-el').textContent      = C.elegiveis.toLocaleString('pt-BR');
-  document.getElementById('kpi-ef').textContent      = C.efetivas.toLocaleString('pt-BR');
+  // KPI cards
   var pc = document.getElementById('kpi-pef-card');
   pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-blue' : C.pef_atual >= 70 ? 'kpi-purple' : 'kpi-red');
-  document.getElementById('kpi-pef').textContent     = C.pef_atual + '%';
-  // linha 2
-  document.getElementById('kpi-avencer').textContent = C.a_vencer_7du.toLocaleString('pt-BR');
-  document.getElementById('kpi-mantidas').textContent= mantidas.toLocaleString('pt-BR');
-  document.getElementById('kpi-faltam').textContent  = faltam_adj.toLocaleString('pt-BR');
-  // linha 3
+  document.getElementById('kpi-pef').textContent    = C.pef_atual + '%';
+  document.getElementById('kpi-faltam').textContent = faltam_adj.toLocaleString('pt-BR');
   var dc = document.getElementById('kpi-delta-card');
   dc.className = 'kpi ' + (C.delta_ef_obs >= 5 ? 'kpi-blue' : C.delta_ef_obs < 0 ? 'kpi-red' : 'kpi-purple');
   document.getElementById('kpi-delta').textContent   = (C.delta_ef_obs > 0 ? '+' : '') + C.delta_ef_obs.toFixed(1) + '/dia';
