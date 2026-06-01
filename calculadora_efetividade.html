@@ -76,16 +76,16 @@ select:focus{border-color:var(--yellow)}
 .controls-bar{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
   padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:28px;
   align-items:flex-end;box-shadow:var(--shadow)}
-.ctrl-group{display:flex;flex-direction:column;gap:6px;min-width:160px}
+.ctrl-group{display:flex;flex-direction:column;gap:6px;min-width:140px}
 .ctrl-label{font-size:10px;font-weight:700;color:var(--muted);
   text-transform:uppercase;letter-spacing:.7px}
 .ctrl-val{font-size:22px;font-weight:800;color:#7668AC;line-height:1;margin-bottom:2px}
 input[type=range]{accent-color:#7668AC;cursor:pointer}
-.kpi4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-@media(max-width:700px){.kpi4{grid-template-columns:repeat(2,1fr)}}
-.kpi-pef-blue .kpi-val{color:#008ECF}
-.kpi-pef-purple .kpi-val{color:#7668AC}
-.kpi-pef-red .kpi-val{color:#E94B56}
+.kpi9{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:640px){.kpi9{grid-template-columns:repeat(2,1fr)}}
+.kpi-blue .kpi-val{color:#008ECF}
+.kpi-purple .kpi-val{color:#7668AC}
+.kpi-red .kpi-val{color:#E94B56}
 .proj-box{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
   padding:24px;margin-bottom:20px;box-shadow:var(--shadow);text-align:center}
 .proj-status{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;
@@ -98,6 +98,12 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
   border-top:1px solid var(--border);padding-top:10px}
 .meta-atual{background:#f0eef8!important}
 .status-ok{color:#008ECF;font-weight:700}
+.chart-wrap{display:flex;align-items:flex-end;gap:6px;height:80px;padding-top:20px}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center}
+.chart-bar{width:100%;background:#7668AC;border-radius:4px 4px 0 0;position:relative;min-height:2px}
+.chart-bar-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  font-size:9px;font-weight:700;color:#7668AC;white-space:nowrap}
+.chart-bar-lbl{font-size:9px;color:var(--muted);margin-top:4px;text-align:center}
 
 </style>
 </head>
@@ -106,27 +112,28 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
 <div class="page">
   <div class="header">
     <h1>Calculadora de Efetividade</h1>
-    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 01/06/2026 &#183; 31 consultores &#183; 1167 escolas vencem nos pr&#243;ximos 7 d.&#250;.</p>
-  </div>
-
-  <!-- Alerta de tendência negativa (exibido via JS quando delta < 0) -->
-  <div id="alerta-tendencia"
-    style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:10px;
-           padding:12px 16px;margin-bottom:16px;font-size:12px;font-weight:600;color:#7a5800">
+    <p style="color:#9a9a9a;font-size:13px;margin-top:4px">Refer&#234;ncia: 01/06/2026 &nbsp;&#183;&nbsp; 31 consultores</p>
   </div>
 
   <div class="controls-bar">
     <div class="ctrl-group">
       <span class="ctrl-label">Meta</span>
       <span class="ctrl-val" id="meta-val">80%</span>
-      <input type="range" id="sl-meta" min="65" max="95" value="80" step="5" style="width:200px">
+      <input type="range" id="sl-meta" min="65" max="95" value="80" step="5" style="width:180px">
       <span style="font-size:10px;color:var(--muted);font-weight:600">65% &#183; 70% &#183; 75% &#183; 80% &#183; 85% &#183; 90% &#183; 95%</span>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Janela de proje&#231;&#227;o</span>
+      <span class="ctrl-val" id="dias-val">5 d.&#250;.</span>
+      <input type="range" id="sl-dias" min="1" max="30" value="5" step="1" style="width:180px">
+      <span style="font-size:10px;color:var(--muted);font-weight:600">dias &#250;teis para calcular ef/dia/B1 necess&#225;rio</span>
     </div>
   </div>
 
-  <div class="kpi4">
+  <!-- Linha 1: vol. -->
+  <div class="kpi9">
     <div class="kpi">
-      <div class="kpi-lbl">Eleg&#237;veis</div>
+      <div class="kpi-lbl">Total Eleg&#237;veis</div>
       <div class="kpi-val" id="kpi-el">&#8212;</div>
     </div>
     <div class="kpi">
@@ -134,17 +141,56 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
       <div class="kpi-val" id="kpi-ef">&#8212;</div>
     </div>
     <div class="kpi" id="kpi-pef-card">
-      <div class="kpi-lbl">% Atual</div>
+      <div class="kpi-lbl">% Efetividade</div>
       <div class="kpi-val" id="kpi-pef">&#8212;</div>
     </div>
+    <!-- Linha 2: vencimentos -->
+    <div class="kpi">
+      <div class="kpi-lbl">A Vencer (7 d.&#250;.)</div>
+      <div class="kpi-val" id="kpi-avencer">&#8212;</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Efetivas Mantidas</div>
+      <div class="kpi-val" id="kpi-mantidas">&#8212;</div>
+      <div class="kpi-sub">efetivas &minus; a&nbsp;vencer</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Faltam p/ Meta</div>
+      <div class="kpi-val" id="kpi-faltam">&#8212;</div>
+      <div class="kpi-sub">necess&#225;rias &minus; mantidas</div>
+    </div>
+    <!-- Linha 3: ritmo -->
     <div class="kpi" id="kpi-delta-card">
-      <div class="kpi-lbl">Tend&#234;ncia (7 d.&#250;.)</div>
+      <div class="kpi-lbl">Ritmo atual (ef/dia)</div>
       <div class="kpi-val" id="kpi-delta">&#8212;</div>
+      <div class="kpi-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Ef/dia/B1 hist&#243;rico</div>
+      <div class="kpi-val" id="kpi-b1h">&#8212;</div>
+      <div class="kpi-sub">ritmo &#247; consultores</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Ef/dia/B1 necess&#225;rio</div>
+      <div class="kpi-val" id="kpi-b1p">&#8212;</div>
+      <div class="kpi-sub">faltam &#247; janela &#247; B1</div>
+    </div>
+  </div>
+
+  <!-- Cards informativos fixos -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+    <div class="kpi">
+      <div class="kpi-lbl">Meta alvo (escolas)</div>
+      <div class="kpi-val" id="kpi-meta-alvo">&#8212;</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Consultores</div>
+      <div class="kpi-val" id="kpi-consultores">&#8212;</div>
     </div>
   </div>
 
   <div class="proj-box">
-    <div class="proj-status" id="proj-status">No ritmo dos &#250;ltimos 7 dias &#250;teis, para a meta selecionada chegamos em</div>
+    <div class="proj-status" id="proj-status">No ritmo atual, para a meta selecionada chegamos em</div>
     <div class="proj-dias" id="proj-dias">&#8212;</div>
     <div class="proj-data" id="proj-data"></div>
     <div class="proj-detalhe" id="proj-detalhe"></div>
@@ -162,6 +208,7 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
             <th>Meta</th>
             <th style="text-align:right">Necess&#225;rias</th>
             <th style="text-align:right">Faltam</th>
+            <th style="text-align:right">Ef/dia/B1</th>
             <th style="text-align:right">Proje&#231;&#227;o</th>
             <th style="text-align:center">Status</th>
           </tr>
@@ -170,13 +217,18 @@ input[type=range]{accent-color:#7668AC;cursor:pointer}
       </table>
     </div>
     <p style="font-size:10px;color:var(--muted);margin-top:10px">
-      <b>Tend&#234;ncia</b>: varia&#231;&#227;o m&#233;dia de escolas efetivas/dia nos &#250;ltimos 7 dias &#250;teis (considera tanto novas efetiva&#231;&#245;es quanto expiracoes reais) &#8212;
-      <b>Faltam</b>: necessárias &#8722; efetivas hoje &#8212;
-      <b>Proje&#231;&#227;o</b>: faltam &#247; tend&#234;ncia (d.&#250;. com tend&#234;ncia positiva) &middot; <b>+X/30d</b>: ef/dia necess&#225;rias em 30 d.&#250;. (tend&#234;ncia negativa)
+      <b>Faltam</b>: necess&#225;rias &minus; efetivas mantidas (j&#225; desconta a&#nbsp;vencer) &#8212;
+      <b>Ef/dia/B1</b>: faltam &#247; janela &#247; n&#186; consultores &#8212;
+      <b>Proje&#231;&#227;o</b>: faltam &#247; ritmo atual (dias &#250;teis)
     </p>
   </div>
+
+  <div class="card">
+    <div class="card-head" style="font-weight:700;font-size:13px">Evolu&#231;&#227;o semanal &mdash; efetividades por dia (22/05–01/06)</div>
+    <div id="chart-bars" class="chart-wrap"></div>
+  </div>
 </div>
-<script>const C = {"efetivas": 1363, "elegiveis": 1868, "pef_atual": 73.0, "novas_dia": 107.6, "delta_ef_obs": -40.4, "ef_historico": [1646, 1616, 1557, 1458, 1363], "n_consultores": 31, "data_ref": "2026-06-01", "expiracoes": [121, 136, 142, 175, 191, 176, 226, 95, 9, 13, 11, 10, 6, 10, 6, 5, 4, 2, 2, 2, 1, 1, 0, 1, 3, 2, 4, 6, 1, 2], "a_vencer_7du": 1167, "semana_label": "25/05–31/05"};
+<script>const C = {"efetivas": 1363, "elegiveis": 1868, "pef_atual": 73.0, "novas_dia": 107.6, "delta_ef_obs": 168.6, "ef_historico": [147, 154, 195, 201, 176, 221, 86], "n_consultores": 31, "data_ref": "2026-06-01", "expiracoes": [121, 136, 142, 175, 191, 176, 226, 95, 9, 13, 11, 10, 6, 10, 6, 5, 4, 2, 2, 2, 1, 1, 0, 1, 3, 2, 4, 6, 1, 2], "a_vencer_7du": 1167, "semana_label": "22/05–01/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -193,107 +245,125 @@ function fmtDate(d) {
   return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'short'});
 }
 
-// Projeção usando delta observado (variação real de efetivas/dia nos últimos 7 d.u.)
-// Retorna {dias, data, faltam} ou null se não convergir
-function projetar(meta_pct) {
-  var nec = Math.ceil(C.elegiveis * meta_pct / 100);
-  if (C.efetivas >= nec) return { dias: 0, data: '', faltam: 0 };
-  if (C.delta_ef_obs <= 0) return null;  // tendência negativa — não converge
-  var faltam = nec - C.efetivas;
-  var dias = Math.ceil(faltam / C.delta_ef_obs);
-  if (dias > 365) return null;
-  var d = new Date(C.data_ref + 'T12:00:00');
-  d = addBusDays(d, dias);
-  return { dias: dias, data: fmtDate(d), faltam: faltam };
-}
-
 function render() {
-  var meta = +document.getElementById('sl-meta').value;
-  document.getElementById('meta-val').textContent = meta + '%';
+  var meta      = +document.getElementById('sl-meta').value;
+  var dias_proj = +document.getElementById('sl-dias').value;
+  document.getElementById('meta-val').textContent  = meta + '%';
+  document.getElementById('dias-val').textContent  = dias_proj + ' d.ú.';
 
-  document.getElementById('kpi-el').textContent    = C.elegiveis;
-  document.getElementById('kpi-ef').textContent    = C.efetivas;
-  document.getElementById('kpi-pef').textContent   = C.pef_atual + '%';
-  var deltaSign = C.delta_ef_obs > 0 ? '+' : '';
-  document.getElementById('kpi-delta').textContent = deltaSign + C.delta_ef_obs.toFixed(1) + '/dia';
-  var dc = document.getElementById('kpi-delta-card');
-  dc.className = 'kpi ' + (C.delta_ef_obs > 5 ? 'kpi-pef-blue' : C.delta_ef_obs < 0 ? 'kpi-pef-red' : 'kpi-pef-purple');
+  // Cálculos principais (mesma lógica da calculadora de referência)
+  var mantidas    = Math.max(0, C.efetivas - C.a_vencer_7du);
+  var nec_meta    = Math.ceil(C.elegiveis * meta / 100);
+  var faltam_adj  = Math.max(0, nec_meta - mantidas);
+  var b1_hist     = C.n_consultores > 0 ? C.delta_ef_obs / C.n_consultores : 0;
+  var b1_proj     = (faltam_adj > 0 && dias_proj > 0 && C.n_consultores > 0)
+                      ? faltam_adj / dias_proj / C.n_consultores : 0;
+
+  // KPI cards — linha 1
+  document.getElementById('kpi-el').textContent      = C.elegiveis.toLocaleString('pt-BR');
+  document.getElementById('kpi-ef').textContent      = C.efetivas.toLocaleString('pt-BR');
   var pc = document.getElementById('kpi-pef-card');
-  pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-pef-blue' : C.pef_atual >= 70 ? 'kpi-pef-purple' : 'kpi-pef-red');
+  pc.className = 'kpi ' + (C.pef_atual >= 80 ? 'kpi-blue' : C.pef_atual >= 70 ? 'kpi-purple' : 'kpi-red');
+  document.getElementById('kpi-pef').textContent     = C.pef_atual + '%';
+  // linha 2
+  document.getElementById('kpi-avencer').textContent = C.a_vencer_7du.toLocaleString('pt-BR');
+  document.getElementById('kpi-mantidas').textContent= mantidas.toLocaleString('pt-BR');
+  document.getElementById('kpi-faltam').textContent  = faltam_adj.toLocaleString('pt-BR');
+  // linha 3
+  var dc = document.getElementById('kpi-delta-card');
+  dc.className = 'kpi ' + (C.delta_ef_obs >= 5 ? 'kpi-blue' : C.delta_ef_obs < 0 ? 'kpi-red' : 'kpi-purple');
+  document.getElementById('kpi-delta').textContent   = (C.delta_ef_obs > 0 ? '+' : '') + C.delta_ef_obs.toFixed(1) + '/dia';
+  document.getElementById('kpi-b1h').textContent     = b1_hist.toFixed(2) + '/B1';
+  document.getElementById('kpi-b1p').textContent     = faltam_adj <= 0 ? '&#8212;' : b1_proj.toFixed(2) + '/B1';
+  document.getElementById('kpi-meta-alvo').textContent = nec_meta.toLocaleString('pt-BR');
+  document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
-  var proj     = projetar(meta);
+  // Caixa de projeção
   var projDias = document.getElementById('proj-dias');
   var projData = document.getElementById('proj-data');
   var projDet  = document.getElementById('proj-detalhe');
-
-  // Alerta de tendência negativa
-  var alertEl = document.getElementById('alerta-tendencia');
-  if (C.delta_ef_obs < 0) {
-    alertEl.style.display = 'block';
-    alertEl.textContent   = 'Atenção: a efetividade está caindo ' + Math.abs(C.delta_ef_obs).toFixed(1) + ' escolas/dia nos últimos 7 dias úteis. Para a meta ser atingível, o time precisa reverter essa tendência.';
-  } else {
-    alertEl.style.display = 'none';
-  }
-
   var statusEl = document.getElementById('proj-status');
-  if (!proj) {
-    if (C.delta_ef_obs <= 0) {
-      var nec_proj  = Math.ceil(C.elegiveis * meta / 100);
-      var falt_proj = Math.max(0, nec_proj - C.efetivas);
-      var r20 = (falt_proj / 20).toFixed(1);
-      var r30 = (falt_proj / 30).toFixed(1);
-      statusEl.textContent = 'Para atingir a meta, o time precisa de um ritmo de';
-      projDias.textContent = '+' + r20 + ' ef/dia'; projDias.className = 'proj-dias red';
-      projData.textContent = 'para meta ' + meta + '% em 20 d.ú.';
-      projDet.textContent  = 'Tendência atual: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia · Em 30 d.ú.: +' + r30 + ' ef/dia necessários';
-      document.getElementById('proj-faltam').textContent = 'Faltam: ' + falt_proj + ' escolas';
-    } else {
-      statusEl.textContent = 'No ritmo dos últimos 7 dias úteis, para a meta selecionada chegamos em';
-      projDias.innerHTML  = '&#8734;'; projDias.className = 'proj-dias red';
-      projData.textContent = 'Não converge no período';
-      projDet.textContent  = '';
-      document.getElementById('proj-faltam').textContent = '';
-    }
-  } else if (proj.dias === 0) {
-    statusEl.textContent = 'No ritmo dos últimos 7 dias úteis, para a meta selecionada chegamos em';
-    projDias.innerHTML  = '&#10003;'; projDias.className = 'proj-dias green';
-    projData.textContent = 'Meta ' + meta + '% atingida!';
-    projDet.textContent  = '';
-    document.getElementById('proj-faltam').textContent = '';
+  var faltamEl = document.getElementById('proj-faltam');
+
+  if (faltam_adj <= 0) {
+    statusEl.textContent = 'Meta atingida!';
+    projDias.innerHTML = '&#10003;'; projDias.className = 'proj-dias green';
+    projData.textContent = 'Meta ' + meta + '% atingida · mantidas: ' + mantidas.toLocaleString('pt-BR');
+    projDet.textContent = ''; faltamEl.textContent = '';
+  } else if (C.delta_ef_obs <= 0) {
+    statusEl.textContent = 'Para atingir a meta ' + meta + '%, o time precisa de';
+    projDias.textContent = b1_proj.toFixed(2) + ' ef/dia/B1';
+    projDias.className = 'proj-dias red';
+    projData.textContent = 'em ' + dias_proj + ' dias &#250;teis';
+    projDet.textContent = 'Ritmo atual: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia';
+    faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
   } else {
-    statusEl.textContent = 'No ritmo dos últimos 7 dias úteis, para a meta selecionada chegamos em';
-    projDias.textContent = proj.dias + (proj.dias === 1 ? ' dia útil' : ' dias úteis');
-    projDias.className   = 'proj-dias' + (proj.dias <= 5 ? ' green' : proj.dias > 15 ? ' red' : '');
-    projData.textContent = proj.data;
-    projDet.textContent  = 'Ritmo: Δ' + (C.delta_ef_obs > 0 ? '+' : '') + C.delta_ef_obs.toFixed(1) + ' ef/dia (obs. últ. 7 d.ú.) · ' + C.a_vencer_7du + ' escolas vencem nos próximos 7 d.ú.';
-    document.getElementById('proj-faltam').textContent = 'Faltam: ' + proj.faltam + ' escolas';
+    var dp = Math.ceil(faltam_adj / C.delta_ef_obs);
+    statusEl.textContent = 'No ritmo atual, para a meta ' + meta + '% chegamos em';
+    if (dp > 365) {
+      projDias.innerHTML = '&#8734;'; projDias.className = 'proj-dias red';
+      projData.textContent = 'N&#227;o converge no per&#237;odo';
+      projDet.textContent = ''; faltamEl.textContent = '';
+    } else {
+      var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
+      projDias.textContent  = dp + (dp === 1 ? ' dia &#250;til' : ' dias &#250;teis');
+      projDias.className    = 'proj-dias' + (dp <= 5 ? ' green' : dp > 15 ? ' red' : '');
+      projData.textContent  = fmtDate(d);
+      projDet.textContent   = 'Ritmo: ' + C.delta_ef_obs.toFixed(1) + ' ef/dia (' + b1_hist.toFixed(2) + '/B1) · ' + C.a_vencer_7du + ' vencem nos pr&#243;ximos 7 d.&#250;.';
+      faltamEl.textContent  = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
+    }
   }
 
+  // Tabela de metas
   var tbody = document.getElementById('metas-tbody');
   tbody.innerHTML = '';
   [65, 70, 75, 80, 85, 90, 95].forEach(function(m) {
-    var nec    = Math.ceil(C.elegiveis * m / 100);
-    var ok     = C.efetivas >= nec;
-    var isSel  = (m === meta);
-    var p      = ok ? null : projetar(m);
+    var nec   = Math.ceil(C.elegiveis * m / 100);
+    var falt  = Math.max(0, nec - mantidas);
+    var ok    = falt <= 0;
+    var isSel = (m === meta);
+    var ef_b1 = (!ok && C.n_consultores > 0 && dias_proj > 0)
+                  ? (falt / dias_proj / C.n_consultores).toFixed(2) : '&#8212;';
+    var dp_m  = (!ok && C.delta_ef_obs > 0) ? Math.ceil(falt / C.delta_ef_obs) : null;
+    var proj_txt = ok ? '&#8212;'
+      : (dp_m && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
     var tr = document.createElement('tr');
     if (isSel) tr.className = 'meta-atual';
-    var falt_m  = Math.max(0, nec - C.efetivas);
-    var projTxt = ok ? '&#8212;' : (p ? p.dias + ' d.ú.' : (C.delta_ef_obs <= 0 ? '+' + (falt_m / 30).toFixed(1) + '/30d' : '&#8734;'));
     tr.innerHTML =
       '<td style="font-weight:700">' + m + '%' + (isSel ? ' &#9668;' : '') + '</td>'
       + '<td class="num">' + nec + '</td>'
-      + '<td class="num">' + (ok ? '&#8212;' : falt_m) + '</td>'
-      + '<td class="num">' + projTxt + '</td>'
+      + '<td class="num">' + (ok ? '&#8212;' : falt) + '</td>'
+      + '<td class="num">' + ef_b1 + '</td>'
+      + '<td class="num">' + proj_txt + '</td>'
       + '<td style="text-align:center">' + (ok
           ? '<span class="status-ok">&#10003;</span>'
           : '<span style="color:#E94B56;font-weight:700">&#9679;</span>') + '</td>';
     tbody.appendChild(tr);
   });
+
+  // Gráfico de barras (ef_historico)
+  var wrap = document.getElementById('chart-bars');
+  if (wrap && C.ef_historico && C.ef_historico.length) {
+    var maxV = Math.max.apply(null, C.ef_historico) || 1;
+    var n    = C.ef_historico.length;
+    wrap.innerHTML = '';
+    C.ef_historico.forEach(function(v, i) {
+      var pct = Math.round(v / maxV * 100);
+      var lbl = i === n - 1 ? 'hoje' : '-' + (n - 1 - i) + 'd';
+      var col = document.createElement('div');
+      col.className = 'chart-col';
+      col.innerHTML =
+        '<div class="chart-bar" style="height:' + pct + '%">'
+        + '<span class="chart-bar-val">' + v + '</span></div>'
+        + '<div class="chart-bar-lbl">' + lbl + '</div>';
+      wrap.appendChild(col);
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('sl-meta').oninput = function() { render(); };
+  document.getElementById('sl-dias').oninput = function() { render(); };
   render();
 });
 </script>
@@ -320,34 +390,31 @@ document.addEventListener('DOMContentLoaded', function() {
     </h2>
     <div style="font-size:13px;line-height:1.8;color:#444">
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#127919; Meta</p>
-      <p style="margin-bottom:14px">Percentual-alvo de efetividade. Mover o slider muda qual linha da tabela fica destacada e atualiza a proje&#231;&#227;o principal.</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#127919; Meta &amp; Janela</p>
+      <p style="margin-bottom:14px">Meta = percentual-alvo. Janela = quantos dias &#250;teis voc&#234; quer usar para calcular o <b>ef/dia/B1 necess&#225;rio</b> (padr&#227;o: 5 = uma semana).</p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Tend&#234;ncia (&#916; ef/dia)</p>
-      <p style="margin-bottom:14px">Varia&#231;&#227;o m&#233;dia de escolas efetivas por dia nos <b>&#250;ltimos 7 dias &#250;teis</b>. Calculada comparando o total de efetivas hoje com o total de 7 dias &#250;teis atr&#225;s (usando o campo de dias desde &#250;ltima atividade efetiva como prox). Valor positivo = efetividade subindo; negativo = caindo. Este &#233; o indicador mais fiel do ritmo atual do time, pois incorpora tanto novas efetiva&#231;&#245;es quanto o churn real.</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Ritmo atual (ef/dia)</p>
+      <p style="margin-bottom:14px">M&#233;dia de escolas com <b>&#250;ltima atividade efetiva</b> registrada por dia nos &#250;ltimos 7 dias &#250;teis. Positivo = time est&#225; efetivando; negativo = parou de efetividades.</p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; Vencem em 7 d.&#250;.</p>
-      <p style="margin-bottom:14px">Escolas efetivas hoje que <b>atingir&#227;o o prazo</b> nos pr&#243;ximos 7 dias &#250;teis. Informativo: mostra a press&#227;o de renova&#231;&#227;o da semana.</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; Efetivas Mantidas</p>
+      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Efetivas hoje &minus; A vencer nos pr&#243;ximos 7 d.&#250;.</code><br>
+      Base conservadora: desconta as escolas que ir&#227;o expirar essa semana.</p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#9997; Faltam</p>
-      <p style="margin-bottom:14px">Escolas que precisam ser conquistadas para atingir a meta:<br>
-        <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">
-          Faltam = Necess&#225;rias &minus; Efetivas hoje
-        </code>
-      </p>
+      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Necess&#225;rias &minus; Efetivas Mantidas</code></p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#9200; Proje&#231;&#227;o (dias &#250;teis)</p>
-      <p style="margin-bottom:14px">Com tend&#234;ncia positiva: <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; Tend&#234;ncia</code> — quantos dias &#250;teis para atingir a meta no ritmo atual. Com tend&#234;ncia negativa: exibe o <b>ritmo necess&#225;rio</b> (<code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; 20 d.&#250;</code>) para que a meta seja atingida em 20 ou 30 dias &#250;teis.</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128101; Ef/dia/B1</p>
+      <p style="margin-bottom:14px"><b>Hist&#243;rico</b>: ritmo atual &#247; n&#186; consultores.<br>
+      <b>Necess&#225;rio</b>: <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; janela &#247; n&#186; consultores</code> — quantas efetividades cada B1 precisa fazer por dia para atingir a meta dentro da janela.</p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128206; Efetivo no prazo (regra de neg&#243;cio)</p>
-      <p style="margin-bottom:2px">Uma escola &#233; <b>efetiva no prazo</b> quando:</p>
-      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">
-        (dias_uteis_ultima_atividade_efetiva &minus; 1) &le; prazo_da_segmenta&#231;&#227;o
-      </code></p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#9200; Proje&#231;&#227;o</p>
+      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; Ritmo atual</code> — quantos dias &#250;teis para atingir a meta no ritmo dos &#250;ltimos 7 d.&#250;.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128206; Efetivo no prazo (regra)</p>
       <table style="width:100%;font-size:12px;border-collapse:collapse">
         <thead><tr style="background:#f4f2fb">
-          <th style="text-align:left;padding:5px 8px;font-weight:700">Segmenta&#231;&#227;o</th>
-          <th style="text-align:right;padding:5px 8px;font-weight:700">Prazo (d.&#250;.)</th>
+          <th style="text-align:left;padding:5px 8px">Segmenta&#231;&#227;o</th>
+          <th style="text-align:right;padding:5px 8px">Prazo (d.&#250;.)</th>
         </tr></thead>
         <tbody>
           <tr><td style="padding:4px 8px">High, Medium, Premium, Premium 40+</td><td style="text-align:right;padding:4px 8px">7</td></tr>
@@ -355,7 +422,6 @@ document.addEventListener('DOMContentLoaded', function() {
           <tr><td style="padding:4px 8px">N&#227;o quer contato ativo</td><td style="text-align:right;padding:4px 8px">30</td></tr>
         </tbody>
       </table>
-      <p style="margin-top:10px;font-size:11px;color:#aaa">O &minus;1 &#233; uma compensa&#231;&#227;o de 1 dia aplicada na regra original de efetividade.</p>
     </div>
   </div>
 </div>
