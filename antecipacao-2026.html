@@ -46,7 +46,18 @@
   }
   .header-left h1 { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; }
   .header-left .sub { font-size: 11px; opacity: 0.75; margin-top: 3px; font-weight: 400; }
+  .header-center { flex: 1; text-align: center; }
+  .header-center h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+  .header-center .sub { font-size: 11px; opacity: 0.75; margin-top: 3px; font-weight: 400; }
   .header-right { display: flex; align-items: center; gap: 12px; }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.35);
+    color: white; text-decoration: none; padding: 6px 14px; border-radius: 8px;
+    font-size: 11px; font-weight: 700; font-family: inherit; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-back:hover { background: rgba(255,255,255,0.28); }
   .stamp {
     background: var(--yellow);
     color: #2B2200;
@@ -269,8 +280,11 @@
 <div class="container">
   <header>
     <div class="header-left">
-      <h1>Dash Antecipacao 2026</h1>
-      <div class="sub">Snapshot 02/06/2026 · Time de Relacionamento · Estante Magica</div>
+      <a href="index.html" class="btn-back">&#8592; Voltar</a>
+    </div>
+    <div class="header-center">
+      <h1>Antecipacao 2026</h1>
+      <div class="sub">Programa de antecipacao de receita &nbsp;&#183;&nbsp; Time de Relacionamento &nbsp;&#183;&nbsp; Estante Magica</div>
     </div>
     <div class="header-right">
       <div class="stamp">ATUALIZADO 02/06/2026</div>
