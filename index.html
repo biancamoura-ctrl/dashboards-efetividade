@@ -68,6 +68,10 @@ body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-heigh
       <div class="t-icon">&#9889;</div>
       <div class="t-name">Time de Ativa&#231;&#227;o</div>
     </div>
+    <div class="team-btn" id="btn-antec" onclick="selectTeam('antec')">
+      <div class="t-icon">&#x1F4B0;</div>
+      <div class="t-name">Antecipa&#231;&#227;o 2026</div>
+    </div>
     <!-- Low Touch oculto por ora
     <div class="team-btn" id="btn-lt" onclick="selectTeam('lt')">
       <div class="t-icon">&#x1F916;</div>
@@ -118,6 +122,11 @@ body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-heigh
 
   <div class="team-section" id="sec-atv">
     <div class="btn-grid">
+    </div>
+  </div>
+
+  <div class="team-section" id="sec-antec">
+    <div class="btn-grid">
       <a href="antecipacao-2026.html" class="btn-card">
         <div style="font-size:52px;width:72px;height:72px;display:flex;align-items:center;justify-content:center;">&#x1F4B0;</div>
         <div class="title">Antecipa&#231;&#227;o 2026</div>
@@ -139,12 +148,12 @@ body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-heigh
   -->
 
 
-  <div class="footer">Atualizado &#224;s 13:44 &nbsp;&#183;&nbsp; 02/06/2026</div>
+  <div class="footer">Atualizado &#224;s 13:49 &nbsp;&#183;&nbsp; 02/06/2026</div>
 </div>
 </div>
 <script>
 function selectTeam(t) {
-  ['rel','atv'].forEach(function(id) {
+  ['rel','atv','antec'].forEach(function(id) {
     document.getElementById('btn-'+id).classList.toggle('active', t === id);
     document.getElementById('sec-'+id).classList.toggle('visible', t === id);
   });
