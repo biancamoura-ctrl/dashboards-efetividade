@@ -90,12 +90,14 @@
     box-shadow: var(--shadow);
     border-top: 3px solid var(--purple);
   }
-  .kpi.blue  { border-top-color: var(--blue); }
-  .kpi.red   { border-top-color: var(--red); }
+  .kpi.blue   { border-top-color: var(--blue); }
+  .kpi.red    { border-top-color: var(--red); }
+  .kpi.orange { border-top-color: #F97316; }
   .kpi .lbl  { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: #aaa; text-transform: uppercase; }
   .kpi .val  { font-size: 28px; font-weight: 800; color: var(--purple); line-height: 1.1; margin-top: 5px; }
-  .kpi.blue .val { color: var(--blue); }
-  .kpi.red  .val { color: var(--red); }
+  .kpi.blue   .val { color: var(--blue); }
+  .kpi.red    .val { color: var(--red); }
+  .kpi.orange .val { color: #F97316; }
   .kpi .sub  { font-size: 10px; color: #bbb; margin-top: 3px; }
   .picker {
     background: white;
@@ -179,7 +181,15 @@
   }
   .badge.agendado  { background: var(--green-bg);  color: var(--green); }
   .badge.agendar   { background: var(--red-bg);    color: var(--red); }
-  .badge.vencido   { background: #FFF8D6;           color: var(--yellow-dark); }
+  .noshow-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: #F97316;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    margin-top: -1px;
+  }
   .prog-bar {
     display: inline-block;
     width: 60px;
@@ -280,8 +290,13 @@
     </div>
     <div class="kpi red">
       <div class="lbl">Para agendar</div>
-      <div class="val">120</div>
-      <div class="sub">Sem BV ou data vencida</div>
+      <div class="val">24</div>
+      <div class="sub">Nunca tiveram data de BV</div>
+    </div>
+    <div class="kpi orange">
+      <div class="lbl">No Show</div>
+      <div class="val">96</div>
+      <div class="sub">Tinham data de BV mas não compareceram</div>
     </div>
   </div>
 
@@ -300,6 +315,7 @@
           <th class="sortable" data-resumo-key="nome">Ativador</th>
           <th class="sortable num" data-resumo-key="carteira">Carteira</th>
           <th class="sortable num" data-resumo-key="agendado">BV Agendado</th>
+          <th class="sortable num" data-resumo-key="noshow">No Show</th>
           <th class="sortable num" data-resumo-key="agendar">Para Agendar</th>
           <th class="sortable num" data-resumo-key="pct">% Agendado</th>
         </tr>
@@ -366,10 +382,11 @@ nomes.forEach(function(n) {
 function buildResumo() {
   const map = {};
   DATA.forEach(function(e) {
-    if (!map[e.nome]) map[e.nome] = { nome: e.nome, carteira: 0, agendado: 0, agendar: 0 };
+    if (!map[e.nome]) map[e.nome] = { nome: e.nome, carteira: 0, agendado: 0, noshow: 0, agendar: 0 };
     map[e.nome].carteira++;
-    if (e.bv_agendado)  map[e.nome].agendado++;
-    if (e.para_agendar) map[e.nome].agendar++;
+    if (e.bv_agendado)               map[e.nome].agendado++;
+    if (e.vencido)                   map[e.nome].noshow++;
+    if (e.para_agendar && !e.vencido) map[e.nome].agendar++;
   });
   return Object.values(map).map(function(r) {
     r.pct = r.carteira > 0 ? r.agendado / r.carteira : 0;
@@ -401,6 +418,7 @@ function renderResumo() {
       '<td>' + r.nome + '</td>' +
       '<td class="num">' + r.carteira + '</td>' +
       '<td class="num">' + r.agendado + '</td>' +
+      '<td class="num" style="color:#F97316;font-weight:700">' + (r.noshow || 0) + '</td>' +
       '<td class="num">' + r.agendar + '</td>' +
       '<td class="num">' + bar + pctTxt + '</td>' +
     '</tr>';
@@ -440,8 +458,8 @@ function getFiltered() {
 }
 
 function statusBadge(e) {
-  if (e.bv_agendado)  return '<span class="badge agendado">AGENDADO</span>';
-  if (e.vencido)      return '<span class="badge vencido">VENCIDO</span>';
+  if (e.bv_agendado) return '<span class="badge agendado">AGENDADO</span>';
+  if (e.vencido)     return '<span class="badge agendar"><span class="noshow-dot"></span>PARA AGENDAR</span>';
   return '<span class="badge agendar">PARA AGENDAR</span>';
 }
 
