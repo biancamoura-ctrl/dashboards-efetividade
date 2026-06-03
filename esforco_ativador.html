@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análise de Esforço · Ativação · Estante Mágica</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:      #7668AC;
+    --purple-dark: #5A4E8E;
+    --purple-bg:   #F0EEF8;
+    --yellow:      #F9DC45;
+    --yellow-dark: #C9AC00;
+    --blue:        #008ECF;
+    --green:       #2E7D32;
+    --green-bg:    #E8F5E9;
+    --red:         #E94B56;
+    --red-bg:      #FEE8EA;
+    --orange:      #F97316;
+    --orange-bg:   #FFF0E6;
+    --gray:        #595959;
+    --gray-light:  #F5F4F9;
+    --border:      #E2DEEF;
+    --shadow:      0 2px 8px rgba(118,104,172,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', -apple-system, 'Segoe UI', sans-serif;
+    background: var(--gray-light);
+    color: var(--gray);
+    line-height: 1.5;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+  header {
+    background: var(--purple);
+    color: white;
+    padding: 20px 28px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: var(--shadow);
+  }
+  .header-left { display: flex; align-items: center; }
+  .header-center { flex: 1; text-align: center; }
+  .header-center h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+  .header-center .sub { font-size: 11px; opacity: 0.75; margin-top: 3px; font-weight: 400; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.35);
+    color: white; text-decoration: none; padding: 6px 14px; border-radius: 8px;
+    font-size: 11px; font-weight: 700; font-family: inherit; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-back:hover { background: rgba(255,255,255,0.28); }
+  .stamp {
+    background: var(--yellow); color: #2B2200;
+    padding: 5px 13px; border-radius: 6px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  }
+  .em-logo {
+    background: white; color: var(--purple);
+    font-size: 15px; font-weight: 800;
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    letter-spacing: -1px; flex-shrink: 0;
+  }
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .kpi {
+    background: white; border-radius: 10px; padding: 15px 16px;
+    box-shadow: var(--shadow); border-top: 3px solid var(--purple);
+  }
+  .kpi.blue   { border-top-color: var(--blue); }
+  .kpi.green  { border-top-color: var(--green); }
+  .kpi.orange { border-top-color: var(--orange); }
+  .kpi .lbl  { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: #aaa; text-transform: uppercase; }
+  .kpi .val  { font-size: 28px; font-weight: 800; color: var(--purple); line-height: 1.1; margin-top: 5px; }
+  .kpi.blue  .val { color: var(--blue); }
+  .kpi.green .val { color: var(--green); }
+  .kpi.orange .val { color: var(--orange); }
+  .kpi .sub  { font-size: 10px; color: #bbb; margin-top: 3px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    color: var(--purple); text-transform: uppercase;
+    margin-bottom: 8px; padding-left: 4px;
+  }
+  .table-wrap {
+    background: white; border-radius: 10px;
+    overflow: hidden; box-shadow: var(--shadow); margin-bottom: 16px;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: var(--purple); color: white; }
+  th {
+    padding: 11px 14px; text-align: left;
+    font-weight: 700; font-size: 9px; letter-spacing: 0.8px;
+    text-transform: uppercase; cursor: pointer; user-select: none; white-space: nowrap;
+  }
+  th:hover { background: var(--purple-dark); }
+  th.sortable::after   { content: " ⇅"; opacity: 0.4; font-size: 8px; }
+  th.sorted-asc::after  { content: " ▲"; opacity: 1; color: var(--yellow); }
+  th.sorted-desc::after { content: " ▼"; opacity: 1; color: var(--yellow); }
+  th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--purple-bg); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #FAF9FE; }
+  .num-blue   { color: var(--blue);   font-weight: 700; }
+  .num-green  { color: var(--green);  font-weight: 700; }
+  .num-orange { color: var(--orange); font-weight: 700; }
+  .num-zero   { color: #ccc; }
+  .empty { padding: 60px 20px; text-align: center; color: #bbb; font-style: italic; }
+  .footer { text-align: center; color: #bbb; font-size: 10px; margin-top: 18px; padding: 14px; font-style: italic; }
+  @media (max-width: 700px) {
+    .header-center h1 { font-size: 16px; }
+    th, td { padding: 7px 8px; font-size: 11px; }
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .kpi .val { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-left">
+      <a href="metricas_ativador.html" class="btn-back">&#8592; Métricas Ativador</a>
+    </div>
+    <div class="header-center">
+      <h1>Análise de Esforço &nbsp;&#183;&nbsp; Ativação</h1>
+      <div class="sub">Time de Ativação &nbsp;&#183;&nbsp; Estante Mágica</div>
+    </div>
+    <div class="header-right">
+      <div class="stamp">HOJE 03/06/2026</div>
+      <div class="em-logo">EM</div>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="lbl">Carteira total</div>
+      <div class="val">158</div>
+      <div class="sub">Escolas em Onboarding</div>
+    </div>
+    <div class="kpi blue">
+      <div class="lbl">Agendou hoje</div>
+      <div class="val">0</div>
+      <div class="sub">Reuniões criadas hoje</div>
+    </div>
+    <div class="kpi green">
+      <div class="lbl">Realizou hoje</div>
+      <div class="val">0</div>
+      <div class="sub">BV concluída hoje</div>
+    </div>
+    <div class="kpi orange">
+      <div class="lbl">No Show hoje</div>
+      <div class="val">0</div>
+      <div class="sub">Não compareceu hoje</div>
+    </div>
+  </div>
+
+  <div class="section-title">Por ativador</div>
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th class="sortable" data-key="nome">Ativador</th>
+          <th class="sortable num" data-key="carteira">Carteira</th>
+          <th class="sortable num" data-key="agendou_hoje">Agendou hoje</th>
+          <th class="sortable num" data-key="realizou_hoje">Realizou hoje</th>
+          <th class="sortable num" data-key="noshow_hoje">No Show hoje</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="empty" id="empty" style="display:none;">Sem dados.</div>
+  </div>
+
+  <div class="footer">Dados CRM AX &nbsp;&#183;&nbsp; Atualizado em 03/06/2026 &nbsp;&#183;&nbsp; Ativação 2026</div>
+</div>
+<script>
+const DATA = [{"email": "agatha.cruz@estantemagica.com.br", "nome": "agatha.cruz@estantemagica.com.br", "carteira": 88, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0}, {"email": "mariana.mazzero@estantemagica.com.br", "nome": "mariana.mazzero@estantemagica.com.br", "carteira": 70, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0}];
+
+const state = { sortKey: 'carteira', sortDir: -1 };
+
+function val(v, cls) {
+  if (v === 0) return '<td class="num num-zero">—</td>';
+  return '<td class="num ' + cls + '">' + v + '</td>';
+}
+
+function render() {
+  const arr = [...DATA].sort(function(a, b) {
+    const av = a[state.sortKey], bv = b[state.sortKey];
+    if (typeof av === 'string') return state.sortDir * av.localeCompare(bv, 'pt-BR');
+    return state.sortDir * (av - bv);
+  });
+
+  const tbody = document.getElementById('tbody');
+  const empty = document.getElementById('empty');
+  if (arr.length === 0) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = arr.map(function(r) {
+    return '<tr>' +
+      '<td>' + r.nome + '</td>' +
+      '<td class="num">' + r.carteira + '</td>' +
+      val(r.agendou_hoje,  'num-blue') +
+      val(r.realizou_hoje, 'num-green') +
+      val(r.noshow_hoje,   'num-orange') +
+    '</tr>';
+  }).join('');
+}
+
+document.querySelectorAll('#tbl th.sortable').forEach(function(th) {
+  th.addEventListener('click', function() {
+    const k = th.dataset.key;
+    if (state.sortKey === k) state.sortDir *= -1;
+    else { state.sortKey = k; state.sortDir = -1; }
+    document.querySelectorAll('#tbl th').forEach(function(t) { t.classList.remove('sorted-asc','sorted-desc'); });
+    th.classList.add(state.sortDir > 0 ? 'sorted-asc' : 'sorted-desc');
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
