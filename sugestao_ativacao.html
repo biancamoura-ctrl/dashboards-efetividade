@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugestão do Agente · Ativação · Estante Mágica</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:#f7f7f5;color:#595959;line-height:1.5}
+.container{max-width:860px;margin:0 auto;padding:20px 16px 48px}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);margin-bottom:18px;transition:opacity .15s}
+.back:hover{opacity:.85}
+.hero{background:#7668AC;border-radius:16px;padding:24px 28px;margin-bottom:20px;color:white}
+.hero-title{font-size:20px;font-weight:900;letter-spacing:-.3px;margin-bottom:4px}
+.hero-sub{font-size:11px;opacity:.75;margin-bottom:16px}
+.hero-status{font-size:14px;font-weight:700;color:#92400e;background:white;display:inline-block;padding:7px 16px;border-radius:8px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.kpi{background:white;border-radius:10px;padding:13px 14px;box-shadow:0 2px 6px rgba(0,0,0,.06);border-top:3px solid #7668AC}
+.kpi.blue{border-top-color:#008ECF}.kpi.orange{border-top-color:#F97316}.kpi.red{border-top-color:#E94B56}
+.kpi-lbl{font-size:9px;font-weight:700;letter-spacing:1px;color:#aaa;text-transform:uppercase}
+.kpi-val{font-size:24px;font-weight:900;color:#595959;margin-top:4px}
+.kpi.blue .kpi-val{color:#008ECF}.kpi.orange .kpi-val{color:#F97316}.kpi.red .kpi-val{color:#E94B56}
+.sec-title{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#7668AC;text-transform:uppercase;margin-bottom:12px;padding-left:2px}
+.card{background:white;border-radius:12px;padding:18px 20px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.card-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.card-icon{font-size:22px;flex-shrink:0}
+.card-nome{font-size:15px;font-weight:800;color:#595959}
+.card-sub{font-size:11px;color:#aaa;margin-top:2px}
+.bars{margin-bottom:12px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar-lbl{font-size:10px;font-weight:600;color:#9a9a9a;width:90px;flex-shrink:0}
+.bar-track{flex:1;height:7px;background:#F0EEF8;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .3s}
+.bar-val{font-size:11px;font-weight:700;color:#595959;white-space:nowrap;min-width:70px}
+.bar-pct{font-weight:400;color:#aaa}
+.sugs{list-style:none;padding:0;border-top:1px solid #F0EEF8;padding-top:10px}
+.sugs li{font-size:12px;color:#595959;padding:4px 0 4px 16px;position:relative}
+.sugs li::before{content:'→';position:absolute;left:0;color:#7668AC;font-weight:700}
+.footer{text-align:center;color:#bbb;font-size:10px;margin-top:24px;font-style:italic}
+@media(max-width:600px){.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="metricas_ativador.html" class="back">&#8592; Métricas Ativador</a>
+
+  <div class="hero">
+    <div class="hero-title">Sugestão do Agente · Ativação</div>
+    <div class="hero-sub">Referência: 03/06/2026 &nbsp;·&nbsp; 2 ativadores ativos</div>
+    <div class="hero-status">⚠️ 30.8% com BV agendado — faltam 52 para chegar a 70%</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-lbl">Carteira total</div>
+      <div class="kpi-val">133</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-lbl">BV Agendado</div>
+      <div class="kpi-val">41</div>
+    </div>
+    <div class="kpi orange">
+      <div class="kpi-lbl">No Show</div>
+      <div class="kpi-val">71</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-lbl">Para Agendar</div>
+      <div class="kpi-val">21</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Análise por ativador</div>
+  
+    <div class="card" style="border-left:4px solid #E94B56">
+      <div class="card-header">
+        <span class="card-icon">🔴</span>
+        <div>
+          <div class="card-nome">agatha.cruz@estantemagica.com.br</div>
+          <div class="card-sub">Carteira: 77 escolas</div>
+        </div>
+      </div>
+      <div class="bars">
+            <div class="bar-row">
+              <span class="bar-lbl">Agendado</span>
+              <div class="bar-track"><div class="bar-fill" style="width:38%;background:#008ECF"></div></div>
+              <span class="bar-val">29 <span class="bar-pct">(38%)</span></span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-lbl">No Show</span>
+              <div class="bar-track"><div class="bar-fill" style="width:49%;background:#F97316"></div></div>
+              <span class="bar-val">38 <span class="bar-pct">(49%)</span></span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-lbl">Para Agendar</span>
+              <div class="bar-track"><div class="bar-fill" style="width:13%;background:#E94B56"></div></div>
+              <span class="bar-val">10 <span class="bar-pct">(13%)</span></span>
+            </div></div>
+      <ul class="sugs"><li>38 escolas em no-show — reagende com prioridade.</li><li>10 escolas nunca tiveram BV agendado — inicie o contato.</li></ul>
+    </div>
+    <div class="card" style="border-left:4px solid #E94B56">
+      <div class="card-header">
+        <span class="card-icon">🔴</span>
+        <div>
+          <div class="card-nome">mariana.mazzero@estantemagica.com.br</div>
+          <div class="card-sub">Carteira: 56 escolas</div>
+        </div>
+      </div>
+      <div class="bars">
+            <div class="bar-row">
+              <span class="bar-lbl">Agendado</span>
+              <div class="bar-track"><div class="bar-fill" style="width:21%;background:#008ECF"></div></div>
+              <span class="bar-val">12 <span class="bar-pct">(21%)</span></span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-lbl">No Show</span>
+              <div class="bar-track"><div class="bar-fill" style="width:59%;background:#F97316"></div></div>
+              <span class="bar-val">33 <span class="bar-pct">(59%)</span></span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-lbl">Para Agendar</span>
+              <div class="bar-track"><div class="bar-fill" style="width:20%;background:#E94B56"></div></div>
+              <span class="bar-val">11 <span class="bar-pct">(20%)</span></span>
+            </div></div>
+      <ul class="sugs"><li>33 escolas em no-show — reagende com prioridade.</li><li>11 escolas nunca tiveram BV agendado — inicie o contato.</li></ul>
+    </div>
+
+  <div class="footer">Dados CRM AX &nbsp;·&nbsp; Snapshot 03/06/2026 &nbsp;·&nbsp; Ativação 2026</div>
+</div>
+</body>
+</html>
