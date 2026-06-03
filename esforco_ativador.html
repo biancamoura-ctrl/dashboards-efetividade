@@ -82,12 +82,16 @@
   }
   .kpi.blue   { border-top-color: var(--blue); }
   .kpi.green  { border-top-color: var(--green); }
-  .kpi.orange { border-top-color: var(--orange); }
+  .kpi.orange  { border-top-color: var(--orange); }
+  .kpi.purple  { border-top-color: var(--purple); }
+  .kpi.gray    { border-top-color: #9E9E9E; }
   .kpi .lbl  { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: #aaa; text-transform: uppercase; }
   .kpi .val  { font-size: 28px; font-weight: 800; color: var(--purple); line-height: 1.1; margin-top: 5px; }
   .kpi.blue  .val { color: var(--blue); }
   .kpi.green .val { color: var(--green); }
   .kpi.orange .val { color: var(--orange); }
+  .kpi.purple .val { color: var(--purple); }
+  .kpi.gray   .val { color: #9E9E9E; }
   .kpi .sub  { font-size: 10px; color: #bbb; margin-top: 3px; }
   .section-title {
     font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
@@ -116,6 +120,8 @@
   .num-blue   { color: var(--blue);   font-weight: 700; }
   .num-green  { color: var(--green);  font-weight: 700; }
   .num-orange { color: var(--orange); font-weight: 700; }
+  .num-purple { color: var(--purple); font-weight: 700; }
+  .num-gray   { color: #9E9E9E;       font-weight: 700; }
   .num-zero   { color: #ccc; }
   .empty { padding: 60px 20px; text-align: center; color: #bbb; font-style: italic; }
   .footer { text-align: center; color: #bbb; font-size: 10px; margin-top: 18px; padding: 14px; font-style: italic; }
@@ -164,6 +170,16 @@
       <div class="val">2</div>
       <div class="sub">Não compareceu hoje</div>
     </div>
+    <div class="kpi purple">
+      <div class="lbl">Chamadas hoje</div>
+      <div class="val">21</div>
+      <div class="sub">Chamadas criadas hoje</div>
+    </div>
+    <div class="kpi gray">
+      <div class="lbl">Tarefas hoje</div>
+      <div class="val">42</div>
+      <div class="sub">Tarefas de foco criadas hoje</div>
+    </div>
   </div>
 
   <div class="section-title">Por ativador</div>
@@ -176,6 +192,8 @@
           <th class="sortable num" data-key="agendou_hoje">Agendou hoje</th>
           <th class="sortable num" data-key="realizou_hoje">Realizou hoje</th>
           <th class="sortable num" data-key="noshow_hoje">No Show hoje</th>
+          <th class="sortable num" data-key="chamadas_hoje">Chamadas hoje</th>
+          <th class="sortable num" data-key="tarefas_hoje">Tarefas hoje</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
@@ -186,7 +204,7 @@
   <div class="footer">Dados CRM AX &nbsp;&#183;&nbsp; Atualizado em 03/06/2026 &nbsp;&#183;&nbsp; Ativação 2026</div>
 </div>
 <script>
-const DATA  = [{"email": "agatha.cruz@estantemagica.com.br", "nome": "agatha.cruz@estantemagica.com.br", "carteira": 77, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0}, {"email": "mariana.mazzero@estantemagica.com.br", "nome": "mariana.mazzero@estantemagica.com.br", "carteira": 56, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0}, {"email": "junior.gomes@estantemagica.com.br", "nome": "junior.gomes@estantemagica.com.br", "carteira": 22, "agendou_hoje": 2, "realizou_hoje": 0, "noshow_hoje": 2}].filter(function(r) { return r.email !== 'junior.gomes@estantemagica.com.br'; });
+const DATA  = [{"email": "agatha.cruz@estantemagica.com.br", "nome": "agatha.cruz@estantemagica.com.br", "carteira": 77, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0, "chamadas_hoje": 3, "tarefas_hoje": 17}, {"email": "mariana.mazzero@estantemagica.com.br", "nome": "mariana.mazzero@estantemagica.com.br", "carteira": 56, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0, "chamadas_hoje": 17, "tarefas_hoje": 0}, {"email": "junior.gomes@estantemagica.com.br", "nome": "junior.gomes@estantemagica.com.br", "carteira": 22, "agendou_hoje": 2, "realizou_hoje": 0, "noshow_hoje": 2, "chamadas_hoje": 1, "tarefas_hoje": 25}].filter(function(r) { return r.email !== 'junior.gomes@estantemagica.com.br'; });
 
 const state = { sortKey: 'carteira', sortDir: -1 };
 
@@ -211,9 +229,11 @@ function render() {
     return '<tr>' +
       '<td>' + r.nome + '</td>' +
       '<td class="num">' + r.carteira + '</td>' +
-      val(r.agendou_hoje,  'num-blue') +
-      val(r.realizou_hoje, 'num-green') +
-      val(r.noshow_hoje,   'num-orange') +
+      val(r.agendou_hoje,   'num-blue') +
+      val(r.realizou_hoje,  'num-green') +
+      val(r.noshow_hoje,    'num-orange') +
+      val(r.chamadas_hoje,  'num-purple') +
+      val(r.tarefas_hoje,   'num-gray') +
     '</tr>';
   }).join('');
 }
