@@ -129,6 +129,7 @@
     <table id="tbl">
       <thead>
         <tr>
+          <th>Link AX</th>
           <th class="sortable" data-key="ativador">Ativador</th>
           <th class="sortable" data-key="escola">Escola</th>
           <th class="sortable" data-key="etapa">Etapa</th>
@@ -136,7 +137,6 @@
           <th class="sortable" data-key="baldinho">Baldinho</th>
           <th class="sortable" data-key="status">Status BV</th>
           <th class="sortable num" data-key="bv_data">Data BV</th>
-          <th>Link AX</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
@@ -197,6 +197,7 @@ function render() {
   tbody.innerHTML = arr.map(function(r) {
     const axLink = r.id_ax ? '<a href="https://axcrm.ai/deals/' + r.id_ax + '" target="_blank" class="ax-link" title="Abrir no AX">' + AX_SVG + ' Ver no AX</a>' : '—';
     return '<tr>' +
+      '<td>' + axLink + '</td>' +
       '<td>' + r.ativador + '</td>' +
       '<td>' + r.escola + '</td>' +
       '<td>' + r.etapa + '</td>' +
@@ -204,7 +205,6 @@ function render() {
       '<td>' + (r.baldinho || '—') + '</td>' +
       '<td>' + statusBadge(r) + '</td>' +
       '<td class="num">' + (r.bv_data || '—') + '</td>' +
-      '<td>' + axLink + '</td>' +
     '</tr>';
   }).join('');
 }
