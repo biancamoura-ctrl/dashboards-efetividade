@@ -91,6 +91,20 @@
   .empty { padding: 60px; text-align: center; color: #bbb; font-style: italic; }
   .footer { text-align: center; color: #bbb; font-size: 10px; margin-top: 18px; padding: 14px; font-style: italic; }
   @media (max-width: 768px) { th, td { padding: 6px 7px; font-size: 10px; } }
+html.dark {
+  --gray-light: #18181b;
+  --border: #2d2d33;
+  --shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+html.dark body { background: #18181b; color: #d4d4d0; }
+html.dark .toolbar { background: #1e1e22; }
+html.dark .toolbar select { background: #27272a; color: #d4d4d0; border-color: #2d2d33; }
+html.dark .table-wrap { background: #1e1e22; }
+html.dark table { background: #1e1e22; }
+html.dark td { border-bottom-color: #2d2d33; color: #d4d4d0; }
+html.dark tr:hover td { background: #27272a; }
+html.dark .em-logo { background: #27272a; }
+body, .toolbar, .table-wrap, table, td, tr, select { transition: background-color .3s ease, color .3s ease, border-color .3s ease; }
 </style>
 <script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
 <body>
