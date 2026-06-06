@@ -132,7 +132,7 @@
     .kpi .val { font-size: 22px; }
   }
 </style>
-</head>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
 <body>
 <div class="container">
   <header>
@@ -144,7 +144,7 @@
       <div class="sub">Time de Ativação &nbsp;&#183;&nbsp; Estante Mágica</div>
     </div>
     <div class="header-right">
-      <div class="stamp">HOJE 05/06/2026</div>
+      <div class="stamp">HOJE 06/06/2026</div>
       <div class="em-logo">EM</div>
     </div>
   </header>
@@ -157,12 +157,12 @@
     </div>
     <div class="kpi blue">
       <div class="lbl">Agendou hoje</div>
-      <div class="val">1</div>
+      <div class="val">0</div>
       <div class="sub">Reuniões criadas hoje</div>
     </div>
     <div class="kpi green">
       <div class="lbl">Realizou hoje</div>
-      <div class="val">1</div>
+      <div class="val">0</div>
       <div class="sub">BV concluída hoje</div>
     </div>
     <div class="kpi orange">
@@ -172,12 +172,12 @@
     </div>
     <div class="kpi purple">
       <div class="lbl">Chamadas hoje</div>
-      <div class="val">11</div>
+      <div class="val">0</div>
       <div class="sub">Chamadas criadas hoje</div>
     </div>
     <div class="kpi gray">
       <div class="lbl">Tarefas hoje</div>
-      <div class="val">40</div>
+      <div class="val">0</div>
       <div class="sub">Tarefas de foco criadas hoje</div>
     </div>
   </div>
@@ -201,10 +201,10 @@
     <div class="empty" id="empty" style="display:none;">Sem dados.</div>
   </div>
 
-  <div class="footer">Dados CRM AX &nbsp;&#183;&nbsp; Atualizado em 05/06/2026 &nbsp;&#183;&nbsp; Ativação 2026</div>
+  <div class="footer">Dados CRM AX &nbsp;&#183;&nbsp; Atualizado em 06/06/2026 &nbsp;&#183;&nbsp; Ativação 2026</div>
 </div>
 <script>
-const DATA  = [{"email": "agatha.cruz@estantemagica.com.br", "nome": "agatha.cruz@estantemagica.com.br", "carteira": 75, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0, "chamadas_hoje": 10, "tarefas_hoje": 14}, {"email": "mariana.mazzero@estantemagica.com.br", "nome": "mariana.mazzero@estantemagica.com.br", "carteira": 56, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0, "chamadas_hoje": 0, "tarefas_hoje": 0}, {"email": "junior.gomes@estantemagica.com.br", "nome": "junior.gomes@estantemagica.com.br", "carteira": 22, "agendou_hoje": 1, "realizou_hoje": 1, "noshow_hoje": 0, "chamadas_hoje": 1, "tarefas_hoje": 26}].filter(function(r) { return r.email !== 'junior.gomes@estantemagica.com.br'; });
+const DATA  = [{"email": "agatha.cruz@estantemagica.com.br", "nome": "agatha.cruz@estantemagica.com.br", "carteira": 75, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0, "chamadas_hoje": 0, "tarefas_hoje": 0}, {"email": "mariana.mazzero@estantemagica.com.br", "nome": "mariana.mazzero@estantemagica.com.br", "carteira": 56, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0, "chamadas_hoje": 0, "tarefas_hoje": 0}, {"email": "junior.gomes@estantemagica.com.br", "nome": "junior.gomes@estantemagica.com.br", "carteira": 22, "agendou_hoje": 0, "realizou_hoje": 0, "noshow_hoje": 0, "chamadas_hoje": 0, "tarefas_hoje": 0}].filter(function(r) { return r.email !== 'junior.gomes@estantemagica.com.br'; });
 
 const state = { sortKey: 'carteira', sortDir: -1 };
 
@@ -251,5 +251,5 @@ document.querySelectorAll('#tbl th.sortable').forEach(function(th) {
 
 render();
 </script>
-</body>
+<button class="theme-btn" id="theme-btn" aria-label="Tema" onclick="(function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light');document.getElementById('theme-btn').textContent=d?'☀':'🌙'})()">🌙</button><script>if(document.documentElement.classList.contains('dark'))document.getElementById('theme-btn').textContent='☀';</script></body>
 </html>
