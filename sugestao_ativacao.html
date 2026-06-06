@@ -127,5 +127,5 @@ body{font-family:'Montserrat',sans-serif;background:#f7f7f5;color:#595959;line-h
 
   <div class="footer">Dados CRM AX &nbsp;·&nbsp; Snapshot 06/06/2026 &nbsp;·&nbsp; Ativação 2026</div>
 </div>
-<button class="theme-btn" id="theme-btn" aria-label="Tema" onclick="(function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light');document.getElementById('theme-btn').textContent=d?'☀':'🌙'})()">🌙</button><script>if(document.documentElement.classList.contains('dark'))document.getElementById('theme-btn').textContent='☀';</script></body>
+<button class="theme-btn" id="theme-btn" aria-label="Tema">🌙</button><script>(function(){var btn=document.getElementById('theme-btn');if(document.documentElement.classList.contains('dark'))btn.textContent='☀';btn.addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light');btn.textContent=d?'☀':'🌙'})})();</script></body>
 </html>
