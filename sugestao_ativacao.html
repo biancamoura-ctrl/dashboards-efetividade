@@ -40,15 +40,15 @@ body{font-family:'Montserrat',sans-serif;background:#f7f7f5;color:#595959;line-h
 .footer{text-align:center;color:#bbb;font-size:10px;margin-top:24px;font-style:italic}
 @media(max-width:600px){.kpis{grid-template-columns:repeat(2,1fr)}}
 </style>
-</head>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
 <body>
 <div class="container">
   <a href="metricas_ativador.html" class="back">&#8592; Métricas Ativador</a>
 
   <div class="hero">
     <div class="hero-title">Sugestão do Agente · Ativação</div>
-    <div class="hero-sub">Referência: 05/06/2026 &nbsp;·&nbsp; 2 ativadores ativos</div>
-    <div class="hero-status">32.1% da carteira com BV agendado · 69 no show · 20 para agendar</div>
+    <div class="hero-sub">Referência: 06/06/2026 &nbsp;·&nbsp; 2 ativadores ativos</div>
+    <div class="hero-status">29.0% da carteira com BV agendado · 73 no show · 20 para agendar</div>
   </div>
 
   <div class="kpis">
@@ -58,11 +58,11 @@ body{font-family:'Montserrat',sans-serif;background:#f7f7f5;color:#595959;line-h
     </div>
     <div class="kpi blue">
       <div class="kpi-lbl">BV Agendado</div>
-      <div class="kpi-val">42</div>
+      <div class="kpi-val">38</div>
     </div>
     <div class="kpi orange">
       <div class="kpi-lbl">No Show</div>
-      <div class="kpi-val">69</div>
+      <div class="kpi-val">73</div>
     </div>
     <div class="kpi red">
       <div class="kpi-lbl">Para Agendar</div>
@@ -83,20 +83,20 @@ body{font-family:'Montserrat',sans-serif;background:#f7f7f5;color:#595959;line-h
       <div class="bars">
             <div class="bar-row">
               <span class="bar-lbl">Agendado</span>
-              <div class="bar-track"><div class="bar-fill" style="width:40%;background:#008ECF"></div></div>
-              <span class="bar-val">30 <span class="bar-pct">(40%)</span></span>
+              <div class="bar-track"><div class="bar-fill" style="width:35%;background:#008ECF"></div></div>
+              <span class="bar-val">26 <span class="bar-pct">(35%)</span></span>
             </div>
             <div class="bar-row">
               <span class="bar-lbl">No Show</span>
-              <div class="bar-track"><div class="bar-fill" style="width:48%;background:#F97316"></div></div>
-              <span class="bar-val">36 <span class="bar-pct">(48%)</span></span>
+              <div class="bar-track"><div class="bar-fill" style="width:53%;background:#F97316"></div></div>
+              <span class="bar-val">40 <span class="bar-pct">(53%)</span></span>
             </div>
             <div class="bar-row">
               <span class="bar-lbl">Para Agendar</span>
               <div class="bar-track"><div class="bar-fill" style="width:12%;background:#E94B56"></div></div>
               <span class="bar-val">9 <span class="bar-pct">(12%)</span></span>
             </div></div>
-      <ul class="sugs"><li>36 escolas em no-show — reagende com prioridade.</li><li>9 escolas nunca tiveram BV agendado — inicie o contato.</li><li>40% com BV agendado — há espaço para acelerar o agendamento.</li></ul>
+      <ul class="sugs"><li>40 escolas em no-show — reagende com prioridade.</li><li>9 escolas nunca tiveram BV agendado — inicie o contato.</li></ul>
     </div>
     <div class="card" style="border-left:4px solid #E94B56">
       <div class="card-header">
@@ -125,7 +125,7 @@ body{font-family:'Montserrat',sans-serif;background:#f7f7f5;color:#595959;line-h
       <ul class="sugs"><li>33 escolas em no-show — reagende com prioridade.</li><li>11 escolas nunca tiveram BV agendado — inicie o contato.</li></ul>
     </div>
 
-  <div class="footer">Dados CRM AX &nbsp;·&nbsp; Snapshot 05/06/2026 &nbsp;·&nbsp; Ativação 2026</div>
+  <div class="footer">Dados CRM AX &nbsp;·&nbsp; Snapshot 06/06/2026 &nbsp;·&nbsp; Ativação 2026</div>
 </div>
-</body>
+<button class="theme-btn" id="theme-btn" aria-label="Tema" onclick="(function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light');document.getElementById('theme-btn').textContent=d?'☀':'🌙'})()">🌙</button><script>if(document.documentElement.classList.contains('dark'))document.getElementById('theme-btn').textContent='☀';</script></body>
 </html>
