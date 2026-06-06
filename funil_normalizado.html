@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Funil Normalizado de Sucesso — 05/06/2026</title>
+<title>Funil Normalizado de Sucesso — 06/06/2026</title>
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
@@ -69,6 +69,27 @@ select:focus{border-color:var(--yellow)}
 #tooltip{position:fixed;background:#595959;color:#fff;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
 #tooltip strong{display:block;margin-bottom:4px;font-size:13px}
 @media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
+html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a}
+html.dark body{background:var(--bg);color:var(--text)}
+html.dark thead th{background:#27272a;border-bottom-color:var(--border)}
+html.dark thead th:hover{background:#303038}
+html.dark tbody tr{border-bottom-color:var(--border)}
+html.dark tbody tr:hover{background:#27272a}
+html.dark .card{background:var(--surface);border-color:var(--border)}
+html.dark .card-head{border-bottom-color:var(--border)}
+html.dark .kpi{background:var(--surface);border-color:var(--border)}
+html.dark .bar-bg{background:var(--border)}
+html.dark select,html.dark input[type=text]{background:#27272a;color:var(--text);border-color:var(--border)}
+html.dark #tooltip{background:#303038;color:var(--text)}
+html.dark .note-box{background:#27272a;border-color:var(--border);color:var(--text)}
+html.dark .insight-box{background:#2a2a1a;color:var(--text)}
+html.dark .chip.all{background:#3f3f46;color:#a1a1aa}
+html.dark .chip.all.active{background:#52525b}
+html.dark .canal-card{background:var(--surface);border-color:var(--border)}
+html.dark .canal-bar-wrap{background:var(--border)}
+html.dark .summary-bar{color:var(--muted)}
+.theme-btn{position:fixed;bottom:20px;right:20px;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;background:#7668AC;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);z-index:9998;transition:opacity .15s;line-height:1;padding:0}
+.theme-btn:hover{opacity:.85}
 
 .funil-badge{background:#e8eaf6;color:#3949ab;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;display:inline-block;margin-right:6px;margin-top:4px}
 .funil-controls{display:flex;gap:8px;margin-bottom:20px}
@@ -98,7 +119,7 @@ select:focus{border-color:var(--yellow)}
 .legenda-tbl td{padding:6px 10px;border-bottom:1px solid #f0f0ec}
 .legenda-tbl tr:last-child td{border-bottom:none}
 </style>
-</head>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
 <body>
 <a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Início</a>
 <div class="page">
@@ -162,7 +183,7 @@ select:focus{border-color:var(--yellow)}
 </div>
 <script>
 
-const DATA = [{"seg": "HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [0, 0, 722, 3, 4, 103, 45, 194, 447, 13, 237, 1768], "r": [0.0, 0.0, 12922402.101530071, 49461.85820301105, 43924.1298923077, 2033418.8255441762, 944926.0334921691, 4281921.100593406, 8935984.378692284, 237278.59999999998, 3947827.7180078467, 33397144.745955274]}, {"seg": "HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [0, 0, 63, 0, 0, 8, 5, 11, 4, 1, 2, 94], "r": [0.0, 0.0, 1236037.7031629796, 0.0, 0.0, 174646.50796876318, 96852.07740135027, 297883.82704485214, 42473.66924680891, 5197.92, 15221.077249508842, 1868312.7820742629]}, {"seg": "HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [0, 0, 785, 3, 4, 111, 50, 205, 451, 14, 239, 1862], "r": [0.0, 0.0, 14158439.80469305, 49461.85820301105, 43924.1298923077, 2208065.3335129395, 1041778.1108935194, 4579804.927638258, 8978458.047939094, 242476.52, 3963048.7952573556, 35265457.52802954]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [0, 0, 378, 2, 1, 71, 21, 58, 60, 6, 57, 654], "r": [0.0, 0.0, 2180301.8658752693, 8927.668795692707, 6616.986656603774, 360461.7046194536, 162840.73436243643, 362196.64830118715, 402444.5623402948, 22930.64, 336184.7570269307, 3842905.5679778685]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [0, 0, 245, 2, 1, 63, 16, 14, 18, 7, 30, 396], "r": [0.0, 0.0, 927818.7662992782, 2823.7000000000003, 1642.88, 215655.938834935, 70469.93885959891, 83812.74598988242, 37318.01630859654, 4332.143783783784, 47020.9775, 1390895.1075760748]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [0, 0, 623, 4, 2, 134, 37, 72, 78, 13, 87, 1050], "r": [0.0, 0.0, 3108120.6321745478, 11751.368795692708, 8259.866656603774, 576117.6434543886, 233310.67322203534, 446009.3942910696, 439762.57864889136, 27262.783783783783, 383205.73452693067, 5233800.675553944]}, {"seg": "TOTAL", "tipo": "TOTAL", "subtotal": false, "grandtotal": true, "q": [0, 0, 1408, 7, 6, 245, 87, 277, 529, 27, 326, 2912], "r": [0.0, 0.0, 17266560.4368676, 61213.22699870376, 52183.99654891147, 2784182.9769673278, 1275088.7841155548, 5025814.321929327, 9418220.626587985, 269739.30378378375, 4346254.529784286, 40499258.20358348]}];
+const DATA = [{"seg": "HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [0, 0, 720, 4, 4, 103, 46, 199, 443, 12, 237, 1768], "r": [0.0, 0.0, 12831514.608306468, 114919.62295567064, 43924.1298923077, 2015169.1915770387, 978503.7571623723, 4332486.215753585, 8919663.749632107, 217585.15999999997, 3928470.4580078493, 33382236.893287398]}, {"seg": "HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [0, 0, 63, 0, 0, 8, 5, 11, 4, 1, 2, 94], "r": [0.0, 0.0, 1236003.9507272253, 0.0, 0.0, 174646.50796876318, 96852.07740135025, 297883.82704485214, 42473.66924680891, 5197.92, 15221.077249508842, 1868279.0296385086]}, {"seg": "HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [0, 0, 783, 4, 4, 111, 51, 210, 447, 13, 239, 1862], "r": [0.0, 0.0, 14067518.559033692, 114919.62295567064, 43924.1298923077, 2189815.699545802, 1075355.8345637226, 4630370.042798437, 8962137.418878917, 222783.08, 3943691.535257358, 35250515.922925904]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [0, 0, 377, 1, 2, 71, 22, 60, 58, 6, 57, 654], "r": [0.0, 0.0, 2174611.0758752716, 1206.81, 14337.845452296482, 360461.70461945364, 168531.52436243644, 374132.49941171345, 390508.71122976847, 22930.64, 336184.7570269307, 3842905.567977871]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [0, 0, 244, 2, 2, 63, 16, 14, 18, 7, 30, 396], "r": [0.0, 0.0, 925919.1862992783, 3131.7400000000002, 3234.42, 215589.1539169022, 70469.9388595989, 83812.74598988242, 37318.01630859654, 4332.143783783784, 47020.97750000001, 1390828.3226580422]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [0, 0, 621, 3, 4, 134, 38, 74, 76, 13, 87, 1050], "r": [0.0, 0.0, 3100530.26217455, 4338.55, 17572.26545229648, 576050.8585363559, 239001.46322203532, 457945.24540159584, 427826.727538365, 27262.783783783783, 383205.7345269307, 5233733.890635913]}, {"seg": "TOTAL", "tipo": "TOTAL", "subtotal": false, "grandtotal": true, "q": [0, 0, 1404, 7, 8, 245, 89, 284, 523, 26, 326, 2912], "r": [0.0, 0.0, 17168048.821208242, 119258.17295567064, 61496.39534460418, 2765866.5580821577, 1314357.297785758, 5088315.288200033, 9389964.14641728, 250045.86378378375, 4326897.2697842885, 40484249.81356182]}];
 
 let mode = 'qtd';
 
@@ -224,4 +245,4 @@ document.getElementById('date-badge').textContent = '🗓️ ' + now.toLocaleDat
 buildTable();
 
 </script>
-</body></html>
+<button class="theme-btn" id="theme-btn" aria-label="Tema" onclick="(function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light');document.getElementById('theme-btn').textContent=d?'☀':'🌙'})()">🌙</button><script>if(document.documentElement.classList.contains('dark'))document.getElementById('theme-btn').textContent='☀';</script></body></html>
