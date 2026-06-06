@@ -90,8 +90,9 @@ html.dark .chip.all.active{background:#52525b}
 html.dark .canal-card{background:var(--surface);border-color:var(--border)}
 html.dark .canal-bar-wrap{background:var(--border)}
 html.dark .summary-bar{color:var(--muted)}
-.theme-btn{position:fixed;bottom:20px;right:20px;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;background:#7668AC;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);z-index:9998;transition:opacity .15s;line-height:1;padding:0}
-.theme-btn:hover{opacity:.85}
+body,tbody tr,.card,.kpi,.card-head,thead th,select,input[type=text],.chip,.bar-bg,.note-box,.insight-box,.canal-card,.canal-bar-wrap{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
+.theme-btn{position:fixed;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;background:#7668AC;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);z-index:9998;transition:opacity .15s,transform .2s ease;line-height:1;padding:0}
+.theme-btn:hover{opacity:.85;transform:scale(1.1)}
 
 
 /* ── Fundo geral ── */
@@ -467,5 +468,5 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-<button class="theme-btn" id="theme-btn" aria-label="Tema" onclick="(function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light');document.getElementById('theme-btn').textContent=d?'☀':'🌙'})()">🌙</button><script>if(document.documentElement.classList.contains('dark'))document.getElementById('theme-btn').textContent='☀';</script></body>
+<button class="theme-btn" id="theme-btn" aria-label="Tema">🌙</button><script>(function(){var btn=document.getElementById('theme-btn');if(document.documentElement.classList.contains('dark'))btn.textContent='☀';btn.addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light');btn.textContent=d?'☀':'🌙'})})();</script></body>
 </html>
