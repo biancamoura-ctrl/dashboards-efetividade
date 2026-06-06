@@ -91,8 +91,17 @@ html.dark .canal-card{background:var(--surface);border-color:var(--border)}
 html.dark .canal-bar-wrap{background:var(--border)}
 html.dark .summary-bar{color:var(--muted)}
 body,tbody tr,.card,.kpi,.card-head,thead th,select,input[type=text],.chip,.bar-bg,.note-box,.insight-box,.canal-card,.canal-bar-wrap{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
-.theme-btn{position:fixed;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;background:#7668AC;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);z-index:9998;transition:opacity .15s,transform .2s ease;line-height:1;padding:0}
-.theme-btn:hover{opacity:.85;transform:scale(1.1)}
+@keyframes sun-glow{0%,100%{filter:drop-shadow(0 0 3px #FFD700) drop-shadow(0 0 6px #FF9500)}50%{filter:drop-shadow(0 0 7px #FFD700) drop-shadow(0 0 12px #FF6B00)}}
+@keyframes sun-rays{0%{transform:scale(1) rotate(0deg)}100%{transform:scale(1) rotate(360deg)}}
+@keyframes moon-twinkle{0%,100%{filter:drop-shadow(0 0 2px #c4b5fd)}50%{filter:drop-shadow(0 0 6px #a78bfa)}}
+.theme-btn{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#FFD947,#FF8C00);box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2);z-index:9998;overflow:hidden;padding:0;display:flex;align-items:center;justify-content:center;transition:background .5s ease,box-shadow .5s ease,transform .2s ease}
+html.dark .theme-btn{background:linear-gradient(135deg,#2d1b69,#0f0c29);box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4)}
+.theme-btn:hover{transform:scale(1.13)}
+.theme-icon-sun,.theme-icon-moon{position:absolute;font-size:22px;line-height:1;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease}
+.theme-icon-sun{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:sun-glow 2.5s ease-in-out infinite,sun-rays 12s linear infinite}
+.theme-icon-moon{opacity:0;transform:scale(0) rotate(-40deg) translateY(10px)}
+html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px);animation:none}
+html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:moon-twinkle 3s ease-in-out infinite}
 
 
 /* ── Fundo geral ── */
