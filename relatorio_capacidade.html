@@ -116,6 +116,34 @@ tbody td:first-child,tbody td:nth-child(2){text-align:left}
 .pill-warn{background:var(--warn-bg);color:var(--warn)}
 .pill-bad{background:var(--bad-bg);color:var(--bad)}
 .no-data{text-align:center;padding:40px;color:var(--t3);font-size:13px}
+html.dark{
+  --bg:#18181b;--card:#1e1e22;--border:#2d2d33;
+  --t1:#d4d4d0;--t2:#a1a1aa;--t3:#71717a;
+  --blue-soft:rgba(0,142,207,.12);--yellow-soft:rgba(249,220,69,.10);
+  --purple-soft:rgba(118,104,172,.12);
+  --ok-bg:rgba(46,125,50,.15);--warn-bg:rgba(196,122,0,.15);--bad-bg:rgba(192,57,43,.15);
+}
+html.dark body{background:var(--bg);color:var(--t1)}
+html.dark .header{background:#22225a}
+html.dark .sidebar{background:var(--card);border-right-color:var(--border)}
+html.dark .preset-btn{background:var(--card);border-color:var(--border);color:var(--t2)}
+html.dark .preset-btn:hover{border-color:var(--blue);color:var(--blue)}
+html.dark .csearch{background:var(--card);color:var(--t1);border-color:var(--border)}
+html.dark .citem:hover{background:var(--bg)}
+html.dark .ov-card{background:var(--card);border-color:var(--border)}
+html.dark .ov-card.hl{background:var(--blue)}
+html.dark .cargo-wrap{background:var(--card);border-color:var(--border)}
+html.dark .cargo-cmp-table th{border-bottom-color:var(--border)}
+html.dark .cargo-cmp-table td{border-top-color:var(--border)}
+html.dark .cargo-cmp-table tr:hover td{background:var(--bg)}
+html.dark .cargo-cmp-table .act-row td{background:var(--bg)}
+html.dark .top-card{background:var(--card);border-color:var(--border)}
+html.dark table{background:var(--card)}
+html.dark thead th{background:var(--bg);border-bottom-color:var(--border)}
+html.dark tbody tr{border-bottom-color:var(--border)}
+html.dark tbody tr:hover{background:var(--blue-soft)}
+html.dark .disclaimer{background:rgba(249,220,69,.08)}
+body,.sidebar,.ov-card,.cargo-wrap,.top-card,table,thead th,tbody tr,input,select{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
 </style>
 <script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
 <body>
