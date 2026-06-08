@@ -437,12 +437,10 @@ function renderKPIs() {
   const totalEsc     = arr.length;
   const totalAntecEsc  = antec.length;
   const totalAlunosAntec = antec.reduce((s, e) => s + e.alunos_antec, 0);
-  const totalAlunosEsc   = antec.reduce((s, e) => s + e.total_alunos, 0);
   const totalRsAntec     = antec.reduce((s, e) => s + e.rs_antec, 0);
   const totalBooked      = arr.reduce((s, e) => s + e.booked, 0);
   const pctAdesao   = totalEsc > 0 ? totalAntecEsc / totalEsc : 0;
-  const ticketMedio = totalAlunosEsc > 0 ? totalRsAntec / totalAlunosEsc : 0;
-  const mediaAlunos = totalAntecEsc > 0 ? totalAlunosEsc / totalAntecEsc : 0;
+  const ticketMedioEsc = totalAntecEsc > 0 ? totalRsAntec / totalAntecEsc : 0;
 
   const cards = [
     { lbl: 'Carteira FC60+',   val: totalEsc,   sub: state.cs === '__all__' ? 'Programa BR' : 'Sua carteira', cls: '', help: 'Escolas com FC entre 07/15 e 09/30.' },
@@ -450,8 +448,7 @@ function renderKPIs() {
     { lbl: 'Pool de Resgate',  val: noPool,     sub: 'Antec 2025 / nao antec 2026', cls: noPool > 0 ? 'yellow' : '', help: 'Anteciparam em 2025, ainda nao em 2026, FC60+.' },
     { lbl: 'Escolas antecip.', val: totalAntecEsc, sub: fmt.pct(pctAdesao) + ' adesao', cls: 'green', help: 'Regua: FC >= 60d na data do ultimo pedido.' },
     { lbl: 'Alunos antecip.', val: totalAlunosAntec.toLocaleString('pt-BR'), sub: 'Nas escolas que antecip.', cls: 'green', help: 'Soma de alunos com compra.' },
-    { lbl: 'Media alunos/esc.', val: Math.round(mediaAlunos).toLocaleString('pt-BR'), sub: 'qtd_alunos / # escolas antec', cls: '', help: totalAlunosEsc.toLocaleString('pt-BR') + ' alunos / ' + totalAntecEsc + ' esc.' },
-    { lbl: 'Ticket medio alunos', val: fmt.money(ticketMedio), sub: 'R$ antec / qtd_alunos', cls: '', help: fmt.money(totalRsAntec) + ' / ' + totalAlunosEsc.toLocaleString('pt-BR') + ' alunos' },
+    { lbl: 'Ticket medio', val: fmt.money(ticketMedioEsc), sub: 'R$ antec / # escolas antec', cls: '', help: fmt.money(totalRsAntec) + ' / ' + totalAntecEsc + ' esc.' },
     { lbl: 'R$ Antecipacao',  val: fmt.moneyK(totalRsAntec), sub: 'Booked ' + fmt.moneyK(totalBooked), cls: 'blue', help: 'Soma R$ das escolas na regua exata.' },
   ];
 
