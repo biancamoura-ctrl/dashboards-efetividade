@@ -300,8 +300,8 @@ html.dark .ev-lbl{color:#71717a}
       <div class="cargo-title"><span>&#128188;</span> Consultor &mdash; <span id="ana-ncargo">&#8212;</span> analistas</div>
       <div class="ctrl-group" style="margin-bottom:12px">
         <span class="ctrl-label">Ef/dia por consultor</span>
-        <span class="ctrl-val" id="ana-b1val">8.0/B1</span>
-        <input type="range" id="sl-ana" min="0.5" max="10" value="8.0" step="0.5" style="width:100%">
+        <span class="ctrl-val" id="ana-b1val">3.0/B1</span>
+        <input type="range" id="sl-ana" min="0.5" max="10" value="3.0" step="0.5" style="width:100%">
       </div>
       <div class="cargo-kpis">
         <div class="ck">
@@ -327,8 +327,8 @@ html.dark .ev-lbl{color:#71717a}
       <div class="cargo-title"><span>&#127891;</span> Estagi&#225;rio &mdash; <span id="est-ncargo">&#8212;</span> estagi&#225;rios</div>
       <div class="ctrl-group" style="margin-bottom:12px">
         <span class="ctrl-label">Ef/dia por estagi&#225;rio</span>
-        <span class="ctrl-val" id="est-b1val">5.5/B1</span>
-        <input type="range" id="sl-est" min="0.5" max="10" value="5.5" step="0.5" style="width:100%">
+        <span class="ctrl-val" id="est-b1val">3.0/B1</span>
+        <input type="range" id="sl-est" min="0.5" max="10" value="3.0" step="0.5" style="width:100%">
       </div>
       <div class="cargo-kpis">
         <div class="ck">
@@ -391,7 +391,7 @@ html.dark .ev-lbl{color:#71717a}
   </div>
 
 </div>
-<script>const C = {"efetivas": 1268, "elegiveis": 1922, "pef_atual": 66.0, "novas_dia": 85.2, "delta_ef_obs": 259.4, "delta_ef_analista": 138.1, "delta_ef_estagiario": 115.6, "ef_historico": [233, 246, 244, 241, 244, 290, 271, 314, 281, 296, 274, 288, 284, 242, 251, 259, 259, 230, 217, 292, 191], "ef_hist_analista": [140, 146, 132, 122, 141, 149, 150, 174, 136, 152, 153, 143, 153, 127, 129, 140, 144, 133, 94, 170, 72], "ef_hist_estagiario": [91, 97, 103, 113, 98, 133, 116, 134, 140, 138, 112, 135, 124, 110, 116, 114, 112, 95, 118, 119, 109], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [131, 131, 147, 143, 9, 166, 265, 155, 8, 17, 16, 7, 1, 9, 16, 17, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 992, "semana_label": "11/05–09/06"};
+<script>const C = {"efetivas": 1268, "elegiveis": 1922, "pef_atual": 66.0, "novas_dia": 85.2, "delta_ef_obs": 110.0, "delta_ef_analista": 48.2, "delta_ef_estagiario": 58.6, "ef_historico": [106, 96, 103, 77, 94, 126, 117, 140, 111, 140, 124, 123, 100, 88, 100, 112, 103, 63, 130, 153, 104], "ef_hist_analista": [43, 47, 37, 29, 47, 45, 63, 76, 33, 64, 65, 48, 48, 42, 44, 52, 46, 30, 42, 83, 28], "ef_hist_estagiario": [63, 48, 60, 46, 44, 75, 52, 63, 75, 72, 54, 68, 49, 43, 53, 59, 55, 32, 85, 68, 67], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [131, 131, 147, 143, 9, 166, 265, 155, 8, 17, 16, 7, 1, 9, 16, 17, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 992, "semana_label": "11/05–09/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -487,19 +487,21 @@ function render() {
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
     projData.textContent = ''; projDet.textContent = ''; faltamEl.textContent = '';
   } else {
-    var dp = Math.ceil(faltam_proj / ritmo_combinado);
+    var dp = projetarDias(C.efetivas, nec_meta, ritmo_combinado, C.expiracoes);
     statusEl.textContent = 'Com consultores em ' + b1_ana.toFixed(1) + '/B1 e estagiários em ' + b1_est.toFixed(1) + '/B1, para ' + meta + '% chegamos em';
     if (dp > 365) {
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
       projData.textContent = 'Não converge no período';
       projDet.textContent  = ''; faltamEl.textContent = '';
     } else {
+      var vencem_periodo = 0;
+      for (var j = 0; j < Math.min(dp, C.expiracoes.length); j++) vencem_periodo += C.expiracoes[j];
       var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
       projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
       projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
       projData.textContent = fmtDate(d);
-      projDet.textContent  = 'Ritmo combinado: ' + ritmo_combinado.toFixed(0) + ' ef/dia (' + b1_ana.toFixed(1) + '×' + C.n_analistas + ' analistas + ' + b1_est.toFixed(1) + '×' + C.n_estagiarios + ' estagiários)';
-      faltamEl.textContent = 'Faltam: ' + faltam_proj.toLocaleString('pt-BR') + ' escolas';
+      projDet.textContent  = 'Faltam: ' + faltam_proj + ' · vencem no período: ' + vencem_periodo + ' · ritmo: ' + ritmo_combinado.toFixed(0) + ' novas/dia';
+      faltamEl.textContent = 'Total a efetivizar: ' + (faltam_proj + vencem_periodo).toLocaleString('pt-BR') + ' escolas';
     }
   }
 
@@ -510,7 +512,7 @@ function render() {
     var falt = Math.max(0, nec - C.efetivas);
     var ok   = falt <= 0;
     var isSel = (m === meta);
-    var dp_m = (!ok && ritmo_combinado > 0) ? Math.ceil(falt / ritmo_combinado) : null;
+    var dp_m = (!ok && ritmo_combinado > 0) ? projetarDias(C.efetivas, nec, ritmo_combinado, C.expiracoes) : null;
     var proj_txt = ok ? '&#8212;' : (dp_m !== null && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
     var tr = document.createElement('tr');
     if (isSel) tr.className = 'meta-atual';
