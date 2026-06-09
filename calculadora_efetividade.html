@@ -473,8 +473,8 @@ function render() {
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
   // Cargos (KPIs individuais sem projeção)
-  renderCargo('ana', C.ef_hist_analista,   C.n_analistas,   n_du);
-  renderCargo('est', C.ef_hist_estagiario, C.n_estagiarios, n_du);
+  renderCargo('ana', C.novas_hist_analista,   C.n_analistas,   n_du);
+  renderCargo('est', C.novas_hist_estagiario, C.n_estagiarios, n_du);
 
   // Projeção combinada (soma dos dois ritmos selecionados)
   var b1_ana    = +document.getElementById('sl-ana').value;
