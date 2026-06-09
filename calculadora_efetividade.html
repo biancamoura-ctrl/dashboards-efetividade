@@ -186,6 +186,7 @@ input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
 html.dark .controls-bar{background:#1e1e22;border-color:#2d2d33;box-shadow:none}
 html.dark .ctrl-label{color:#71717a}
 html.dark .ctrl-val{color:#a78bfa}
+html.dark #sl-du{background:#27272a;color:#a78bfa;border-color:#3f3f46}
 html.dark .kpi-c{background:#1e1e22;border-color:#2d2d33;box-shadow:none}
 html.dark .kc-lbl{color:#71717a}
 html.dark .kc-sub{color:#52525b}
@@ -241,9 +242,22 @@ html.dark .ev-lbl{color:#71717a}
       </div>
       <div class="ctrl-group">
         <span class="ctrl-label">Ef/dia/B1 necessário</span>
-        <span class="ctrl-val" id="b1-val">5.0/B1</span>
-        <input type="range" id="sl-b1" min="0.5" max="10" value="5.0" step="0.5">
+        <span class="ctrl-val" id="b1-val">3.0/B1</span>
+        <input type="range" id="sl-b1" min="0.5" max="10" value="3.0" step="0.5">
         <span style="font-size:9px;color:var(--muted);font-weight:600">efetividades por dia por consultor</span>
+      </div>
+      <div class="ctrl-group" style="min-width:120px">
+        <span class="ctrl-label">Janela do ritmo</span>
+        <span class="ctrl-val" id="du-val">7 d.&#250;.</span>
+        <select id="sl-du" style="margin-top:4px;padding:6px 10px;border-radius:8px;
+          border:1.5px solid rgba(118,104,172,.30);font-size:13px;font-weight:700;
+          color:#7668AC;background:#fff;cursor:pointer;accent-color:#7668AC">
+          <option value="7" selected>7 dias &#250;teis</option>
+          <option value="10">10 dias &#250;teis</option>
+          <option value="15">15 dias &#250;teis</option>
+          <option value="21">21 dias &#250;teis</option>
+        </select>
+        <span style="font-size:9px;color:var(--muted);font-weight:600">base do ritmo atual (ef/dia)</span>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
@@ -251,7 +265,7 @@ html.dark .ev-lbl{color:#71717a}
         <div class="kc-icon">&#128200;</div>
         <div class="kc-lbl">Ritmo atual (ef/dia)</div>
         <div class="kc-val" id="kpi-delta">&#8212;</div>
-        <div class="kc-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
+        <div class="kc-sub" id="kpi-delta-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
       </div>
       <div class="kpi-c">
         <div class="kc-icon">&#128101;</div>
@@ -300,14 +314,14 @@ html.dark .ev-lbl{color:#71717a}
   </div>
 
   <div class="card">
-    <div class="card-head"><span class="card-title">Evolu&#231;&#227;o &mdash; efetividades/dia (01/06–09/06)</span></div>
+    <div class="card-head"><span class="card-title">Evolu&#231;&#227;o &mdash; efetividades/dia (12/05–09/06)</span></div>
     <div style="padding:0 18px 18px">
       <div id="chart-bars" class="ev-chart-wrap"></div>
     </div>
   </div>
 
 </div>
-<script>const C = {"efetivas": 1232, "elegiveis": 1920, "pef_atual": 64.2, "novas_dia": 85.6, "delta_ef_obs": 145.1, "ef_historico": [142, 162, 153, 1, 169, 279, 110], "n_consultores": 30, "data_ref": "2026-06-09", "expiracoes": [137, 134, 152, 143, 9, 171, 268, 108, 8, 16, 13, 7, 1, 9, 16, 10, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 1014, "semana_label": "01/06–09/06"};
+<script>const C = {"efetivas": 1232, "elegiveis": 1920, "pef_atual": 64.2, "novas_dia": 85.6, "delta_ef_obs": 84.8, "ef_historico": [8, 15, 19, 20, 24, 37, 44, 57, 68, 64, 97, 93, 81, 138, 142, 162, 153, 1, 169, 279, 110], "n_consultores": 30, "data_ref": "2026-06-09", "expiracoes": [137, 134, 152, 143, 9, 171, 268, 108, 8, 16, 13, 7, 1, 9, 16, 10, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 1014, "semana_label": "12/05–09/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -325,17 +339,24 @@ function fmtDate(d) {
 }
 
 function render() {
-  var meta   = +document.getElementById('sl-meta').value;
+  var meta    = +document.getElementById('sl-meta').value;
   var b1_alvo = +document.getElementById('sl-b1').value;
+  var n_du    = +document.getElementById('sl-du').value;
   document.getElementById('meta-val').textContent = meta + '%';
   document.getElementById('b1-val').textContent   = b1_alvo.toFixed(1) + '/B1';
+  document.getElementById('du-val').textContent   = n_du + ' d.ú.';
+
+  // Ritmo calculado dinamicamente pelos últimos n_du pontos do histórico
+  var hist = C.ef_historico.slice(-n_du);
+  var delta_ef = hist.length
+    ? Math.round(hist.reduce(function(a,b){return a+b;}, 0) / hist.length * 10) / 10
+    : C.delta_ef_obs;
 
   // Cálculos principais
   var mantidas   = Math.max(0, C.efetivas - C.a_vencer_7du);
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
   var faltam_adj = Math.max(0, nec_meta - mantidas);
-  var b1_hist    = C.n_consultores > 0 ? C.delta_ef_obs / C.n_consultores : 0;
-  // Janela calculada a partir do ef/dia/B1 alvo
+  var b1_hist    = C.n_consultores > 0 ? delta_ef / C.n_consultores : 0;
   var b1_proj    = b1_alvo;
 
   // KPI hero (sempre branco — dentro do gradiente)
@@ -344,9 +365,10 @@ function render() {
   document.getElementById('kpi-meta-alvo').textContent = nec_meta.toLocaleString('pt-BR');
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
   // KPI cards (fora do hero — cores dinâmicas)
-  var deltaClass = C.delta_ef_obs >= 5 ? 'v-blue' : C.delta_ef_obs < 0 ? 'v-red' : '';
+  var deltaClass = delta_ef >= 5 ? 'v-blue' : delta_ef < 0 ? 'v-red' : '';
   document.getElementById('kpi-delta').className    = 'kc-val ' + deltaClass;
-  document.getElementById('kpi-delta').textContent  = (C.delta_ef_obs > 0 ? '+' : '') + C.delta_ef_obs.toFixed(1) + '/dia';
+  document.getElementById('kpi-delta').textContent  = (delta_ef > 0 ? '+' : '') + delta_ef.toFixed(1) + '/dia';
+  document.getElementById('kpi-delta-sub').textContent = 'média últ. ' + n_du + ' d.ú.';
   document.getElementById('kpi-b1h').textContent    = b1_hist.toFixed(2) + '/B1';
   document.getElementById('kpi-b1p').textContent    = faltam_adj <= 0 ? '—' : b1_proj.toFixed(2) + '/B1';
 
@@ -380,7 +402,7 @@ function render() {
       projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
       projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
       projData.textContent = fmtDate(d);
-      projDet.textContent  = 'Ritmo selecionado: ' + b1_alvo.toFixed(1) + '/B1 (' + ritmo_alvo.toFixed(0) + ' ef/dia) · Ritmo atual: ' + b1_hist.toFixed(1) + '/B1';
+      projDet.textContent  = 'Ritmo selecionado: ' + b1_alvo.toFixed(1) + '/B1 (' + ritmo_alvo.toFixed(0) + ' ef/dia) · Ritmo ' + n_du + 'd.ú.: ' + b1_hist.toFixed(1) + '/B1';
       faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
     }
   }
@@ -432,6 +454,7 @@ function render() {
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('sl-meta').oninput = function() { render(); };
   document.getElementById('sl-b1').oninput   = function() { render(); };
+  document.getElementById('sl-du').onchange  = function() { render(); };
   render();
 });
 </script>
