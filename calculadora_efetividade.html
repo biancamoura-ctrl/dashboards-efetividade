@@ -286,9 +286,15 @@ html.dark .ev-lbl{color:#71717a}
     </div>
     <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
       <div class="kc-icon">&#128200;</div>
-      <div class="kc-lbl">Ritmo total (ef/dia)</div>
+      <div class="kc-lbl">Novas ef./dia</div>
       <div class="kc-val" id="kpi-delta">&#8212;</div>
       <div class="kc-sub" id="kpi-delta-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+      <div class="kc-icon">&#9200;</div>
+      <div class="kc-lbl">Vencem/dia (m&#233;d. 7du)</div>
+      <div class="kc-val v-red" id="kpi-vencem">&#8212;</div>
+      <div class="kc-sub" id="kpi-vencem-sub">escolas que expiram</div>
     </div>
   </div>
 
@@ -462,6 +468,9 @@ function render() {
   document.getElementById('kpi-delta').className   = dc;
   document.getElementById('kpi-delta').textContent = (delta_total > 0 ? '+' : '') + delta_total.toFixed(1) + '/dia';
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. méd. últ. ' + n_du + ' d.ú.';
+  var media_vencem = mediaExpJanela(C.expiracoes, 0);
+  document.getElementById('kpi-vencem').textContent = media_vencem.toFixed(1) + '/dia';
+  document.getElementById('kpi-vencem-sub').textContent = 'próx. 7 d.ú. — total ' + (Math.round(media_vencem * 7)).toLocaleString('pt-BR');
 
   // KPIs universais
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
