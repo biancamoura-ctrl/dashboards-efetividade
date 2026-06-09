@@ -412,24 +412,28 @@ function calcDelta(hist, n_du) {
   var h = hist.slice(-n_du);
   return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
 }
+function mediaExpJanela(expiracoes, inicio) {
+  // Média de expirações dos próximos 7 dias úteis a partir de 'inicio'
+  var soma = 0;
+  for (var j = inicio; j < inicio + 7; j++) soma += (expiracoes[j] || 0);
+  return soma / 7;
+}
 function projetarDias(efetivas, nec_meta, ritmo, expiracoes) {
-  // Fórmula: dp = faltam / (ritmo - media_exp_por_dia)
+  // Janelas de 7 dias úteis: recalcula média de expirações a cada janela
   if (efetivas >= nec_meta) return 0;
   if (ritmo <= 0) return Infinity;
-  var total_exp = 0;
-  for (var i = 0; i < expiracoes.length; i++) total_exp += expiracoes[i];
-  var media_exp = expiracoes.length > 0 ? total_exp / expiracoes.length : 0;
-  var ritmo_liq = ritmo - media_exp;
-  if (ritmo_liq <= 0) return Infinity;
-  return Math.ceil((nec_meta - efetivas) / ritmo_liq);
-}
-function mediaExpDia(expiracoes) {
-  if (!expiracoes || expiracoes.length === 0) return 0;
-  var total = 0, dias = 0;
-  for (var i = 0; i < expiracoes.length; i++) {
-    if (expiracoes[i] > 0) { total += expiracoes[i]; dias++; }
+  var faltam = nec_meta - efetivas;
+  var dia = 0;
+  var MAX = 365;
+  while (faltam > 0 && dia < MAX) {
+    var media_exp = mediaExpJanela(expiracoes, dia);
+    var ritmo_liq = ritmo - media_exp;
+    if (ritmo_liq <= 0) return Infinity;
+    var dias_janela = Math.min(7, Math.ceil(faltam / ritmo_liq));
+    faltam -= ritmo_liq * dias_janela;
+    dia += dias_janela;
   }
-  return dias > 0 ? total / dias : 0;
+  return dia >= MAX ? Infinity : dia;
 }
 function renderCargo(prefix, hist, n_cargo, n_du) {
   var b1_alvo = +document.getElementById('sl-' + prefix).value;
@@ -494,7 +498,7 @@ function render() {
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
     projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = '';
   } else {
-    var media_exp    = mediaExpDia(C.expiracoes);
+    var media_exp    = mediaExpJanela(C.expiracoes, 0);
     var ritmo_liq    = ritmo_combinado - media_exp;
     var dp_real      = projetarDias(C.efetivas, nec_meta, ritmo_combinado, C.expiracoes);
 
