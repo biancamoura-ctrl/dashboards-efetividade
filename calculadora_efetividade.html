@@ -419,10 +419,10 @@ function calcDelta(hist, n_du) {
   return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
 }
 function mediaExpJanela(expiracoes, inicio) {
-  // Média de expirações dos próximos 7 dias úteis a partir de 'inicio'
+  // Média de expirações dos próximos 3 dias úteis a partir de 'inicio'
   var soma = 0;
-  for (var j = inicio; j < inicio + 7; j++) soma += (expiracoes[j] || 0);
-  return soma / 7;
+  for (var j = inicio; j < inicio + 3; j++) soma += (expiracoes[j] || 0);
+  return soma / 3;
 }
 function projetarDias(efetivas, nec_meta, ritmo, expiracoes) {
   // Janelas de 7 dias úteis: recalcula média de expirações a cada janela
@@ -470,7 +470,7 @@ function render() {
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. méd. últ. ' + n_du + ' d.ú.';
   var media_vencem = mediaExpJanela(C.expiracoes, 0);
   document.getElementById('kpi-vencem').textContent = media_vencem.toFixed(1) + '/dia';
-  document.getElementById('kpi-vencem-sub').textContent = 'próx. 7 d.ú. — total ' + (Math.round(media_vencem * 7)).toLocaleString('pt-BR');
+  document.getElementById('kpi-vencem-sub').textContent = 'próx. 3 d.ú. — total ' + (Math.round(media_vencem * 3)).toLocaleString('pt-BR');
 
   // KPIs universais
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
@@ -523,7 +523,7 @@ function render() {
       projDet.textContent  = '';
       racEl.innerHTML =
         '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-        + '&#10146; Ritmo atual: <b>' + ritmo_combinado.toFixed(0) + '</b> ef./dia &mdash; média de expirações: <b>' + media_exp.toFixed(1) + '</b>/dia<br>'
+        + '&#10146; Ritmo atual: <b>' + ritmo_combinado.toFixed(0) + '</b> ef./dia &mdash; média expirações (3 d.ú.): <b>' + media_exp.toFixed(1) + '</b>/dia<br>'
         + '&#10146; Ritmo líquido (ganho real por dia): <b>' + (ritmo_liq > 0 ? '+' : '') + ritmo_liq.toFixed(1) + '</b> ef./dia<br>'
         + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + ritmo_liq.toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
     }
