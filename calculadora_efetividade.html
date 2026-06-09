@@ -396,7 +396,7 @@ function calcDelta(hist, n_du) {
   return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
 }
 function mediaExpJanela(expiracoes, inicio) {
-  return expiracoes[inicio] || 0;
+  return expiracoes[inicio + 1] || 0;
 }
 function projetarDias(efetivas, nec_meta, ritmo, media_exp) {
   if (efetivas >= nec_meta) return 0;
