@@ -398,7 +398,7 @@ html.dark .ev-lbl{color:#71717a}
   </div>
 
 </div>
-<script>const C = {"efetivas": 1283, "elegiveis": 1922, "pef_atual": 66.8, "novas_dia": 119.6, "novas_analista": 53.3, "novas_estagiario": 62.2, "novas_historico": [124, 111, 115, 88, 104, 145, 123, 146, 123, 149, 136, 135, 104, 97, 105, 115, 110, 67, 134, 158, 122], "novas_hist_analista": [58, 55, 41, 35, 52, 53, 64, 79, 39, 68, 73, 53, 50, 48, 47, 53, 50, 32, 45, 87, 37], "novas_hist_estagiario": [66, 54, 65, 50, 49, 85, 56, 66, 81, 75, 58, 75, 50, 45, 55, 61, 57, 34, 86, 68, 71], "delta_ef_obs": 257.3, "delta_ef_analista": 136.7, "delta_ef_estagiario": 114.7, "ef_historico": [230, 242, 235, 238, 243, 281, 267, 312, 278, 294, 270, 284, 282, 241, 249, 256, 257, 226, 215, 292, 211], "ef_hist_analista": [138, 144, 125, 120, 140, 141, 146, 173, 135, 151, 151, 142, 152, 127, 128, 139, 143, 131, 92, 170, 83], "ef_hist_estagiario": [90, 95, 101, 112, 98, 132, 116, 133, 138, 137, 110, 132, 123, 109, 115, 112, 111, 93, 118, 119, 115], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [130, 130, 144, 140, 9, 164, 260, 184, 8, 17, 17, 7, 1, 9, 15, 18, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 977, "semana_label": "11/05–09/06"};
+<script>const C = {"efetivas": 1292, "elegiveis": 1922, "pef_atual": 67.2, "novas_dia": 120.2, "novas_analista": 53.7, "novas_estagiario": 62.5, "novas_historico": [124, 111, 115, 88, 104, 145, 123, 146, 123, 149, 136, 135, 104, 97, 105, 115, 110, 67, 134, 158, 136], "novas_hist_analista": [58, 55, 41, 35, 52, 53, 64, 79, 39, 68, 73, 53, 50, 48, 47, 53, 50, 32, 45, 87, 45], "novas_hist_estagiario": [66, 54, 65, 50, 49, 85, 56, 66, 81, 75, 58, 75, 50, 45, 55, 61, 57, 34, 86, 68, 77], "delta_ef_obs": 259.0, "delta_ef_analista": 137.8, "delta_ef_estagiario": 115.4, "ef_historico": [230, 242, 235, 238, 243, 281, 267, 312, 278, 294, 270, 284, 282, 241, 249, 256, 257, 226, 215, 292, 247], "ef_hist_analista": [137, 144, 125, 120, 140, 141, 145, 173, 135, 151, 150, 141, 152, 127, 128, 139, 143, 131, 92, 170, 109], "ef_hist_estagiario": [91, 95, 101, 112, 98, 132, 117, 133, 138, 137, 111, 133, 123, 109, 115, 112, 111, 93, 118, 119, 125], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [126, 129, 144, 138, 8, 161, 258, 203, 8, 17, 18, 7, 1, 9, 15, 20, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 964, "semana_label": "11/05–09/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -462,12 +462,12 @@ function render() {
   document.getElementById('meta-val').textContent = meta + '%';
   document.getElementById('du-val').textContent   = n_du + ' d.ú.';
 
-  // Ritmo total (novas efetivações por dia)
-  var delta_total = calcDelta(C.novas_historico, n_du);
+  // Ritmo total (atividades efetivas por dia)
+  var delta_total = calcDelta(C.ef_historico, n_du);
   var dc = delta_total >= 5 ? 'kc-val v-blue' : delta_total < 0 ? 'kc-val v-red' : 'kc-val';
   document.getElementById('kpi-delta').className   = dc;
   document.getElementById('kpi-delta').textContent = (delta_total > 0 ? '+' : '') + delta_total.toFixed(1) + '/dia';
-  document.getElementById('kpi-delta-sub').textContent = 'novas ef. méd. últ. ' + n_du + ' d.ú.';
+  document.getElementById('kpi-delta-sub').textContent = 'ef./dia méd. últ. ' + n_du + ' d.ú.';
   var media_vencem = mediaExpJanela(C.expiracoes, 0);
   document.getElementById('kpi-vencem').textContent = media_vencem.toFixed(1) + '/dia';
   document.getElementById('kpi-vencem-sub').textContent = 'próx. 3 d.ú. — total ' + (Math.round(media_vencem * 3)).toLocaleString('pt-BR');
