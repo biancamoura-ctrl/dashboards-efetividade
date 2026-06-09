@@ -530,9 +530,19 @@ function render() {
   }
 }
 
+function setarSlidersHistorico() {
+  var n_du = +document.getElementById('sl-du').value;
+  var d_ana = calcDelta(C.ef_hist_analista,   n_du);
+  var d_est = calcDelta(C.ef_hist_estagiario, n_du);
+  var b1_ana = C.n_analistas   > 0 ? Math.max(0.5, Math.round(d_ana / C.n_analistas   * 2) / 2) : 0.5;
+  var b1_est = C.n_estagiarios > 0 ? Math.max(0.5, Math.round(d_est / C.n_estagiarios * 2) / 2) : 0.5;
+  document.getElementById('sl-ana').value = b1_ana;
+  document.getElementById('sl-est').value = b1_est;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('sl-meta').oninput  = function() { render(); };
-  document.getElementById('sl-du').onchange   = function() { render(); };
+  document.getElementById('sl-du').onchange   = function() { setarSlidersHistorico(); render(); };
   document.getElementById('sl-ana').oninput   = function() { render(); };
   document.getElementById('sl-est').oninput   = function() { render(); };
   render();
