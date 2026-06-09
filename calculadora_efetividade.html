@@ -150,6 +150,37 @@ input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
 .kc-val{font-size:30px;font-weight:900;line-height:1.1;color:#7668AC}
 .kc-val.v-blue{color:#008ECF}.kc-val.v-red{color:#E94B56}
 .kc-sub{font-size:10px;color:#c0b8d8;margin-top:2px}
+/* ── Cargo grid ── */
+.cargo-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:640px){.cargo-grid{grid-template-columns:1fr}}
+.cargo-card{background:#fff;border-radius:18px;padding:18px 18px 14px;
+  border:1px solid rgba(118,104,172,.15);box-shadow:0 2px 16px rgba(118,104,172,.09)}
+.cargo-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;
+  color:#7668AC;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.cargo-title span{font-size:15px}
+.cargo-kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.ck{background:#f5f3ff;border-radius:12px;padding:10px 12px}
+.ck-lbl{font-size:8px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.ck-val{font-size:20px;font-weight:900;color:#7668AC;line-height:1}
+.ck-sub{font-size:9px;color:#c0b8d8;margin-top:2px}
+.cargo-proj{background:#f5f3ff;border-radius:12px;padding:12px 14px;text-align:center}
+.cp-lbl{font-size:9px;font-weight:700;color:rgba(118,104,172,.7);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.cp-dias{font-size:28px;font-weight:900;color:#7668AC;line-height:1}
+.cp-dias.cp-green{color:#65a30d}.cp-dias.cp-red{color:#E94B56}
+.cp-data{font-size:11px;font-weight:700;color:#7668AC;margin-top:4px}
+.cp-det{font-size:9px;color:#a09ac0;margin-top:6px}
+/* dark */
+html.dark .cargo-card{background:#1e1e22;border-color:#2d2d33}
+html.dark .cargo-title{color:#a78bfa}
+html.dark .ck{background:#27272a}
+html.dark .ck-lbl{color:#71717a}
+html.dark .ck-val{color:#a78bfa}
+html.dark .ck-sub{color:#52525b}
+html.dark .cargo-proj{background:#27272a}
+html.dark .cp-lbl{color:#71717a}
+html.dark .cp-dias{color:#a78bfa}
+html.dark .cp-data{color:#a78bfa}
+html.dark .cp-det{color:#52525b}
 /* ── Info grid ── */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 /* ── Projeção ── */
@@ -232,62 +263,104 @@ html.dark .ev-lbl{color:#71717a}
     </div>
   </div>
 
-  <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;margin-bottom:20px;align-items:stretch">
-    <div class="controls-bar" style="margin-bottom:0;align-self:stretch">
-      <div class="ctrl-group">
-        <span class="ctrl-label">Meta</span>
-        <span class="ctrl-val" id="meta-val">80%</span>
-        <input type="range" id="sl-meta" min="65" max="95" value="80" step="5">
-        <span style="font-size:9px;color:var(--muted);font-weight:600">65 &middot; 70 &middot; 75 &middot; 80 &middot; 85 &middot; 90 &middot; 95</span>
-      </div>
-      <div class="ctrl-group">
-        <span class="ctrl-label">Ef/dia/B1 necessário</span>
-        <span class="ctrl-val" id="b1-val">8.5/B1</span>
-        <input type="range" id="sl-b1" min="0.5" max="10" value="8.5" step="0.5">
-        <span style="font-size:9px;color:var(--muted);font-weight:600">efetividades por dia por consultor</span>
-      </div>
-      <div class="ctrl-group" style="min-width:120px">
-        <span class="ctrl-label">Janela do ritmo</span>
-        <span class="ctrl-val" id="du-val">7 d.&#250;.</span>
-        <select id="sl-du" style="margin-top:4px;padding:6px 10px;border-radius:8px;
-          border:1.5px solid rgba(118,104,172,.30);font-size:13px;font-weight:700;
-          color:#7668AC;background:#fff;cursor:pointer;accent-color:#7668AC">
-          <option value="7" selected>7 dias &#250;teis</option>
-          <option value="10">10 dias &#250;teis</option>
-          <option value="15">15 dias &#250;teis</option>
-          <option value="21">21 dias &#250;teis</option>
-        </select>
-        <span style="font-size:9px;color:var(--muted);font-weight:600">base do ritmo atual (ef/dia)</span>
-      </div>
+  <!-- Controles universais -->
+  <div class="controls-bar" style="margin-bottom:16px">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Meta</span>
+      <span class="ctrl-val" id="meta-val">80%</span>
+      <input type="range" id="sl-meta" min="65" max="95" value="80" step="5">
+      <span style="font-size:9px;color:var(--muted);font-weight:600">65 &middot; 70 &middot; 75 &middot; 80 &middot; 85 &middot; 90 &middot; 95</span>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-      <div class="kpi-c">
-        <div class="kc-icon">&#128200;</div>
-        <div class="kc-lbl">Ritmo atual (ef/dia)</div>
-        <div class="kc-val" id="kpi-delta">&#8212;</div>
-        <div class="kc-sub" id="kpi-delta-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
-      </div>
-      <div class="kpi-c">
-        <div class="kc-icon">&#128101;</div>
-        <div class="kc-lbl">Ef/dia/B1 hist&#243;rico</div>
-        <div class="kc-val" id="kpi-b1h">&#8212;</div>
-        <div class="kc-sub">ritmo &#247; consultores</div>
-      </div>
-      <div class="kpi-c">
-        <div class="kc-icon">&#127919;</div>
-        <div class="kc-lbl">Ef/dia/B1 necess&#225;rio</div>
-        <div class="kc-val" id="kpi-b1p">&#8212;</div>
-        <div class="kc-sub">faltam &#247; janela &#247; B1</div>
-      </div>
+    <div class="ctrl-group" style="min-width:120px">
+      <span class="ctrl-label">Janela do ritmo</span>
+      <span class="ctrl-val" id="du-val">7 d.&#250;.</span>
+      <select id="sl-du" style="margin-top:4px;padding:6px 10px;border-radius:8px;
+        border:1.5px solid rgba(118,104,172,.30);font-size:13px;font-weight:700;
+        color:#7668AC;background:#fff;cursor:pointer">
+        <option value="7" selected>7 dias &#250;teis</option>
+        <option value="10">10 dias &#250;teis</option>
+        <option value="15">15 dias &#250;teis</option>
+        <option value="21">21 dias &#250;teis</option>
+      </select>
+      <span style="font-size:9px;color:var(--muted);font-weight:600">base do ritmo atual</span>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+      <div class="kc-icon">&#128200;</div>
+      <div class="kc-lbl">Ritmo total (ef/dia)</div>
+      <div class="kc-val" id="kpi-delta">&#8212;</div>
+      <div class="kc-sub" id="kpi-delta-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
     </div>
   </div>
 
-  <div class="proj-hero">
-    <div class="ph-status" id="proj-status">No ritmo atual, para a meta selecionada chegamos em</div>
-    <div class="ph-dias" id="proj-dias">&#8212;</div>
-    <div class="ph-data" id="proj-data"></div>
-    <div class="ph-detail" id="proj-detalhe"></div>
-    <div class="ph-faltam" id="proj-faltam"></div>
+  <!-- Grid de dois cargos -->
+  <div class="cargo-grid">
+
+    <!-- Consultor (Analista) -->
+    <div class="cargo-card">
+      <div class="cargo-title"><span>&#128188;</span> Consultor &mdash; <span id="ana-ncargo">&#8212;</span> analistas</div>
+      <div class="ctrl-group" style="margin-bottom:12px">
+        <span class="ctrl-label">Ef/dia por consultor</span>
+        <span class="ctrl-val" id="ana-b1val">8.0/B1</span>
+        <input type="range" id="sl-ana" min="0.5" max="10" value="8.0" step="0.5" style="width:100%">
+      </div>
+      <div class="cargo-kpis">
+        <div class="ck">
+          <div class="ck-lbl">Ritmo</div>
+          <div class="ck-val" id="ana-delta">&#8212;</div>
+          <div class="ck-sub" id="ana-delta-sub">méd. 7d.ú.</div>
+        </div>
+        <div class="ck">
+          <div class="ck-lbl">Hist. B1</div>
+          <div class="ck-val" id="ana-b1h">&#8212;</div>
+          <div class="ck-sub">ef/dia &#247; B1</div>
+        </div>
+        <div class="ck">
+          <div class="ck-lbl">Analistas</div>
+          <div class="ck-val" id="ana-ncargo2">17</div>
+          <div class="ck-sub">no time</div>
+        </div>
+      </div>
+      <div class="cargo-proj">
+        <div class="cp-lbl">Proje&#231;&#227;o ao ritmo selecionado</div>
+        <div class="cp-dias" id="ana-proj-dias">&#8212;</div>
+        <div class="cp-data" id="ana-proj-data"></div>
+        <div class="cp-det"  id="ana-proj-det"></div>
+      </div>
+    </div>
+
+    <!-- Estagiário -->
+    <div class="cargo-card">
+      <div class="cargo-title"><span>&#127891;</span> Estagi&#225;rio &mdash; <span id="est-ncargo">&#8212;</span> estagi&#225;rios</div>
+      <div class="ctrl-group" style="margin-bottom:12px">
+        <span class="ctrl-label">Ef/dia por estagi&#225;rio</span>
+        <span class="ctrl-val" id="est-b1val">5.5/B1</span>
+        <input type="range" id="sl-est" min="0.5" max="10" value="5.5" step="0.5" style="width:100%">
+      </div>
+      <div class="cargo-kpis">
+        <div class="ck">
+          <div class="ck-lbl">Ritmo</div>
+          <div class="ck-val" id="est-delta">&#8212;</div>
+          <div class="ck-sub" id="est-delta-sub">méd. 7d.ú.</div>
+        </div>
+        <div class="ck">
+          <div class="ck-lbl">Hist. B1</div>
+          <div class="ck-val" id="est-b1h">&#8212;</div>
+          <div class="ck-sub">ef/dia &#247; B1</div>
+        </div>
+        <div class="ck">
+          <div class="ck-lbl">Estagi&#225;rios</div>
+          <div class="ck-val" id="est-ncargo2">21</div>
+          <div class="ck-sub">no time</div>
+        </div>
+      </div>
+      <div class="cargo-proj">
+        <div class="cp-lbl">Proje&#231;&#227;o ao ritmo selecionado</div>
+        <div class="cp-dias" id="est-proj-dias">&#8212;</div>
+        <div class="cp-data" id="est-proj-data"></div>
+        <div class="cp-det"  id="est-proj-det"></div>
+      </div>
+    </div>
+
   </div>
 
   <div class="card">
@@ -321,7 +394,7 @@ html.dark .ev-lbl{color:#71717a}
   </div>
 
 </div>
-<script>const C = {"efetivas": 1241, "elegiveis": 1920, "pef_atual": 64.6, "novas_dia": 85.4, "delta_ef_obs": 257.3, "ef_historico": [233, 246, 244, 240, 243, 289, 271, 313, 280, 296, 273, 288, 284, 242, 249, 258, 260, 229, 217, 291, 158], "n_consultores": 30, "data_ref": "2026-06-09", "expiracoes": [136, 132, 150, 144, 10, 171, 268, 119, 8, 16, 13, 7, 1, 9, 16, 11, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 1011, "semana_label": "11/05–09/06"};
+<script>const C = {"efetivas": 1241, "elegiveis": 1920, "pef_atual": 64.6, "novas_dia": 85.4, "delta_ef_obs": 257.3, "delta_ef_analista": 137.3, "delta_ef_estagiario": 114.4, "ef_historico": [233, 246, 244, 240, 243, 289, 271, 313, 280, 296, 273, 288, 284, 242, 249, 258, 260, 229, 217, 291, 158], "ef_hist_analista": [140, 146, 132, 122, 140, 148, 150, 174, 136, 152, 153, 143, 153, 127, 128, 140, 144, 132, 94, 170, 60], "ef_hist_estagiario": [91, 97, 103, 112, 98, 133, 116, 133, 139, 138, 111, 135, 124, 110, 115, 113, 113, 95, 118, 118, 91], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [136, 132, 150, 144, 10, 171, 268, 119, 8, 16, 13, 7, 1, 9, 16, 11, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 1011, "semana_label": "11/05–09/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -337,86 +410,89 @@ function addBusDays(d, n) {
 function fmtDate(d) {
   return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'short'});
 }
+function calcDelta(hist, n_du) {
+  var h = hist.slice(-n_du);
+  return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
+}
+function renderCargo(prefix, hist, n_cargo, faltam_adj, meta, n_du, mantidas) {
+  var b1_alvo = +document.getElementById('sl-' + prefix).value;
+  document.getElementById(prefix + '-b1val').textContent = b1_alvo.toFixed(1) + '/B1';
+
+  var delta   = calcDelta(hist, n_du);
+  var b1_hist = n_cargo > 0 ? delta / n_cargo : 0;
+  var ritmo   = b1_alvo * n_cargo;
+
+  // KPIs
+  var dc = delta >= 5 ? 'ck-val v-blue' : delta < 0 ? 'ck-val v-red' : 'ck-val';
+  document.getElementById(prefix + '-delta').className   = dc;
+  document.getElementById(prefix + '-delta').textContent = (delta > 0 ? '+' : '') + delta.toFixed(1) + '/dia';
+  document.getElementById(prefix + '-delta-sub').textContent = 'méd. ' + n_du + 'd.ú.';
+  document.getElementById(prefix + '-b1h').textContent   = b1_hist.toFixed(2) + '/B1';
+  document.getElementById(prefix + '-ncargo').textContent = n_cargo;
+
+  // Projeção do cargo
+  var pDias = document.getElementById(prefix + '-proj-dias');
+  var pData = document.getElementById(prefix + '-proj-data');
+  var pDet  = document.getElementById(prefix + '-proj-det');
+  if (faltam_adj <= 0) {
+    pDias.innerHTML = '&#10003;'; pDias.className = 'cp-dias cp-green';
+    pData.textContent = 'Meta atingida'; pDet.textContent = '';
+  } else if (ritmo <= 0) {
+    pDias.innerHTML = '&#8212;'; pDias.className = 'cp-dias';
+    pData.textContent = ''; pDet.textContent = '';
+  } else {
+    var dp = Math.ceil(faltam_adj / ritmo);
+    if (dp > 365) {
+      pDias.innerHTML = '&#8734;'; pDias.className = 'cp-dias cp-red';
+      pData.textContent = 'Não converge'; pDet.textContent = '';
+    } else {
+      var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
+      pDias.innerHTML   = dp + (dp === 1 ? ' d.ú.' : ' d.ú.');
+      pDias.className   = 'cp-dias' + (dp <= 5 ? ' cp-green' : dp > 15 ? ' cp-red' : '');
+      pData.textContent = fmtDate(d);
+      pDet.textContent  = b1_alvo.toFixed(1) + '/B1 · ' + ritmo.toFixed(0) + ' ef/dia · hist: ' + b1_hist.toFixed(2) + '/B1';
+    }
+  }
+}
 
 function render() {
-  var meta    = +document.getElementById('sl-meta').value;
-  var b1_alvo = +document.getElementById('sl-b1').value;
-  var n_du    = +document.getElementById('sl-du').value;
+  var meta  = +document.getElementById('sl-meta').value;
+  var n_du  = +document.getElementById('sl-du').value;
   document.getElementById('meta-val').textContent = meta + '%';
-  document.getElementById('b1-val').textContent   = b1_alvo.toFixed(1) + '/B1';
   document.getElementById('du-val').textContent   = n_du + ' d.ú.';
 
-  // Ritmo calculado dinamicamente pelos últimos n_du pontos do histórico
-  var hist = C.ef_historico.slice(-n_du);
-  var delta_ef = hist.length
-    ? Math.round(hist.reduce(function(a,b){return a+b;}, 0) / hist.length * 10) / 10
-    : C.delta_ef_obs;
+  // Ritmo total (universal)
+  var delta_total = calcDelta(C.ef_historico, n_du);
+  var dc = delta_total >= 5 ? 'kc-val v-blue' : delta_total < 0 ? 'kc-val v-red' : 'kc-val';
+  document.getElementById('kpi-delta').className   = dc;
+  document.getElementById('kpi-delta').textContent = (delta_total > 0 ? '+' : '') + delta_total.toFixed(1) + '/dia';
+  document.getElementById('kpi-delta-sub').textContent = 'méd. últ. ' + n_du + ' d.ú.';
 
-  // Cálculos principais
+  // KPIs universais
   var mantidas   = Math.max(0, C.efetivas - C.a_vencer_7du);
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
   var faltam_adj = Math.max(0, nec_meta - mantidas);
-  var b1_hist    = C.n_consultores > 0 ? delta_ef / C.n_consultores : 0;
-  var b1_proj    = b1_alvo;
-
-  // KPI hero (sempre branco — dentro do gradiente)
-  document.getElementById('kpi-pef').textContent    = C.pef_atual + '%';
-  document.getElementById('kpi-faltam').textContent = faltam_adj.toLocaleString('pt-BR');
-  document.getElementById('kpi-meta-alvo').textContent = nec_meta.toLocaleString('pt-BR');
+  document.getElementById('kpi-pef').textContent         = C.pef_atual + '%';
+  document.getElementById('kpi-faltam').textContent      = faltam_adj.toLocaleString('pt-BR');
+  document.getElementById('kpi-meta-alvo').textContent   = nec_meta.toLocaleString('pt-BR');
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
-  // KPI cards (fora do hero — cores dinâmicas)
-  var deltaClass = delta_ef >= 5 ? 'v-blue' : delta_ef < 0 ? 'v-red' : '';
-  document.getElementById('kpi-delta').className    = 'kc-val ' + deltaClass;
-  document.getElementById('kpi-delta').textContent  = (delta_ef > 0 ? '+' : '') + delta_ef.toFixed(1) + '/dia';
-  document.getElementById('kpi-delta-sub').textContent = 'média últ. ' + n_du + ' d.ú.';
-  document.getElementById('kpi-b1h').textContent    = b1_hist.toFixed(2) + '/B1';
-  document.getElementById('kpi-b1p').textContent    = faltam_adj <= 0 ? '—' : b1_proj.toFixed(2) + '/B1';
 
-  // Caixa de projeção
-  var projDias = document.getElementById('proj-dias');
-  var projData = document.getElementById('proj-data');
-  var projDet  = document.getElementById('proj-detalhe');
-  var statusEl = document.getElementById('proj-status');
-  var faltamEl = document.getElementById('proj-faltam');
+  // Cargos
+  renderCargo('ana', C.ef_hist_analista,   C.n_analistas,   faltam_adj, meta, n_du, mantidas);
+  renderCargo('est', C.ef_hist_estagiario, C.n_estagiarios, faltam_adj, meta, n_du, mantidas);
 
-  // Projeção pelo ef/dia/B1 alvo selecionado
-  var ritmo_alvo = b1_alvo * C.n_consultores; // ef/dia total ao ritmo alvo
-  if (faltam_adj <= 0) {
-    statusEl.textContent  = 'Meta ' + meta + '% atingida!';
-    projDias.innerHTML    = '&#10003;'; projDias.className = 'ph-dias ph-green';
-    projData.textContent  = 'Efetivas mantidas: ' + mantidas.toLocaleString('pt-BR');
-    projDet.textContent   = ''; faltamEl.textContent = '';
-  } else if (ritmo_alvo <= 0) {
-    statusEl.textContent  = 'Defina um ef/dia/B1 acima de zero';
-    projDias.innerHTML    = '&#8212;'; projDias.className = 'ph-dias';
-    projData.textContent  = ''; projDet.textContent = ''; faltamEl.textContent = '';
-  } else {
-    var dp = Math.ceil(faltam_adj / ritmo_alvo);
-    statusEl.textContent  = 'Com ' + b1_alvo.toFixed(1) + ' ef/dia por B1, para a meta ' + meta + '% chegamos em';
-    if (dp > 365) {
-      projDias.innerHTML  = '&#8734;'; projDias.className = 'ph-dias ph-red';
-      projData.textContent = 'Não converge no período';
-      projDet.textContent = ''; faltamEl.textContent = '';
-    } else {
-      var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
-      projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
-      projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
-      projData.textContent = fmtDate(d);
-      projDet.textContent  = 'Ritmo selecionado: ' + b1_alvo.toFixed(1) + '/B1 (' + ritmo_alvo.toFixed(0) + ' ef/dia) · Ritmo ' + n_du + 'd.ú.: ' + b1_hist.toFixed(1) + '/B1';
-      faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
-    }
-  }
-
-  // Tabela de metas
+  // Tabela de metas (usa ritmo total)
+  var ritmo_total = (calcDelta(C.ef_hist_analista, n_du) * C.n_analistas / Math.max(1,C.n_analistas))
+                  + (calcDelta(C.ef_hist_estagiario, n_du) * C.n_estagiarios / Math.max(1,C.n_estagiarios));
+  // simplificado: usa delta_total como ritmo total
   var tbody = document.getElementById('metas-tbody');
   tbody.innerHTML = '';
   [65, 70, 75, 80, 85, 90, 95].forEach(function(m) {
-    var nec   = Math.ceil(C.elegiveis * m / 100);
-    var falt  = Math.max(0, nec - mantidas);
-    var ok    = falt <= 0;
+    var nec  = Math.ceil(C.elegiveis * m / 100);
+    var falt = Math.max(0, nec - mantidas);
+    var ok   = falt <= 0;
     var isSel = (m === meta);
-    // dias para atingir essa meta ao ritmo selecionado
-    var dp_m  = (!ok && ritmo_alvo > 0) ? Math.ceil(falt / ritmo_alvo) : null;
+    var dp_m = (!ok && delta_total > 0) ? Math.ceil(falt / delta_total) : null;
     var proj_txt = ok ? '&#8212;' : (dp_m && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
     var tr = document.createElement('tr');
     if (isSel) tr.className = 'meta-atual';
@@ -431,7 +507,7 @@ function render() {
     tbody.appendChild(tr);
   });
 
-  // Gráfico de barras (ef_historico)
+  // Gráfico total
   var wrap = document.getElementById('chart-bars');
   if (wrap && C.ef_historico && C.ef_historico.length) {
     var maxV = Math.max.apply(null, C.ef_historico) || 1;
@@ -452,9 +528,10 @@ function render() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('sl-meta').oninput = function() { render(); };
-  document.getElementById('sl-b1').oninput   = function() { render(); };
-  document.getElementById('sl-du').onchange  = function() { render(); };
+  document.getElementById('sl-meta').oninput  = function() { render(); };
+  document.getElementById('sl-du').onchange   = function() { render(); };
+  document.getElementById('sl-ana').oninput   = function() { render(); };
+  document.getElementById('sl-est').oninput   = function() { render(); };
   render();
 });
 </script>
