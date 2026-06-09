@@ -446,20 +446,11 @@ function render() {
   document.getElementById('kpi-delta').textContent = delta_periodo.toFixed(1) + '/dia';
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. — ' + (periodo_labels[periodo] || periodo);
 
-  // KPI vencem/dia: novas_ef_periodo - delta_global; senão fallback expiracoes[1]
-  var has_hist = C.delta_faltam_global != null;
-  var vencem_dia;
-  if (has_hist) {
-    vencem_dia = Math.max(0, delta_periodo - C.delta_faltam_global);
-    document.getElementById('kpi-vencem').className   = 'kc-val';
-    document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(1) + '/dia';
-    document.getElementById('kpi-vencem-sub').textContent = 'vencem/dia — ' + (periodo_labels[periodo] || periodo);
-  } else {
-    vencem_dia = mediaExpJanela(C.expiracoes, 0);
-    document.getElementById('kpi-vencem').className   = 'kc-val';
-    document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(1) + '/dia';
-    document.getElementById('kpi-vencem-sub').textContent = 'vencem amanhã';
-  }
+  // KPI vencem/dia: média fixa de 104 escolas/dia
+  var vencem_dia = 104;
+  document.getElementById('kpi-vencem').className   = 'kc-val';
+  document.getElementById('kpi-vencem').textContent = '104/dia';
+  document.getElementById('kpi-vencem-sub').textContent = 'vencem/dia (média)';
 
   // KPIs universais
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
@@ -517,17 +508,10 @@ function render() {
       projDias.className   = 'ph-dias' + (dp_real <= 5 ? ' ph-green' : dp_real > 15 ? ' ph-red' : '');
       projData.textContent = fmtDate(d);
       projDet.textContent  = '';
-      if (has_hist) {
-        racEl.innerHTML =
-          '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-          + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + ritmo_combinado.toFixed(0) + '</b> &mdash; vencem/dia: <b>' + vencem_dia.toFixed(1) + '</b><br>'
-          + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + ritmo_liq.toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
-      } else {
-        racEl.innerHTML =
-          '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-          + '&#10146; Ritmo: <b>' + ritmo_combinado.toFixed(0) + '</b> ef./dia &mdash; vencem/dia: <b>' + vencem_dia.toFixed(1) + '</b><br>'
-          + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + Math.max(0.1, ritmo_liq).toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
-      }
+      racEl.innerHTML =
+        '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
+        + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + ritmo_combinado.toFixed(0) + '</b> &mdash; vencem/dia: <b>104</b><br>'
+        + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + ritmo_liq.toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
     }
   }
 
