@@ -413,18 +413,21 @@ function calcDelta(hist, n_du) {
   return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
 }
 function projetarDias(efetivas, nec_meta, ritmo, expiracoes) {
-  // Iterativo: a cada dp dias, as escolas que vencem nesse período precisam ser reefetivadas.
+  // Fórmula: dp = faltam / (ritmo - media_exp_por_dia)
   if (efetivas >= nec_meta) return 0;
   if (ritmo <= 0) return Infinity;
-  var dp = Math.ceil((nec_meta - efetivas) / ritmo);
-  for (var i = 0; i < 50; i++) {
-    var vencem = 0;
-    for (var j = 0; j < Math.min(dp, expiracoes.length); j++) vencem += expiracoes[j];
-    var novo_dp = Math.ceil((nec_meta - efetivas + vencem) / ritmo);
-    if (novo_dp === dp) break;
-    dp = novo_dp;
-  }
-  return dp;
+  var total_exp = 0;
+  for (var i = 0; i < expiracoes.length; i++) total_exp += expiracoes[i];
+  var media_exp = expiracoes.length > 0 ? total_exp / expiracoes.length : 0;
+  var ritmo_liq = ritmo - media_exp;
+  if (ritmo_liq <= 0) return Infinity;
+  return Math.ceil((nec_meta - efetivas) / ritmo_liq);
+}
+function mediaExpDia(expiracoes) {
+  if (!expiracoes || expiracoes.length === 0) return 0;
+  var total = 0;
+  for (var i = 0; i < expiracoes.length; i++) total += expiracoes[i];
+  return total / expiracoes.length;
 }
 function renderCargo(prefix, hist, n_cargo, n_du) {
   var b1_alvo = +document.getElementById('sl-' + prefix).value;
@@ -489,21 +492,15 @@ function render() {
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
     projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = '';
   } else {
-    // Estimativa sem expirações
-    var dp_simples = Math.ceil(faltam_proj / ritmo_combinado);
-    // Quantas expiram nessa janela simples
-    var vencem_simples = 0;
-    for (var j = 0; j < Math.min(dp_simples, C.expiracoes.length); j++) vencem_simples += C.expiracoes[j];
-    // Projeção real (iterativa, considerando expirações)
-    var dp_real = projetarDias(C.efetivas, nec_meta, ritmo_combinado, C.expiracoes);
-    var vencem_real = 0;
-    for (var j = 0; j < Math.min(dp_real, C.expiracoes.length); j++) vencem_real += C.expiracoes[j];
+    var media_exp    = mediaExpDia(C.expiracoes);
+    var ritmo_liq    = ritmo_combinado - media_exp;
+    var dp_real      = projetarDias(C.efetivas, nec_meta, ritmo_combinado, C.expiracoes);
 
-    statusEl.textContent = 'Para atingir ' + meta + '% no ritmo de ' + ritmo_combinado.toFixed(0) + ' novas ef./dia:';
+    statusEl.textContent = 'Para atingir ' + meta + '% no ritmo de ' + ritmo_combinado.toFixed(0) + ' ef./dia:';
 
     if (dp_real > 365) {
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
-      projData.textContent = 'Não converge no período';
+      projData.textContent = 'Ritmo não cobre as expirações';
       projDet.textContent  = ''; racEl.innerHTML = '';
     } else {
       var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp_real);
@@ -512,10 +509,10 @@ function render() {
       projData.textContent = fmtDate(d);
       projDet.textContent  = '';
       racEl.innerHTML =
-        '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> escolas para ' + meta + '%<br>'
-        + '&#10146; No ritmo de <b>' + ritmo_combinado.toFixed(0) + '</b> novas ef./dia, sem considerar expirações: <b>' + dp_simples + ' dias úteis</b><br>'
-        + '&#10146; Mas nesses <b>' + dp_simples + ' dias</b>, <b>' + vencem_simples.toLocaleString('pt-BR') + '</b> escolas ficam não-efetivas<br>'
-        + '&#10146; Considerando essas expirações, na verdade são <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
+        '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
+        + '&#10146; Ritmo atual: <b>' + ritmo_combinado.toFixed(0) + '</b> ef./dia &mdash; média de expirações: <b>' + media_exp.toFixed(1) + '</b>/dia<br>'
+        + '&#10146; Ritmo líquido (ganho real por dia): <b>' + (ritmo_liq > 0 ? '+' : '') + ritmo_liq.toFixed(1) + '</b> ef./dia<br>'
+        + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + ritmo_liq.toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
     }
   }
 
