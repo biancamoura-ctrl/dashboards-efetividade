@@ -391,7 +391,7 @@ html.dark .ev-lbl{color:#71717a}
   </div>
 
 </div>
-<script>const C = {"efetivas": 1241, "elegiveis": 1920, "pef_atual": 64.6, "novas_dia": 85.4, "delta_ef_obs": 257.3, "delta_ef_analista": 137.3, "delta_ef_estagiario": 114.4, "ef_historico": [233, 246, 244, 240, 243, 289, 271, 313, 280, 296, 273, 288, 284, 242, 249, 258, 260, 229, 217, 291, 158], "ef_hist_analista": [140, 146, 132, 122, 140, 148, 150, 174, 136, 152, 153, 143, 153, 127, 128, 140, 144, 132, 94, 170, 60], "ef_hist_estagiario": [91, 97, 103, 112, 98, 133, 116, 133, 139, 138, 111, 135, 124, 110, 115, 113, 113, 95, 118, 118, 91], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [136, 132, 150, 144, 10, 171, 268, 119, 8, 16, 13, 7, 1, 9, 16, 11, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 1011, "semana_label": "11/05–09/06"};
+<script>const C = {"efetivas": 1268, "elegiveis": 1922, "pef_atual": 66.0, "novas_dia": 85.2, "delta_ef_obs": 259.4, "delta_ef_analista": 138.1, "delta_ef_estagiario": 115.6, "ef_historico": [233, 246, 244, 241, 244, 290, 271, 314, 281, 296, 274, 288, 284, 242, 251, 259, 259, 230, 217, 292, 191], "ef_hist_analista": [140, 146, 132, 122, 141, 149, 150, 174, 136, 152, 153, 143, 153, 127, 129, 140, 144, 133, 94, 170, 72], "ef_hist_estagiario": [91, 97, 103, 113, 98, 133, 116, 134, 140, 138, 112, 135, 124, 110, 116, 114, 112, 95, 118, 119, 109], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [131, 131, 147, 143, 9, 166, 265, 155, 8, 17, 16, 7, 1, 9, 16, 17, 2, 0, 3, 4, 4, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 992, "semana_label": "11/05–09/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -476,7 +476,8 @@ function render() {
   var projDet  = document.getElementById('proj-detalhe');
   var statusEl = document.getElementById('proj-status');
   var faltamEl = document.getElementById('proj-faltam');
-  if (C.efetivas >= nec_meta) {
+  var faltam_proj = Math.max(0, nec_meta - C.efetivas);
+  if (faltam_proj <= 0) {
     statusEl.textContent = 'Meta ' + meta + '% atingida!';
     projDias.innerHTML   = '&#10003;'; projDias.className = 'ph-dias ph-green';
     projData.textContent = 'Efetivas hoje: ' + C.efetivas.toLocaleString('pt-BR');
@@ -486,21 +487,19 @@ function render() {
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
     projData.textContent = ''; projDet.textContent = ''; faltamEl.textContent = '';
   } else {
-    var dp = projetarDias(C.efetivas, nec_meta, ritmo_combinado, C.expiracoes);
+    var dp = Math.ceil(faltam_proj / ritmo_combinado);
     statusEl.textContent = 'Com consultores em ' + b1_ana.toFixed(1) + '/B1 e estagiários em ' + b1_est.toFixed(1) + '/B1, para ' + meta + '% chegamos em';
     if (dp > 365) {
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
       projData.textContent = 'Não converge no período';
       projDet.textContent  = ''; faltamEl.textContent = '';
     } else {
-      var vencem_periodo = 0;
-      for (var j = 0; j < Math.min(dp, C.expiracoes.length); j++) vencem_periodo += C.expiracoes[j];
       var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
       projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
       projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
       projData.textContent = fmtDate(d);
-      projDet.textContent  = 'Ritmo: ' + ritmo_combinado.toFixed(0) + ' ef/dia · vencem no período: ' + vencem_periodo.toLocaleString('pt-BR') + ' escolas';
-      faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
+      projDet.textContent  = 'Ritmo combinado: ' + ritmo_combinado.toFixed(0) + ' ef/dia (' + b1_ana.toFixed(1) + '×' + C.n_analistas + ' analistas + ' + b1_est.toFixed(1) + '×' + C.n_estagiarios + ' estagiários)';
+      faltamEl.textContent = 'Faltam: ' + faltam_proj.toLocaleString('pt-BR') + ' escolas';
     }
   }
 
@@ -508,10 +507,10 @@ function render() {
   tbody.innerHTML = '';
   [65, 70, 75, 80, 85, 90, 95].forEach(function(m) {
     var nec  = Math.ceil(C.elegiveis * m / 100);
-    var falt = Math.max(0, nec - mantidas);
-    var ok   = C.efetivas >= nec;
+    var falt = Math.max(0, nec - C.efetivas);
+    var ok   = falt <= 0;
     var isSel = (m === meta);
-    var dp_m = (!ok && ritmo_combinado > 0) ? projetarDias(C.efetivas, nec, ritmo_combinado, C.expiracoes) : null;
+    var dp_m = (!ok && ritmo_combinado > 0) ? Math.ceil(falt / ritmo_combinado) : null;
     var proj_txt = ok ? '&#8212;' : (dp_m !== null && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
     var tr = document.createElement('tr');
     if (isSel) tr.className = 'meta-atual';
