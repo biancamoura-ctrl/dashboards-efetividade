@@ -369,37 +369,14 @@ html.dark .ev-lbl{color:#71717a}
   </div>
 
   <div class="card">
-    <div class="card-head"><span class="card-title">Proje&#231;&#227;o por Meta</span></div>
-    <div class="tbl-wrap">
-      <table style="min-width:500px">
-        <thead>
-          <tr>
-            <th>Meta</th>
-            <th style="text-align:right">Necess&#225;rias</th>
-            <th style="text-align:right">Faltam</th>
-            <th style="text-align:right">Proje&#231;&#227;o</th>
-            <th style="text-align:center">Status</th>
-          </tr>
-        </thead>
-        <tbody id="metas-tbody"></tbody>
-      </table>
-    </div>
-    <p style="font-size:10px;color:var(--muted);padding:10px 18px 14px">
-      <b>Faltam</b>: necess&#225;rias &minus; mantidas (desconta a vencer) &#8212;
-      <b>Ef/dia/B1</b>: faltam &#247; janela &#247; consultores &#8212;
-      <b>Proje&#231;&#227;o</b>: faltam &#247; ritmo atual
-    </p>
-  </div>
-
-  <div class="card">
-    <div class="card-head"><span class="card-title">Evolu&#231;&#227;o &mdash; efetividades/dia (11/05–09/06)</span></div>
+    <div class="card-head"><span class="card-title">Evolu&#231;&#227;o &mdash; novas ef./dia</span></div>
     <div style="padding:0 18px 18px">
       <div id="chart-bars" class="ev-chart-wrap"></div>
     </div>
   </div>
 
 </div>
-<script>const C = {"efetivas": 1302, "elegiveis": 1923, "pef_atual": 67.7, "novas_dia": 120.5, "novas_analista": 53.9, "novas_estagiario": 62.6, "novas_historico": [124, 111, 115, 88, 104, 145, 123, 146, 123, 149, 136, 135, 104, 97, 105, 115, 110, 67, 134, 157, 142], "novas_hist_analista": [58, 55, 41, 35, 52, 53, 64, 79, 39, 68, 73, 53, 50, 48, 47, 53, 50, 32, 45, 86, 50], "novas_hist_estagiario": [66, 54, 65, 50, 49, 85, 56, 66, 81, 75, 58, 75, 50, 45, 55, 61, 57, 34, 86, 68, 78], "delta_ef_obs": 259.7, "delta_ef_analista": 138.2, "delta_ef_estagiario": 115.6, "ef_historico": [230, 242, 235, 238, 243, 281, 267, 312, 278, 294, 270, 285, 283, 241, 249, 256, 258, 226, 215, 291, 259], "ef_hist_analista": [137, 144, 125, 120, 140, 141, 145, 173, 135, 151, 150, 141, 152, 127, 128, 139, 143, 131, 92, 169, 119], "ef_hist_estagiario": [91, 95, 101, 112, 98, 132, 117, 133, 138, 137, 111, 134, 124, 109, 115, 112, 112, 93, 118, 119, 127], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [123, 127, 138, 136, 8, 157, 252, 235, 8, 16, 18, 7, 1, 9, 14, 22, 2, 0, 3, 4, 5, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 941, "semana_label": "11/05–09/06"};
+<script>const C = {"efetivas": 1302, "elegiveis": 1923, "pef_atual": 67.7, "novas_dia": 120.5, "novas_analista": 53.9, "novas_estagiario": 62.6, "novas_historico": [124, 111, 115, 88, 104, 145, 123, 146, 123, 149, 136, 135, 104, 97, 105, 115, 110, 67, 134, 157, 142], "novas_datas": ["11/05", "12/05", "13/05", "14/05", "15/05", "18/05", "19/05", "20/05", "21/05", "22/05", "25/05", "26/05", "27/05", "28/05", "29/05", "01/06", "02/06", "03/06", "05/06", "08/06", "09/06"], "novas_hist_analista": [58, 55, 41, 35, 52, 53, 64, 79, 39, 68, 73, 53, 50, 48, 47, 53, 50, 32, 45, 86, 50], "novas_hist_estagiario": [66, 54, 65, 50, 49, 85, 56, 66, 81, 75, 58, 75, 50, 45, 55, 61, 57, 34, 86, 68, 78], "delta_ef_obs": 259.7, "delta_ef_analista": 138.2, "delta_ef_estagiario": 115.6, "ef_historico": [230, 242, 235, 238, 243, 281, 267, 312, 278, 294, 270, 285, 283, 241, 249, 256, 258, 226, 215, 291, 259], "ef_hist_analista": [137, 144, 125, 120, 140, 141, 145, 173, 135, 151, 150, 141, 152, 127, 128, 139, 143, 131, 92, 169, 119], "ef_hist_estagiario": [91, 95, 101, 112, 98, 132, 117, 133, 138, 137, 111, 134, 124, 109, 115, 112, 112, 93, 118, 119, 127], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [123, 127, 138, 136, 8, 157, 252, 235, 8, 16, 18, 7, 1, 9, 14, 22, 2, 0, 3, 4, 5, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 941, "semana_label": "11/05–09/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -516,44 +493,64 @@ function render() {
     }
   }
 
-  var tbody = document.getElementById('metas-tbody');
-  tbody.innerHTML = '';
-  [65, 70, 75, 80, 85, 90, 95].forEach(function(m) {
-    var nec  = Math.ceil(C.elegiveis * m / 100);
-    var falt = Math.max(0, nec - C.efetivas);
-    var ok   = falt <= 0;
-    var isSel = (m === meta);
-    var dp_m = (!ok && ritmo_combinado > 0) ? projetarDias(C.efetivas, nec, ritmo_combinado, C.expiracoes) : null;
-    var proj_txt = ok ? '&#8212;' : (dp_m !== null && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
-    var tr = document.createElement('tr');
-    if (isSel) tr.className = 'meta-atual';
-    tr.innerHTML =
-      '<td style="font-weight:700">' + m + '%' + (isSel ? ' &#9668;' : '') + '</td>'
-      + '<td class="num">' + nec + '</td>'
-      + '<td class="num">' + (ok ? '&#8212;' : falt) + '</td>'
-      + '<td class="num">' + proj_txt + '</td>'
-      + '<td style="text-align:center">' + (ok
-          ? '<span class="status-ok">&#10003;</span>'
-          : '<span style="color:#E94B56;font-weight:700">&#9679;</span>') + '</td>';
-    tbody.appendChild(tr);
-  });
-
-  // Gráfico total
+  // Gráfico de barras — novas ef./dia com datas e média semanal
   var wrap = document.getElementById('chart-bars');
-  if (wrap && C.ef_historico && C.ef_historico.length) {
-    var maxV = Math.max.apply(null, C.ef_historico) || 1;
-    var n    = C.ef_historico.length;
+  if (wrap && C.novas_historico && C.novas_historico.length) {
+    var hist  = C.novas_historico;
+    var datas = C.novas_datas || [];
+    var maxV  = Math.max.apply(null, hist) || 1;
+    var n     = hist.length;
     wrap.innerHTML = '';
-    C.ef_historico.forEach(function(v, i) {
-      var pct = Math.round(v / maxV * 100);
-      var lbl = i === n - 1 ? 'hoje' : '-' + (n - 1 - i) + 'd';
-      var col = document.createElement('div');
-      col.className = 'ev-col';
-      col.innerHTML =
-        '<div class="ev-bar" style="height:' + pct + '%">'
-        + '<span class="ev-bar-val">' + v + '</span></div>'
-        + '<div class="ev-lbl">' + lbl + '</div>';
-      wrap.appendChild(col);
+
+    // Agrupar por semana (segunda a sexta = 5 barras por semana)
+    var semanas = [];
+    var semAtual = [];
+    for (var i = 0; i < n; i++) {
+      var partes = (datas[i] || '').split('/');
+      var dia = partes.length === 2 ? parseInt(partes[0]) : 0;
+      // nova semana quando encontramos uma segunda (começa do índice 0)
+      // simples: agrupa de 5 em 5 pela ordem cronológica
+      semAtual.push(i);
+      if (semAtual.length === 5 || i === n - 1) {
+        semanas.push(semAtual);
+        semAtual = [];
+      }
+    }
+
+    semanas.forEach(function(idxs) {
+      var semDiv = document.createElement('div');
+      semDiv.style.cssText = 'display:flex;flex-direction:column;align-items:stretch;gap:0;flex:1;min-width:0';
+
+      // barras da semana
+      var barsDiv = document.createElement('div');
+      barsDiv.style.cssText = 'display:flex;align-items:flex-end;gap:3px;height:120px;flex:1';
+
+      var soma = 0;
+      idxs.forEach(function(i) {
+        var v   = hist[i];
+        var pct = Math.round(v / maxV * 100);
+        var lbl = datas[i] || '';
+        var isHoje = (i === n - 1);
+        var col = document.createElement('div');
+        col.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;min-width:0';
+        col.innerHTML =
+          '<span style="font-size:9px;font-weight:700;color:#7668AC;margin-bottom:2px">' + v + '</span>'
+          + '<div style="width:100%;background:' + (isHoje ? '#7668AC' : 'rgba(118,104,172,.35)') + ';'
+          + 'border-radius:4px 4px 0 0;height:' + pct + '%;min-height:4px;transition:height .3s"></div>'
+          + '<div style="font-size:9px;color:var(--muted);margin-top:3px;white-space:nowrap">' + lbl + '</div>';
+        barsDiv.appendChild(col);
+        soma += v;
+      });
+
+      var media = Math.round(soma / idxs.length);
+      var lblSem = document.createElement('div');
+      lblSem.style.cssText = 'text-align:center;font-size:10px;font-weight:700;color:#7668AC;'
+        + 'border-top:1px solid rgba(118,104,172,.2);padding-top:4px;margin-top:4px';
+      lblSem.textContent = 'méd. ' + media + '/dia';
+
+      semDiv.appendChild(barsDiv);
+      semDiv.appendChild(lblSem);
+      wrap.appendChild(semDiv);
     });
   }
 }
