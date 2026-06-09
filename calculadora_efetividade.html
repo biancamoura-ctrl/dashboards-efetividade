@@ -357,7 +357,8 @@ html.dark .ev-lbl{color:#71717a}
     <div class="ph-dias" id="proj-dias">&#8212;</div>
     <div class="ph-data" id="proj-data"></div>
     <div class="ph-detail" id="proj-detalhe"></div>
-    <div class="ph-faltam" id="proj-faltam"></div>
+    <div id="proj-raciocinio" style="margin-top:14px;border-top:1px solid rgba(255,255,255,.18);
+      padding-top:14px;font-size:12px;color:rgba(255,255,255,.75);line-height:1.9;text-align:left"></div>
   </div>
 
   <div class="card">
@@ -476,32 +477,45 @@ function render() {
   var projDet  = document.getElementById('proj-detalhe');
   var statusEl = document.getElementById('proj-status');
   var faltamEl = document.getElementById('proj-faltam');
-  var faltam_proj = Math.max(0, nec_meta - C.efetivas);
+  var faltam_proj  = Math.max(0, nec_meta - C.efetivas);
+  var racEl        = document.getElementById('proj-raciocinio');
   if (faltam_proj <= 0) {
     statusEl.textContent = 'Meta ' + meta + '% atingida!';
     projDias.innerHTML   = '&#10003;'; projDias.className = 'ph-dias ph-green';
     projData.textContent = 'Efetivas hoje: ' + C.efetivas.toLocaleString('pt-BR');
-    projDet.textContent  = ''; faltamEl.textContent = '';
+    projDet.textContent  = ''; racEl.innerHTML = '';
   } else if (ritmo_combinado <= 0) {
     statusEl.textContent = 'Defina ef/dia acima de zero';
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
-    projData.textContent = ''; projDet.textContent = ''; faltamEl.textContent = '';
+    projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = '';
   } else {
-    var dp = projetarDias(C.efetivas, nec_meta, ritmo_combinado, C.expiracoes);
-    statusEl.textContent = 'Com consultores em ' + b1_ana.toFixed(1) + '/B1 e estagiários em ' + b1_est.toFixed(1) + '/B1, para ' + meta + '% chegamos em';
-    if (dp > 365) {
+    // Estimativa sem expirações
+    var dp_simples = Math.ceil(faltam_proj / ritmo_combinado);
+    // Quantas expiram nessa janela simples
+    var vencem_simples = 0;
+    for (var j = 0; j < Math.min(dp_simples, C.expiracoes.length); j++) vencem_simples += C.expiracoes[j];
+    // Projeção real (iterativa, considerando expirações)
+    var dp_real = projetarDias(C.efetivas, nec_meta, ritmo_combinado, C.expiracoes);
+    var vencem_real = 0;
+    for (var j = 0; j < Math.min(dp_real, C.expiracoes.length); j++) vencem_real += C.expiracoes[j];
+
+    statusEl.textContent = 'Para atingir ' + meta + '% no ritmo de ' + ritmo_combinado.toFixed(0) + ' novas ef./dia:';
+
+    if (dp_real > 365) {
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
       projData.textContent = 'Não converge no período';
-      projDet.textContent  = ''; faltamEl.textContent = '';
+      projDet.textContent  = ''; racEl.innerHTML = '';
     } else {
-      var vencem_periodo = 0;
-      for (var j = 0; j < Math.min(dp, C.expiracoes.length); j++) vencem_periodo += C.expiracoes[j];
-      var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
-      projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
-      projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
+      var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp_real);
+      projDias.innerHTML   = dp_real + (dp_real === 1 ? ' dia útil' : ' dias úteis');
+      projDias.className   = 'ph-dias' + (dp_real <= 5 ? ' ph-green' : dp_real > 15 ? ' ph-red' : '');
       projData.textContent = fmtDate(d);
-      projDet.textContent  = 'Faltam: ' + faltam_proj + ' · vencem no período: ' + vencem_periodo + ' · ritmo: ' + ritmo_combinado.toFixed(0) + ' novas/dia';
-      faltamEl.textContent = 'Total a efetivizar: ' + (faltam_proj + vencem_periodo).toLocaleString('pt-BR') + ' escolas';
+      projDet.textContent  = '';
+      racEl.innerHTML =
+        '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> escolas para ' + meta + '%<br>'
+        + '&#10146; No ritmo de <b>' + ritmo_combinado.toFixed(0) + '</b> novas ef./dia, sem considerar expirações: <b>' + dp_simples + ' dias úteis</b><br>'
+        + '&#10146; Mas nesses <b>' + dp_simples + ' dias</b>, <b>' + vencem_simples.toLocaleString('pt-BR') + '</b> escolas ficam não-efetivas<br>'
+        + '&#10146; Considerando essas expirações, na verdade são <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
     }
   }
 
