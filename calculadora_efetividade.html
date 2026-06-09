@@ -460,14 +460,11 @@ function render() {
   document.getElementById('kpi-meta-alvo').textContent   = nec_meta.toLocaleString('pt-BR');
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
-  // Ritmo do período selecionado
-  var ritmo_combinado = rp.total;
+  // Ritmo combinado — lê os sliders de cargo (ajustáveis pelo usuário)
+  var b1_ana_v = +document.getElementById('sl-ana').value;
+  var b1_est_v = +document.getElementById('sl-est').value;
+  var ritmo_combinado = C.n_analistas * b1_ana_v + C.n_estagiarios * b1_est_v;
 
-  // KPIs de cargo — atualiza delta e hist/B1 com valor do período
-  var b1_ana = C.n_analistas   > 0 ? Math.round(rp.analista   / C.n_analistas   * 2) / 2 : 0;
-  var b1_est = C.n_estagiarios > 0 ? Math.round(rp.estagiario / C.n_estagiarios * 2) / 2 : 0;
-  document.getElementById('sl-ana').value = Math.max(0.5, b1_ana);
-  document.getElementById('sl-est').value = Math.max(0.5, b1_est);
   renderCargo('ana', C.novas_hist_analista,   C.n_analistas,   1);
   renderCargo('est', C.novas_hist_estagiario, C.n_estagiarios, 1);
 
