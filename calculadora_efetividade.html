@@ -277,11 +277,10 @@ html.dark .ev-lbl{color:#71717a}
       <select id="sl-du" style="margin-top:4px;padding:6px 10px;border-radius:8px;
         border:1.5px solid rgba(118,104,172,.30);font-size:13px;font-weight:700;
         color:#7668AC;background:#fff;cursor:pointer">
-        <option value="1" selected>hoje</option>
-        <option value="7">7 dias &#250;teis</option>
-        <option value="10">10 dias &#250;teis</option>
-        <option value="15">15 dias &#250;teis</option>
-        <option value="21">21 dias &#250;teis</option>
+        <option value="semana" selected>Essa semana</option>
+        <option value="semana_passada">Semana passada</option>
+        <option value="mes">Este m&#234;s</option>
+        <option value="mes_passado">M&#234;s passado</option>
       </select>
       <span style="font-size:9px;color:var(--muted);font-weight:600">base do ritmo atual</span>
     </div>
@@ -376,7 +375,7 @@ html.dark .ev-lbl{color:#71717a}
   </div>
 
 </div>
-<script>const C = {"efetivas": 1302, "elegiveis": 1923, "pef_atual": 67.7, "novas_dia": 120.5, "novas_analista": 53.9, "novas_estagiario": 62.6, "novas_historico": [124, 111, 115, 88, 104, 145, 123, 146, 123, 149, 136, 135, 104, 97, 105, 115, 110, 67, 134, 157, 142], "novas_datas": ["11/05", "12/05", "13/05", "14/05", "15/05", "18/05", "19/05", "20/05", "21/05", "22/05", "25/05", "26/05", "27/05", "28/05", "29/05", "01/06", "02/06", "03/06", "05/06", "08/06", "09/06"], "semana_novas": [157, 142], "semana_datas": ["08/06", "09/06"], "semana_dias": ["Seg", "Ter"], "novas_hist_analista": [58, 55, 41, 35, 52, 53, 64, 79, 39, 68, 73, 53, 50, 48, 47, 53, 50, 32, 45, 86, 50], "novas_hist_estagiario": [66, 54, 65, 50, 49, 85, 56, 66, 81, 75, 58, 75, 50, 45, 55, 61, 57, 34, 86, 68, 78], "delta_ef_obs": 259.7, "delta_ef_analista": 138.2, "delta_ef_estagiario": 115.6, "ef_historico": [230, 242, 235, 238, 243, 281, 267, 312, 278, 294, 270, 285, 283, 241, 249, 256, 258, 226, 215, 291, 259], "ef_hist_analista": [137, 144, 125, 120, 140, 141, 145, 173, 135, 151, 150, 141, 152, 127, 128, 139, 143, 131, 92, 169, 119], "ef_hist_estagiario": [91, 95, 101, 112, 98, 132, 117, 133, 138, 137, 111, 134, 124, 109, 115, 112, 112, 93, 118, 119, 127], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [123, 127, 138, 136, 8, 157, 252, 235, 8, 16, 18, 7, 1, 9, 14, 22, 2, 0, 3, 4, 5, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 941, "semana_label": "11/05–09/06"};
+<script>const C = {"efetivas": 1302, "elegiveis": 1923, "pef_atual": 67.7, "novas_dia": 120.5, "novas_analista": 53.9, "novas_estagiario": 62.6, "novas_historico": [124, 111, 115, 88, 104, 145, 123, 146, 123, 149, 136, 135, 104, 97, 105, 115, 110, 67, 134, 157, 142], "novas_datas": ["11/05", "12/05", "13/05", "14/05", "15/05", "18/05", "19/05", "20/05", "21/05", "22/05", "25/05", "26/05", "27/05", "28/05", "29/05", "01/06", "02/06", "03/06", "05/06", "08/06", "09/06"], "semana_novas": [157, 142], "semana_datas": ["08/06", "09/06"], "semana_dias": ["Seg", "Ter"], "ritmos_periodos": {"semana": {"total": 149.5, "analista": 68.0, "estagiario": 73.0, "n": 2}, "semana_passada": {"total": 106.5, "analista": 45.0, "estagiario": 59.5, "n": 4}, "mes": {"total": 120.8, "analista": 52.7, "estagiario": 64.0, "n": 6}, "mes_passado": {"total": 120.3, "analista": 54.3, "estagiario": 62.0, "n": 15}}, "novas_hist_analista": [58, 55, 41, 35, 52, 53, 64, 79, 39, 68, 73, 53, 50, 48, 47, 53, 50, 32, 45, 86, 50], "novas_hist_estagiario": [66, 54, 65, 50, 49, 85, 56, 66, 81, 75, 58, 75, 50, 45, 55, 61, 57, 34, 86, 68, 78], "delta_ef_obs": 259.7, "delta_ef_analista": 138.2, "delta_ef_estagiario": 115.6, "ef_historico": [230, 242, 235, 238, 243, 281, 267, 312, 278, 294, 270, 285, 283, 241, 249, 256, 258, 226, 215, 291, 259], "ef_hist_analista": [137, 144, 125, 120, 140, 141, 145, 173, 135, 151, 150, 141, 152, 127, 128, 139, 143, 131, 92, 169, 119], "ef_hist_estagiario": [91, 95, 101, 112, 98, 132, 117, 133, 138, 137, 111, 134, 124, 109, 115, 112, 112, 93, 118, 119, 127], "n_consultores": 30, "n_analistas": 17, "n_estagiarios": 21, "data_ref": "2026-06-09", "expiracoes": [123, 127, 138, 136, 8, 157, 252, 235, 8, 16, 18, 7, 1, 9, 14, 22, 2, 0, 3, 4, 5, 8, 1, 1, 1, 2, 2, 0, 0, 1, 1], "a_vencer_7du": 941, "semana_label": "11/05–09/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -422,11 +421,21 @@ function renderCargo(prefix, hist, n_cargo, n_du) {
   document.getElementById(prefix + '-ncargo').textContent = n_cargo;
 }
 
+function getRitmoPeriodo() {
+  var periodo = document.getElementById('sl-du').value;
+  var rp = (C.ritmos_periodos && C.ritmos_periodos[periodo]) || {};
+  return {
+    total:      rp.total      || 0,
+    analista:   rp.analista   || 0,
+    estagiario: rp.estagiario || 0
+  };
+}
+
 function render() {
-  var meta  = +document.getElementById('sl-meta').value;
-  var n_du  = +document.getElementById('sl-du').value;
+  var meta   = +document.getElementById('sl-meta').value;
+  var periodo = document.getElementById('sl-du').value;
   document.getElementById('meta-val').textContent = meta + '%';
-  document.getElementById('du-val').textContent   = n_du + ' d.ú.';
+  document.getElementById('du-val').textContent   = '';
 
   // Ritmo de novas efetivações por dia
   var delta_hoje = C.novas_historico.length ? C.novas_historico[C.novas_historico.length - 1] : 0;
@@ -446,12 +455,17 @@ function render() {
   document.getElementById('kpi-meta-alvo').textContent   = nec_meta.toLocaleString('pt-BR');
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
-  // Cargos (KPIs individuais sem projeção)
-  renderCargo('ana', C.novas_hist_analista,   C.n_analistas,   n_du);
-  renderCargo('est', C.novas_hist_estagiario, C.n_estagiarios, n_du);
+  // Ritmo do período selecionado
+  var rp = getRitmoPeriodo();
+  var ritmo_combinado = rp.total;
 
-  // Ritmo total do time (histograma completo, inclui supervisores)
-  var ritmo_combinado = calcDelta(C.novas_historico, n_du);
+  // KPIs de cargo — atualiza delta e hist/B1 com valor do período
+  var b1_ana = C.n_analistas   > 0 ? Math.round(rp.analista   / C.n_analistas   * 2) / 2 : 0;
+  var b1_est = C.n_estagiarios > 0 ? Math.round(rp.estagiario / C.n_estagiarios * 2) / 2 : 0;
+  document.getElementById('sl-ana').value = Math.max(0.5, b1_ana);
+  document.getElementById('sl-est').value = Math.max(0.5, b1_est);
+  renderCargo('ana', C.novas_hist_analista,   C.n_analistas,   1);
+  renderCargo('est', C.novas_hist_estagiario, C.n_estagiarios, 1);
 
   var projDias = document.getElementById('proj-dias');
   var projData = document.getElementById('proj-data');
@@ -535,11 +549,9 @@ function render() {
 }
 
 function setarSlidersHistorico() {
-  var n_du  = +document.getElementById('sl-du').value;
-  var d_ana = calcDelta(C.novas_hist_analista,   n_du);
-  var d_est = calcDelta(C.novas_hist_estagiario, n_du);
-  var b1_ana = C.n_analistas   > 0 ? Math.max(0.5, Math.round(d_ana / C.n_analistas   * 2) / 2) : 0.5;
-  var b1_est = C.n_estagiarios > 0 ? Math.max(0.5, Math.round(d_est / C.n_estagiarios * 2) / 2) : 0.5;
+  var rp = getRitmoPeriodo();
+  var b1_ana = C.n_analistas   > 0 ? Math.max(0.5, Math.round(rp.analista   / C.n_analistas   * 2) / 2) : 0.5;
+  var b1_est = C.n_estagiarios > 0 ? Math.max(0.5, Math.round(rp.estagiario / C.n_estagiarios * 2) / 2) : 0.5;
   document.getElementById('sl-ana').value = b1_ana;
   document.getElementById('sl-est').value = b1_est;
 }
