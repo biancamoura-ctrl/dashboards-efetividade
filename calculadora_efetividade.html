@@ -460,11 +460,11 @@ function render() {
   document.getElementById('du-val').textContent   = n_du + ' d.ú.';
 
   // Ritmo de novas efetivações por dia
-  var delta_total = calcDelta(C.novas_historico, n_du);
-  var dc = delta_total >= 5 ? 'kc-val v-blue' : delta_total < 0 ? 'kc-val v-red' : 'kc-val';
+  var delta_hoje = C.novas_historico.length ? C.novas_historico[C.novas_historico.length - 1] : 0;
+  var dc = delta_hoje >= 5 ? 'kc-val v-blue' : delta_hoje < 0 ? 'kc-val v-red' : 'kc-val';
   document.getElementById('kpi-delta').className   = dc;
-  document.getElementById('kpi-delta').textContent = (delta_total > 0 ? '+' : '') + delta_total.toFixed(1) + '/dia';
-  document.getElementById('kpi-delta-sub').textContent = 'novas ef. méd. últ. ' + n_du + ' d.ú.';
+  document.getElementById('kpi-delta').textContent = delta_hoje + '/dia';
+  document.getElementById('kpi-delta-sub').textContent = 'novas ef. hoje';
   var media_vencem = mediaExpJanela(C.expiracoes, 0);
   document.getElementById('kpi-vencem').textContent = media_vencem.toFixed(1) + '/dia';
   document.getElementById('kpi-vencem-sub').textContent = 'vencem amanhã';
