@@ -411,6 +411,20 @@ function calcDelta(hist, n_du) {
   var h = hist.slice(-n_du);
   return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
 }
+function projetarDias(efetivas, nec_meta, ritmo, expiracoes) {
+  // Iterativo: a cada dp dias, as escolas que vencem nesse período precisam ser reefetivadas.
+  if (efetivas >= nec_meta) return 0;
+  if (ritmo <= 0) return Infinity;
+  var dp = Math.ceil((nec_meta - efetivas) / ritmo);
+  for (var i = 0; i < 50; i++) {
+    var vencem = 0;
+    for (var j = 0; j < Math.min(dp, expiracoes.length); j++) vencem += expiracoes[j];
+    var novo_dp = Math.ceil((nec_meta - efetivas + vencem) / ritmo);
+    if (novo_dp === dp) break;
+    dp = novo_dp;
+  }
+  return dp;
+}
 function renderCargo(prefix, hist, n_cargo, n_du) {
   var b1_alvo = +document.getElementById('sl-' + prefix).value;
   document.getElementById(prefix + '-b1val').textContent = b1_alvo.toFixed(1) + '/B1';
@@ -462,28 +476,30 @@ function render() {
   var projDet  = document.getElementById('proj-detalhe');
   var statusEl = document.getElementById('proj-status');
   var faltamEl = document.getElementById('proj-faltam');
-  if (faltam_adj <= 0) {
+  if (C.efetivas >= nec_meta) {
     statusEl.textContent = 'Meta ' + meta + '% atingida!';
     projDias.innerHTML   = '&#10003;'; projDias.className = 'ph-dias ph-green';
-    projData.textContent = 'Efetivas mantidas: ' + mantidas.toLocaleString('pt-BR');
+    projData.textContent = 'Efetivas hoje: ' + C.efetivas.toLocaleString('pt-BR');
     projDet.textContent  = ''; faltamEl.textContent = '';
   } else if (ritmo_combinado <= 0) {
     statusEl.textContent = 'Defina ef/dia acima de zero';
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
     projData.textContent = ''; projDet.textContent = ''; faltamEl.textContent = '';
   } else {
-    var dp = Math.ceil(faltam_adj / ritmo_combinado);
+    var dp = projetarDias(C.efetivas, nec_meta, ritmo_combinado, C.expiracoes);
     statusEl.textContent = 'Com consultores em ' + b1_ana.toFixed(1) + '/B1 e estagiários em ' + b1_est.toFixed(1) + '/B1, para ' + meta + '% chegamos em';
     if (dp > 365) {
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
       projData.textContent = 'Não converge no período';
       projDet.textContent  = ''; faltamEl.textContent = '';
     } else {
+      var vencem_periodo = 0;
+      for (var j = 0; j < Math.min(dp, C.expiracoes.length); j++) vencem_periodo += C.expiracoes[j];
       var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
       projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
       projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
       projData.textContent = fmtDate(d);
-      projDet.textContent  = 'Ritmo combinado: ' + ritmo_combinado.toFixed(0) + ' ef/dia (' + b1_ana.toFixed(1) + '×' + C.n_analistas + ' analistas + ' + b1_est.toFixed(1) + '×' + C.n_estagiarios + ' estagiários)';
+      projDet.textContent  = 'Ritmo: ' + ritmo_combinado.toFixed(0) + ' ef/dia · vencem no período: ' + vencem_periodo.toLocaleString('pt-BR') + ' escolas';
       faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
     }
   }
@@ -493,10 +509,10 @@ function render() {
   [65, 70, 75, 80, 85, 90, 95].forEach(function(m) {
     var nec  = Math.ceil(C.elegiveis * m / 100);
     var falt = Math.max(0, nec - mantidas);
-    var ok   = falt <= 0;
+    var ok   = C.efetivas >= nec;
     var isSel = (m === meta);
-    var dp_m = (!ok && delta_total > 0) ? Math.ceil(falt / delta_total) : null;
-    var proj_txt = ok ? '&#8212;' : (dp_m && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
+    var dp_m = (!ok && ritmo_combinado > 0) ? projetarDias(C.efetivas, nec, ritmo_combinado, C.expiracoes) : null;
+    var proj_txt = ok ? '&#8212;' : (dp_m !== null && dp_m <= 365 ? dp_m + ' d.&#250;.' : '&#8734;');
     var tr = document.createElement('tr');
     if (isSel) tr.className = 'meta-atual';
     tr.innerHTML =
