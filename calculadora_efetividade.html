@@ -446,11 +446,11 @@ function render() {
   document.getElementById('kpi-delta').textContent = delta_periodo.toFixed(1) + '/dia';
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. — ' + (periodo_labels[periodo] || periodo);
 
-  // KPI vencem/dia: média fixa de 104 escolas/dia
-  var vencem_dia = 104;
+  // KPI vencem/dia: amanhã para essa semana, 104 fixo para demais períodos
+  var vencem_dia = (periodo === 'semana') ? mediaExpJanela(C.expiracoes, 0) : 104;
   document.getElementById('kpi-vencem').className   = 'kc-val';
-  document.getElementById('kpi-vencem').textContent = '104/dia';
-  document.getElementById('kpi-vencem-sub').textContent = 'vencem/dia (média)';
+  document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(0) + '/dia';
+  document.getElementById('kpi-vencem-sub').textContent = (periodo === 'semana') ? 'vencem amanhã' : 'vencem/dia (média)';
 
   // KPIs universais
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
