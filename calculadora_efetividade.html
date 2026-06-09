@@ -320,12 +320,6 @@ html.dark .ev-lbl{color:#71717a}
           <div class="ck-sub">no time</div>
         </div>
       </div>
-      <div class="cargo-proj">
-        <div class="cp-lbl">Proje&#231;&#227;o ao ritmo selecionado</div>
-        <div class="cp-dias" id="ana-proj-dias">&#8212;</div>
-        <div class="cp-data" id="ana-proj-data"></div>
-        <div class="cp-det"  id="ana-proj-det"></div>
-      </div>
     </div>
 
     <!-- Estagiário -->
@@ -353,14 +347,17 @@ html.dark .ev-lbl{color:#71717a}
           <div class="ck-sub">no time</div>
         </div>
       </div>
-      <div class="cargo-proj">
-        <div class="cp-lbl">Proje&#231;&#227;o ao ritmo selecionado</div>
-        <div class="cp-dias" id="est-proj-dias">&#8212;</div>
-        <div class="cp-data" id="est-proj-data"></div>
-        <div class="cp-det"  id="est-proj-det"></div>
-      </div>
     </div>
 
+  </div>
+
+  <!-- Projeção combinada -->
+  <div class="proj-hero">
+    <div class="ph-status" id="proj-status">Ajuste os ritmos acima para simular</div>
+    <div class="ph-dias" id="proj-dias">&#8212;</div>
+    <div class="ph-data" id="proj-data"></div>
+    <div class="ph-detail" id="proj-detalhe"></div>
+    <div class="ph-faltam" id="proj-faltam"></div>
   </div>
 
   <div class="card">
@@ -414,45 +411,19 @@ function calcDelta(hist, n_du) {
   var h = hist.slice(-n_du);
   return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
 }
-function renderCargo(prefix, hist, n_cargo, faltam_adj, meta, n_du, mantidas) {
+function renderCargo(prefix, hist, n_cargo, n_du) {
   var b1_alvo = +document.getElementById('sl-' + prefix).value;
   document.getElementById(prefix + '-b1val').textContent = b1_alvo.toFixed(1) + '/B1';
 
   var delta   = calcDelta(hist, n_du);
   var b1_hist = n_cargo > 0 ? delta / n_cargo : 0;
-  var ritmo   = b1_alvo * n_cargo;
 
-  // KPIs
   var dc = delta >= 5 ? 'ck-val v-blue' : delta < 0 ? 'ck-val v-red' : 'ck-val';
   document.getElementById(prefix + '-delta').className   = dc;
   document.getElementById(prefix + '-delta').textContent = (delta > 0 ? '+' : '') + delta.toFixed(1) + '/dia';
   document.getElementById(prefix + '-delta-sub').textContent = 'méd. ' + n_du + 'd.ú.';
   document.getElementById(prefix + '-b1h').textContent   = b1_hist.toFixed(2) + '/B1';
   document.getElementById(prefix + '-ncargo').textContent = n_cargo;
-
-  // Projeção do cargo
-  var pDias = document.getElementById(prefix + '-proj-dias');
-  var pData = document.getElementById(prefix + '-proj-data');
-  var pDet  = document.getElementById(prefix + '-proj-det');
-  if (faltam_adj <= 0) {
-    pDias.innerHTML = '&#10003;'; pDias.className = 'cp-dias cp-green';
-    pData.textContent = 'Meta atingida'; pDet.textContent = '';
-  } else if (ritmo <= 0) {
-    pDias.innerHTML = '&#8212;'; pDias.className = 'cp-dias';
-    pData.textContent = ''; pDet.textContent = '';
-  } else {
-    var dp = Math.ceil(faltam_adj / ritmo);
-    if (dp > 365) {
-      pDias.innerHTML = '&#8734;'; pDias.className = 'cp-dias cp-red';
-      pData.textContent = 'Não converge'; pDet.textContent = '';
-    } else {
-      var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
-      pDias.innerHTML   = dp + (dp === 1 ? ' d.ú.' : ' d.ú.');
-      pDias.className   = 'cp-dias' + (dp <= 5 ? ' cp-green' : dp > 15 ? ' cp-red' : '');
-      pData.textContent = fmtDate(d);
-      pDet.textContent  = b1_alvo.toFixed(1) + '/B1 · ' + ritmo.toFixed(0) + ' ef/dia · hist: ' + b1_hist.toFixed(2) + '/B1';
-    }
-  }
 }
 
 function render() {
@@ -477,14 +448,46 @@ function render() {
   document.getElementById('kpi-meta-alvo').textContent   = nec_meta.toLocaleString('pt-BR');
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
-  // Cargos
-  renderCargo('ana', C.ef_hist_analista,   C.n_analistas,   faltam_adj, meta, n_du, mantidas);
-  renderCargo('est', C.ef_hist_estagiario, C.n_estagiarios, faltam_adj, meta, n_du, mantidas);
+  // Cargos (KPIs individuais sem projeção)
+  renderCargo('ana', C.ef_hist_analista,   C.n_analistas,   n_du);
+  renderCargo('est', C.ef_hist_estagiario, C.n_estagiarios, n_du);
 
-  // Tabela de metas (usa ritmo total)
-  var ritmo_total = (calcDelta(C.ef_hist_analista, n_du) * C.n_analistas / Math.max(1,C.n_analistas))
-                  + (calcDelta(C.ef_hist_estagiario, n_du) * C.n_estagiarios / Math.max(1,C.n_estagiarios));
-  // simplificado: usa delta_total como ritmo total
+  // Projeção combinada (soma dos dois ritmos selecionados)
+  var b1_ana    = +document.getElementById('sl-ana').value;
+  var b1_est    = +document.getElementById('sl-est').value;
+  var ritmo_combinado = b1_ana * C.n_analistas + b1_est * C.n_estagiarios;
+
+  var projDias = document.getElementById('proj-dias');
+  var projData = document.getElementById('proj-data');
+  var projDet  = document.getElementById('proj-detalhe');
+  var statusEl = document.getElementById('proj-status');
+  var faltamEl = document.getElementById('proj-faltam');
+  if (faltam_adj <= 0) {
+    statusEl.textContent = 'Meta ' + meta + '% atingida!';
+    projDias.innerHTML   = '&#10003;'; projDias.className = 'ph-dias ph-green';
+    projData.textContent = 'Efetivas mantidas: ' + mantidas.toLocaleString('pt-BR');
+    projDet.textContent  = ''; faltamEl.textContent = '';
+  } else if (ritmo_combinado <= 0) {
+    statusEl.textContent = 'Defina ef/dia acima de zero';
+    projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
+    projData.textContent = ''; projDet.textContent = ''; faltamEl.textContent = '';
+  } else {
+    var dp = Math.ceil(faltam_adj / ritmo_combinado);
+    statusEl.textContent = 'Com consultores em ' + b1_ana.toFixed(1) + '/B1 e estagiários em ' + b1_est.toFixed(1) + '/B1, para ' + meta + '% chegamos em';
+    if (dp > 365) {
+      projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
+      projData.textContent = 'Não converge no período';
+      projDet.textContent  = ''; faltamEl.textContent = '';
+    } else {
+      var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp);
+      projDias.innerHTML   = dp + (dp === 1 ? ' dia útil' : ' dias úteis');
+      projDias.className   = 'ph-dias' + (dp <= 5 ? ' ph-green' : dp > 15 ? ' ph-red' : '');
+      projData.textContent = fmtDate(d);
+      projDet.textContent  = 'Ritmo combinado: ' + ritmo_combinado.toFixed(0) + ' ef/dia (' + b1_ana.toFixed(1) + '×' + C.n_analistas + ' analistas + ' + b1_est.toFixed(1) + '×' + C.n_estagiarios + ' estagiários)';
+      faltamEl.textContent = 'Faltam: ' + faltam_adj.toLocaleString('pt-BR') + ' escolas';
+    }
+  }
+
   var tbody = document.getElementById('metas-tbody');
   tbody.innerHTML = '';
   [65, 70, 75, 80, 85, 90, 95].forEach(function(m) {
