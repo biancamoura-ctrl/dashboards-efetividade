@@ -447,18 +447,19 @@ function render() {
   document.getElementById('kpi-delta').textContent = delta_periodo.toFixed(1) + '/dia';
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. — ' + (periodo_labels[periodo] || periodo);
 
-  // KPI ganho líquido/dia: usa delta_faltam do histórico; senão fallback expiracoes[1]
+  // KPI vencem/dia: novas_ef_periodo - delta_faltam; senão fallback expiracoes[1]
   var delta_faltam = rp.delta_faltam;
   var has_hist = delta_faltam !== null;
+  var vencem_dia;
   if (has_hist) {
-    var dc_v = delta_faltam >= 10 ? 'kc-val v-blue' : delta_faltam < 0 ? 'kc-val v-red' : 'kc-val';
-    document.getElementById('kpi-vencem').className   = dc_v;
-    document.getElementById('kpi-vencem').textContent = (delta_faltam > 0 ? '+' : '') + delta_faltam.toFixed(1) + '/dia';
-    document.getElementById('kpi-vencem-sub').textContent = 'ganho líq. — ' + (periodo_labels[periodo] || periodo);
-  } else {
-    var media_vencem = mediaExpJanela(C.expiracoes, 0);
+    vencem_dia = Math.max(0, delta_periodo - delta_faltam);
     document.getElementById('kpi-vencem').className   = 'kc-val';
-    document.getElementById('kpi-vencem').textContent = media_vencem.toFixed(1) + '/dia';
+    document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(1) + '/dia';
+    document.getElementById('kpi-vencem-sub').textContent = 'vencem/dia — ' + (periodo_labels[periodo] || periodo);
+  } else {
+    vencem_dia = mediaExpJanela(C.expiracoes, 0);
+    document.getElementById('kpi-vencem').className   = 'kc-val';
+    document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(1) + '/dia';
     document.getElementById('kpi-vencem-sub').textContent = 'vencem amanhã';
   }
 
@@ -499,20 +500,18 @@ function render() {
   } else {
     var dp_real;
     var periodo_lbl = periodo_labels[periodo] || periodo;
-    if (has_hist && delta_faltam > 0) {
-      dp_real = Math.ceil(faltam_proj / delta_faltam);
-    } else if (has_hist && delta_faltam <= 0) {
-      dp_real = Infinity;
+    var ritmo_liq = ritmo_combinado - vencem_dia;
+    if (ritmo_liq > 0) {
+      dp_real = Math.ceil(faltam_proj / ritmo_liq);
     } else {
-      var media_exp_fb = mediaExpJanela(C.expiracoes, 0);
-      dp_real = projetarDias(C.efetivas, nec_meta, ritmo_combinado, (periodo === 'semana') ? media_exp_fb : 0);
+      dp_real = Infinity;
     }
 
     statusEl.textContent = 'Para atingir ' + meta + '% no ritmo de ' + ritmo_combinado.toFixed(0) + ' ef./dia:';
 
     if (dp_real > 365) {
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
-      projData.textContent = has_hist ? 'Ganho líquido insuficiente (' + periodo_lbl + ')' : 'Ritmo não cobre as expirações';
+      projData.textContent = 'Ritmo não cobre as expirações';
       projDet.textContent  = ''; racEl.innerHTML = '';
     } else {
       var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp_real);
@@ -523,15 +522,13 @@ function render() {
       if (has_hist) {
         racEl.innerHTML =
           '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-          + '&#10146; Ganho líquido (' + periodo_lbl + '): <b>' + (delta_faltam > 0 ? '+' : '') + delta_faltam.toFixed(1) + '</b> ef./dia<br>'
-          + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + delta_faltam.toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
+          + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + ritmo_combinado.toFixed(0) + '</b> &mdash; vencem/dia: <b>' + vencem_dia.toFixed(1) + '</b><br>'
+          + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + ritmo_liq.toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
       } else {
-        var media_exp_s = mediaExpJanela(C.expiracoes, 0);
-        var ritmo_liq_s = ritmo_combinado - (has_hist ? 0 : media_exp_s);
         racEl.innerHTML =
           '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-          + '&#10146; Ritmo: <b>' + ritmo_combinado.toFixed(0) + '</b> ef./dia &mdash; expirações amanhã: <b>' + media_exp_s.toFixed(1) + '</b>/dia<br>'
-          + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + Math.max(0.1, ritmo_liq_s).toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
+          + '&#10146; Ritmo: <b>' + ritmo_combinado.toFixed(0) + '</b> ef./dia &mdash; vencem/dia: <b>' + vencem_dia.toFixed(1) + '</b><br>'
+          + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + Math.max(0.1, ritmo_liq).toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
       }
     }
   }
