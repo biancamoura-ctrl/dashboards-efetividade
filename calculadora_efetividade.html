@@ -482,10 +482,8 @@ function render() {
   renderCargo('ana', C.novas_hist_analista,   C.n_analistas,   n_du);
   renderCargo('est', C.novas_hist_estagiario, C.n_estagiarios, n_du);
 
-  // Projeção combinada (soma dos dois ritmos selecionados)
-  var b1_ana    = +document.getElementById('sl-ana').value;
-  var b1_est    = +document.getElementById('sl-est').value;
-  var ritmo_combinado = b1_ana * C.n_analistas + b1_est * C.n_estagiarios;
+  // Ritmo total do time (histograma completo, inclui supervisores)
+  var ritmo_combinado = calcDelta(C.novas_historico, n_du);
 
   var projDias = document.getElementById('proj-dias');
   var projData = document.getElementById('proj-data');
