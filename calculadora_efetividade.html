@@ -424,17 +424,11 @@ function mediaExpJanela(expiracoes, inicio) {
 }
 function projetarDias(efetivas, nec_meta, ritmo, expiracoes) {
   if (efetivas >= nec_meta) return 0;
-  if (ritmo <= 0) return Infinity;
   var faltam = nec_meta - efetivas;
-  var dia = 0;
-  var MAX = 365;
-  while (faltam > 0 && dia < MAX) {
-    var exp_dia = expiracoes[dia] || 0;
-    var ritmo_liq = ritmo - exp_dia;
-    faltam -= ritmo_liq;
-    dia++;
-  }
-  return dia >= MAX ? Infinity : dia;
+  var media_exp = mediaExpJanela(expiracoes, 0);
+  var ritmo_liq = ritmo - media_exp;
+  if (ritmo_liq <= 0) return Infinity;
+  return Math.ceil(faltam / ritmo_liq);
 }
 function renderCargo(prefix, hist, n_cargo, n_du) {
   var b1_alvo = +document.getElementById('sl-' + prefix).value;
