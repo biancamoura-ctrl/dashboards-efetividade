@@ -464,11 +464,10 @@ function render() {
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. méd. últ. ' + n_du + ' d.ú.';
 
   // KPIs universais
-  var mantidas   = Math.max(0, C.efetivas - C.a_vencer_7du);
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
-  var faltam_adj = Math.max(0, nec_meta - mantidas);
+  var faltam_proj  = Math.max(0, nec_meta - C.efetivas);
   document.getElementById('kpi-pef').textContent         = C.pef_atual + '%';
-  document.getElementById('kpi-faltam').textContent      = faltam_adj.toLocaleString('pt-BR');
+  document.getElementById('kpi-faltam').textContent      = faltam_proj.toLocaleString('pt-BR');
   document.getElementById('kpi-meta-alvo').textContent   = nec_meta.toLocaleString('pt-BR');
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
@@ -486,7 +485,6 @@ function render() {
   var projDet  = document.getElementById('proj-detalhe');
   var statusEl = document.getElementById('proj-status');
   var faltamEl = document.getElementById('proj-faltam');
-  var faltam_proj  = Math.max(0, nec_meta - C.efetivas);
   var racEl        = document.getElementById('proj-raciocinio');
   if (faltam_proj <= 0) {
     statusEl.textContent = 'Meta ' + meta + '% atingida!';
