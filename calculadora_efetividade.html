@@ -597,27 +597,31 @@ document.addEventListener('DOMContentLoaded', function() {
     </h2>
     <div style="font-size:13px;line-height:1.8;color:#444">
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#127919; Meta &amp; Janela</p>
-      <p style="margin-bottom:14px">Meta = percentual-alvo. Janela = quantos dias &#250;teis voc&#234; quer usar para calcular o <b>ef/dia/B1 necess&#225;rio</b> (padr&#227;o: 5 = uma semana).</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#127919; Meta &amp; Janela de ritmo</p>
+      <p style="margin-bottom:14px">Meta = percentual-alvo de efetividade. Janela = per&#237;odo usado para calcular o ritmo de novas ef./dia: <b>essa semana, semana passada, este m&#234;s ou m&#234;s passado</b>.</p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Ritmo atual (ef/dia)</p>
-      <p style="margin-bottom:14px">M&#233;dia de escolas com <b>&#250;ltima atividade efetiva</b> registrada por dia nos &#250;ltimos 7 dias &#250;teis. Positivo = time est&#225; efetivando; negativo = parou de efetividades.</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Novas ef./dia</p>
+      <p style="margin-bottom:14px">Escolas que <b>voltaram a ser efetivas depois de expirar</b> (gap desde a &#250;ltima atividade efetiva &#8805; prazo em dias corridos). Calculado pela <b>data de cria&#231;&#227;o</b> da atividade. Prazo: High/Medium/Premium = 10 dias corridos, demais = 21 dias corridos.</p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; Efetivas Mantidas</p>
-      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Efetivas hoje &minus; A vencer nos pr&#243;ximos 7 d.&#250;.</code><br>
-      Base conservadora: desconta as escolas que ir&#227;o expirar essa semana.</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; Vencem/dia</p>
+      <p style="margin-bottom:14px">
+        <b>Essa semana:</b> escolas que chegam no prazo <b>amanh&#227;</b> (snapshot em tempo real).<br>
+        <b>Demais per&#237;odos:</b> m&#233;dia fixa de <b>104 escolas/dia</b>.
+      </p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#9997; Faltam</p>
-      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Necess&#225;rias &minus; Efetivas Mantidas</code></p>
-
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128101; Ef/dia/B1</p>
-      <p style="margin-bottom:14px"><b>Hist&#243;rico</b>: ritmo atual &#247; n&#186; consultores.<br>
-      <b>Necess&#225;rio</b>: <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; janela &#247; n&#186; consultores</code> — quantas efetividades cada B1 precisa fazer por dia para atingir a meta dentro da janela.</p>
+      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Necess&#225;rias &minus; Efetivas hoje</code> — onde necess&#225;rias = ceil(eleg&#237;veis &times; meta%).</p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#9200; Proje&#231;&#227;o</p>
-      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; Ritmo atual</code> — quantos dias &#250;teis para atingir a meta no ritmo dos &#250;ltimos 7 d.&#250;.</p>
+      <p style="margin-bottom:14px">
+        <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; (novas ef./dia &minus; vencem/dia)</code><br>
+        O denominador &#233; o <b>ganho l&#237;quido real por dia</b>: quanto a base efetiva cresce de fato descontando as que vencem.
+      </p>
 
-      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128206; Efetivo no prazo (regra)</p>
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128101; Ef/dia/B1 (analista &amp; estagi&#225;rio)</p>
+      <p style="margin-bottom:14px">Sliders ajust&#225;veis. Inicializam com a m&#233;dia do per&#237;odo selecionado. O <b>ritmo combinado</b> usado na proje&#231;&#227;o &#233; calculado como <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">n_analistas &times; ef/B1_ana + n_estagi&#225;rios &times; ef/B1_est</code>.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128206; Efetivo no prazo (regra de carteira)</p>
       <table style="width:100%;font-size:12px;border-collapse:collapse">
         <thead><tr style="background:#f4f2fb">
           <th style="text-align:left;padding:5px 8px">Segmenta&#231;&#227;o</th>
