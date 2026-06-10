@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Funil Normalizado de Sucesso — 10/06/2026</title>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
@@ -101,158 +102,486 @@ html.dark .theme-btn{background:linear-gradient(135deg,#2d1b69,#0f0c29);box-shad
 html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px);animation:none}
 html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:moon-twinkle 3s ease-in-out infinite}
 
-.funil-badge{background:#e8eaf6;color:#3949ab;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;display:inline-block;margin-right:6px;margin-top:4px}
-.funil-controls{display:flex;gap:8px;margin-bottom:20px}
-.funil-btn{padding:8px 20px;border:2px solid var(--purple);border-radius:8px;background:#fff;color:var(--purple);font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;transition:all .2s}
-.funil-btn.active{background:var(--purple);color:#fff}
-.funil-btn:hover:not(.active){background:var(--amber-lt)}
-.funil-tbl-wrap{overflow-x:auto;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:20px}
-.funil-tbl{border-collapse:collapse;width:100%;min-width:1100px;background:#fff}
-.funil-tbl th{background:#1a1a2e;color:#fff;padding:10px 12px;font-size:11px;font-weight:600;text-align:center;white-space:nowrap;position:sticky;top:0;z-index:2;font-family:'Montserrat',sans-serif}
-.funil-tbl th.left{text-align:left}
-.funil-tbl th.stage-h{background:#2d2d5e;font-size:10px;max-width:90px;white-space:normal;line-height:1.3}
-.funil-tbl th.total-h{background:#3949ab}
-.funil-tbl td{padding:9px 12px;font-size:12px;text-align:center;border-bottom:1px solid #eee;border-right:1px solid #f0f0f0;font-family:'Montserrat',sans-serif}
-.funil-tbl td.label-seg{font-weight:700;color:#1a1a2e;text-align:left;background:#fafafa}
-.funil-tbl td.label-tipo{color:#555;text-align:left;padding-left:20px;background:#fff}
-.funil-tbl tr.subtotal td{background:#e8eaf6!important;font-weight:700;color:#1a1a2e}
-.funil-tbl tr.subtotal td.label-seg{background:#dde0f5!important}
-.funil-tbl tr.grandtotal td{background:#1a1a2e!important;color:#fff!important;font-weight:700;font-size:13px}
-.funil-tbl tbody tr:hover:not(.subtotal):not(.grandtotal) td{background:#f0f4ff}
-.funil-tbl td.zero{color:#ccc}
-.funil-tbl td.val{font-variant-numeric:tabular-nums}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle}
-.c01{background:#7986cb}.c02{background:#64b5f6}.c031{background:#81c784}.c032{background:#ffb74d}
-.c033{background:#e57373}.c04{background:#4db6ac}.c05{background:#9575cd}.c06{background:#4caf50}
-.c071{background:#1976d2}.c072{background:#90caf9}.c08{background:#ef5350}
-.legenda-tbl{width:100%;border-collapse:collapse;font-size:12px}
-.legenda-tbl td{padding:6px 10px;border-bottom:1px solid #f0f0ec}
-.legenda-tbl tr:last-child td{border-bottom:none}
+
+/* ── page hero ─────────────────────────────────────────── */
+.fn-hero{
+  background:linear-gradient(135deg,#7668AC 0%,#4f3f8a 100%);
+  border-radius:18px;padding:28px 32px 24px;margin-bottom:24px;
+  position:relative;overflow:hidden;color:#fff
+}
+.fn-hero::after{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(249,220,69,.10);pointer-events:none
+}
+.fn-hero-bar{width:4px;height:44px;border-radius:3px;background:#F9DC45;flex-shrink:0;margin-right:16px}
+.fn-hero-inner{display:flex;align-items:center}
+.fn-hero h1{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:2px}
+.fn-hero-meta{font-size:11px;color:rgba(255,255,255,.7);font-weight:600;margin-top:2px}
+.fn-date-badge{
+  display:inline-block;background:rgba(249,220,69,.2);border:1px solid rgba(249,220,69,.5);
+  color:#F9DC45;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;
+  margin-top:10px
+}
+.fn-filter-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.fn-tag{background:rgba(255,255,255,.15);color:#fff;font-size:11px;font-weight:600;
+  padding:3px 10px;border-radius:20px;white-space:nowrap}
+
+/* ── mode toggle ───────────────────────────────────────── */
+.fn-toggle{
+  display:inline-flex;background:#f0eef8;border-radius:10px;padding:3px;
+  margin-bottom:20px;gap:2px;box-shadow:inset 0 1px 3px rgba(0,0,0,.06)
+}
+.fn-toggle button{
+  padding:8px 22px;border:none;border-radius:8px;
+  font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .2s;color:#7668AC;background:transparent
+}
+.fn-toggle button.mode-active{background:#7668AC;color:#fff;box-shadow:0 2px 6px rgba(118,104,172,.4)}
+.fn-toggle button:hover:not(.mode-active){background:#dddaf0}
+html.dark .fn-toggle{background:#2d2b3a}
+html.dark .fn-toggle button{color:#c4b8f0}
+html.dark .fn-toggle button:hover:not(.mode-active){background:#3d3a55}
+
+/* ── KPI row ───────────────────────────────────────────── */
+.fn-kpi-row{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;margin-bottom:24px
+}
+.fn-kpi{
+  background:#fff;border-radius:12px;padding:16px 16px 14px;
+  border:1px solid var(--border);border-top:3px solid var(--yellow);
+  box-shadow:var(--shadow);text-align:center;transition:transform .15s
+}
+.fn-kpi:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.fn-kpi.kpi-ht{border-top-color:#7668AC}
+.fn-kpi.kpi-nt{border-top-color:#64b5f6}
+.fn-kpi.kpi-conc{border-top-color:#4caf50}
+.fn-kpi.kpi-ret{border-top-color:#ef5350}
+.fn-kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.7px;font-weight:700;margin-bottom:6px}
+.fn-kpi-val{font-size:26px;font-weight:800;line-height:1;color:#595959}
+.fn-kpi.kpi-ht .fn-kpi-val{color:#7668AC}
+.fn-kpi.kpi-nt .fn-kpi-val{color:#5b9bd5}
+.fn-kpi.kpi-conc .fn-kpi-val{color:#388e3c}
+.fn-kpi.kpi-ret .fn-kpi-val{color:#d32f2f}
+.fn-kpi-sub{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+html.dark .fn-kpi{background:var(--surface);border-color:var(--border)}
+html.dark .fn-kpi-val{color:var(--text)}
+@media(max-width:900px){.fn-kpi-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.fn-kpi-row{grid-template-columns:1fr}}
+
+/* ── table wrapper ─────────────────────────────────────── */
+.fn-tbl-wrap{
+  overflow-x:auto;border-radius:14px;
+  box-shadow:0 2px 16px rgba(0,0,0,.07);margin-bottom:24px;
+  border:1px solid var(--border)
+}
+.fn-tbl{border-collapse:collapse;width:100%;min-width:1200px;background:#fff}
+html.dark .fn-tbl{background:var(--surface)}
+
+/* ── table header ──────────────────────────────────────── */
+.fn-tbl thead tr:first-child th{
+  background:#7668AC;color:#fff;padding:10px 12px;
+  font-size:11px;font-weight:700;text-align:left;
+  position:sticky;top:0;z-index:3
+}
+.fn-tbl .th-etapa{
+  background:#4f3f8a;text-align:center;font-size:9.5px;font-weight:700;
+  white-space:normal;max-width:72px;line-height:1.35;padding:8px 6px;
+  vertical-align:bottom;cursor:default
+}
+.th-dot{
+  display:block;width:8px;height:8px;border-radius:50%;
+  margin:0 auto 5px;flex-shrink:0
+}
+.fn-tbl .th-total{background:#3d2e72;text-align:center;font-size:11px}
+.fn-tbl .th-seg-lbl{min-width:145px}
+.fn-tbl .th-tipo-lbl{min-width:110px}
+
+/* ── table body rows ───────────────────────────────────── */
+.row-detail td{
+  padding:9px 8px;font-size:12px;
+  border-bottom:1px solid #f0f0ec;border-right:1px solid #f5f5f3;
+  transition:background .12s
+}
+.row-detail:hover .cell-val{filter:brightness(.94)}
+.row-detail:hover .cell-seg,
+.row-detail:hover .cell-tipo{background:#f4f0fc!important}
+
+.row-subtotal td{
+  padding:9px 8px;font-size:12px;font-weight:700;
+  background:#ede9f8!important;color:#3d2e72;
+  border-bottom:2px solid #d0c9ee;border-right:1px solid #dddaf0;
+}
+html.dark .row-subtotal td{background:#2a2640!important;color:#c4b8f0;border-bottom-color:#3d3a55}
+
+.row-grandtotal td{
+  padding:10px 8px;font-size:13px;font-weight:800;
+  background:#7668AC!important;color:#fff!important;
+  border-bottom:none;border-right:1px solid rgba(255,255,255,.15)
+}
+
+/* ── seg / tipo cells ──────────────────────────────────── */
+.cell-seg{
+  font-weight:700;color:#3d2e72;text-align:left;
+  background:#faf9fd;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+  padding:9px 12px!important;min-width:145px
+}
+html.dark .cell-seg{background:#201e2e;color:#c4b8f0}
+.row-subtotal .cell-seg{background:#dddaf0!important}
+html.dark .row-subtotal .cell-seg{background:#2d2b40!important}
+.row-grandtotal .cell-seg{background:#7668AC!important;color:#fff!important}
+
+.cell-tipo{text-align:left;padding:9px 8px 9px 16px!important;background:#fff}
+html.dark .cell-tipo{background:var(--surface)}
+.row-subtotal .cell-tipo{background:#ede9f8!important}
+html.dark .row-subtotal .cell-tipo{background:#2a2640!important}
+.row-grandtotal .cell-tipo{background:#7668AC!important;color:#fff!important}
+
+.seg-dot{
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block
+}
+.dot-ht{background:#7668AC}.dot-nt{background:#64b5f6}
+
+.tipo-badge{
+  display:inline-block;font-size:10px;font-weight:700;
+  padding:2px 9px;border-radius:20px;white-space:nowrap
+}
+.tipo-particular{background:#e8f4fd;color:#1565c0}
+.tipo-pública{background:#e8f5e9;color:#2e7d32}
+.tipo-outro{background:#f5f5f5;color:#595959}
+.tipo-label-sub{font-size:11px;font-weight:700;color:#3d2e72}
+.tipo-label-grand{font-size:12px;font-weight:800;color:#fff}
+
+/* ── value cells ───────────────────────────────────────── */
+.cell-val{text-align:center;font-variant-numeric:tabular-nums}
+.cell-zero .val-num{color:#ccc}
+html.dark .cell-zero .val-num{color:#444}
+.cell-total{
+  background:#f0eef8!important;font-weight:700;color:#3d2e72;
+  border-left:2px solid #dddaf0
+}
+.row-grandtotal .cell-total{background:#5a4a96!important;color:#fff!important}
+.row-subtotal .cell-total{background:#d0c9ee!important;color:#3d2e72!important}
+
+.val-wrap{display:flex;flex-direction:column;align-items:center;gap:3px}
+.val-num{font-size:12px;line-height:1}
+.mini-bar-outer{width:80%;height:3px;background:#e8e8e4;border-radius:2px;overflow:hidden}
+.mini-bar-inner{height:100%;border-radius:2px;transition:width .3s ease}
+html.dark .mini-bar-outer{background:#3a3a44}
+
+/* ── legend ────────────────────────────────────────────── */
+.fn-legend{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:8px;margin-bottom:0
+}
+.leg-row{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:8px 10px;border-radius:8px;background:#faf9fd;
+  border:1px solid #f0eef8
+}
+html.dark .leg-row{background:#201e2e;border-color:#2d2b3a}
+.leg-dot{
+  width:10px;height:10px;border-radius:50%;
+  flex-shrink:0;margin-top:2px
+}
+.leg-etapa{font-size:11px;font-weight:700;color:#3d2e72;white-space:nowrap}
+html.dark .leg-etapa{color:#c4b8f0}
+.leg-desc{font-size:11px;color:var(--muted);margin-left:2px}
+
 </style>
 <script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
 <body>
-<a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Início</a>
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button><script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
+<a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">&#8592; In&iacute;cio</a>
 <div class="page">
 
-<div class="header">
-  <h1>Funil Normalizado de Sucesso</h1>
-  <p>
-    <span class="funil-badge">Brasil</span>
-    <span class="funil-badge">Jornada 2026</span>
-    <span class="funil-badge">Sucesso do Cliente</span>
-    <span class="funil-badge" id="date-badge">—</span>
-  </p>
+<!-- HERO -->
+<div class="fn-hero">
+  <div class="fn-hero-inner">
+    <div class="fn-hero-bar"></div>
+    <div>
+      <h1>Funil Normalizado de Sucesso</h1>
+      <div class="fn-hero-meta">Distribui&ccedil;&atilde;o das escolas por etapa da jornada</div>
+    </div>
+  </div>
+  <div class="fn-date-badge" id="date-badge">—</div>
+  <div class="fn-filter-tags">
+    <span class="fn-tag">Brasil</span>
+    <span class="fn-tag">Jornada 2026</span>
+    <span class="fn-tag">Sucesso do Cliente</span>
+    <span class="fn-tag">Alunos &ge; 3</span>
+  </div>
 </div>
 
-<div class="funil-controls">
-  <button class="funil-btn active" id="btn-qtd" onclick="setMode('qtd')">Qtd Escolas</button>
-  <button class="funil-btn"        id="btn-ref" onclick="setMode('ref')">Ref Ano Anterior V2</button>
+<!-- KPI CARDS -->
+<div class="fn-kpi-row">
+  <div class="fn-kpi">
+    <div class="fn-kpi-lbl">Total Geral</div>
+    <div class="fn-kpi-val" id="kpi-total">—</div>
+    <div class="fn-kpi-sub">todas as escolas</div>
+  </div>
+  <div class="fn-kpi kpi-ht">
+    <div class="fn-kpi-lbl">High Touch</div>
+    <div class="fn-kpi-val" id="kpi-ht">—</div>
+    <div class="fn-kpi-sub">Premium + HT</div>
+  </div>
+  <div class="fn-kpi kpi-nt">
+    <div class="fn-kpi-lbl">N&atilde;o &eacute; High Touch</div>
+    <div class="fn-kpi-val" id="kpi-nt">—</div>
+    <div class="fn-kpi-sub">Medium + demais</div>
+  </div>
+  <div class="fn-kpi kpi-conc">
+    <div class="fn-kpi-lbl">Jornada Conclu&iacute;da</div>
+    <div class="fn-kpi-val" id="kpi-conc">—</div>
+    <div class="fn-kpi-sub" id="kpi-conc-pct">&nbsp;</div>
+  </div>
+  <div class="fn-kpi kpi-ret">
+    <div class="fn-kpi-lbl">Retra&ccedil;&atilde;o</div>
+    <div class="fn-kpi-val" id="kpi-ret">—</div>
+    <div class="fn-kpi-sub" id="kpi-ret-pct">&nbsp;</div>
+  </div>
 </div>
 
-<div class="funil-tbl-wrap">
-<table class="funil-tbl">
+<!-- TOGGLE -->
+<div class="fn-toggle">
+  <button id="btn-qtd" class="mode-active" onclick="setMode('qtd')">Qtd Escolas</button>
+  <button id="btn-ref"                     onclick="setMode('ref')">Ref Ano Anterior</button>
+</div>
+
+<!-- TABLE -->
+<div class="fn-tbl-wrap">
+<table class="fn-tbl">
   <thead>
     <tr>
-      <th class="left" rowspan="2" style="min-width:140px">Segmentação</th>
-      <th class="left" rowspan="2" style="min-width:100px">Tipo Escola</th>
-      <th class="stage-h"><span class="dot c01"></span>01. Onboarding &amp; BV</th>
-      <th class="stage-h"><span class="dot c02"></span>02. Ag. Cronograma</th>
-      <th class="stage-h"><span class="dot c031"></span>03.1 Crono (no prazo)</th>
-      <th class="stage-h"><span class="dot c032"></span>03.2 Crono (5 dias)</th>
-      <th class="stage-h"><span class="dot c033"></span>03.3 Crono (passou)</th>
-      <th class="stage-h"><span class="dot c04"></span>04. 5% Material</th>
-      <th class="stage-h"><span class="dot c05"></span>05. Com Resp.</th>
-      <th class="stage-h"><span class="dot c06"></span>06. Com Compras</th>
-      <th class="stage-h"><span class="dot c071"></span>07.1 Conc. c/ Compras</th>
-      <th class="stage-h"><span class="dot c072"></span>07.2 Conc. s/ Compras</th>
-      <th class="stage-h"><span class="dot c08"></span>08. Retração</th>
-      <th class="total-h">Total</th>
+      <th class="th-seg-lbl">Segmenta&ccedil;&atilde;o</th>
+      <th class="th-tipo-lbl">Tipo Escola</th>
+      <th class="th-etapa" style="--dot-color:#9d95d8"><span class="th-dot" style="background:#9d95d8"></span>01.<br>Onboarding<br>&amp; BV</th>
+<th class="th-etapa" style="--dot-color:#64b5f6"><span class="th-dot" style="background:#64b5f6"></span>02.<br>Ag.<br>Cronograma</th>
+<th class="th-etapa" style="--dot-color:#81c784"><span class="th-dot" style="background:#81c784"></span>03.1<br>Crono<br>(no prazo)</th>
+<th class="th-etapa" style="--dot-color:#ffb74d"><span class="th-dot" style="background:#ffb74d"></span>03.2<br>Crono<br>(5 dias)</th>
+<th class="th-etapa" style="--dot-color:#e57373"><span class="th-dot" style="background:#e57373"></span>03.3<br>Crono<br>(passou)</th>
+<th class="th-etapa" style="--dot-color:#4db6ac"><span class="th-dot" style="background:#4db6ac"></span>04.<br>5%<br>Material</th>
+<th class="th-etapa" style="--dot-color:#9575cd"><span class="th-dot" style="background:#9575cd"></span>05.<br>Com<br>Resp.</th>
+<th class="th-etapa" style="--dot-color:#4caf50"><span class="th-dot" style="background:#4caf50"></span>06.<br>Com<br>Compras</th>
+<th class="th-etapa" style="--dot-color:#1976d2"><span class="th-dot" style="background:#1976d2"></span>07.1<br>Conc.<br>c/ Compras</th>
+<th class="th-etapa" style="--dot-color:#90caf9"><span class="th-dot" style="background:#90caf9"></span>07.2<br>Conc.<br>s/ Compras</th>
+<th class="th-etapa" style="--dot-color:#ef5350"><span class="th-dot" style="background:#ef5350"></span>08.<br>Retra&ccedil;&atilde;o</th>
+
+      <th class="th-total">Total</th>
     </tr>
   </thead>
   <tbody id="tbody"></tbody>
 </table>
 </div>
 
+<!-- LEGENDA -->
 <div class="card">
-  <div class="card-head"><span class="card-title">Legenda das Etapas</span></div>
-  <div class="card-body" style="padding:0">
-    <div class="tbl-wrap">
-      <table class="legenda-tbl">
-        <tbody><tr><td style="white-space:nowrap;font-weight:600">01. Onboarding & BV</td><td style="color:#555">HIGH TOUCH aguardando reunião de Boas-Vindas</td></tr><tr><td style="white-space:nowrap;font-weight:600">02. Ag. Cronograma</td><td style="color:#555">Escola convertida aguardando preenchimento do cronograma</td></tr><tr><td style="white-space:nowrap;font-weight:600">03.1 Crono (no prazo)</td><td style="color:#555">Com cronograma, sem material — dentro do prazo</td></tr><tr><td style="white-space:nowrap;font-weight:600">03.2 Crono (5 dias)</td><td style="color:#555">Com cronograma, sem material — faltam até 5 dias</td></tr><tr><td style="white-space:nowrap;font-weight:600">03.3 Crono (passou)</td><td style="color:#555">Com cronograma, sem material — prazo vencido</td></tr><tr><td style="white-space:nowrap;font-weight:600">04. 5% Material</td><td style="color:#555">Com ao menos 5% do material pronto, sem compras</td></tr><tr><td style="white-space:nowrap;font-weight:600">05. Com Resp.</td><td style="color:#555">Com responsáveis cadastrados, sem compras</td></tr><tr><td style="white-space:nowrap;font-weight:600">06. Com Compras</td><td style="color:#555">Com compras em andamento</td></tr><tr><td style="white-space:nowrap;font-weight:600">07.1 Conc. c/ Compras</td><td style="color:#555">Jornada concluída com compras</td></tr><tr><td style="white-space:nowrap;font-weight:600">07.2 Conc. s/ Compras</td><td style="color:#555">Jornada concluída sem compras</td></tr><tr><td style="white-space:nowrap;font-weight:600">08. Retração</td><td style="color:#555">Escola em retração, descarte, revenda ou negócio perdido</td></tr></tbody>
-      </table>
-    </div>
+  <div class="card-head">
+    <span class="card-title">Legenda das Etapas</span>
+    <span style="font-size:11px;color:var(--muted)">O que cada etapa significa</span>
+  </div>
+  <div class="card-body">
+    <div class="fn-legend"><div class="leg-row"><span class="leg-dot" style="background:#9d95d8"></span><span class="leg-etapa">01. Onboarding & BV</span><span class="leg-desc">HIGH TOUCH aguardando reunião de Boas-Vindas</span></div><div class="leg-row"><span class="leg-dot" style="background:#64b5f6"></span><span class="leg-etapa">02. Ag. Cronograma</span><span class="leg-desc">Escola convertida aguardando preenchimento do cronograma</span></div><div class="leg-row"><span class="leg-dot" style="background:#81c784"></span><span class="leg-etapa">03.1 Crono (no prazo)</span><span class="leg-desc">Com cronograma, sem material — dentro do prazo</span></div><div class="leg-row"><span class="leg-dot" style="background:#ffb74d"></span><span class="leg-etapa">03.2 Crono (5 dias)</span><span class="leg-desc">Com cronograma, sem material — faltam até 5 dias</span></div><div class="leg-row"><span class="leg-dot" style="background:#e57373"></span><span class="leg-etapa">03.3 Crono (passou)</span><span class="leg-desc">Com cronograma, sem material — prazo vencido</span></div><div class="leg-row"><span class="leg-dot" style="background:#4db6ac"></span><span class="leg-etapa">04. 5% Material</span><span class="leg-desc">Com ao menos 5% do material pronto, sem compras</span></div><div class="leg-row"><span class="leg-dot" style="background:#9575cd"></span><span class="leg-etapa">05. Com Resp.</span><span class="leg-desc">Com responsáveis cadastrados, sem compras</span></div><div class="leg-row"><span class="leg-dot" style="background:#4caf50"></span><span class="leg-etapa">06. Com Compras</span><span class="leg-desc">Com compras em andamento</span></div><div class="leg-row"><span class="leg-dot" style="background:#1976d2"></span><span class="leg-etapa">07.1 Conc. c/ Compras</span><span class="leg-desc">Jornada concluída com compras</span></div><div class="leg-row"><span class="leg-dot" style="background:#90caf9"></span><span class="leg-etapa">07.2 Conc. s/ Compras</span><span class="leg-desc">Jornada concluída sem compras</span></div><div class="leg-row"><span class="leg-dot" style="background:#ef5350"></span><span class="leg-etapa">08. Retração</span><span class="leg-desc">Escola em retração, descarte, revenda ou negócio perdido</span></div></div>
   </div>
 </div>
 
-<div style="margin-top:12px;font-size:11px;color:#9a9a9a">
-  Gerado em <span id="gen-date"></span> &nbsp;·&nbsp;
-  Fonte: site-dados.gold.etl_jornada_escolas_aplicacao × lakehouse-378716.crm_ax_raw.ax_deals_temp_ &nbsp;·&nbsp;
+<div style="margin-top:16px;font-size:11px;color:var(--muted);text-align:center">
+  Gerado em <span id="gen-date"></span> &nbsp;&middot;&nbsp;
+  Fonte: site-dados.gold.etl_jornada_escolas_aplicacao &nbsp;&middot;&nbsp;
   Filtro: qtd_alunos &ge; 3
 </div>
 
-</div>
+</div><!-- .page -->
 <script>
 
-const DATA = [{"seg": "HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [0, 0, 722, 0, 4, 104, 50, 194, 464, 12, 240, 1790], "r": [0.0, 0.0, 12906560.818488942, 0.0, 69598.82169249492, 1994546.50203649, 1029083.9435578588, 4328702.5398673825, 9309423.658423899, 224970.2, 3960360.04486454, 33823246.52893161]}, {"seg": "HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [0, 0, 66, 0, 0, 8, 6, 11, 4, 1, 2, 98], "r": [0.0, 0.0, 1254744.2556490656, 0.0, 0.0, 164266.26823085998, 129367.26326944517, 300515.8123329431, 51053.055913475575, 5197.92, 15221.077249508842, 1920365.6526452983]}, {"seg": "HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [0, 0, 788, 0, 4, 112, 56, 205, 468, 13, 242, 1888], "r": [0.0, 0.0, 14161305.074138008, 0.0, 69598.82169249492, 2158812.77026735, 1158451.206827304, 4629218.352200326, 9360476.714337375, 230168.12000000002, 3975581.122114049, 35743612.18157691]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [0, 0, 364, 1, 2, 69, 20, 60, 65, 7, 56, 644], "r": [0.0, 0.0, 2022057.7704848228, 1645.6499999999999, 8927.668795692709, 335328.32312894566, 139453.29738786834, 375293.4718513293, 397644.4300843283, 35239.04, 308871.29076844, 3624460.942501427]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [0, 0, 237, 3, 3, 66, 16, 13, 21, 7, 30, 396], "r": [0.0, 0.0, 879738.4689339175, 8484.009133858268, 4466.58, 224446.0670121898, 79311.84444877914, 74316.58581838626, 52564.25648009269, 4332.143783783784, 48766.53750000001, 1376426.4931110074]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [0, 0, 601, 4, 5, 135, 36, 73, 86, 14, 86, 1040], "r": [0.0, 0.0, 2901796.2394187404, 10129.659133858268, 13394.248795692709, 559774.3901411354, 218765.14183664747, 449610.0576697156, 450208.686564421, 39571.18378378378, 357637.82826844003, 5000887.4356124345]}, {"seg": "TOTAL", "tipo": "TOTAL", "subtotal": false, "grandtotal": true, "q": [0, 0, 1389, 4, 9, 247, 92, 278, 554, 27, 328, 2928], "r": [0.0, 0.0, 17063101.31355675, 10129.659133858268, 82993.07048818763, 2718587.1604084857, 1377216.3486639515, 5078828.4098700415, 9810685.400901794, 269739.3037837838, 4333218.950382489, 40744499.61718934]}];
+const DATA = [{"seg": "HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [0, 0, 722, 0, 4, 102, 51, 195, 464, 12, 240, 1790], "r": [0.0, 0.0, 12906789.898488956, 0.0, 69598.82169249492, 1948458.3134748458, 1054412.7248046088, 4347114.829829445, 9309423.6584239, 224970.19999999995, 3960360.0448645423, 33821128.491578795]}, {"seg": "HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [0, 0, 65, 0, 0, 9, 6, 11, 4, 1, 2, 98], "r": [0.0, 0.0, 1223095.1159469383, 0.0, 0.0, 197395.77456419333, 129367.26326944519, 300378.0178098662, 51053.055913475575, 5197.92, 15221.077249508842, 1921708.2247534276]}, {"seg": "HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [0, 0, 787, 0, 4, 111, 57, 206, 468, 13, 242, 1888], "r": [0.0, 0.0, 14129885.014435895, 0.0, 69598.82169249492, 2145854.088039039, 1183779.988074054, 4647492.847639311, 9360476.714337377, 230168.11999999997, 3975581.122114051, 35742836.71633222]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PARTICULAR", "subtotal": false, "grandtotal": false, "q": [0, 0, 364, 1, 2, 69, 20, 60, 65, 7, 56, 644], "r": [0.0, 0.0, 2022057.7704848223, 1645.6499999999999, 8927.668795692707, 335328.32312894566, 139453.29738786828, 375293.4718513293, 397644.43008432834, 35239.04, 308871.29076844006, 3624460.9425014267]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "PÚBLICA", "subtotal": false, "grandtotal": false, "q": [0, 0, 237, 3, 3, 66, 16, 13, 21, 7, 30, 396], "r": [0.0, 0.0, 879827.2256552286, 8484.009133858268, 4466.58, 224446.0670121898, 79435.51944877915, 74316.58581838626, 52564.25648009269, 4332.143783783784, 48766.5375, 1376638.9248323184]}, {"seg": "NÃO É HIGH TOUCH", "tipo": "TOTAL", "subtotal": true, "grandtotal": false, "q": [0, 0, 601, 4, 5, 135, 36, 73, 86, 14, 86, 1040], "r": [0.0, 0.0, 2901884.9961400507, 10129.659133858268, 13394.248795692707, 559774.3901411354, 218888.81683664743, 449610.0576697156, 450208.68656442105, 39571.18378378378, 357637.82826844003, 5001099.867333745]}, {"seg": "TOTAL", "tipo": "TOTAL", "subtotal": false, "grandtotal": true, "q": [0, 0, 1388, 4, 9, 246, 93, 279, 554, 27, 328, 2928], "r": [0.0, 0.0, 17031770.010575946, 10129.659133858268, 82993.07048818763, 2705628.4781801747, 1402668.8049107015, 5097102.905309027, 9810685.400901796, 269739.30378378375, 4333218.950382492, 40743936.58366597]}];
+
+// ── etapa labels and colour palette ───────────────────────────────────────────
+const ETAPA_LABELS = [
+  "01. Onboarding & BV","02. Ag. Cronograma",
+  "03.1 Crono (no prazo)","03.2 Crono (5 dias)","03.3 Crono (passou)",
+  "04. 5% Material","05. Com Resp.","06. Com Compras",
+  "07.1 Conc. c/ Compras","07.2 Conc. s/ Compras","08. Retração"
+];
+const ETAPA_COLORS = [
+  "#9d95d8","#64b5f6",
+  "#81c784","#ffb74d","#e57373",
+  "#4db6ac","#9575cd","#4caf50",
+  "#1976d2","#90caf9","#ef5350"
+];
+// indices of "concluded" etapas for summary KPIs
+const IDX_CONCLUIDAS = [8, 9]; // 07.1 e 07.2
+const IDX_RETRACAO   = 10;     // 08.
 
 let mode = 'qtd';
 
+// ── formatters ────────────────────────────────────────────────────────────────
 function fmtRef(v) {
   if (v === 0) return '—';
-  if (v >= 1000000) return 'R$ ' + (v / 1000000).toFixed(2).replace('.', ',') + 'M';
-  if (v >= 1000) return 'R$ ' + Math.round(v / 1000).toLocaleString('pt-BR') + 'k';
+  if (v >= 1000000) return 'R$ ' + (v / 1000000).toFixed(1).replace('.', ',') + 'M';
+  if (v >= 1000)    return 'R$ ' + Math.round(v / 1000).toLocaleString('pt-BR') + 'k';
   return 'R$ ' + v.toLocaleString('pt-BR');
 }
+function fmtQtd(v) { return v === 0 ? '—' : v.toLocaleString('pt-BR'); }
 
-function fmtQtd(v) {
-  return v === 0 ? '—' : v.toLocaleString('pt-BR');
+// ── compute column maxima (exclude subtotal/grandtotal rows for heatmap) ──────
+function colMaxima() {
+  const detail = DATA.filter(r => !r.subtotal && !r.grandtotal);
+  const vals   = mode === 'qtd' ? detail.map(r => r.q) : detail.map(r => r.r);
+  const n      = ETAPA_LABELS.length + 1; // +1 total col
+  const mx     = new Array(n).fill(0);
+  vals.forEach(row => row.forEach((v, i) => { if (v > mx[i]) mx[i] = v; }));
+  return mx;
 }
 
+// interpolate white → purple for heatmap
+function heatColor(v, max) {
+  if (max === 0 || v === 0) return 'transparent';
+  const t   = Math.min(v / max, 1);
+  const r   = Math.round(255 + (118 - 255) * t);
+  const g   = Math.round(255 + (104 - 255) * t);
+  const b   = Math.round(255 + (172 - 255) * t);
+  return `rgba(${r},${g},${b},${(0.15 + 0.55 * t).toFixed(2)})`;
+}
+
+// ── KPI cards ─────────────────────────────────────────────────────────────────
+function buildKpis() {
+  const gt  = DATA.find(r => r.grandtotal);
+  if (!gt) return;
+  const htrow = DATA.find(r => r.subtotal && r.seg === 'HIGH TOUCH');
+  const ntrow = DATA.find(r => r.subtotal && r.seg === 'NÃO É HIGH TOUCH');
+  const vals  = mode === 'qtd';
+  const fmt   = vals ? fmtQtd : fmtRef;
+
+  const qgt  = vals ? gt.q  : gt.r;
+  const qht  = vals ? (htrow ? htrow.q  : []) : (htrow ? htrow.r  : []);
+  const qnt  = vals ? (ntrow ? ntrow.q  : []) : (ntrow ? ntrow.r  : []);
+
+  const totalGeral = qgt[qgt.length - 1] || 0;
+  const totalHT    = qht.length ? qht[qht.length - 1] : 0;
+  const totalNT    = qnt.length ? qnt[qnt.length - 1] : 0;
+
+  const concluidas = qgt.length
+    ? IDX_CONCLUIDAS.reduce((s, i) => s + (qgt[i] || 0), 0) : 0;
+  const retracao   = qgt.length ? (qgt[IDX_RETRACAO] || 0) : 0;
+
+  document.getElementById('kpi-total').textContent   = fmt(totalGeral);
+  document.getElementById('kpi-ht').textContent      = fmt(totalHT);
+  document.getElementById('kpi-nt').textContent      = fmt(totalNT);
+  document.getElementById('kpi-conc').textContent    = fmt(concluidas);
+  document.getElementById('kpi-ret').textContent     = fmt(retracao);
+
+  if (totalGeral > 0) {
+    const pct = Math.round(concluidas / totalGeral * 100);
+    document.getElementById('kpi-conc-pct').textContent = pct + '% do total';
+    const pctRet = Math.round(retracao / totalGeral * 100);
+    document.getElementById('kpi-ret-pct').textContent  = pctRet + '% do total';
+  }
+}
+
+// ── main table ────────────────────────────────────────────────────────────────
 function buildTable() {
+  const mx  = colMaxima();
+  const fmt = mode === 'qtd' ? fmtQtd : fmtRef;
   const tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
+
   DATA.forEach(row => {
-    const tr = document.createElement('tr');
-    if (row.grandtotal) tr.className = 'grandtotal';
-    else if (row.subtotal) tr.className = 'subtotal';
+    const isGT  = row.grandtotal;
+    const isST  = row.subtotal;
+    const tr    = document.createElement('tr');
+    if (isGT)      tr.className = 'row-grandtotal';
+    else if (isST) tr.className = 'row-subtotal';
+    else           tr.className = 'row-detail';
 
     const vals = mode === 'qtd' ? row.q : row.r;
-    const fmt  = mode === 'qtd' ? fmtQtd : fmtRef;
+    const nEtapas = ETAPA_LABELS.length;
 
-    const tdSeg  = document.createElement('td');
-    tdSeg.className = 'label-seg';
-    tdSeg.textContent = row.seg;
+    // seg cell
+    const tdSeg = document.createElement('td');
+    tdSeg.className = 'cell-seg';
+    if (!isST && !isGT) {
+      const dot = document.createElement('span');
+      dot.className = 'seg-dot ' + (row.seg === 'HIGH TOUCH' ? 'dot-ht' : 'dot-nt');
+      tdSeg.appendChild(dot);
+    }
+    const segSpan = document.createElement('span');
+    segSpan.textContent = row.seg;
+    tdSeg.appendChild(segSpan);
     tr.appendChild(tdSeg);
 
+    // tipo cell
     const tdTipo = document.createElement('td');
-    tdTipo.className = row.grandtotal ? 'label-seg' : 'label-tipo';
-    tdTipo.textContent = row.tipo;
+    tdTipo.className = 'cell-tipo';
+    const tipoBadge = document.createElement('span');
+    tipoBadge.className = isGT ? 'tipo-label-grand' :
+                          isST ? 'tipo-label-sub'   : 'tipo-badge tipo-' + row.tipo.toLowerCase();
+    tipoBadge.textContent = row.tipo;
+    tdTipo.appendChild(tipoBadge);
     tr.appendChild(tdTipo);
 
-    vals.forEach(v => {
+    // value cells
+    vals.forEach((v, i) => {
+      const isTotal = (i === nEtapas);
       const td = document.createElement('td');
-      td.className = 'val' + (v === 0 ? ' zero' : '');
-      td.textContent = fmt(v);
+      td.className = 'cell-val' + (v === 0 ? ' cell-zero' : '') + (isTotal ? ' cell-total' : '');
+
+      if (!isST && !isGT && !isTotal && v > 0) {
+        const bg = heatColor(v, mx[i]);
+        td.style.background = bg;
+      }
+
+      const wrap = document.createElement('div');
+      wrap.className = 'val-wrap';
+
+      const num = document.createElement('span');
+      num.className = 'val-num';
+      num.textContent = fmt(v);
+      wrap.appendChild(num);
+
+      // inline mini-bar for detail rows, non-zero, non-total
+      if (!isST && !isGT && !isTotal && v > 0 && mx[i] > 0) {
+        const barOuter = document.createElement('div');
+        barOuter.className = 'mini-bar-outer';
+        const barInner = document.createElement('div');
+        barInner.className = 'mini-bar-inner';
+        const col = ETAPA_COLORS[i] || '#7668AC';
+        barInner.style.width  = Math.round(v / mx[i] * 100) + '%';
+        barInner.style.background = col;
+        barOuter.appendChild(barInner);
+        wrap.appendChild(barOuter);
+      }
+
+      td.appendChild(wrap);
       tr.appendChild(td);
     });
+
     tbody.appendChild(tr);
   });
 }
 
+// ── toggle ────────────────────────────────────────────────────────────────────
 function setMode(m) {
   mode = m;
-  document.getElementById('btn-qtd').className = 'btn' + (m === 'qtd' ? ' active' : '');
-  document.getElementById('btn-ref').className = 'btn' + (m === 'ref' ? ' active' : '');
+  document.getElementById('btn-qtd').classList.toggle('mode-active', m === 'qtd');
+  document.getElementById('btn-ref').classList.toggle('mode-active', m === 'ref');
   buildTable();
+  buildKpis();
 }
 
+// ── init ──────────────────────────────────────────────────────────────────────
 const now = new Date();
 document.getElementById('gen-date').textContent = now.toLocaleDateString('pt-BR', {
   day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
 });
-document.getElementById('date-badge').textContent = '🗓️ ' + now.toLocaleDateString('pt-BR');
+document.getElementById('date-badge').textContent = now.toLocaleDateString('pt-BR', {weekday:'long', day:'2-digit',month:'long',year:'numeric'});
 
 buildTable();
+buildKpis();
 
 </script>
 </body></html>
