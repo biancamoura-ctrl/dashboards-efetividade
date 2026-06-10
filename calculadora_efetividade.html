@@ -396,7 +396,13 @@ function calcDelta(hist, n_du) {
   return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
 }
 function mediaExpJanela(expiracoes, inicio) {
-  return expiracoes[inicio + 1] || 0;
+  // Calcula a média diária de expirações nos próximos 7 dias corridos (≈5 dias úteis).
+  // Usar só o dia de amanhã (expiracoes[1]) causava distorção quando havia pico pontual.
+  var janela = expiracoes.slice(inicio, inicio + 7);
+  if (!janela.length) return 0;
+  var soma = janela.reduce(function(a, b) { return a + b; }, 0);
+  // Divide por 5 (dias úteis esperados na semana) para obter média diária de dias úteis
+  return Math.round(soma / 5 * 10) / 10;
 }
 function projetarDias(efetivas, nec_meta, ritmo, media_exp) {
   if (efetivas >= nec_meta) return 0;
@@ -447,11 +453,11 @@ function render() {
   document.getElementById('kpi-delta').textContent = delta_periodo.toFixed(1) + '/dia';
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. — ' + (periodo_labels[periodo] || periodo);
 
-  // KPI vencem/dia: amanhã para essa semana, 104 fixo para demais períodos
-  var vencem_dia = (periodo === 'semana') ? mediaExpJanela(C.expiracoes, 0) : 104;
+  // KPI vencem/dia: média dos próximos 7 dias (≈5 dias úteis) para todos os períodos
+  var vencem_dia = mediaExpJanela(C.expiracoes, 0);
   document.getElementById('kpi-vencem').className   = 'kc-val';
   document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(0) + '/dia';
-  document.getElementById('kpi-vencem-sub').textContent = (periodo === 'semana') ? 'vencem amanhã' : 'vencem/dia (média)';
+  document.getElementById('kpi-vencem-sub').textContent = 'vencem/dia (média 7d)';
 
   // KPIs universais
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
@@ -509,7 +515,7 @@ function render() {
       projDet.textContent  = '';
       racEl.innerHTML =
         '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-        + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + ritmo_combinado.toFixed(0) + '</b> &mdash; vencem/dia: <b>104</b><br>'
+        + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + ritmo_combinado.toFixed(0) + '</b> &mdash; vencem/dia (média 7d): <b>' + vencem_dia.toFixed(0) + '</b><br>'
         + '&#10146; Estimativa: ' + faltam_proj + ' ÷ ' + ritmo_liq.toFixed(1) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
     }
   }
