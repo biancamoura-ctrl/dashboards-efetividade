@@ -522,8 +522,7 @@ function render() {
     var dias  = C.semana_dias  || [];
     var maxV  = Math.max.apply(null, vals) || 1;
     var n     = vals.length;
-    var total = vals.reduce(function(a,b){return a+b;},0);
-    var media = Math.round(total / n);
+    var media = ritmo_combinado.toFixed(0);
     wrap.innerHTML = '';
     wrap.style.cssText = 'display:flex;align-items:flex-end;gap:12px;height:160px;padding:0 8px 0';
 
@@ -550,7 +549,7 @@ function render() {
     wrapOuter.style.position = 'relative';
     var medWrap = document.createElement('div');
     medWrap.style.cssText = 'text-align:right;padding:8px 8px 0;font-size:10px;font-weight:700;color:#7668AC';
-    medWrap.textContent = 'méd. semana: ' + media + '/dia';
+    medWrap.textContent = 'méd. ' + (periodo_labels[periodo] || periodo) + ': ' + media + '/dia';
     wrapOuter.appendChild(medWrap);
   }
 }
