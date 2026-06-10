@@ -139,9 +139,9 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
 }
 .fn-toggle button.mode-active{background:#7668AC;color:#fff;box-shadow:0 2px 6px rgba(118,104,172,.4)}
 .fn-toggle button:hover:not(.mode-active){background:#dddaf0}
-html.dark .fn-toggle{background:#2d2b3a}
-html.dark .fn-toggle button{color:#c4b8f0}
-html.dark .fn-toggle button:hover:not(.mode-active){background:#3d3a55}
+html.dark .fn-toggle{background:#2a2a35}
+html.dark .fn-toggle button{color:#fff}
+html.dark .fn-toggle button:hover:not(.mode-active){background:#3a3a48}
 
 /* ── KPI row ───────────────────────────────────────────── */
 .fn-kpi-row{
@@ -206,16 +206,19 @@ html.dark .fn-tbl{background:var(--surface)}
   border-bottom:1px solid #f0f0ec;border-right:1px solid #f5f5f3;
   transition:background .12s
 }
+html.dark .row-detail td{border-bottom-color:#2a2a38;border-right-color:#2a2a38;color:#fff}
 .row-detail:hover .cell-val{filter:brightness(.94)}
 .row-detail:hover .cell-seg,
 .row-detail:hover .cell-tipo{background:#f4f0fc!important}
+html.dark .row-detail:hover .cell-seg,
+html.dark .row-detail:hover .cell-tipo{background:#26263a!important}
 
 .row-subtotal td{
   padding:9px 8px;font-size:12px;font-weight:700;
   background:#ede9f8!important;color:#3d2e72;
   border-bottom:2px solid #d0c9ee;border-right:1px solid #dddaf0;
 }
-html.dark .row-subtotal td{background:#2a2640!important;color:#c4b8f0;border-bottom-color:#3d3a55}
+html.dark .row-subtotal td{background:#252530!important;color:#fff;border-bottom-color:#38384a}
 
 .row-grandtotal td{
   padding:10px 8px;font-size:13px;font-weight:800;
@@ -230,15 +233,15 @@ html.dark .row-subtotal td{background:#2a2640!important;color:#c4b8f0;border-bot
   display:flex;align-items:center;gap:6px;
   padding:9px 12px!important;min-width:145px
 }
-html.dark .cell-seg{background:#201e2e;color:#c4b8f0}
+html.dark .cell-seg{background:#1e1e28;color:#fff}
 .row-subtotal .cell-seg{background:#dddaf0!important}
-html.dark .row-subtotal .cell-seg{background:#2d2b40!important}
+html.dark .row-subtotal .cell-seg{background:#252530!important;color:#fff!important}
 .row-grandtotal .cell-seg{background:#7668AC!important;color:#fff!important}
 
 .cell-tipo{text-align:left;padding:9px 8px 9px 16px!important;background:#fff}
 html.dark .cell-tipo{background:var(--surface)}
 .row-subtotal .cell-tipo{background:#ede9f8!important}
-html.dark .row-subtotal .cell-tipo{background:#2a2640!important}
+html.dark .row-subtotal .cell-tipo{background:#252530!important;color:#fff!important}
 .row-grandtotal .cell-tipo{background:#7668AC!important;color:#fff!important}
 
 .seg-dot{
@@ -255,6 +258,11 @@ html.dark .row-subtotal .cell-tipo{background:#2a2640!important}
 .tipo-outro{background:#f5f5f5;color:#595959}
 .tipo-label-sub{font-size:11px;font-weight:700;color:#3d2e72}
 .tipo-label-grand{font-size:12px;font-weight:800;color:#fff}
+html.dark .tipo-particular{background:#1a2a3a;color:#90caf9}
+html.dark .tipo-pública{background:#1a2e1a;color:#a5d6a7}
+html.dark .tipo-outro{background:#2a2a2a;color:#ccc}
+html.dark .tipo-label-sub{color:#fff}
+html.dark .cell-tipo{color:#fff}
 
 /* ── value cells ───────────────────────────────────────── */
 .cell-val{text-align:center;font-variant-numeric:tabular-nums}
@@ -266,6 +274,8 @@ html.dark .cell-zero .val-num{color:#444}
 }
 .row-grandtotal .cell-total{background:#5a4a96!important;color:#fff!important}
 .row-subtotal .cell-total{background:#d0c9ee!important;color:#3d2e72!important}
+html.dark .cell-total{background:#2a2a38!important;color:#fff!important;border-left-color:#38384a}
+html.dark .row-subtotal .cell-total{background:#252530!important;color:#fff!important}
 
 .val-wrap{display:flex;flex-direction:column;align-items:center;gap:3px}
 .val-num{font-size:12px;line-height:1}
@@ -289,11 +299,11 @@ html.dark .leg-row{background:#201e2e;border-color:#2d2b3a}
   flex-shrink:0;margin-top:2px
 }
 .leg-etapa{font-size:11px;font-weight:700;color:#3d2e72;white-space:nowrap}
-html.dark .leg-etapa{color:#c4b8f0}
+html.dark .leg-etapa{color:#fff}
 .leg-desc{font-size:11px;color:var(--muted);margin-left:2px}
 
 </style>
-<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+</head>
 <body>
 <button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button><script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
 <a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">&#8592; In&iacute;cio</a>
