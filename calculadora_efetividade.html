@@ -359,7 +359,7 @@ html.dark .ev-lbl{color:#71717a}
 
   <!-- Projeção combinada -->
   <div class="proj-hero">
-    <div class="ph-status" id="proj-status">Ajuste os ritmos acima para simular</div>
+    <div class="ph-status" id="proj-status">Carregando proje&#231;&#227;o&#8230;</div>
     <div class="ph-dias" id="proj-dias">&#8212;</div>
     <div class="ph-data" id="proj-data"></div>
     <div class="ph-detail" id="proj-detalhe"></div>
@@ -453,11 +453,14 @@ function render() {
   document.getElementById('kpi-delta').textContent = delta_periodo.toFixed(1) + '/dia';
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. — ' + (periodo_labels[periodo] || periodo);
 
-  // KPI vencem/dia: informativo — média dos próximos 7 dias corridos (a partir de amanhã)
-  var vencem_dia = mediaExpJanela(C.expiracoes, 1);
+  // KPI vencem/dia: para "semana" (que inclui hoje), usar o valor de hoje (expiracoes[0]);
+  // para outros períodos, usar a média dos próximos 7 dias corridos (a partir de amanhã).
+  var vencem_dia = (periodo === 'semana')
+    ? (C.expiracoes && C.expiracoes.length > 0 ? C.expiracoes[0] : 0)
+    : mediaExpJanela(C.expiracoes, 1);
   document.getElementById('kpi-vencem').className   = 'kc-val';
   document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(0) + '/dia';
-  document.getElementById('kpi-vencem-sub').textContent = 'vencem/dia (média 7d)';
+  document.getElementById('kpi-vencem-sub').textContent = periodo === 'semana' ? 'vencem/dia (hoje)' : 'vencem/dia (média 7d)';
 
   // KPIs universais
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
@@ -467,11 +470,7 @@ function render() {
   document.getElementById('kpi-meta-alvo').textContent   = nec_meta.toLocaleString('pt-BR');
   document.getElementById('kpi-consultores').textContent = C.n_consultores;
 
-  // Ritmo combinado — lê os sliders de cargo (ajustáveis pelo usuário)
-  var b1_ana_v = +document.getElementById('sl-ana').value;
-  var b1_est_v = +document.getElementById('sl-est').value;
-  var ritmo_combinado = C.n_analistas * b1_ana_v + C.n_estagiarios * b1_est_v;
-
+  // Breakdown por cargo — sliders informativos, não usados na projeção
   var n_du_p = rp.n || 1;
   renderCargo('ana', C.novas_hist_analista,   C.n_analistas,   n_du_p);
   renderCargo('est', C.novas_hist_estagiario, C.n_estagiarios, n_du_p);
@@ -487,17 +486,18 @@ function render() {
     projDias.innerHTML   = '&#10003;'; projDias.className = 'ph-dias ph-green';
     projData.textContent = 'Efetivas hoje: ' + C.efetivas.toLocaleString('pt-BR');
     projDet.textContent  = ''; racEl.innerHTML = '';
-  } else if (ritmo_combinado <= 0) {
-    statusEl.textContent = 'Defina ef/dia acima de zero';
+  } else if (delta_periodo <= 0) {
+    statusEl.textContent = 'Sem novas efetivações no período — projeção indisponível';
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
     projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = '';
   } else {
     var dp_real;
     var periodo_lbl = periodo_labels[periodo] || periodo;
     // Dias para fechar o gap = faltam ÷ (novas ef./dia − vencem/dia).
+    // Usa delta_periodo — exatamente o mesmo valor exibido no KPI "novas ef./dia".
     // O denominador é o ganho líquido real: quanto a base efetiva cresce por dia
     // descontando as que expiram.
-    var ritmo_liq = ritmo_combinado - vencem_dia;
+    var ritmo_liq = delta_periodo - vencem_dia;
     if (ritmo_liq <= 0) {
       statusEl.textContent = 'Ritmo líquido negativo — mais escolas expiram do que são efetivadas';
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
@@ -520,7 +520,7 @@ function render() {
         projDet.textContent  = '';
         racEl.innerHTML =
           '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-          + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + ritmo_combinado.toFixed(0) + '</b> &minus; vencem/dia: <b>' + vencem_dia.toFixed(0) + '</b> = ritmo líquido: <b>' + ritmo_liq.toFixed(0) + '</b><br>'
+          + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + delta_periodo.toFixed(0) + '</b> &minus; vencem/dia: <b>' + vencem_dia.toFixed(0) + '</b> = ritmo líquido: <b>' + ritmo_liq.toFixed(0) + '</b><br>'
           + '&#10146; Estimativa: ' + faltam_proj + ' &divide; ' + ritmo_liq.toFixed(0) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
       }
     }
@@ -534,7 +534,7 @@ function render() {
     var dias  = C.semana_dias  || [];
     var maxV  = Math.max.apply(null, vals) || 1;
     var n     = vals.length;
-    var media = ritmo_combinado.toFixed(0);
+    var media = delta_periodo.toFixed(0);
     wrap.innerHTML = '';
     wrap.style.cssText = 'display:flex;align-items:flex-end;gap:12px;height:160px;padding:0 8px 0';
 
@@ -631,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#128101; Ef/dia/B1 (analista &amp; estagi&#225;rio)</p>
-      <p style="margin-bottom:14px">Sliders ajust&#225;veis. Inicializam com a m&#233;dia do per&#237;odo selecionado. O <b>ritmo combinado</b> usado na proje&#231;&#227;o &#233; calculado como <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">n_analistas &times; ef/B1_ana + n_estagi&#225;rios &times; ef/B1_est</code>.</p>
+      <p style="margin-bottom:14px">Breakdown informativo por cargo. A proje&#231;&#227;o usa o <b>novas ef./dia do per&#237;odo</b> (o mesmo valor exibido no KPI acima) — n&#227;o os sliders, para garantir consist&#234;ncia entre o que &#233; exibido e o que &#233; calculado.</p>
 
       <p style="font-weight:800;color:#333;margin-bottom:4px">&#128206; Efetivo no prazo (regra de carteira)</p>
       <table style="width:100%;font-size:12px;border-collapse:collapse">
