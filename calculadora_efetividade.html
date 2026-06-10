@@ -454,13 +454,13 @@ function render() {
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. — ' + (periodo_labels[periodo] || periodo);
 
   // KPI vencem/dia: para "semana" (que inclui hoje), usar o valor de hoje (expiracoes[0]);
-  // para outros períodos, usar a média dos próximos 7 dias corridos (a partir de amanhã).
+  // para outros períodos, fixar em 100 (valor de referência padrão).
   var vencem_dia = (periodo === 'semana')
     ? (C.expiracoes && C.expiracoes.length > 0 ? C.expiracoes[0] : 0)
-    : mediaExpJanela(C.expiracoes, 1);
+    : 100;
   document.getElementById('kpi-vencem').className   = 'kc-val';
   document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(0) + '/dia';
-  document.getElementById('kpi-vencem-sub').textContent = periodo === 'semana' ? 'vencem/dia (hoje)' : 'vencem/dia (média 7d)';
+  document.getElementById('kpi-vencem-sub').textContent = periodo === 'semana' ? 'vencem/dia (hoje)' : 'vencem/dia (referência)';
 
   // KPIs universais
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
