@@ -453,8 +453,8 @@ function render() {
   document.getElementById('kpi-delta').textContent = delta_periodo.toFixed(1) + '/dia';
   document.getElementById('kpi-delta-sub').textContent = 'novas ef. — ' + (periodo_labels[periodo] || periodo);
 
-  // KPI vencem/dia: informativo — média dos próximos 7 dias corridos
-  var vencem_dia = mediaExpJanela(C.expiracoes, 0);
+  // KPI vencem/dia: informativo — média dos próximos 7 dias corridos (a partir de amanhã)
+  var vencem_dia = mediaExpJanela(C.expiracoes, 1);
   document.getElementById('kpi-vencem').className   = 'kc-val';
   document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(0) + '/dia';
   document.getElementById('kpi-vencem-sub').textContent = 'vencem/dia (média 7d)';
@@ -494,27 +494,35 @@ function render() {
   } else {
     var dp_real;
     var periodo_lbl = periodo_labels[periodo] || periodo;
-    // Dias para fechar o gap = faltam ÷ novas ef./dia (ritmo bruto observado).
-    // Não subtraímos vencem/dia porque o ritmo já é calculado sobre a base real
-    // (inclui reativações), então representa o ganho líquido efetivo do time.
-    dp_real = Math.ceil(faltam_proj / ritmo_combinado);
-
-    statusEl.textContent = 'Para atingir ' + meta + '% no ritmo de ' + ritmo_combinado.toFixed(0) + ' ef./dia:';
-
-    if (dp_real > 365) {
+    // Dias para fechar o gap = faltam ÷ (novas ef./dia − vencem/dia).
+    // O denominador é o ganho líquido real: quanto a base efetiva cresce por dia
+    // descontando as que expiram.
+    var ritmo_liq = ritmo_combinado - vencem_dia;
+    if (ritmo_liq <= 0) {
+      statusEl.textContent = 'Ritmo líquido negativo — mais escolas expiram do que são efetivadas';
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
-      projData.textContent = 'Meta muito distante no ritmo atual';
+      projData.textContent = 'Aumente o ritmo de efetivações ou reduza expirações';
       projDet.textContent  = ''; racEl.innerHTML = '';
     } else {
-      var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp_real);
-      projDias.innerHTML   = dp_real + (dp_real === 1 ? ' dia útil' : ' dias úteis');
-      projDias.className   = 'ph-dias' + (dp_real <= 5 ? ' ph-green' : dp_real > 15 ? ' ph-red' : '');
-      projData.textContent = fmtDate(d);
-      projDet.textContent  = '';
-      racEl.innerHTML =
-        '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-        + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + ritmo_combinado.toFixed(0) + '</b><br>'
-        + '&#10146; Estimativa: ' + faltam_proj + ' &divide; ' + ritmo_combinado.toFixed(0) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
+      dp_real = Math.ceil(faltam_proj / ritmo_liq);
+
+      statusEl.textContent = 'Para atingir ' + meta + '% no ritmo líquido de ' + ritmo_liq.toFixed(0) + ' ef./dia:';
+
+      if (dp_real > 365) {
+        projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
+        projData.textContent = 'Meta muito distante no ritmo atual';
+        projDet.textContent  = ''; racEl.innerHTML = '';
+      } else {
+        var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp_real);
+        projDias.innerHTML   = dp_real + (dp_real === 1 ? ' dia útil' : ' dias úteis');
+        projDias.className   = 'ph-dias' + (dp_real <= 5 ? ' ph-green' : dp_real > 15 ? ' ph-red' : '');
+        projData.textContent = fmtDate(d);
+        projDet.textContent  = '';
+        racEl.innerHTML =
+          '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
+          + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + ritmo_combinado.toFixed(0) + '</b> &minus; vencem/dia: <b>' + vencem_dia.toFixed(0) + '</b> = ritmo líquido: <b>' + ritmo_liq.toFixed(0) + '</b><br>'
+          + '&#10146; Estimativa: ' + faltam_proj + ' &divide; ' + ritmo_liq.toFixed(0) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
+      }
     }
   }
 
