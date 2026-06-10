@@ -157,14 +157,14 @@ html.dark .fn-toggle button:hover:not(.mode-active){background:#3a3a48}
 .fn-kpi:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.1)}
 .fn-kpi.kpi-ht{border-top-color:#7668AC}
 .fn-kpi.kpi-nt{border-top-color:#64b5f6}
-.fn-kpi.kpi-conc{border-top-color:#4caf50}
+.fn-kpi.kpi-lokado{border-top-color:#4caf50}
 .fn-kpi.kpi-ret{border-top-color:#ef5350}
 .fn-kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;
   letter-spacing:.7px;font-weight:700;margin-bottom:6px}
 .fn-kpi-val{font-size:26px;font-weight:800;line-height:1;color:#595959}
 .fn-kpi.kpi-ht .fn-kpi-val{color:#7668AC}
 .fn-kpi.kpi-nt .fn-kpi-val{color:#5b9bd5}
-.fn-kpi.kpi-conc .fn-kpi-val{color:#388e3c}
+.fn-kpi.kpi-lokado .fn-kpi-val{color:#388e3c}
 .fn-kpi.kpi-ret .fn-kpi-val{color:#d32f2f}
 .fn-kpi-sub{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
 html.dark .fn-kpi{background:var(--surface);border-color:var(--border)}
@@ -344,10 +344,10 @@ html.dark .leg-etapa{color:#fff}
     <div class="fn-kpi-val" id="kpi-nt">—</div>
     <div class="fn-kpi-sub">Medium + demais</div>
   </div>
-  <div class="fn-kpi kpi-conc">
-    <div class="fn-kpi-lbl">Jornada Conclu&iacute;da</div>
-    <div class="fn-kpi-val" id="kpi-conc">—</div>
-    <div class="fn-kpi-sub" id="kpi-conc-pct">&nbsp;</div>
+  <div class="fn-kpi kpi-lokado">
+    <div class="fn-kpi-lbl">Lokado</div>
+    <div class="fn-kpi-val" id="kpi-lokado">—</div>
+    <div class="fn-kpi-sub" id="kpi-lokado-pct">&nbsp;</div>
   </div>
   <div class="fn-kpi kpi-ret">
     <div class="fn-kpi-lbl">Retra&ccedil;&atilde;o</div>
@@ -424,7 +424,7 @@ const ETAPA_COLORS = [
   "#1976d2","#90caf9","#ef5350"
 ];
 // indices of "concluded" etapas for summary KPIs
-const IDX_CONCLUIDAS = [8, 9]; // 07.1 e 07.2
+const IDX_LOKADO = [5, 6, 7, 8, 9]; // 04 até 07.2
 const IDX_RETRACAO   = 10;     // 08.
 
 let mode = 'qtd';
@@ -475,19 +475,19 @@ function buildKpis() {
   const totalHT    = qht.length ? qht[qht.length - 1] : 0;
   const totalNT    = qnt.length ? qnt[qnt.length - 1] : 0;
 
-  const concluidas = qgt.length
-    ? IDX_CONCLUIDAS.reduce((s, i) => s + (qgt[i] || 0), 0) : 0;
+  const lokado   = qgt.length
+    ? IDX_LOKADO.reduce((s, i) => s + (qgt[i] || 0), 0) : 0;
   const retracao   = qgt.length ? (qgt[IDX_RETRACAO] || 0) : 0;
 
   document.getElementById('kpi-total').textContent   = fmt(totalGeral);
   document.getElementById('kpi-ht').textContent      = fmt(totalHT);
   document.getElementById('kpi-nt').textContent      = fmt(totalNT);
-  document.getElementById('kpi-conc').textContent    = fmt(concluidas);
+  document.getElementById('kpi-lokado').textContent  = fmt(lokado);
   document.getElementById('kpi-ret').textContent     = fmt(retracao);
 
   if (totalGeral > 0) {
-    const pct = Math.round(concluidas / totalGeral * 100);
-    document.getElementById('kpi-conc-pct').textContent = pct + '% do total';
+    const pct = Math.round(lokado / totalGeral * 100);
+    document.getElementById('kpi-lokado-pct').textContent = pct + '% do total';
     const pctRet = Math.round(retracao / totalGeral * 100);
     document.getElementById('kpi-ret-pct').textContent  = pctRet + '% do total';
   }
