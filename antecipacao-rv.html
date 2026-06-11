@@ -1729,14 +1729,16 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
         <b>T2/T3/T4</b> = indica se o CS atingiu o threshold de carteira para cada trigger.<br>
         <b>Pago</b> = atualizado manualmente conforme pagamento é processado.
       </div>
-            <div class="cs-filter" style="margin-bottom:12px;">
-        <span style="font-size:11px;font-weight:700;color:var(--gray);margin-right:8px;">Filtrar:</span>
-        <button class="cs-filter-btn active" data-filter="todos"    onclick="filtrarPorCS(this)">Todos</button>
-        <button class="cs-filter-btn"        data-filter="pagos"    onclick="filtrarPorCS(this)">Já pagos</button>
-        <button class="cs-filter-btn"        data-filter="nao-pagos" onclick="filtrarPorCS(this)">Não pagos</button>
-        <button class="cs-filter-btn"        data-filter="t2"       onclick="filtrarPorCS(this)">Atingiu T2</button>
-        <button class="cs-filter-btn"        data-filter="t3"       onclick="filtrarPorCS(this)">Atingiu T3</button>
-        <button class="cs-filter-btn"        data-filter="t4"       onclick="filtrarPorCS(this)">Atingiu T4</button>
+      <div class="cs-filter">
+        <label>Filtrar</label>
+        <select id="select-cs-filter" onchange="filtrarPorCS(this.value)">
+          <option value="todos">Todos</option>
+          <option value="pagos">Já pagos</option>
+          <option value="nao-pagos">Não pagos</option>
+          <option value="t2">Atingiu T2</option>
+          <option value="t3">Atingiu T3</option>
+          <option value="t4">Atingiu T4</option>
+        </select>
       </div>
       <div class="table-wrap">
         <table id="tabela-cs">
@@ -2135,10 +2137,7 @@ function exportarEscolas() {
   a.click();
 }
 
-function filtrarPorCS(btn) {
-  document.querySelectorAll('.cs-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  var f = btn.getAttribute('data-filter');
+function filtrarPorCS(f) {
   document.querySelectorAll('#tabela-cs tbody tr[data-pago]').forEach(function(r) {
     var show = false;
     if      (f === 'todos')     show = true;
