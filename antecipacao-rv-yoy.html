@@ -218,12 +218,32 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 .roi-card.green .r-val { color: var(--green); }
 .roi-card .r-sub { font-size: 11px; color: #aaa; }
 
-/* ── Aviso regras pendentes ── */
-.aviso {
-  background: #fff3cd; border: 1px solid var(--yellow-dark);
-  border-radius: 8px; padding: 10px 14px; font-size: 11px;
-  color: #7a5800; margin-bottom: 14px; font-weight: 600;
+/* ── Acordeão de regras ── */
+.regra-toggle {
+  display: flex; align-items: center; gap: 8px;
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 8px; padding: 9px 14px; margin-bottom: 8px;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--gray); cursor: pointer; width: 100%; text-align: left;
+  box-shadow: var(--shadow); transition: border-color .15s, color .15s;
 }
+.regra-toggle:hover { border-color: var(--purple); color: var(--purple); }
+.regra-toggle.open  { border-color: var(--purple); color: var(--purple); background: var(--purple-bg); }
+.regra-toggle .arrow { margin-left: auto; font-size: 10px; transition: transform .2s; }
+.regra-toggle.open .arrow { transform: rotate(180deg); }
+.regra-body {
+  display: none; background: white; border: 1.5px solid var(--border);
+  border-top: none; border-radius: 0 0 8px 8px;
+  padding: 10px 16px; font-size: 11px; line-height: 1.7;
+  margin-bottom: 10px; color: var(--gray);
+}
+.regra-body.open { display: block; }
+.regra-body b { color: var(--purple); }
+.regra-body .warn { color: var(--yellow-dark); font-weight: 700; }
+.regra-body table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
+.regra-body th { background: var(--purple-bg); color: var(--purple); padding: 5px 10px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+.regra-body td { padding: 5px 10px; border-bottom: 1px solid var(--purple-bg); }
+.regra-body tr:last-child td { border-bottom: none; }
 
 /* ── Footer ── */
 .footer { text-align: center; font-size: 10px; color: #ccc; margin-top: 32px; }
@@ -261,17 +281,39 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
   ══════════════════════════════════════════════════════════ -->
   <div id="tab-rv" class="tab-panel active">
 
-    <!-- Regras -->
-    <div class="def-box">
-      <b>Regras de bônus — Maio 2026</b> &nbsp;&#183;&nbsp;
-      <b>Trigger 1:</b> escola com 5+ alunos que realizaram pedido → <b>R$ 50 por escola</b> &nbsp;&#183;&nbsp;
-      <b>Trigger 2:</b> CS com &gt;30% da carteira antecipada → <b>+ R$ 100</b> (cumulativo) &nbsp;&#183;&nbsp;
-      <b>Especial:</b> 100% da carteira antecipada → <b>R$ 200</b> (substitui T1+T2) &nbsp;&#183;&nbsp;
-      Regra FC60+: <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code>
+    <!-- Regras Maio 2026 (acordeão) -->
+    <button class="regra-toggle" onclick="toggleRegra('maio')">
+      📋 Regras de bônus — Maio 2026
+      <span class="arrow">▼</span>
+    </button>
+    <div id="regra-maio" class="regra-body">
+      Dois triggers independentes. O segundo é <b>cumulativo</b> com o primeiro.<br><br>
+      <b>Trigger 1 — Por escola:</b> escola com <b>5 ou mais alunos que realizaram pedido</b> → <b>R$ 50 por escola</b><br>
+      <b>Trigger 2 — Por carteira:</b> CS com <b>&gt;30% da carteira total antecipada</b> → <b>R$ 100 adicional</b> (cumulativo com T1)<br>
+      <b>Caso especial:</b> CS com <b>100% da carteira</b> → <b>R$ 200</b> (substitui T1+T2, não cumulativo)<br>
+      <b>Regra FC60+:</b> <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code>
+      <table>
+        <tr><th>Situação</th><th>Valor total</th></tr>
+        <tr><td>Apenas T1 (escola com 5+ alunos)</td><td><b>R$ 50 por escola</b></td></tr>
+        <tr><td>T1 + T2 (escola + &gt;30% carteira)</td><td><b>R$ 50/escola + R$ 100</b></td></tr>
+        <tr><td>100% da carteira antecipada</td><td><b>R$ 200</b></td></tr>
+      </table>
     </div>
 
-    <div class="aviso">
-      ⚠️ <b>Regras de junho ainda pendentes</b> — confirmar com JP e Amanda antes de implementar. Proposta: faixa 30%–70% → R$50 · acima de 70% → R$100.
+    <!-- Regras Junho 2026 (acordeão) -->
+    <button class="regra-toggle" onclick="toggleRegra('junho')" style="border-color: var(--yellow-dark); color: #7a5800;">
+      ⚠️ Regras de bônus — Junho 2026 <span style="font-weight:400;color:#aaa;">(proposta — pendente confirmação)</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div id="regra-junho" class="regra-body" style="border-color: var(--yellow-dark);">
+      Proposta da Amanda — <span class="warn">não implementar até confirmar com JP e Amanda.</span><br><br>
+      Escala progressiva baseada na <b>penetração de carteira</b>:<br>
+      &nbsp;&nbsp;• Faixa de <b>30% a 70%</b> de penetração → <b>R$ 50</b><br>
+      &nbsp;&nbsp;• Acima de <b>70%</b> ou abaixo de 30% → <b>R$ 100</b><br><br>
+      <b>Pendências antes de implementar:</b><br>
+      &nbsp;&nbsp;• Confirmar com JP a regra de divisão de bônus quando CS muda durante o período<br>
+      &nbsp;&nbsp;• Confirmar com JP + Amanda as regras finais de junho<br>
+      &nbsp;&nbsp;• Verificar na planilha semanal o que já foi pago e alinhar formato
     </div>
 
     <!-- KPIs resumo RV -->
@@ -655,6 +697,15 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 </div><!-- /container -->
 
 <script>
+/* ── Acordeão de regras ── */
+function toggleRegra(id) {
+  var btn  = document.querySelector('[onclick="toggleRegra(\'' + id + '\')"]');
+  var body = document.getElementById('regra-' + id);
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  btn.classList.toggle('open', !open);
+}
+
 /* ── Main tabs ── */
 function switchTab(t) {
   document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
