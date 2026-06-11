@@ -329,6 +329,19 @@ html.dark .theme-btn { background:linear-gradient(135deg,#2d1b69,#0f0c29); box-s
 .theme-icon-moon { opacity:0; transform:scale(0) rotate(-40deg) translateY(10px); }
 html.dark .theme-icon-sun  { opacity:0; transform:scale(0) rotate(60deg) translateY(10px); animation:none; }
 html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translateY(0); animation:moon-twinkle 3s ease-in-out infinite; }
+
+/* ── Filtro Por CS ── */
+.cs-filter-btn {
+  background: white; border: 1.5px solid var(--border); color: var(--gray);
+  border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 700;
+  font-family: 'Montserrat', sans-serif; cursor: pointer; margin-right: 4px; margin-bottom: 4px;
+  transition: all .15s;
+}
+.cs-filter-btn:hover { border-color: var(--purple); color: var(--purple); }
+.cs-filter-btn.active { background: var(--purple); color: white; border-color: var(--purple); }
+html.dark .cs-filter-btn { background:#1e1e22; border-color:#2d2d33; color:#a1a1aa; }
+html.dark .cs-filter-btn:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:#7668AC; }
 </style>
 <body>
   <div class="wip-banner">&#9888;&#65039; Página em ajuste — dados em validação</div>
@@ -1716,8 +1729,17 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
         <b>T2/T3/T4</b> = indica se o CS atingiu o threshold de carteira para cada trigger.<br>
         <b>Pago</b> = atualizado manualmente conforme pagamento é processado.
       </div>
+            <div class="cs-filter" style="margin-bottom:12px;">
+        <span style="font-size:11px;font-weight:700;color:var(--gray);margin-right:8px;">Filtrar:</span>
+        <button class="cs-filter-btn active" data-filter="todos"    onclick="filtrarPorCS(this)">Todos</button>
+        <button class="cs-filter-btn"        data-filter="pagos"    onclick="filtrarPorCS(this)">Já pagos</button>
+        <button class="cs-filter-btn"        data-filter="nao-pagos" onclick="filtrarPorCS(this)">Não pagos</button>
+        <button class="cs-filter-btn"        data-filter="t2"       onclick="filtrarPorCS(this)">Atingiu T2</button>
+        <button class="cs-filter-btn"        data-filter="t3"       onclick="filtrarPorCS(this)">Atingiu T3</button>
+        <button class="cs-filter-btn"        data-filter="t4"       onclick="filtrarPorCS(this)">Atingiu T4</button>
+      </div>
       <div class="table-wrap">
-        <table>
+        <table id="tabela-cs">
           <thead>
             <tr>
               <th>CS</th>
@@ -1731,7 +1753,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Mariana Santana</td>
               <td class="num">16</td>
               <td class="num">25%</td>
@@ -1741,17 +1763,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 800</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
-              <td>Sarah Moura</td>
-              <td class="num">12</td>
-              <td class="num">10%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 600</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Talita Panassol</td>
               <td class="num">12</td>
               <td class="num">16%</td>
@@ -1761,7 +1773,17 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 600</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+              <td>Sarah Moura</td>
+              <td class="num">12</td>
+              <td class="num">10%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 600</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Carla Gomes</td>
               <td class="num">9</td>
               <td class="num">15%</td>
@@ -1771,7 +1793,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 450</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Shelry Solart</td>
               <td class="num">8</td>
               <td class="num">13%</td>
@@ -1781,7 +1803,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 400</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Mariaeduarda Carvalho</td>
               <td class="num">6</td>
               <td class="num">5%</td>
@@ -1791,7 +1813,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 300</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Maria Elvira</td>
               <td class="num">6</td>
               <td class="num">12%</td>
@@ -1801,7 +1823,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 300</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Gabriela Ribeiro</td>
               <td class="num">5</td>
               <td class="num">9%</td>
@@ -1811,7 +1833,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 250</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Larissa Freitas</td>
               <td class="num">5</td>
               <td class="num">7%</td>
@@ -1821,17 +1843,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 250</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
-              <td>Renata Brandao</td>
-              <td class="num">4</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 200</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Andreina Ferreira</td>
               <td class="num">4</td>
               <td class="num">6%</td>
@@ -1841,7 +1853,17 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 200</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+              <td>Renata Brandao</td>
+              <td class="num">4</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 200</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Laura Pagliuzo</td>
               <td class="num">3</td>
               <td class="num">6%</td>
@@ -1851,7 +1873,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 150</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Tatiana Portela</td>
               <td class="num">3</td>
               <td class="num">4%</td>
@@ -1861,7 +1883,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 150</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Junior Gomes</td>
               <td class="num">3</td>
               <td class="num">4%</td>
@@ -1871,17 +1893,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 150</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
-              <td>Thayna Bastos</td>
-              <td class="num">3</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 150</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Indlayse Ferreira</td>
               <td class="num">3</td>
               <td class="num">4%</td>
@@ -1891,7 +1903,17 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 150</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+              <td>Thayna Bastos</td>
+              <td class="num">3</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 150</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Julia Cordeiro</td>
               <td class="num">3</td>
               <td class="num">4%</td>
@@ -1901,17 +1923,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 150</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
-              <td>Erick Andrade</td>
-              <td class="num">2</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 100</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Giovanna Munhoz</td>
               <td class="num">2</td>
               <td class="num">4%</td>
@@ -1921,7 +1933,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 100</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Anaclara Peres</td>
               <td class="num">2</td>
               <td class="num">3%</td>
@@ -1931,7 +1943,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 100</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Viviane Luz</td>
               <td class="num">2</td>
               <td class="num">4%</td>
@@ -1941,7 +1953,17 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 100</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+              <td>Erick Andrade</td>
+              <td class="num">2</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 100</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Thais Borges</td>
               <td class="num">1</td>
               <td class="num">2%</td>
@@ -1951,27 +1973,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 50</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
-              <td>Viviancristina Souza</td>
-              <td class="num">1</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr>
-              <td>Stefany Figueredo</td>
-              <td class="num">1</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Pamela Miranda</td>
               <td class="num">1</td>
               <td class="num">2%</td>
@@ -1981,17 +1983,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 50</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr>
-              <td>Kaian Silva</td>
-              <td class="num">1</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Mayane Costa</td>
               <td class="num">1</td>
               <td class="num">3%</td>
@@ -2001,12 +1993,40 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
               <td class="num"><b>R$ 50</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr class="total-row">
-              <td><b>Total</b></td>
-              <td class="num"><b>119</b></td>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+              <td>Viviancristina Souza</td>
+              <td class="num">1</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+              <td>Kaian Silva</td>
+              <td class="num">1</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+              <td>Stefany Figueredo</td>
+              <td class="num">1</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr class="total-row" id="cs-total">
+              <td><b>Total</b></td><td class="num"><b>119</b></td>
               <td></td><td></td><td></td><td></td>
-              <td class="num"><b>R$ 5.950</b></td>
-              <td></td>
+              <td class="num"><b>R$ 5.950</b></td><td></td>
             </tr>
           </tbody>
         </table>
@@ -2113,6 +2133,24 @@ function exportarEscolas() {
   var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = 'escolas_antecipacao_rv' + (cs !== 'todos' ? '_'+cs.replace(/ /g,'_') : '') + '.csv';
   a.click();
+}
+
+function filtrarPorCS(btn) {
+  document.querySelectorAll('.cs-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  var f = btn.getAttribute('data-filter');
+  document.querySelectorAll('#tabela-cs tbody tr[data-pago]').forEach(function(r) {
+    var show = false;
+    if      (f === 'todos')     show = true;
+    else if (f === 'pagos')     show = r.dataset.pago === 'sim';
+    else if (f === 'nao-pagos') show = r.dataset.pago === 'nao';
+    else if (f === 't2')        show = r.dataset.t2   === 'sim';
+    else if (f === 't3')        show = r.dataset.t3   === 'sim';
+    else if (f === 't4')        show = r.dataset.t4   === 'sim';
+    r.style.display = show ? '' : 'none';
+  });
+  var total = document.getElementById('cs-total');
+  if (total) total.style.display = f === 'todos' ? '' : 'none';
 }
 function filtrarCS(cs) {
   document.querySelectorAll('#tabela-escola tbody tr[data-cs]').forEach(function(r) {
