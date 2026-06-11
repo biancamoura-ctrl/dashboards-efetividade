@@ -343,13 +343,13 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 
     <!-- Sub-tabs -->
     <div class="sub-tabs">
-      <button class="sub-tab active" onclick="switchSub('escola')">Por Escola</button>
-      <button class="sub-tab" onclick="switchSub('cs')">Por CS</button>
+      <button class="sub-tab active" onclick="switchSub('cs')">Por CS</button>
       <button class="sub-tab" onclick="switchSub('roi')">ROI</button>
+      <button class="sub-tab" onclick="switchSub('escola')">Por Escola</button>
     </div>
 
     <!-- ── SUB-TAB: Por Escola ── -->
-    <div id="sub-escola" class="sub-panel active">
+    <div id="sub-escola" class="sub-panel">
       <div class="def-box">
         Cada linha = uma escola que <b>atingiu T1</b> (5+ alunos pedindo). Escolas encerradas permanecem registradas.
         O bônus da coluna <em>Bônus</em> é o valor de T1 (R$50); o adicional de T2 aparece na visão por CS.
@@ -453,7 +453,7 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
     </div>
 
     <!-- ── SUB-TAB: Por CS ── -->
-    <div id="sub-cs" class="sub-panel">
+    <div id="sub-cs" class="sub-panel active">
       <div class="def-box">
         <b>Valor a receber</b> = soma dos T1 das escolas deste CS + R$100 se T2 atingido (ou R$200 se especial, que substitui tudo).
         <b>Saldo devedor</b> = valor a receber − valor já pago. Percentual de carteira calculado sobre total de escolas FC60+ ativas.
