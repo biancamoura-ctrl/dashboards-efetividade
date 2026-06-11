@@ -365,6 +365,13 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 
     <!-- ── SUB-TAB: Por Escola ── -->
     <div id="sub-escola" class="sub-panel">
+      <button class="regra-chip" onclick="toggleRegra('info-escola')" style="margin-bottom:12px;">
+        ℹ️ Como ler esta tabela <span class="arrow">▾</span>
+      </button>
+      <div id="regra-info-escola" class="regra-body">
+        Cada linha = uma escola que <b>atingiu T1</b> (5+ alunos com pedido). Escolas encerradas permanecem registradas.<br>
+        O bônus exibido aqui é o de T1 (R$50 por escola). O adicional de T2 aparece consolidado na visão Por CS.
+      </div>
       <!-- Filtro de CS -->
       <div class="cs-filter">
         <label>Filtrar por CS</label>
@@ -476,9 +483,13 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 
     <!-- ── SUB-TAB: Por CS ── -->
     <div id="sub-cs" class="sub-panel active">
-      <div class="def-box">
-        <b>Valor a receber</b> = soma dos T1 das escolas deste CS + R$100 se T2 atingido (ou R$200 se especial, que substitui tudo).
-        <b>Saldo devedor</b> = valor a receber − valor já pago. Percentual de carteira calculado sobre total de escolas FC60+ ativas.
+      <button class="regra-chip" onclick="toggleRegra('info-cs')" style="margin-bottom:12px;">
+        ℹ️ Como ler esta tabela <span class="arrow">▾</span>
+      </button>
+      <div id="regra-info-cs" class="regra-body">
+        <b>Valor a receber</b> = soma dos bônus T1 das escolas deste CS + R$100 se T2 atingido (ou R$200 se especial, que substitui tudo).<br>
+        <b>Saldo devedor</b> = valor a receber − valor já pago.<br>
+        <b>% Carteira</b> = calculado sobre total de escolas FC60+ ativas na carteira do CS.
       </div>
       <div class="table-wrap">
         <table>
@@ -549,9 +560,12 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 
     <!-- ── SUB-TAB: ROI ── -->
     <div id="sub-roi" class="sub-panel">
-      <div class="def-box">
-        <b>ROI do programa</b> = R$ antecipado ÷ R$ gasto em bônus.
-        <b>Atenção:</b> a antecipação pode ou não gerar receita incremental &mdash; análise futura com JP definirá se é ganho líquido ou apenas adiantamento de receita que viria de qualquer forma.
+      <button class="regra-chip" onclick="toggleRegra('info-roi')" style="margin-bottom:12px;">
+        ℹ️ Como interpretar o ROI <span class="arrow">▾</span>
+      </button>
+      <div id="regra-info-roi" class="regra-body">
+        <b>ROI</b> = R$ antecipado ÷ R$ gasto em bônus.<br>
+        <b>Atenção:</b> ainda não está claro se a antecipação gera receita incremental ou apenas antecipa receita que viria de qualquer forma — análise futura com JP vai definir a interpretação.
       </div>
 
       <div class="roi-cards">
