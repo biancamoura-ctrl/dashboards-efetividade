@@ -1712,164 +1712,301 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
         ℹ️ Como ler esta tabela <span class="arrow">▾</span>
       </button>
       <div id="regra-info-cs" class="regra-body">
-        <b>Valor a receber</b> = soma dos bônus T1 das escolas deste CS + R$100 se T2 atingido + R$200 se 100% carteira (todos cumulativos).<br>
-        <b>Saldo devedor</b> = valor a receber − valor já pago.<br>
-        <b>% Carteira</b> = calculado sobre total de escolas FC60+ ativas na carteira do CS.
+        <b>Bônus Total</b> = T1 (R$50 × escolas) + T2 (+R$50 se &gt;30%) + T3 (+R$100 se &gt;70%) + T4 (+R$200 se 100%), todos cumulativos.<br>
+        <b>T2/T3/T4</b> = indica se o CS atingiu o threshold de carteira para cada trigger.<br>
+        <b>Pago</b> = atualizado manualmente conforme pagamento é processado.
       </div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th>CS</th>
-              <th class="num">Escolas com T1</th>
-              <th class="num">% Carteira Antecipada</th>
-              <th>T2 Atingido?</th>
-              <th class="num">Valor a Receber</th>
-              <th class="num">Já Pago</th>
-              <th class="num">Saldo</th>
+              <th class="num">Escolas T1</th>
+              <th class="num">% Carteira</th>
+              <th style="text-align:center">T2</th>
+              <th style="text-align:center">T3</th>
+              <th style="text-align:center">T4</th>
+              <th class="num">Bônus Total</th>
+              <th style="text-align:center">Pago</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Mariana Santana</td><td class="num">16</td><td class="num">25%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 800</td><td class="num">R$ 0</td><td class="num"><b>R$ 800</b></td>
+              <td>Mariana Santana</td>
+              <td class="num">16</td>
+              <td class="num">25%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 800</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Talita Panassol</td><td class="num">12</td><td class="num">16%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 600</td><td class="num">R$ 0</td><td class="num"><b>R$ 600</b></td>
+              <td>Sarah Moura</td>
+              <td class="num">12</td>
+              <td class="num">10%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 600</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Sarah Moura</td><td class="num">12</td><td class="num">10%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 600</td><td class="num">R$ 0</td><td class="num"><b>R$ 600</b></td>
+              <td>Talita Panassol</td>
+              <td class="num">12</td>
+              <td class="num">16%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 600</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Carla Gomes</td><td class="num">9</td><td class="num">15%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 450</td><td class="num">R$ 0</td><td class="num"><b>R$ 450</b></td>
+              <td>Carla Gomes</td>
+              <td class="num">9</td>
+              <td class="num">15%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 450</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Shelry Solart</td><td class="num">8</td><td class="num">13%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 400</td><td class="num">R$ 0</td><td class="num"><b>R$ 400</b></td>
+              <td>Shelry Solart</td>
+              <td class="num">8</td>
+              <td class="num">13%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 400</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Maria Elvira</td><td class="num">6</td><td class="num">12%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 300</td><td class="num">R$ 0</td><td class="num"><b>R$ 300</b></td>
+              <td>Mariaeduarda Carvalho</td>
+              <td class="num">6</td>
+              <td class="num">5%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 300</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Mariaeduarda Carvalho</td><td class="num">6</td><td class="num">5%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 300</td><td class="num">R$ 0</td><td class="num"><b>R$ 300</b></td>
+              <td>Maria Elvira</td>
+              <td class="num">6</td>
+              <td class="num">12%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 300</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Larissa Freitas</td><td class="num">5</td><td class="num">7%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 250</td><td class="num">R$ 0</td><td class="num"><b>R$ 250</b></td>
+              <td>Gabriela Ribeiro</td>
+              <td class="num">5</td>
+              <td class="num">9%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 250</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Gabriela Ribeiro</td><td class="num">5</td><td class="num">9%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 250</td><td class="num">R$ 0</td><td class="num"><b>R$ 250</b></td>
+              <td>Larissa Freitas</td>
+              <td class="num">5</td>
+              <td class="num">7%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 250</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Andreina Ferreira</td><td class="num">4</td><td class="num">6%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 200</td><td class="num">R$ 0</td><td class="num"><b>R$ 200</b></td>
+              <td>Renata Brandao</td>
+              <td class="num">4</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 200</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Renata Brandao</td><td class="num">4</td><td class="num">4%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 200</td><td class="num">R$ 0</td><td class="num"><b>R$ 200</b></td>
+              <td>Andreina Ferreira</td>
+              <td class="num">4</td>
+              <td class="num">6%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 200</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Tatiana Portela</td><td class="num">3</td><td class="num">4%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+              <td>Laura Pagliuzo</td>
+              <td class="num">3</td>
+              <td class="num">6%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 150</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Indlayse Ferreira</td><td class="num">3</td><td class="num">4%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+              <td>Tatiana Portela</td>
+              <td class="num">3</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 150</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Laura Pagliuzo</td><td class="num">3</td><td class="num">6%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+              <td>Junior Gomes</td>
+              <td class="num">3</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 150</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Thayna Bastos</td><td class="num">3</td><td class="num">4%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+              <td>Thayna Bastos</td>
+              <td class="num">3</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 150</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Junior Gomes</td><td class="num">3</td><td class="num">4%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+              <td>Indlayse Ferreira</td>
+              <td class="num">3</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 150</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Julia Cordeiro</td><td class="num">3</td><td class="num">4%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+              <td>Julia Cordeiro</td>
+              <td class="num">3</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 150</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Erick Andrade</td><td class="num">2</td><td class="num">2%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
+              <td>Erick Andrade</td>
+              <td class="num">2</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 100</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Anaclara Peres</td><td class="num">2</td><td class="num">3%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
+              <td>Giovanna Munhoz</td>
+              <td class="num">2</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 100</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Giovanna Munhoz</td><td class="num">2</td><td class="num">4%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
+              <td>Anaclara Peres</td>
+              <td class="num">2</td>
+              <td class="num">3%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 100</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Viviane Luz</td><td class="num">2</td><td class="num">4%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
+              <td>Viviane Luz</td>
+              <td class="num">2</td>
+              <td class="num">4%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 100</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Viviancristina Souza</td><td class="num">1</td><td class="num">2%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+              <td>Thais Borges</td>
+              <td class="num">1</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Stefany Figueredo</td><td class="num">1</td><td class="num">2%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+              <td>Viviancristina Souza</td>
+              <td class="num">1</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Pamela Miranda</td><td class="num">1</td><td class="num">2%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+              <td>Stefany Figueredo</td>
+              <td class="num">1</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Mayane Costa</td><td class="num">1</td><td class="num">3%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+              <td>Pamela Miranda</td>
+              <td class="num">1</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Kaian Silva</td><td class="num">1</td><td class="num">2%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+              <td>Kaian Silva</td>
+              <td class="num">1</td>
+              <td class="num">2%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr>
-              <td>Thais Borges</td><td class="num">1</td><td class="num">2%</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+              <td>Mayane Costa</td>
+              <td class="num">1</td>
+              <td class="num">3%</td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
+              <td class="num"><b>R$ 50</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr class="total-row">
-              <td><b>Total</b></td><td class="num"><b>119</b></td>
-              <td></td><td></td>
-              <td class="num"><b>R$ 5.950</b></td><td class="num"><b>R$ 0</b></td>
+              <td><b>Total</b></td>
+              <td class="num"><b>119</b></td>
+              <td></td><td></td><td></td><td></td>
               <td class="num"><b>R$ 5.950</b></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
