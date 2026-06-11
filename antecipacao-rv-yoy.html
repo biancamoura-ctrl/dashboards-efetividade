@@ -392,17 +392,17 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
     <div class="kpis">
       <div class="kpi green">
         <div class="lbl">Escolas com T1</div>
-        <div class="val">92</div>
+        <div class="val">119</div>
         <div class="sub">5+ alunos antecipados</div>
       </div>
       <div class="kpi blue">
         <div class="lbl">CSs com T1</div>
-        <div class="val">29</div>
+        <div class="val">27</div>
         <div class="sub">ao menos 1 escola atingida</div>
       </div>
       <div class="kpi blue">
         <div class="lbl">CSs com T2</div>
-        <div class="val">2</div>
+        <div class="val">0</div>
         <div class="sub">&gt;30% da carteira antecipada</div>
       </div>
       <div class="kpi yellow">
@@ -412,7 +412,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
       </div>
       <div class="kpi">
         <div class="lbl">Total bônus a pagar</div>
-        <div class="val">R$&nbsp;8.550</div>
+        <div class="val">R$&nbsp;5.950</div>
         <div class="sub">R$ 250 já pagos</div>
       </div>
     </div>
@@ -438,31 +438,33 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
         <label>Filtrar por CS</label>
         <select id="select-cs" onchange="filtrarCS(this.value)">
                     <option value="todos">Todos os CSs</option>
-          <option value="Anaclara P.">Anaclara P.</option>
-          <option value="Andreina F.">Andreina F.</option>
-          <option value="Carla G.">Carla G.</option>
-          <option value="Erick A.">Erick A.</option>
-          <option value="Gabriela R.">Gabriela R.</option>
-          <option value="Giovanna M.">Giovanna M.</option>
-          <option value="Indlayse F.">Indlayse F.</option>
-          <option value="Julia C.">Julia C.</option>
-          <option value="Junior G.">Junior G.</option>
-          <option value="Kaian S.">Kaian S.</option>
-          <option value="Larissa F.">Larissa F.</option>
-          <option value="Laura P.">Laura P.</option>
-          <option value="Maria E.">Maria E.</option>
-          <option value="Mariaeduarda C.">Mariaeduarda C.</option>
-          <option value="Mariana S.">Mariana S.</option>
-          <option value="Mayane C.">Mayane C.</option>
-          <option value="Pamela M.">Pamela M.</option>
-          <option value="Renata B.">Renata B.</option>
-          <option value="Sarah M.">Sarah M.</option>
-          <option value="Shelry S.">Shelry S.</option>
-          <option value="Talita P.">Talita P.</option>
-          <option value="Tatiana P.">Tatiana P.</option>
-          <option value="Thayna B.">Thayna B.</option>
-          <option value="Viviancristina S.">Viviancristina S.</option>
-          <option value="Viviane L.">Viviane L.</option>
+          <option value="Anaclara Peres">Anaclara Peres</option>
+          <option value="Andreina Ferreira">Andreina Ferreira</option>
+          <option value="Carla Gomes">Carla Gomes</option>
+          <option value="Erick Andrade">Erick Andrade</option>
+          <option value="Gabriela Ribeiro">Gabriela Ribeiro</option>
+          <option value="Giovanna Munhoz">Giovanna Munhoz</option>
+          <option value="Indlayse Ferreira">Indlayse Ferreira</option>
+          <option value="Julia Cordeiro">Julia Cordeiro</option>
+          <option value="Junior Gomes">Junior Gomes</option>
+          <option value="Kaian Silva">Kaian Silva</option>
+          <option value="Larissa Freitas">Larissa Freitas</option>
+          <option value="Laura Pagliuzo">Laura Pagliuzo</option>
+          <option value="Maria Elvira">Maria Elvira</option>
+          <option value="Mariaeduarda Carvalho">Mariaeduarda Carvalho</option>
+          <option value="Mariana Santana">Mariana Santana</option>
+          <option value="Mayane Costa">Mayane Costa</option>
+          <option value="Pamela Miranda">Pamela Miranda</option>
+          <option value="Renata Brandao">Renata Brandao</option>
+          <option value="Sarah Moura">Sarah Moura</option>
+          <option value="Shelry Solart">Shelry Solart</option>
+          <option value="Stefany Figueredo">Stefany Figueredo</option>
+          <option value="Talita Panassol">Talita Panassol</option>
+          <option value="Tatiana Portela">Tatiana Portela</option>
+          <option value="Thais Borges">Thais Borges</option>
+          <option value="Thayna Bastos">Thayna Bastos</option>
+          <option value="Viviancristina Souza">Viviancristina Souza</option>
+          <option value="Viviane Luz">Viviane Luz</option>
         </select>
       </div>
       <div class="table-wrap">
@@ -471,8 +473,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
             <tr>
               <th>Escola</th>
               <th>CS Responsável</th>
-              <th>Data Antec.</th>
-              <th class="num">Alunos Antec.</th>
+                            <th class="num">Alunos Antec.</th>
               <th class="num">R$ Antecipado</th>
               <th>Trigger</th>
               <th class="num">Bônus (T1)</th>
@@ -481,723 +482,723 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
           </thead>
           <tbody>
             <tr data-cs="Maria Elvira">
-              <td>COLÉGIO ALTA FLORESTA</td><td>Maria Elvira</td><td>12/03/2026</td>
-              <td>82</td><td>R$ 30.259</td>
+              <td>COLÉGIO ALTA FLORESTA</td><td>Maria Elvira</td>
+              <td class="num">84</td><td class="num">R$ 30.259</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Shelry Solart">
-              <td>Centro Educacional São Tomás de Aquino</td><td>Shelry Solart</td><td>29/05/2026</td>
-              <td>60</td><td>R$ 18.562</td>
+              <td>Centro Educacional São Tomás de Aquino</td><td>Shelry Solart</td>
+              <td class="num">60</td><td class="num">R$ 18.562</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>VILA VERDE ESCOLA INFANTIL</td><td>Carla Gomes</td><td>27/04/2026</td>
-              <td>97</td><td>R$ 17.571</td>
+              <td>VILA VERDE ESCOLA INFANTIL</td><td>Carla Gomes</td>
+              <td class="num">74</td><td class="num">R$ 17.571</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>COLÉGIO VICENTINO SANTA ISABEL</td><td>Talita Panassol</td><td>12/04/2026</td>
-              <td>85</td><td>R$ 17.513</td>
+              <td>COLÉGIO VICENTINO SANTA ISABEL</td><td>Talita Panassol</td>
+              <td class="num">86</td><td class="num">R$ 17.513</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Shelry Solart">
-              <td>Colégio Adventista de Indaial</td><td>Shelry Solart</td><td>14/05/2026</td>
-              <td>110</td><td>R$ 17.027</td>
+              <td>Colégio Adventista de Indaial</td><td>Shelry Solart</td>
+              <td class="num">114</td><td class="num">R$ 17.027</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
-              <td>Escola Sesi SP</td><td>Mariaeduarda Carvalho</td><td>27/05/2026</td>
-              <td>98</td><td>R$ 16.425</td>
+              <td>Escola Sesi SP</td><td>Mariaeduarda Carvalho</td>
+              <td class="num">100</td><td class="num">R$ 16.425</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>Colégio GGE Boa Viagem</td><td>Sarah Moura</td><td>27/04/2026</td>
-              <td>58</td><td>R$ 16.323</td>
+              <td>Colégio GGE Boa Viagem</td><td>Sarah Moura</td>
+              <td class="num">58</td><td class="num">R$ 16.323</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>COLÉGIO SÃO FRANCISCO - UNIDADE I</td><td>Carla Gomes</td><td>22/05/2026</td>
-              <td>82</td><td>R$ 13.149</td>
+              <td>COLÉGIO SÃO FRANCISCO - UNIDADE I</td><td>Carla Gomes</td>
+              <td class="num">83</td><td class="num">R$ 13.149</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>BRIGHT BEE SCHOOL</td><td>Carla Gomes</td><td>08/06/2026</td>
-              <td>20</td><td>R$ 10.915</td>
+              <td>BRIGHT BEE SCHOOL</td><td>Carla Gomes</td>
+              <td class="num">21</td><td class="num">R$ 10.915</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Maria Elvira">
-              <td>PRO CAMPUS CRIANÇA</td><td>Maria Elvira</td><td>28/05/2026</td>
-              <td>51</td><td>R$ 10.296</td>
+              <td>PRO CAMPUS CRIANÇA</td><td>Maria Elvira</td>
+              <td class="num">53</td><td class="num">R$ 10.296</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Andreina Ferreira">
-              <td>COLÉGIO CARPE DIEM</td><td>Andreina Ferreira</td><td>28/05/2026</td>
-              <td>121</td><td>R$ 10.232</td>
+              <td>COLÉGIO CARPE DIEM</td><td>Andreina Ferreira</td>
+              <td class="num">122</td><td class="num">R$ 10.232</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Maria Elvira">
-              <td>Colégio Moraes Rêgo</td><td>Maria Elvira</td><td>19/05/2026</td>
-              <td>34</td><td>R$ 9.897</td>
+              <td>Colégio Moraes Rêgo</td><td>Maria Elvira</td>
+              <td class="num">35</td><td class="num">R$ 9.897</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>COLÉGIO HEXÁGONO</td><td>Talita Panassol</td><td>24/04/2026</td>
-              <td>49</td><td>R$ 9.831</td>
+              <td>COLÉGIO HEXÁGONO</td><td>Talita Panassol</td>
+              <td class="num">48</td><td class="num">R$ 9.831</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>ESCOLA VIVANT</td><td>Mariana Santana</td><td>11/04/2026</td>
-              <td>42</td><td>R$ 9.682</td>
+              <td>ESCOLA VIVANT</td><td>Mariana Santana</td>
+              <td class="num">42</td><td class="num">R$ 9.682</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO STATUS - TV MORENA</td><td>Sarah Moura</td><td>11/05/2026</td>
-              <td>37</td><td>R$ 8.342</td>
+              <td>COLÉGIO STATUS - TV MORENA</td><td>Sarah Moura</td>
+              <td class="num">37</td><td class="num">R$ 8.342</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>Lua De Algodão e Colégio Lua</td><td>Mariana Santana</td><td>27/05/2026</td>
-              <td>36</td><td>R$ 7.938</td>
+              <td>Lua De Algodão e Colégio Lua</td><td>Mariana Santana</td>
+              <td class="num">36</td><td class="num">R$ 7.938</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Andreina Ferreira">
-              <td>Colégio Tesla</td><td>Andreina Ferreira</td><td>18/05/2026</td>
-              <td>42</td><td>R$ 7.424</td>
+              <td>Colégio Tesla</td><td>Andreina Ferreira</td>
+              <td class="num">42</td><td class="num">R$ 7.424</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
-              <td>COLÉGIO ADVENTISTA DE GURUPI</td><td>Mariaeduarda Carvalho</td><td>26/05/2026</td>
-              <td>36</td><td>R$ 7.247</td>
+              <td>COLÉGIO ADVENTISTA DE GURUPI</td><td>Mariaeduarda Carvalho</td>
+              <td class="num">36</td><td class="num">R$ 7.247</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Tatiana Portela">
-              <td>Escola Núcleo Municipal Teutônia</td><td>Tatiana Portela</td><td>26/05/2026</td>
-              <td>103</td><td>R$ 7.231</td>
+              <td>Escola Núcleo Municipal Teutônia</td><td>Tatiana Portela</td>
+              <td class="num">103</td><td class="num">R$ 7.231</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>COLÉGIO TRIVIUM</td><td>Mariana Santana</td><td>16/03/2026</td>
-              <td>29</td><td>R$ 7.194</td>
+              <td>COLÉGIO TRIVIUM</td><td>Mariana Santana</td>
+              <td class="num">30</td><td class="num">R$ 7.194</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO GGE PETROLINA</td><td>Sarah Moura</td><td>29/04/2026</td>
-              <td>14</td><td>R$ 7.096</td>
+              <td>COLÉGIO GGE PETROLINA</td><td>Sarah Moura</td>
+              <td class="num">14</td><td class="num">R$ 7.096</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>Escola SESI Darcy Zacharias</td><td>Talita Panassol</td><td>09/03/2026</td>
-              <td>22</td><td>R$ 6.974</td>
+              <td>Escola SESI Darcy Zacharias</td><td>Talita Panassol</td>
+              <td class="num">23</td><td class="num">R$ 6.974</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Larissa Freitas">
-              <td>Lmp Burini Centro de Aprendizagem</td><td>Larissa Freitas</td><td>06/05/2026</td>
-              <td>32</td><td>R$ 6.888</td>
+              <td>Lmp Burini Centro de Aprendizagem</td><td>Larissa Freitas</td>
+              <td class="num">30</td><td class="num">R$ 6.888</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>DRUMMOND EDUCACIONAL</td><td>Mariana Santana</td><td>20/05/2026</td>
-              <td>44</td><td>R$ 6.823</td>
+              <td>DRUMMOND EDUCACIONAL</td><td>Mariana Santana</td>
+              <td class="num">47</td><td class="num">R$ 6.823</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>ESCOLA MUNDO INFANTIL</td><td>Carla Gomes</td><td>03/06/2026</td>
-              <td>26</td><td>R$ 6.611</td>
+              <td>ESCOLA MUNDO INFANTIL</td><td>Carla Gomes</td>
+              <td class="num">27</td><td class="num">R$ 6.611</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Maria Elvira">
-              <td>CENTRO DE ENSINO CHARLES DARWIN</td><td>Maria Elvira</td><td>29/04/2026</td>
-              <td>23</td><td>R$ 5.971</td>
+              <td>CENTRO DE ENSINO CHARLES DARWIN</td><td>Maria Elvira</td>
+              <td class="num">23</td><td class="num">R$ 5.971</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>COLÉGIO O BOM PASTOR JÚNIOR</td><td>Carla Gomes</td><td>23/04/2026</td>
-              <td>27</td><td>R$ 5.804</td>
+              <td>COLÉGIO O BOM PASTOR JÚNIOR</td><td>Carla Gomes</td>
+              <td class="num">27</td><td class="num">R$ 5.804</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Gabriela Ribeiro">
-              <td>COLÉGIO NOVO MILÊNIO - COOTEC</td><td>Gabriela Ribeiro</td><td>10/04/2026</td>
-              <td>30</td><td>R$ 5.660</td>
+              <td>COLÉGIO NOVO MILÊNIO - COOTEC</td><td>Gabriela Ribeiro</td>
+              <td class="num">32</td><td class="num">R$ 5.660</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
-              <td>COLÉGIO COC LAGES</td><td>Mariaeduarda Carvalho</td><td>08/04/2026</td>
-              <td>13</td><td>R$ 5.349</td>
+              <td>COLÉGIO COC LAGES</td><td>Mariaeduarda Carvalho</td>
+              <td class="num">13</td><td class="num">R$ 5.349</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Viviancristina Souza">
-              <td>COLÉGIO DRUMMOND</td><td>Viviancristina Souza</td><td>09/03/2026</td>
-              <td>22</td><td>R$ 4.996</td>
+              <td>COLÉGIO DRUMMOND</td><td>Viviancristina Souza</td>
+              <td class="num">23</td><td class="num">R$ 4.996</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Gabriela Ribeiro">
-              <td>Colégio N.E.E.R</td><td>Gabriela Ribeiro</td><td>11/05/2026</td>
-              <td>25</td><td>R$ 4.891</td>
+              <td>Colégio N.E.E.R</td><td>Gabriela Ribeiro</td>
+              <td class="num">25</td><td class="num">R$ 4.891</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>COLÉGIO MARISTA SÃO FRANCISCO</td><td>Mariana Santana</td><td>05/06/2026</td>
-              <td>16</td><td>R$ 4.778</td>
+              <td>COLÉGIO MARISTA SÃO FRANCISCO</td><td>Mariana Santana</td>
+              <td class="num">16</td><td class="num">R$ 4.778</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>ESCOLA TRAMPOLIM</td><td>Talita Panassol</td><td>24/03/2026</td>
-              <td>113</td><td>R$ 4.639</td>
+              <td>ESCOLA TRAMPOLIM</td><td>Talita Panassol</td>
+              <td class="num">15</td><td class="num">R$ 4.639</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>Colégio Adventista da Asa Sul</td><td>Mariana Santana</td><td>25/05/2026</td>
-              <td>17</td><td>R$ 4.517</td>
+              <td>Colégio Adventista da Asa Sul</td><td>Mariana Santana</td>
+              <td class="num">18</td><td class="num">R$ 4.517</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO MARISTA DE RIBEIRÃO PRETO</td><td>Mariana Santana</td>
+              <td class="num">13</td><td class="num">R$ 4.314</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>COLÉGIO ADVENTISTA MARECHAL RONDON</td><td>Talita Panassol</td><td>27/05/2026</td>
-              <td>16</td><td>R$ 4.290</td>
+              <td>COLÉGIO ADVENTISTA MARECHAL RONDON</td><td>Talita Panassol</td>
+              <td class="num">16</td><td class="num">R$ 4.290</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Erick Andrade">
-              <td>COLINHO DE MAMAE BERCARIO E EDUCACAO INFANTIL LTDA</td><td>Erick Andrade</td><td>03/04/2026</td>
-              <td>13</td><td>R$ 4.142</td>
+              <td>COLINHO DE MAMAE BERCARIO E EDUCACAO INFANTIL LTDA</td><td>Erick Andrade</td>
+              <td class="num">13</td><td class="num">R$ 4.142</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Indlayse Ferreira">
-              <td>CEPP - CENTRO EDUCACIONAL PRIMEIROS PASSOS</td><td>Indlayse Ferreira</td><td>29/04/2026</td>
-              <td>11</td><td>R$ 4.128</td>
+              <td>CEPP - CENTRO EDUCACIONAL PRIMEIROS PASSOS</td><td>Indlayse Ferreira</td>
+              <td class="num">11</td><td class="num">R$ 4.128</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Laura Pagliuzo">
-              <td>Colégio Presbiteriano</td><td>Laura Pagliuzo</td><td>22/03/2026</td>
-              <td>13</td><td>R$ 4.098</td>
+              <td>Colégio Presbiteriano</td><td>Laura Pagliuzo</td>
+              <td class="num">13</td><td class="num">R$ 4.098</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>Colégio Externato São José</td><td>Talita Panassol</td><td>08/03/2026</td>
-              <td>9</td><td>R$ 3.895</td>
+              <td>Colégio Externato São José</td><td>Talita Panassol</td>
+              <td class="num">9</td><td class="num">R$ 3.895</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Anaclara Peres">
-              <td>Escola de Ensino Fundamental Fortunato Tarnowski</td><td>Anaclara Peres</td><td>23/05/2026</td>
-              <td>19</td><td>R$ 3.773</td>
+              <td>Escola de Ensino Fundamental Fortunato Tarnowski</td><td>Anaclara Peres</td>
+              <td class="num">20</td><td class="num">R$ 3.773</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>COLÉGIO MARISTA DE RIBEIRÃO PRETO</td><td>Mariana Santana</td><td>10/06/2026</td>
-              <td>9</td><td>R$ 3.754</td>
+              <td>COLÉGIO BATISTA RIO-PRETENSE</td><td>Mariana Santana</td>
+              <td class="num">11</td><td class="num">R$ 3.734</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>COLÉGIO BATISTA RIO-PRETENSE</td><td>Mariana Santana</td><td>14/05/2026</td>
-              <td>11</td><td>R$ 3.734</td>
+              <td>Escola  SESI Planalto</td><td>Mariana Santana</td>
+              <td class="num">13</td><td class="num">R$ 3.699</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
-            </tr>
-            <tr data-cs="Mariana Santana">
-              <td>Escola  SESI Planalto</td><td>Mariana Santana</td><td>11/05/2026</td>
-              <td>13</td><td>R$ 3.699</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Laura Pagliuzo">
-              <td>ESCOLA DE EDUCAÇÃO INFANTIL FERINHAS</td><td>Laura Pagliuzo</td><td>27/05/2026</td>
-              <td>19</td><td>R$ 3.538</td>
+              <td>ESCOLA DE EDUCAÇÃO INFANTIL FERINHAS</td><td>Laura Pagliuzo</td>
+              <td class="num">19</td><td class="num">R$ 3.538</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Giovanna Munhoz">
-              <td>EMEI DOLORES MARIA TORRENTE</td><td>Giovanna Munhoz</td><td>30/05/2026</td>
-              <td>11</td><td>R$ 3.522</td>
+              <td>EMEI DOLORES MARIA TORRENTE</td><td>Giovanna Munhoz</td>
+              <td class="num">13</td><td class="num">R$ 3.522</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Maria Elvira">
-              <td>CENTRO RENOVO DE EDUCAÇÃO</td><td>Maria Elvira</td><td>15/05/2026</td>
-              <td>17</td><td>R$ 3.503</td>
+              <td>CENTRO RENOVO DE EDUCAÇÃO</td><td>Maria Elvira</td>
+              <td class="num">17</td><td class="num">R$ 3.503</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>Colégio Intelecto</td><td>Talita Panassol</td><td>11/05/2026</td>
-              <td>7</td><td>R$ 3.432</td>
+              <td>Colégio Intelecto</td><td>Talita Panassol</td>
+              <td class="num">8</td><td class="num">R$ 3.432</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>Escola Adventista de Tubarão</td><td>Talita Panassol</td><td>11/03/2026</td>
-              <td>41</td><td>R$ 3.419</td>
+              <td>Escola Adventista de Tubarão</td><td>Talita Panassol</td>
+              <td class="num">19</td><td class="num">R$ 3.419</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>Colégio Saber Viver</td><td>Mariana Santana</td><td>08/06/2026</td>
-              <td>16</td><td>R$ 3.399</td>
+              <td>Colégio Saber Viver</td><td>Mariana Santana</td>
+              <td class="num">17</td><td class="num">R$ 3.399</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Tatiana Portela">
-              <td>APARECIDA MERINO ELIAS EMEB</td><td>Tatiana Portela</td><td>13/05/2026</td>
-              <td>12</td><td>R$ 3.356</td>
+              <td>APARECIDA MERINO ELIAS EMEB</td><td>Tatiana Portela</td>
+              <td class="num">13</td><td class="num">R$ 3.356</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
-              <td>COLÉGIO SIMETRIA</td><td>Mariaeduarda Carvalho</td><td>06/05/2026</td>
-              <td>15</td><td>R$ 3.340</td>
+              <td>COLÉGIO SIMETRIA</td><td>Mariaeduarda Carvalho</td>
+              <td class="num">16</td><td class="num">R$ 3.340</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO STATUS</td><td>Sarah Moura</td><td>20/05/2026</td>
-              <td>14</td><td>R$ 2.845</td>
+              <td>COLÉGIO STATUS</td><td>Sarah Moura</td>
+              <td class="num">15</td><td class="num">R$ 2.845</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Shelry Solart">
-              <td>Colégio Cristão</td><td>Shelry Solart</td><td>01/06/2026</td>
-              <td>8</td><td>R$ 2.765</td>
+              <td>Colégio Cristão</td><td>Shelry Solart</td>
+              <td class="num">8</td><td class="num">R$ 2.765</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>COLÉGIO CRIATIVO</td><td>Mariana Santana</td><td>10/06/2026</td>
-              <td>6</td><td>R$ 2.565</td>
+              <td>COLÉGIO CRIATIVO</td><td>Mariana Santana</td>
+              <td class="num">6</td><td class="num">R$ 2.565</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Larissa Freitas">
-              <td>NÚCLEO PEDAGÓGICO COLIBRI</td><td>Larissa Freitas</td><td>13/04/2026</td>
-              <td>10</td><td>R$ 2.434</td>
+              <td>NÚCLEO PEDAGÓGICO COLIBRI</td><td>Larissa Freitas</td>
+              <td class="num">10</td><td class="num">R$ 2.434</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>Colégio Novo Éden</td><td>Talita Panassol</td><td>09/04/2026</td>
-              <td>20</td><td>R$ 2.394</td>
+              <td>Colégio Novo Éden</td><td>Talita Panassol</td>
+              <td class="num">21</td><td class="num">R$ 2.394</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>COLÉGIO COOPEN</td><td>Carla Gomes</td><td>02/06/2026</td>
-              <td>5</td><td>R$ 2.390</td>
+              <td>COLÉGIO COOPEN</td><td>Carla Gomes</td>
+              <td class="num">5</td><td class="num">R$ 2.390</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Shelry Solart">
-              <td>Escola Pequeno Príncipe e Pequena Princesa</td><td>Shelry Solart</td><td>31/05/2026</td>
-              <td>8</td><td>R$ 2.387</td>
+              <td>Escola Pequeno Príncipe e Pequena Princesa</td><td>Shelry Solart</td>
+              <td class="num">8</td><td class="num">R$ 2.387</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Stefany Figueredo">
-              <td>INSTITUTO TECNOLÓGICO DO ESTADO DO PARÁ</td><td>Stefany Figueredo</td><td>21/05/2026</td>
-              <td>10</td><td>R$ 2.357</td>
+              <td>INSTITUTO TECNOLÓGICO DO ESTADO DO PARÁ</td><td>Stefany Figueredo</td>
+              <td class="num">9</td><td class="num">R$ 2.357</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Thayna Bastos">
-              <td>CENTRO EDUCACIONAL SONHO DE CRIANÇA</td><td>Thayna Bastos</td><td>21/05/2026</td>
-              <td>8</td><td>R$ 2.269</td>
+              <td>CENTRO EDUCACIONAL SONHO DE CRIANÇA</td><td>Thayna Bastos</td>
+              <td class="num">8</td><td class="num">R$ 2.269</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Shelry Solart">
-              <td>COLÉGIO EQUIPE GRAU – NOVA IGUAÇU</td><td>Shelry Solart</td><td>26/05/2026</td>
-              <td>26</td><td>R$ 2.228</td>
+              <td>COLÉGIO EQUIPE GRAU – NOVA IGUAÇU</td><td>Shelry Solart</td>
+              <td class="num">5</td><td class="num">R$ 2.228</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Pamela Miranda">
-              <td>COLÉGIO SANTA CLARA</td><td>Pamela Miranda</td><td>01/06/2026</td>
-              <td>14</td><td>R$ 2.083</td>
+              <td>COLÉGIO SANTA CLARA</td><td>Pamela Miranda</td>
+              <td class="num">15</td><td class="num">R$ 2.083</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Thayna Bastos">
-              <td>COLÉGIO ADVENTISTA TAUBATÉ/TREMEMBÉ</td><td>Thayna Bastos</td><td>12/05/2026</td>
-              <td>7</td><td>R$ 2.079</td>
+              <td>COLÉGIO ADVENTISTA TAUBATÉ/TREMEMBÉ</td><td>Thayna Bastos</td>
+              <td class="num">7</td><td class="num">R$ 2.079</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
-              <td>COLÉGIO ALICERCE DO SABER</td><td>Mariaeduarda Carvalho</td><td>06/05/2026</td>
-              <td>6</td><td>R$ 2.028</td>
+              <td>COLÉGIO ALICERCE DO SABER</td><td>Mariaeduarda Carvalho</td>
+              <td class="num">6</td><td class="num">R$ 2.028</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Thayna Bastos">
-              <td>ESCOLA DE ENSINO MÉDIO CAPITAL DO SABER</td><td>Thayna Bastos</td><td>09/06/2026</td>
-              <td>9</td><td>R$ 2.019</td>
+              <td>ESCOLA DE ENSINO MÉDIO CAPITAL DO SABER</td><td>Thayna Bastos</td>
+              <td class="num">9</td><td class="num">R$ 2.019</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO GGE JOÃO PESSOA</td><td>Sarah Moura</td><td>11/05/2026</td>
-              <td>10</td><td>R$ 2.018</td>
+              <td>COLÉGIO GGE JOÃO PESSOA</td><td>Sarah Moura</td>
+              <td class="num">10</td><td class="num">R$ 2.018</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
-              <td>COLÉGIO IMP</td><td>Mariaeduarda Carvalho</td><td>01/06/2026</td>
-              <td>11</td><td>R$ 1.995</td>
+              <td>COLÉGIO IMP</td><td>Mariaeduarda Carvalho</td>
+              <td class="num">9</td><td class="num">R$ 1.995</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Giovanna Munhoz">
-              <td>Colégio Anglo Aquarela</td><td>Giovanna Munhoz</td><td>29/05/2026</td>
-              <td>7</td><td>R$ 1.981</td>
+              <td>Colégio Anglo Aquarela</td><td>Giovanna Munhoz</td>
+              <td class="num">7</td><td class="num">R$ 1.981</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Gabriela Ribeiro">
-              <td>ESCOLA DJANIRA ALVES RODRIGUES</td><td>Gabriela Ribeiro</td><td>10/05/2026</td>
-              <td>20</td><td>R$ 1.959</td>
+              <td>ESCOLA DJANIRA ALVES RODRIGUES</td><td>Gabriela Ribeiro</td>
+              <td class="num">8</td><td class="num">R$ 1.959</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Andreina Ferreira">
-              <td>Escola Única Santo André</td><td>Andreina Ferreira</td><td>24/05/2026</td>
-              <td>12</td><td>R$ 1.939</td>
+              <td>Escola Única Santo André</td><td>Andreina Ferreira</td>
+              <td class="num">12</td><td class="num">R$ 1.939</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>COLÉGIO ADVENTISTA DE NOVO HAMBURGO</td><td>Mariana Santana</td><td>30/05/2026</td>
-              <td>5</td><td>R$ 1.903</td>
+              <td>COLÉGIO ADVENTISTA DE NOVO HAMBURGO</td><td>Mariana Santana</td>
+              <td class="num">5</td><td class="num">R$ 1.903</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Viviane Luz">
-              <td>Emef Cel. Thomaz Gonçalves da Rocha Cunha</td><td>Viviane Luz</td><td>08/04/2026</td>
-              <td>8</td><td>R$ 1.867</td>
+              <td>Emef Cel. Thomaz Gonçalves da Rocha Cunha</td><td>Viviane Luz</td>
+              <td class="num">10</td><td class="num">R$ 1.867</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>Colégio Objetivo DF - Asa Norte</td><td>Sarah Moura</td><td>18/05/2026</td>
-              <td>13</td><td>R$ 1.801</td>
+              <td>Colégio Objetivo DF - Asa Norte</td><td>Sarah Moura</td>
+              <td class="num">13</td><td class="num">R$ 1.800</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>COLÉGIO VIRGEM PODEROSA - REDE SANTA CATARINA</td><td>Carla Gomes</td><td>07/06/2026</td>
-              <td>10</td><td>R$ 1.799</td>
+              <td>COLÉGIO VIRGEM PODEROSA - REDE SANTA CATARINA</td><td>Carla Gomes</td>
+              <td class="num">11</td><td class="num">R$ 1.799</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Laura Pagliuzo">
-              <td>ESCOLA PORTAL</td><td>Laura Pagliuzo</td><td>15/05/2026</td>
-              <td>44</td><td>R$ 1.707</td>
+              <td>ESCOLA PORTAL</td><td>Laura Pagliuzo</td>
+              <td class="num">5</td><td class="num">R$ 1.707</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Andreina Ferreira">
-              <td>ESCOLA MORANGUINHO E COLÉGIO ALPHA X</td><td>Andreina Ferreira</td><td>16/03/2026</td>
-              <td>5</td><td>R$ 1.688</td>
+              <td>ESCOLA MORANGUINHO E COLÉGIO ALPHA X</td><td>Andreina Ferreira</td>
+              <td class="num">6</td><td class="num">R$ 1.688</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Viviane Luz">
-              <td>EDUCANDÁRIO FRANCISCANO NHÁ CHICA</td><td>Viviane Luz</td><td>15/05/2026</td>
-              <td>12</td><td>R$ 1.649</td>
+              <td>EDUCANDÁRIO FRANCISCANO NHÁ CHICA</td><td>Viviane Luz</td>
+              <td class="num">12</td><td class="num">R$ 1.649</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>CEL INTERCULTURAL SCHOOL</td><td>Mariana Santana</td><td>08/06/2026</td>
-              <td>6</td><td>R$ 1.624</td>
+              <td>CEL INTERCULTURAL SCHOOL</td><td>Mariana Santana</td>
+              <td class="num">7</td><td class="num">R$ 1.624</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mayane Costa">
-              <td>COLÉGIO RANIERI</td><td>Mayane Costa</td><td>04/06/2026</td>
-              <td>6</td><td>R$ 1.617</td>
+              <td>COLÉGIO RANIERI</td><td>Mayane Costa</td>
+              <td class="num">6</td><td class="num">R$ 1.617</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Indlayse Ferreira">
-              <td>Colégio Objetivo - Unidade Tatuí</td><td>Indlayse Ferreira</td><td>17/04/2026</td>
-              <td>20</td><td>R$ 1.587</td>
+              <td>Colégio Objetivo - Unidade Tatuí</td><td>Indlayse Ferreira</td>
+              <td class="num">7</td><td class="num">R$ 1.587</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO BIÂNGULO ASA NORTE</td><td>Sarah Moura</td><td>25/05/2026</td>
-              <td>8</td><td>R$ 1.562</td>
+              <td>COLÉGIO BIÂNGULO ASA NORTE</td><td>Sarah Moura</td>
+              <td class="num">8</td><td class="num">R$ 1.562</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO GGE PARNAMIRIM</td><td>Sarah Moura</td><td>06/06/2026</td>
-              <td>6</td><td>R$ 1.553</td>
+              <td>COLÉGIO GGE PARNAMIRIM</td><td>Sarah Moura</td>
+              <td class="num">6</td><td class="num">R$ 1.553</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Tatiana Portela">
-              <td>CENTRO EDUCACIONAL CONSTRUÇÃO DO SABER</td><td>Tatiana Portela</td><td>01/06/2026</td>
-              <td>19</td><td>R$ 1.544</td>
+              <td>CENTRO EDUCACIONAL CONSTRUÇÃO DO SABER</td><td>Tatiana Portela</td>
+              <td class="num">19</td><td class="num">R$ 1.544</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>Colégio Romano Santa Helena</td><td>Sarah Moura</td><td>07/04/2026</td>
-              <td>14</td><td>R$ 1.526</td>
+              <td>Colégio Romano Santa Helena</td><td>Sarah Moura</td>
+              <td class="num">7</td><td class="num">R$ 1.526</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>ESCOLA CASA DE BRINQUEDOS</td><td>Talita Panassol</td><td>02/06/2026</td>
-              <td>9</td><td>R$ 1.509</td>
+              <td>ESCOLA CASA DE BRINQUEDOS</td><td>Talita Panassol</td>
+              <td class="num">10</td><td class="num">R$ 1.509</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>Cooperativa de Trabalho Educacional de Pontes e Lacerda</td><td>Mariana Santana</td><td>10/05/2026</td>
-              <td>9</td><td>R$ 1.450</td>
+              <td>Cooperativa de Trabalho Educacional de Pontes e Lacerda</td><td>Mariana Santana</td>
+              <td class="num">5</td><td class="num">R$ 1.450</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>COLÉGIO ESPAÇO VERDE</td><td>Mariana Santana</td><td>08/06/2026</td>
-              <td>12</td><td>R$ 1.437</td>
+              <td>COLÉGIO ESPAÇO VERDE</td><td>Mariana Santana</td>
+              <td class="num">12</td><td class="num">R$ 1.437</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Renata Brandao">
-              <td>INSTITUTO FLAVIA RAQUEL DE ENSINO LTDA - ME</td><td>Renata Brandao</td><td>06/05/2026</td>
-              <td>10</td><td>R$ 1.413</td>
+              <td>INSTITUTO FLAVIA RAQUEL DE ENSINO LTDA - ME</td><td>Renata Brandao</td>
+              <td class="num">10</td><td class="num">R$ 1.413</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO BIÂNGULO - ÁGUAS CLARAS 1</td><td>Sarah Moura</td><td>09/05/2026</td>
-              <td>7</td><td>R$ 1.368</td>
+              <td>COLÉGIO BIÂNGULO - ÁGUAS CLARAS 1</td><td>Sarah Moura</td>
+              <td class="num">7</td><td class="num">R$ 1.368</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Shelry Solart">
-              <td>SESI 341 CENTRO EDUCACIONAL</td><td>Shelry Solart</td><td>25/05/2026</td>
-              <td>10</td><td>R$ 1.326</td>
+              <td>ESCOLA REI DAVI</td><td>Shelry Solart</td>
+              <td class="num">8</td><td class="num">R$ 1.334</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>SESI 341 CENTRO EDUCACIONAL</td><td>Shelry Solart</td>
+              <td class="num">11</td><td class="num">R$ 1.326</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>Escola Educativa Osasco</td><td>Talita Panassol</td><td>18/05/2026</td>
-              <td>5</td><td>R$ 1.318</td>
+              <td>Escola Educativa Osasco</td><td>Talita Panassol</td>
+              <td class="num">5</td><td class="num">R$ 1.318</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Renata Brandao">
-              <td>INSTITUTO EDUCACIONAL CASTRO ALVES</td><td>Renata Brandao</td><td>20/05/2026</td>
-              <td>7</td><td>R$ 1.293</td>
+              <td>INSTITUTO EDUCACIONAL CASTRO ALVES</td><td>Renata Brandao</td>
+              <td class="num">7</td><td class="num">R$ 1.293</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Renata Brandao">
-              <td>Colégio Vitória</td><td>Renata Brandao</td><td>16/05/2026</td>
-              <td>13</td><td>R$ 1.270</td>
+              <td>Colégio Vitória</td><td>Renata Brandao</td>
+              <td class="num">8</td><td class="num">R$ 1.270</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
-            </tr>
-            <tr data-cs="Shelry Solart">
-              <td>ESCOLA REI DAVI</td><td>Shelry Solart</td><td>30/05/2026</td>
-              <td>7</td><td>R$ 1.254</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO BIÂNGULO - TAGUATINGA</td><td>Sarah Moura</td><td>14/05/2026</td>
-              <td>7</td><td>R$ 1.238</td>
+              <td>COLÉGIO BIÂNGULO - TAGUATINGA</td><td>Sarah Moura</td>
+              <td class="num">7</td><td class="num">R$ 1.238</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Larissa Freitas">
-              <td>COLÉGIO ÉPICO</td><td>Larissa Freitas</td><td>06/04/2026</td>
-              <td>6</td><td>R$ 1.224</td>
+              <td>COLÉGIO ÉPICO</td><td>Larissa Freitas</td>
+              <td class="num">6</td><td class="num">R$ 1.224</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
-            </tr>
-            <tr data-cs="Larissa Freitas">
-              <td>ESCOLA CLASSE 12 DE TAGUATINGA</td><td>Larissa Freitas</td><td>30/03/2026</td>
-              <td>7</td><td>R$ 1.206</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>COLÉGIO DOM BOSCO</td><td>Carla Gomes</td><td>13/03/2026</td>
-              <td>146</td><td>R$ 1.206</td>
+              <td>COLÉGIO DOM BOSCO</td><td>Carla Gomes</td>
+              <td class="num">37</td><td class="num">R$ 1.206</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>ESCOLA CLASSE 12 DE TAGUATINGA</td><td>Larissa Freitas</td>
+              <td class="num">8</td><td class="num">R$ 1.206</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Indlayse Ferreira">
-              <td>FREITAS AUREO EDUCAÇÃO</td><td>Indlayse Ferreira</td><td>07/05/2026</td>
-              <td>21</td><td>R$ 1.186</td>
+              <td>FREITAS AUREO EDUCAÇÃO</td><td>Indlayse Ferreira</td>
+              <td class="num">7</td><td class="num">R$ 1.186</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Sarah Moura">
-              <td>COLÉGIO BIÂNGULO - SAMAMBAIA</td><td>Sarah Moura</td><td>14/05/2026</td>
-              <td>6</td><td>R$ 1.179</td>
+              <td>COLÉGIO BIÂNGULO - SAMAMBAIA</td><td>Sarah Moura</td>
+              <td class="num">7</td><td class="num">R$ 1.179</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Shelry Solart">
-              <td>ESCOLA SANTA MONICA</td><td>Shelry Solart</td><td>01/06/2026</td>
-              <td>7</td><td>R$ 1.161</td>
+              <td>ESCOLA SANTA MONICA</td><td>Shelry Solart</td>
+              <td class="num">7</td><td class="num">R$ 1.161</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Larissa Freitas">
-              <td>ESPAÇO DO SABER</td><td>Larissa Freitas</td><td>09/04/2026</td>
-              <td>16</td><td>R$ 1.153</td>
+              <td>ESPAÇO DO SABER</td><td>Larissa Freitas</td>
+              <td class="num">6</td><td class="num">R$ 1.153</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Gabriela Ribeiro">
-              <td>COLÉGIO INTEGRAÇÃO</td><td>Gabriela Ribeiro</td><td>06/04/2026</td>
-              <td>183</td><td>R$ 1.114</td>
+              <td>COLÉGIO INTEGRAÇÃO</td><td>Gabriela Ribeiro</td>
+              <td class="num">8</td><td class="num">R$ 1.114</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Mariana Santana">
-              <td>COLÉGIO JOSEENSE - Unidade 2</td><td>Mariana Santana</td><td>17/04/2026</td>
-              <td>68</td><td>R$ 1.093</td>
+              <td>COLÉGIO JOSEENSE - Unidade 2</td><td>Mariana Santana</td>
+              <td class="num">13</td><td class="num">R$ 1.093</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Kaian Silva">
-              <td>WATER OKANO C M E I PROF</td><td>Kaian Silva</td><td>31/05/2026</td>
-              <td>7</td><td>R$ 991</td>
+              <td>WATER OKANO C M E I PROF</td><td>Kaian Silva</td>
+              <td class="num">8</td><td class="num">R$ 991</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>COLÉGIO SAGRADO CORAÇÃO DE JESUS QUIXADÁ</td><td>Talita Panassol</td><td>26/05/2026</td>
-              <td>7</td><td>R$ 938</td>
+              <td>COLÉGIO SAGRADO CORAÇÃO DE JESUS QUIXADÁ</td><td>Talita Panassol</td>
+              <td class="num">8</td><td class="num">R$ 938</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Erick Andrade">
-              <td>COLÉGIO MONFORTE</td><td>Erick Andrade</td><td>27/05/2026</td>
-              <td>7</td><td>R$ 916</td>
+              <td>COLÉGIO MONFORTE</td><td>Erick Andrade</td>
+              <td class="num">5</td><td class="num">R$ 916</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Junior Gomes">
-              <td>JARDIM ESCOLA VOVÓ MERCEDES</td><td>Junior Gomes</td><td>28/02/2026</td>
-              <td>7</td><td>R$ 896</td>
+              <td>JARDIM ESCOLA VOVÓ MERCEDES</td><td>Junior Gomes</td>
+              <td class="num">7</td><td class="num">R$ 896</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Carla Gomes">
-              <td>Colégio Caminhos e Colinas</td><td>Carla Gomes</td><td>04/05/2026</td>
-              <td>20</td><td>R$ 883</td>
+              <td>Colégio Caminhos e Colinas</td><td>Carla Gomes</td>
+              <td class="num">12</td><td class="num">R$ 883</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Junior Gomes">
-              <td>ESCOLA ARCO IRIS</td><td>Junior Gomes</td><td>16/05/2026</td>
-              <td>6</td><td>R$ 841</td>
+              <td>ESCOLA ARCO IRIS</td><td>Junior Gomes</td>
+              <td class="num">6</td><td class="num">R$ 841</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Julia Cordeiro">
-              <td>EEB COOPESG ROBUSTA</td><td>Julia Cordeiro</td><td>02/06/2026</td>
-              <td>7</td><td>R$ 835</td>
+              <td>EEB COOPESG ROBUSTA</td><td>Julia Cordeiro</td>
+              <td class="num">5</td><td class="num">R$ 835</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Gabriela Ribeiro">
-              <td>FENIX C EF M</td><td>Gabriela Ribeiro</td><td>14/04/2026</td>
-              <td>16</td><td>R$ 809</td>
+              <td>FENIX C EF M</td><td>Gabriela Ribeiro</td>
+              <td class="num">5</td><td class="num">R$ 810</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Renata Brandao">
-              <td>Escola Casinha da Nietta</td><td>Renata Brandao</td><td>25/04/2026</td>
-              <td>12</td><td>R$ 720</td>
+              <td>Escola Casinha da Nietta</td><td>Renata Brandao</td>
+              <td class="num">12</td><td class="num">R$ 720</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Anaclara Peres">
-              <td>Escola e Jardim de Infância Pintando o Sete</td><td>Anaclara Peres</td><td>05/06/2026</td>
-              <td>5</td><td>R$ 696</td>
+              <td>Escola e Jardim de Infância Pintando o Sete</td><td>Anaclara Peres</td>
+              <td class="num">5</td><td class="num">R$ 696</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Julia Cordeiro">
-              <td>COLÉGIO ÁGUIA DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL E MÉDIO</td><td>Julia Cordeiro</td><td>26/03/2026</td>
-              <td>121</td><td>R$ 640</td>
+              <td>COLÉGIO ÁGUIA DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL E MÉDIO</td><td>Julia Cordeiro</td>
+              <td class="num">8</td><td class="num">R$ 640</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Maria Elvira">
-              <td>International School of Cuiabá</td><td>Maria Elvira</td><td>10/03/2026</td>
-              <td>160</td><td>R$ 248</td>
+              <td>International School of Cuiabá</td><td>Maria Elvira</td>
+              <td class="num">10</td><td class="num">R$ 248</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Julia Cordeiro">
-              <td>LEGACY SCHOOL - Unidade Taquara</td><td>Julia Cordeiro</td><td>11/05/2026</td>
-              <td>26</td><td>R$ 78</td>
+              <td>LEGACY SCHOOL - Unidade Taquara</td><td>Julia Cordeiro</td>
+              <td class="num">26</td><td class="num">R$ 78</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
-            </tr>
-            <tr data-cs="Junior Gomes">
-              <td>COLÉGIO SÃO GABRIEL</td><td>Junior Gomes</td><td>26/04/2026</td>
-              <td>77</td><td>R$ 0</td>
-              <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr data-cs="Thais Borges">
-              <td>ESCOLA DOS AMIGUINHOS</td><td>Thais Borges</td><td>18/03/2026</td>
-              <td>125</td><td>R$ 0</td>
+              <td>ESCOLA DOS AMIGUINHOS</td><td>Thais Borges</td>
+              <td class="num">6</td><td class="num">R$ 0</td>
               <td><span class="pill pill-t1">T1</span></td>
-              <td>R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Junior Gomes">
+              <td>COLÉGIO SÃO GABRIEL</td><td>Junior Gomes</td>
+              <td class="num">11</td><td class="num">R$ 0</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
             <tr class="total-row" id="escola-total">
-              <td colspan="3"><b>Total (119 escolas)</b></td>
-              <td></td><td>R$ 498.126</td><td></td>
-              <td>R$ 5.950</td><td></td>
+              <td colspan="2"><b>Total (119 escolas)</b></td>
+              <td></td><td class="num">R$ 498.765</td><td></td>
+              <td class="num">R$ 5.950</td><td></td>
             </tr>
           </tbody>
         </table>
@@ -1232,145 +1233,145 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
           </thead>
           <tbody>
             <tr>
-              <td>Mariana Santana</td><td>16</td><td>25%</td>
+              <td>Mariana Santana</td><td class="num">16</td><td class="num">25%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 800</td><td>R$ 0</td><td><b>R$ 800</b></td>
+              <td class="num">R$ 800</td><td class="num">R$ 0</td><td class="num"><b>R$ 800</b></td>
             </tr>
             <tr>
-              <td>Talita Panassol</td><td>12</td><td>16%</td>
+              <td>Talita Panassol</td><td class="num">12</td><td class="num">16%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 600</td><td>R$ 0</td><td><b>R$ 600</b></td>
+              <td class="num">R$ 600</td><td class="num">R$ 0</td><td class="num"><b>R$ 600</b></td>
             </tr>
             <tr>
-              <td>Sarah Moura</td><td>12</td><td>10%</td>
+              <td>Sarah Moura</td><td class="num">12</td><td class="num">10%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 600</td><td>R$ 0</td><td><b>R$ 600</b></td>
+              <td class="num">R$ 600</td><td class="num">R$ 0</td><td class="num"><b>R$ 600</b></td>
             </tr>
             <tr>
-              <td>Carla Gomes</td><td>9</td><td>15%</td>
+              <td>Carla Gomes</td><td class="num">9</td><td class="num">15%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 450</td><td>R$ 0</td><td><b>R$ 450</b></td>
+              <td class="num">R$ 450</td><td class="num">R$ 0</td><td class="num"><b>R$ 450</b></td>
             </tr>
             <tr>
-              <td>Shelry Solart</td><td>8</td><td>13%</td>
+              <td>Shelry Solart</td><td class="num">8</td><td class="num">13%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 400</td><td>R$ 0</td><td><b>R$ 400</b></td>
+              <td class="num">R$ 400</td><td class="num">R$ 0</td><td class="num"><b>R$ 400</b></td>
             </tr>
             <tr>
-              <td>Maria Elvira</td><td>6</td><td>12%</td>
+              <td>Maria Elvira</td><td class="num">6</td><td class="num">12%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 300</td><td>R$ 0</td><td><b>R$ 300</b></td>
+              <td class="num">R$ 300</td><td class="num">R$ 0</td><td class="num"><b>R$ 300</b></td>
             </tr>
             <tr>
-              <td>Mariaeduarda Carvalho</td><td>6</td><td>5%</td>
+              <td>Mariaeduarda Carvalho</td><td class="num">6</td><td class="num">5%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 300</td><td>R$ 0</td><td><b>R$ 300</b></td>
+              <td class="num">R$ 300</td><td class="num">R$ 0</td><td class="num"><b>R$ 300</b></td>
             </tr>
             <tr>
-              <td>Larissa Freitas</td><td>5</td><td>7%</td>
+              <td>Larissa Freitas</td><td class="num">5</td><td class="num">7%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 250</td><td>R$ 0</td><td><b>R$ 250</b></td>
+              <td class="num">R$ 250</td><td class="num">R$ 0</td><td class="num"><b>R$ 250</b></td>
             </tr>
             <tr>
-              <td>Gabriela Ribeiro</td><td>5</td><td>9%</td>
+              <td>Gabriela Ribeiro</td><td class="num">5</td><td class="num">9%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 250</td><td>R$ 0</td><td><b>R$ 250</b></td>
+              <td class="num">R$ 250</td><td class="num">R$ 0</td><td class="num"><b>R$ 250</b></td>
             </tr>
             <tr>
-              <td>Andreina Ferreira</td><td>4</td><td>6%</td>
+              <td>Andreina Ferreira</td><td class="num">4</td><td class="num">6%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 200</td><td>R$ 0</td><td><b>R$ 200</b></td>
+              <td class="num">R$ 200</td><td class="num">R$ 0</td><td class="num"><b>R$ 200</b></td>
             </tr>
             <tr>
-              <td>Renata Brandao</td><td>4</td><td>4%</td>
+              <td>Renata Brandao</td><td class="num">4</td><td class="num">4%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 200</td><td>R$ 0</td><td><b>R$ 200</b></td>
+              <td class="num">R$ 200</td><td class="num">R$ 0</td><td class="num"><b>R$ 200</b></td>
             </tr>
             <tr>
-              <td>Tatiana Portela</td><td>3</td><td>4%</td>
+              <td>Tatiana Portela</td><td class="num">3</td><td class="num">4%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 150</td><td>R$ 0</td><td><b>R$ 150</b></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
             </tr>
             <tr>
-              <td>Indlayse Ferreira</td><td>3</td><td>4%</td>
+              <td>Indlayse Ferreira</td><td class="num">3</td><td class="num">4%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 150</td><td>R$ 0</td><td><b>R$ 150</b></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
             </tr>
             <tr>
-              <td>Laura Pagliuzo</td><td>3</td><td>7%</td>
+              <td>Laura Pagliuzo</td><td class="num">3</td><td class="num">7%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 150</td><td>R$ 0</td><td><b>R$ 150</b></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
             </tr>
             <tr>
-              <td>Thayna Bastos</td><td>3</td><td>4%</td>
+              <td>Thayna Bastos</td><td class="num">3</td><td class="num">4%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 150</td><td>R$ 0</td><td><b>R$ 150</b></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
             </tr>
             <tr>
-              <td>Junior Gomes</td><td>3</td><td>4%</td>
+              <td>Junior Gomes</td><td class="num">3</td><td class="num">4%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 150</td><td>R$ 0</td><td><b>R$ 150</b></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
             </tr>
             <tr>
-              <td>Julia Cordeiro</td><td>3</td><td>5%</td>
+              <td>Julia Cordeiro</td><td class="num">3</td><td class="num">4%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 150</td><td>R$ 0</td><td><b>R$ 150</b></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
             </tr>
             <tr>
-              <td>Erick Andrade</td><td>2</td><td>2%</td>
+              <td>Erick Andrade</td><td class="num">2</td><td class="num">2%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 100</td><td>R$ 0</td><td><b>R$ 100</b></td>
+              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
             </tr>
             <tr>
-              <td>Anaclara Peres</td><td>2</td><td>3%</td>
+              <td>Anaclara Peres</td><td class="num">2</td><td class="num">3%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 100</td><td>R$ 0</td><td><b>R$ 100</b></td>
+              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
             </tr>
             <tr>
-              <td>Giovanna Munhoz</td><td>2</td><td>4%</td>
+              <td>Giovanna Munhoz</td><td class="num">2</td><td class="num">4%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 100</td><td>R$ 0</td><td><b>R$ 100</b></td>
+              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
             </tr>
             <tr>
-              <td>Viviane Luz</td><td>2</td><td>5%</td>
+              <td>Viviane Luz</td><td class="num">2</td><td class="num">4%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 100</td><td>R$ 0</td><td><b>R$ 100</b></td>
+              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
             </tr>
             <tr>
-              <td>Viviancristina Souza</td><td>1</td><td>2%</td>
+              <td>Viviancristina Souza</td><td class="num">1</td><td class="num">2%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 50</td><td>R$ 0</td><td><b>R$ 50</b></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
             </tr>
             <tr>
-              <td>Stefany Figueredo</td><td>1</td><td>2%</td>
+              <td>Stefany Figueredo</td><td class="num">1</td><td class="num">2%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 50</td><td>R$ 0</td><td><b>R$ 50</b></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
             </tr>
             <tr>
-              <td>Pamela Miranda</td><td>1</td><td>2%</td>
+              <td>Pamela Miranda</td><td class="num">1</td><td class="num">2%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 50</td><td>R$ 0</td><td><b>R$ 50</b></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
             </tr>
             <tr>
-              <td>Mayane Costa</td><td>1</td><td>3%</td>
+              <td>Mayane Costa</td><td class="num">1</td><td class="num">3%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 50</td><td>R$ 0</td><td><b>R$ 50</b></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
             </tr>
             <tr>
-              <td>Kaian Silva</td><td>1</td><td>2%</td>
+              <td>Kaian Silva</td><td class="num">1</td><td class="num">2%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 50</td><td>R$ 0</td><td><b>R$ 50</b></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
             </tr>
             <tr>
-              <td>Thais Borges</td><td>1</td><td>2%</td>
+              <td>Thais Borges</td><td class="num">1</td><td class="num">2%</td>
               <td><span class="pill pill-nao">Não</span></td>
-              <td>R$ 50</td><td>R$ 0</td><td><b>R$ 50</b></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
             </tr>
             <tr class="total-row">
-              <td><b>Total</b></td><td><b>119</b></td>
+              <td><b>Total</b></td><td class="num"><b>119</b></td>
               <td></td><td></td>
-              <td><b>R$ 5.950</b></td><td><b>R$ 0</b></td>
-              <td><b>R$ 5.950</b></td>
+              <td class="num"><b>R$ 5.950</b></td><td class="num"><b>R$ 0</b></td>
+              <td class="num"><b>R$ 5.950</b></td>
             </tr>
           </tbody>
         </table>
@@ -1393,17 +1394,17 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
       <div class="roi-cards">
         <div class="roi-card">
           <div class="r-lbl">R$ Total Antecipado</div>
-          <div class="r-val">R$&nbsp;380k</div>
+          <div class="r-val">R$&nbsp;498.765</div>
           <div class="r-sub">YTD Junho 2026</div>
         </div>
         <div class="roi-card blue">
           <div class="r-lbl">Total Bônus Pagos</div>
-          <div class="r-val">R$&nbsp;900</div>
+          <div class="r-val">R$&nbsp;5.950</div>
           <div class="r-sub">Maio 2026 (piloto)</div>
         </div>
         <div class="roi-card green">
           <div class="r-lbl">Relação Antecipado/Bônus</div>
-          <div class="r-val">422x</div>
+          <div class="r-val">84x</div>
           <div class="r-sub">R$ 422 antec. por R$ 1 em bônus</div>
         </div>
       </div>
