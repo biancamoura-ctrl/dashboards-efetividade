@@ -249,6 +249,16 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 .regra-body td { padding: 5px 10px; border-bottom: 1px solid rgba(118,104,172,.12); }
 .regra-body tr:last-child td { border-bottom: none; }
 
+/* ── Filtro CS (Por Escola) ── */
+.cs-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.cs-chip {
+  padding: 4px 13px; border: 1.5px solid var(--border); border-radius: 20px;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--gray); background: white; cursor: pointer; transition: all .15s;
+}
+.cs-chip:hover  { border-color: var(--purple); color: var(--purple); }
+.cs-chip.active { background: var(--purple); color: white; border-color: var(--purple); }
+
 /* ── Footer ── */
 .footer { text-align: center; font-size: 10px; color: #ccc; margin-top: 32px; }
 
@@ -350,12 +360,16 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 
     <!-- ── SUB-TAB: Por Escola ── -->
     <div id="sub-escola" class="sub-panel">
-      <div class="def-box">
-        Cada linha = uma escola que <b>atingiu T1</b> (5+ alunos pedindo). Escolas encerradas permanecem registradas.
-        O bônus da coluna <em>Bônus</em> é o valor de T1 (R$50); o adicional de T2 aparece na visão por CS.
+      <!-- Filtro de CS -->
+      <div class="cs-filter">
+        <button class="cs-chip active" onclick="filtrarCS(this, 'todos')">Todos</button>
+        <button class="cs-chip" onclick="filtrarCS(this, 'Fernanda S.')">Fernanda S.</button>
+        <button class="cs-chip" onclick="filtrarCS(this, 'Lucas M.')">Lucas M.</button>
+        <button class="cs-chip" onclick="filtrarCS(this, 'Carla R.')">Carla R.</button>
+        <button class="cs-chip" onclick="filtrarCS(this, 'João P.')">João P.</button>
       </div>
       <div class="table-wrap">
-        <table>
+        <table id="tabela-escola">
           <thead>
             <tr>
               <th>Escola</th>
@@ -369,74 +383,74 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr data-cs="Fernanda S.">
               <td>EM José de Alencar</td><td>Fernanda S.</td><td>01/05/2026</td>
               <td class="num">7</td><td class="num">R$ 1.800</td>
               <td><span class="pill pill-t1t2">T1 + T2</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Fernanda S.">
               <td>EE São Pedro</td><td>Fernanda S.</td><td>05/05/2026</td>
               <td class="num">6</td><td class="num">R$ 2.100</td>
               <td><span class="pill pill-t1t2">T1 + T2</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Fernanda S.">
               <td>EMEB Cel. Fontoura</td><td>Fernanda S.</td><td>12/05/2026</td>
               <td class="num">5</td><td class="num">R$ 1.200</td>
               <td><span class="pill pill-t1t2">T1 + T2</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Lucas M.">
               <td>Colégio Bom Pastor</td><td>Lucas M.</td><td>03/05/2026</td>
               <td class="num">8</td><td class="num">R$ 2.800</td>
               <td><span class="pill pill-t1">T1</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Lucas M.">
               <td>EMEIF Prof. Maria</td><td>Lucas M.</td><td>10/05/2026</td>
               <td class="num">5</td><td class="num">R$ 900</td>
               <td><span class="pill pill-t1">T1</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Carla R.">
               <td>EM Tiradentes</td><td>Carla R.</td><td>02/05/2026</td>
               <td class="num">9</td><td class="num">R$ 3.200</td>
               <td><span class="pill pill-t1t2">T1 + T2</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Carla R.">
               <td>EE Carlos Gomes</td><td>Carla R.</td><td>07/05/2026</td>
               <td class="num">7</td><td class="num">R$ 2.400</td>
               <td><span class="pill pill-t1t2">T1 + T2</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Carla R.">
               <td>EMEIEF do Norte</td><td>Carla R.</td><td>14/05/2026</td>
               <td class="num">6</td><td class="num">R$ 1.900</td>
               <td><span class="pill pill-t1t2">T1 + T2</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Carla R.">
               <td>Colégio Santa Fé</td><td>Carla R.</td><td>16/05/2026</td>
               <td class="num">5</td><td class="num">R$ 1.500</td>
               <td><span class="pill pill-t1t2">T1 + T2</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
-            <tr>
+            <tr data-cs="Carla R.">
               <td>EMEI Jardim Sul</td><td>Carla R.</td><td>20/05/2026</td>
               <td class="num">5</td><td class="num">R$ 1.000</td>
               <td><span class="pill pill-t1t2">T1 + T2</span></td>
               <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
-            <tr>
+            <tr data-cs="João P.">
               <td>EE Monteiro Lobato <em style="color:#aaa;font-size:10px;">(encerrada)</em></td>
               <td>João P.</td><td>22/04/2026</td>
               <td class="num">—</td><td class="num">R$ 900</td>
               <td><span class="pill pill-spec">Especial</span></td>
               <td class="num">—</td><td><span class="pill pill-pend">Pendente</span></td>
             </tr>
-            <tr class="total-row">
+            <tr class="total-row" id="escola-total">
               <td colspan="3"><b>Total</b></td>
               <td class="num"><b>—</b></td>
               <td class="num"><b>R$ 19.700</b></td>
@@ -698,6 +712,18 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 </div><!-- /container -->
 
 <script>
+/* ── Filtro CS na tabela Por Escola ── */
+function filtrarCS(btn, cs) {
+  document.querySelectorAll('.cs-chip').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  var rows = document.querySelectorAll('#tabela-escola tbody tr[data-cs]');
+  rows.forEach(function(r) {
+    r.style.display = (cs === 'todos' || r.dataset.cs === cs) ? '' : 'none';
+  });
+  var total = document.getElementById('escola-total');
+  if (total) total.style.display = cs === 'todos' ? '' : 'none';
+}
+
 /* ── Chips de regras ── */
 function toggleRegra(id) {
   var btn  = document.querySelector('.regra-chip[onclick="toggleRegra(\'' + id + '\')"]');
