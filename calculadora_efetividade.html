@@ -292,9 +292,13 @@ html.dark .ev-lbl{color:#71717a}
     </div>
     <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
       <div class="kc-icon">&#9200;</div>
-      <div class="kc-lbl">Vencem/dia (m&#233;d. 7du)</div>
+      <div class="kc-lbl">Vencem/dia</div>
       <div class="kc-val v-red" id="kpi-vencem">&#8212;</div>
-      <div class="kc-sub" id="kpi-vencem-sub">escolas que expiram</div>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+      <div class="kc-icon">&#128197;</div>
+      <div class="kc-lbl">Vencem amanh&#227;</div>
+      <div class="kc-val v-red" id="kpi-vencem-amanha">&#8212;</div>
     </div>
   </div>
 
@@ -458,9 +462,12 @@ function render() {
   var vencem_dia = (periodo === 'semana')
     ? (C.expiracoes && C.expiracoes.length > 0 ? C.expiracoes[0] : 0)
     : 100;
-  document.getElementById('kpi-vencem').className   = 'kc-val';
+  document.getElementById('kpi-vencem').className   = 'kc-val v-red';
   document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(0) + '/dia';
-  document.getElementById('kpi-vencem-sub').textContent = periodo === 'semana' ? 'vencem/dia (hoje)' : 'vencem/dia (referência)';
+  // KPI vencem amanhã — sempre fixo em expiracoes[1], independente do período
+  var vencem_amanha = (C.expiracoes && C.expiracoes.length > 1 ? C.expiracoes[1] : 0);
+  document.getElementById('kpi-vencem-amanha').className   = 'kc-val v-red';
+  document.getElementById('kpi-vencem-amanha').textContent = vencem_amanha.toFixed(0);
 
   // KPIs universais
   var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
