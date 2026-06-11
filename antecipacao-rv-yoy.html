@@ -466,6 +466,9 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
           <option value="Viviancristina Souza">Viviancristina Souza</option>
           <option value="Viviane Luz">Viviane Luz</option>
         </select>
+        <button onclick="exportarEscolas()" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:white;border:none;border-radius:8px;padding:7px 14px;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;cursor:pointer;white-space:nowrap;">
+          ⬇ Exportar CSV
+        </button>
       </div>
       <div class="table-wrap">
         <table id="tabela-escola">
@@ -1678,6 +1681,32 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
 
 <script>
 /* ── Filtro CS na tabela Por Escola ── */
+function exportarEscolas() {
+  var cs = document.getElementById('select-cs').value;
+  var rows = document.querySelectorAll('#tabela-escola tbody tr[data-cs]');
+  var lines = [['Escola','CS','Data 5º Pedido','Alunos Antec.','R$ Antecipado','Trigger','Bônus T1','Pagamento']];
+  rows.forEach(function(tr) {
+    if (cs !== 'todos' && tr.getAttribute('data-cs') !== cs) return;
+    var tds = tr.querySelectorAll('td');
+    lines.push([
+      tds[0].textContent.trim(),
+      tds[1].textContent.trim(),
+      tds[2].textContent.trim(),
+      tds[3].textContent.trim(),
+      tds[4].textContent.trim(),
+      tds[5].textContent.trim(),
+      tds[6].textContent.trim(),
+      tds[7].textContent.trim(),
+    ]);
+  });
+  var csv = lines.map(function(r){ return r.map(function(c){ return '"'+c.replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
+  var blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'escolas_antecipacao_rv' + (cs !== 'todos' ? '_'+cs.replace(/ /g,'_') : '') + '.csv';
+  a.click();
+}
+
 function filtrarCS(cs) {
   document.querySelectorAll('#tabela-escola tbody tr[data-cs]').forEach(function(r) {
     r.style.display = (cs === 'todos' || r.dataset.cs === cs) ? '' : 'none';
