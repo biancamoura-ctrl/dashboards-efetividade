@@ -1961,6 +1961,8 @@ function exportarEscolas() {
       tds[5].textContent.trim(),
       tds[6].textContent.trim(),
       tds[7].textContent.trim(),
+      tds[8].textContent.trim(),
+      tds[9].textContent.trim(),
     ]);
   });
   var csv = lines.map(function(r){ return r.map(function(c){ return '"'+c.replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
