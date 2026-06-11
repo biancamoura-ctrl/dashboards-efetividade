@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antecipação · RV & Análises · Estante Mágica</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --purple:      #7668AC;
+  --purple-dark: #5A4E8E;
+  --purple-bg:   #F0EEF8;
+  --yellow:      #F9DC45;
+  --yellow-dark: #C9AC00;
+  --blue:        #008ECF;
+  --blue-bg:     #E0F3FC;
+  --red:         #E94B56;
+  --red-bg:      #FEE8EA;
+  --green:       #2E7D32;
+  --green-bg:    #E8F5E9;
+  --gray:        #595959;
+  --gray-light:  #F5F4F9;
+  --border:      #E2DEEF;
+  --shadow:      0 2px 8px rgba(118,104,172,0.10);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', sans-serif;
+  background: var(--gray-light);
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+/* ── WIP Banner ── */
+.wip-banner {
+  background: #fff3cd;
+  border-bottom: 2px solid var(--yellow-dark);
+  color: #7a5800;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  padding: 7px 16px;
+  letter-spacing: 0.3px;
+  position: sticky; top: 0; z-index: 100;
+}
+
+/* ── Back button ── */
+.btn-back {
+  position: fixed; top: 48px; left: 14px;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--purple); color: white;
+  text-decoration: none; padding: 7px 14px;
+  border-radius: 8px; font-size: 11px; font-weight: 700;
+  box-shadow: 0 2px 6px rgba(118,104,172,.4); z-index: 9999;
+  transition: opacity .15s;
+}
+.btn-back:hover { opacity: .85; }
+
+/* ── Container ── */
+.container { max-width: 1280px; margin: 0 auto; padding: 20px 16px 60px; }
+
+/* ── Header ── */
+header {
+  background: var(--purple); color: white;
+  padding: 20px 28px; border-radius: 12px;
+  margin-bottom: 16px; margin-top: 52px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow);
+}
+header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; }
+.badge-ajuste {
+  background: var(--yellow); color: #2B2200;
+  padding: 5px 13px; border-radius: 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ── Main Tabs ── */
+.tabs-bar {
+  display: flex; gap: 4px; margin-bottom: 16px;
+  background: white; border-radius: 10px; padding: 6px;
+  box-shadow: var(--shadow);
+}
+.tab-btn {
+  flex: 1; padding: 10px 20px; border: none; border-radius: 7px;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+  color: var(--gray); background: transparent; cursor: pointer;
+  letter-spacing: 0.3px; transition: all .18s;
+}
+.tab-btn:hover { background: var(--purple-bg); color: var(--purple); }
+.tab-btn.active { background: var(--purple); color: white; box-shadow: 0 2px 6px rgba(118,104,172,.25); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Sub-tabs (pills) ── */
+.sub-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.sub-tab {
+  padding: 5px 16px; border: 1.5px solid var(--border); border-radius: 20px;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--gray); background: white; cursor: pointer;
+  transition: all .15s;
+}
+.sub-tab:hover { border-color: var(--purple); color: var(--purple); }
+.sub-tab.active { background: var(--purple); color: white; border-color: var(--purple); }
+.sub-panel { display: none; }
+.sub-panel.active { display: block; }
+
+/* ── KPI cards ── */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.kpi {
+  background: white; border-radius: 10px; padding: 15px 16px;
+  box-shadow: var(--shadow); border-top: 3px solid var(--purple);
+  position: relative;
+}
+.kpi.yellow { border-top-color: var(--yellow-dark); }
+.kpi.blue   { border-top-color: var(--blue); }
+.kpi.green  { border-top-color: var(--green); }
+.kpi.red    { border-top-color: var(--red); }
+.kpi .lbl { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: #aaa; text-transform: uppercase; }
+.kpi .val { font-size: 22px; font-weight: 800; color: var(--purple); line-height: 1.1; margin-top: 5px; }
+.kpi.blue .val  { color: var(--blue); }
+.kpi.green .val { color: var(--green); }
+.kpi.red .val   { color: var(--red); }
+.kpi.yellow .val { color: var(--yellow-dark); }
+.kpi .sub { font-size: 10px; color: #bbb; margin-top: 3px; }
+
+/* ── Definition box ── */
+.def-box {
+  background: white; padding: 10px 16px; border-radius: 8px;
+  font-size: 11px; color: var(--gray); margin-bottom: 14px;
+  border-left: 3px solid var(--purple); box-shadow: var(--shadow);
+  line-height: 1.7;
+}
+.def-box b { color: var(--purple); }
+.def-box .warn { color: var(--yellow-dark); font-weight: 700; }
+
+/* ── Section heading ── */
+.sec-head {
+  font-size: 10px; font-weight: 800; color: #9a9a9a;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 10px; margin-top: 4px;
+}
+
+/* ── Table ── */
+.table-wrap { background: white; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 16px; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.table-wrap thead { background: var(--purple); color: white; }
+.table-wrap th {
+  padding: 10px 11px; text-align: left;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.8px;
+  text-transform: uppercase; white-space: nowrap;
+}
+.table-wrap td { padding: 8px 11px; border-bottom: 1px solid var(--purple-bg); }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tr:hover td { background: #FAF9FE; }
+.table-wrap tr.total-row td { background: var(--purple-bg); font-weight: 700; font-size: 11px; border-top: 2px solid var(--purple); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.pill {
+  display: inline-block; padding: 2px 8px; border-radius: 12px;
+  font-size: 10px; font-weight: 700; white-space: nowrap;
+}
+.pill-t1    { background: var(--blue-bg); color: var(--blue); }
+.pill-t1t2  { background: var(--green-bg); color: var(--green); }
+.pill-spec  { background: #FFF3E0; color: #E65100; }
+.pill-pago  { background: var(--green-bg); color: var(--green); }
+.pill-pend  { background: #FFF3E0; color: #E65100; }
+.pill-sim   { background: var(--green-bg); color: var(--green); }
+.pill-nao   { background: var(--red-bg); color: var(--red); }
+.delta-pos  { color: var(--green); font-weight: 700; }
+.delta-neg  { color: var(--red); font-weight: 700; }
+.delta-neu  { color: #aaa; font-weight: 700; }
+
+/* ── YoY comparison table ── */
+.yoy-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.yoy-card {
+  background: white; border-radius: 10px; padding: 0;
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.yoy-card-head {
+  background: var(--purple); color: white;
+  padding: 10px 14px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.yoy-card-head.year-25 { background: #9e9e9e; }
+.yoy-card-head.delta   { background: var(--gray); }
+.yoy-card table { width: 100%; }
+.yoy-card td { padding: 9px 14px; border-bottom: 1px solid var(--purple-bg); font-size: 12px; }
+.yoy-card tr:last-child td { border-bottom: none; }
+.yoy-lbl { color: #aaa; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.yoy-val { font-size: 16px; font-weight: 800; color: var(--purple); }
+
+/* ── Chart card ── */
+.chart-card {
+  background: white; border-radius: 10px; padding: 20px;
+  box-shadow: var(--shadow); margin-bottom: 16px;
+}
+.chart-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.chart-card .chart-sub { font-size: 11px; color: #aaa; margin-bottom: 16px; }
+.chart-wrap { position: relative; height: 260px; }
+
+/* ── ROI card ── */
+.roi-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.roi-card {
+  background: white; border-radius: 10px; padding: 18px 20px;
+  box-shadow: var(--shadow); text-align: center;
+  border-top: 3px solid var(--purple);
+}
+.roi-card.blue  { border-top-color: var(--blue); }
+.roi-card.green { border-top-color: var(--green); }
+.roi-card .r-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #aaa; text-transform: uppercase; }
+.roi-card .r-val { font-size: 28px; font-weight: 800; color: var(--purple); margin: 6px 0 2px; }
+.roi-card.blue .r-val  { color: var(--blue); }
+.roi-card.green .r-val { color: var(--green); }
+.roi-card .r-sub { font-size: 11px; color: #aaa; }
+
+/* ── Aviso regras pendentes ── */
+.aviso {
+  background: #fff3cd; border: 1px solid var(--yellow-dark);
+  border-radius: 8px; padding: 10px 14px; font-size: 11px;
+  color: #7a5800; margin-bottom: 14px; font-weight: 600;
+}
+
+/* ── Footer ── */
+.footer { text-align: center; font-size: 10px; color: #ccc; margin-top: 32px; }
+
+@media (max-width: 600px) {
+  .tabs-bar { flex-direction: column; }
+  .btn-back { top: 42px; }
+}
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+
+<div class="wip-banner">&#9888; Página em ajuste &nbsp;·&nbsp; não aparece no menu público ainda &nbsp;·&nbsp; acesso via link direto</div>
+<a href="index.html" class="btn-back">&#8592; Início</a>
+
+<div class="container">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div>
+      <h1>Antecipação de Receita &nbsp;·&nbsp; RV &amp; Análises</h1>
+      <div class="sub">Remuneração variável &nbsp;&#183;&nbsp; Comparativo YoY &nbsp;&#183;&nbsp; Regra FC60+ &nbsp;&#183;&nbsp; 2026</div>
+    </div>
+    <span class="badge-ajuste">EM AJUSTE</span>
+  </header>
+
+  <!-- ── MAIN TABS ── -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('rv')">💰 Remuneração Variável</button>
+    <button class="tab-btn" onclick="switchTab('yoy')">📊 YoY &middot; YTD</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       TAB 1 — REMUNERAÇÃO VARIÁVEL
+  ══════════════════════════════════════════════════════════ -->
+  <div id="tab-rv" class="tab-panel active">
+
+    <!-- Regras -->
+    <div class="def-box">
+      <b>Regras de bônus — Maio 2026</b> &nbsp;&#183;&nbsp;
+      <b>Trigger 1:</b> escola com 5+ alunos que realizaram pedido → <b>R$ 50 por escola</b> &nbsp;&#183;&nbsp;
+      <b>Trigger 2:</b> CS com &gt;30% da carteira antecipada → <b>+ R$ 100</b> (cumulativo) &nbsp;&#183;&nbsp;
+      <b>Especial:</b> 100% da carteira antecipada → <b>R$ 200</b> (substitui T1+T2) &nbsp;&#183;&nbsp;
+      Regra FC60+: <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code>
+    </div>
+
+    <div class="aviso">
+      ⚠️ <b>Regras de junho ainda pendentes</b> — confirmar com JP e Amanda antes de implementar. Proposta: faixa 30%–70% → R$50 · acima de 70% → R$100.
+    </div>
+
+    <!-- KPIs resumo RV -->
+    <div class="kpis">
+      <div class="kpi green">
+        <div class="lbl">Escolas com T1</div>
+        <div class="val">10</div>
+        <div class="sub">5+ alunos antecipados</div>
+      </div>
+      <div class="kpi blue">
+        <div class="lbl">CSs com T2</div>
+        <div class="val">2</div>
+        <div class="sub">&gt;30% da carteira antecipada</div>
+      </div>
+      <div class="kpi yellow">
+        <div class="lbl">Casos especiais</div>
+        <div class="val">1</div>
+        <div class="sub">100% da carteira</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Total bônus a pagar</div>
+        <div class="val">R$&nbsp;900</div>
+        <div class="sub">R$ 250 já pagos</div>
+      </div>
+    </div>
+
+    <!-- Sub-tabs -->
+    <div class="sub-tabs">
+      <button class="sub-tab active" onclick="switchSub('escola')">Por Escola</button>
+      <button class="sub-tab" onclick="switchSub('cs')">Por CS</button>
+      <button class="sub-tab" onclick="switchSub('roi')">ROI</button>
+    </div>
+
+    <!-- ── SUB-TAB: Por Escola ── -->
+    <div id="sub-escola" class="sub-panel active">
+      <div class="def-box">
+        Cada linha = uma escola que <b>atingiu T1</b> (5+ alunos pedindo). Escolas encerradas permanecem registradas.
+        O bônus da coluna <em>Bônus</em> é o valor de T1 (R$50); o adicional de T2 aparece na visão por CS.
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Escola</th>
+              <th>CS Responsável</th>
+              <th>Data Antec.</th>
+              <th class="num">Alunos Antec.</th>
+              <th class="num">R$ Antecipado</th>
+              <th>Trigger</th>
+              <th class="num">Bônus (T1)</th>
+              <th>Pagamento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EM José de Alencar</td><td>Fernanda S.</td><td>01/05/2026</td>
+              <td class="num">7</td><td class="num">R$ 1.800</td>
+              <td><span class="pill pill-t1t2">T1 + T2</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
+            </tr>
+            <tr>
+              <td>EE São Pedro</td><td>Fernanda S.</td><td>05/05/2026</td>
+              <td class="num">6</td><td class="num">R$ 2.100</td>
+              <td><span class="pill pill-t1t2">T1 + T2</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
+            </tr>
+            <tr>
+              <td>EMEB Cel. Fontoura</td><td>Fernanda S.</td><td>12/05/2026</td>
+              <td class="num">5</td><td class="num">R$ 1.200</td>
+              <td><span class="pill pill-t1t2">T1 + T2</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr>
+              <td>Colégio Bom Pastor</td><td>Lucas M.</td><td>03/05/2026</td>
+              <td class="num">8</td><td class="num">R$ 2.800</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
+            </tr>
+            <tr>
+              <td>EMEIF Prof. Maria</td><td>Lucas M.</td><td>10/05/2026</td>
+              <td class="num">5</td><td class="num">R$ 900</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr>
+              <td>EM Tiradentes</td><td>Carla R.</td><td>02/05/2026</td>
+              <td class="num">9</td><td class="num">R$ 3.200</td>
+              <td><span class="pill pill-t1t2">T1 + T2</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
+            </tr>
+            <tr>
+              <td>EE Carlos Gomes</td><td>Carla R.</td><td>07/05/2026</td>
+              <td class="num">7</td><td class="num">R$ 2.400</td>
+              <td><span class="pill pill-t1t2">T1 + T2</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pago">Pago</span></td>
+            </tr>
+            <tr>
+              <td>EMEIEF do Norte</td><td>Carla R.</td><td>14/05/2026</td>
+              <td class="num">6</td><td class="num">R$ 1.900</td>
+              <td><span class="pill pill-t1t2">T1 + T2</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr>
+              <td>Colégio Santa Fé</td><td>Carla R.</td><td>16/05/2026</td>
+              <td class="num">5</td><td class="num">R$ 1.500</td>
+              <td><span class="pill pill-t1t2">T1 + T2</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr>
+              <td>EMEI Jardim Sul</td><td>Carla R.</td><td>20/05/2026</td>
+              <td class="num">5</td><td class="num">R$ 1.000</td>
+              <td><span class="pill pill-t1t2">T1 + T2</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr>
+              <td>EE Monteiro Lobato <em style="color:#aaa;font-size:10px;">(encerrada)</em></td>
+              <td>João P.</td><td>22/04/2026</td>
+              <td class="num">—</td><td class="num">R$ 900</td>
+              <td><span class="pill pill-spec">Especial</span></td>
+              <td class="num">—</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3"><b>Total</b></td>
+              <td class="num"><b>—</b></td>
+              <td class="num"><b>R$ 19.700</b></td>
+              <td></td>
+              <td class="num"><b>R$ 500</b></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
+        * Dados de exemplo &mdash; integração BigQuery pendente &nbsp;&#183;&nbsp; T2 aparece consolidado na visão Por CS
+      </div>
+    </div>
+
+    <!-- ── SUB-TAB: Por CS ── -->
+    <div id="sub-cs" class="sub-panel">
+      <div class="def-box">
+        <b>Valor a receber</b> = soma dos T1 das escolas deste CS + R$100 se T2 atingido (ou R$200 se especial, que substitui tudo).
+        <b>Saldo devedor</b> = valor a receber − valor já pago. Percentual de carteira calculado sobre total de escolas FC60+ ativas.
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>CS</th>
+              <th class="num">Escolas com T1</th>
+              <th class="num">% Carteira Antecipada</th>
+              <th>T2 Atingido?</th>
+              <th class="num">Valor a Receber</th>
+              <th class="num">Já Pago</th>
+              <th class="num">Saldo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fernanda Santos</td>
+              <td class="num">3</td>
+              <td class="num">45%</td>
+              <td><span class="pill pill-sim">Sim</span></td>
+              <td class="num">R$ 250</td>
+              <td class="num">R$ 100</td>
+              <td class="num"><b>R$ 150</b></td>
+            </tr>
+            <tr>
+              <td>Lucas Medeiros</td>
+              <td class="num">2</td>
+              <td class="num">28%</td>
+              <td><span class="pill pill-nao">Não</span></td>
+              <td class="num">R$ 100</td>
+              <td class="num">R$ 50</td>
+              <td class="num"><b>R$ 50</b></td>
+            </tr>
+            <tr>
+              <td>Carla Ribeiro</td>
+              <td class="num">5</td>
+              <td class="num">62%</td>
+              <td><span class="pill pill-sim">Sim</span></td>
+              <td class="num">R$ 350</td>
+              <td class="num">R$ 100</td>
+              <td class="num"><b>R$ 250</b></td>
+            </tr>
+            <tr>
+              <td>João Paulo</td>
+              <td class="num">—</td>
+              <td class="num">100%</td>
+              <td><span class="pill pill-spec">Especial</span></td>
+              <td class="num">R$ 200</td>
+              <td class="num">R$ 0</td>
+              <td class="num"><b>R$ 200</b></td>
+            </tr>
+            <tr class="total-row">
+              <td><b>Total</b></td>
+              <td class="num"><b>10</b></td>
+              <td class="num">—</td>
+              <td></td>
+              <td class="num"><b>R$ 900</b></td>
+              <td class="num"><b>R$ 250</b></td>
+              <td class="num"><b>R$ 650</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
+        * Dados de exemplo &mdash; integração BigQuery pendente &nbsp;&#183;&nbsp; confirmar com JP lógica de split quando CS muda durante o período
+      </div>
+    </div>
+
+    <!-- ── SUB-TAB: ROI ── -->
+    <div id="sub-roi" class="sub-panel">
+      <div class="def-box">
+        <b>ROI do programa</b> = R$ antecipado ÷ R$ gasto em bônus.
+        <b>Atenção:</b> a antecipação pode ou não gerar receita incremental &mdash; análise futura com JP definirá se é ganho líquido ou apenas adiantamento de receita que viria de qualquer forma.
+      </div>
+
+      <div class="roi-cards">
+        <div class="roi-card">
+          <div class="r-lbl">R$ Total Antecipado</div>
+          <div class="r-val">R$&nbsp;380k</div>
+          <div class="r-sub">YTD Junho 2026</div>
+        </div>
+        <div class="roi-card blue">
+          <div class="r-lbl">Total Bônus Pagos</div>
+          <div class="r-val">R$&nbsp;900</div>
+          <div class="r-sub">Maio 2026 (piloto)</div>
+        </div>
+        <div class="roi-card green">
+          <div class="r-lbl">Relação Antecipado/Bônus</div>
+          <div class="r-val">422x</div>
+          <div class="r-sub">R$ 422 antec. por R$ 1 em bônus</div>
+        </div>
+      </div>
+
+      <div class="sec-head">Detalhamento por CS</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>CS</th>
+              <th class="num">R$ Antecipado</th>
+              <th class="num">R$ Bônus</th>
+              <th class="num">Relação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fernanda Santos</td>
+              <td class="num">R$ 5.100</td><td class="num">R$ 250</td>
+              <td class="num"><b>20,4x</b></td>
+            </tr>
+            <tr>
+              <td>Lucas Medeiros</td>
+              <td class="num">R$ 3.700</td><td class="num">R$ 100</td>
+              <td class="num"><b>37,0x</b></td>
+            </tr>
+            <tr>
+              <td>Carla Ribeiro</td>
+              <td class="num">R$ 10.000</td><td class="num">R$ 350</td>
+              <td class="num"><b>28,6x</b></td>
+            </tr>
+            <tr>
+              <td>João Paulo</td>
+              <td class="num">R$ 900</td><td class="num">R$ 200</td>
+              <td class="num"><b>4,5x</b></td>
+            </tr>
+            <tr class="total-row">
+              <td><b>Total</b></td>
+              <td class="num"><b>R$ 19.700</b></td>
+              <td class="num"><b>R$ 900</b></td>
+              <td class="num"><b>21,9x</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
+        * Dados de exemplo &mdash; integração BigQuery pendente &nbsp;&#183;&nbsp; ROI global usa R$ total antecipado YTD 2026 vs bônus pagos no piloto (mai/2026)
+      </div>
+    </div>
+
+  </div><!-- /tab-rv -->
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       TAB 2 — YoY · YTD
+  ══════════════════════════════════════════════════════════ -->
+  <div id="tab-yoy" class="tab-panel">
+
+    <div class="def-box">
+      <b>YTD (Year to Date):</b> acumulado do ano atual até hoje &nbsp;&#183;&nbsp;
+      <b>YoY (Year over Year):</b> YTD 2026 vs mesmo período de 2025 &nbsp;&#183;&nbsp;
+      <b>Regra FC60+:</b> escola antecipou se <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code> &nbsp;&#183;&nbsp;
+      <b>Ticket médio</b> = R$ antecipado ÷ nº de escolas (não por aluno) &nbsp;&#183;&nbsp;
+      <b>Referência:</b> comparação calculada em 05/06/2026.
+    </div>
+
+    <!-- KPI Comparison -->
+    <div class="sec-head">Comparativo YTD — 05/06/2026 (referência)</div>
+    <div class="yoy-grid">
+      <div class="yoy-card">
+        <div class="yoy-card-head year-25">2025 YTD (até 05/06)</div>
+        <table>
+          <tr><td><div class="yoy-lbl">Escolas antecipando</div><div class="yoy-val" style="color:#9e9e9e;">149</div></td></tr>
+          <tr><td><div class="yoy-lbl">R$ antecipação</div><div class="yoy-val" style="color:#9e9e9e;">R$ 380.994</div></td></tr>
+          <tr><td><div class="yoy-lbl">Ticket médio</div><div class="yoy-val" style="color:#9e9e9e;">R$ 2.557</div></td></tr>
+          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val" style="color:#9e9e9e;">—</div></td></tr>
+          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val" style="color:#9e9e9e;">—</div></td></tr>
+        </table>
+      </div>
+      <div class="yoy-card">
+        <div class="yoy-card-head">2026 YTD (até 05/06)</div>
+        <table>
+          <tr><td><div class="yoy-lbl">Escolas antecipando</div><div class="yoy-val">153</div></td></tr>
+          <tr><td><div class="yoy-lbl">R$ antecipação</div><div class="yoy-val">R$ 380.200</div></td></tr>
+          <tr><td><div class="yoy-lbl">Ticket médio</div><div class="yoy-val">R$ 2.485</div></td></tr>
+          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val">—</div></td></tr>
+          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val">—</div></td></tr>
+        </table>
+      </div>
+      <div class="yoy-card">
+        <div class="yoy-card-head delta">Variação (2026 − 2025)</div>
+        <table>
+          <tr><td><div class="yoy-lbl">Escolas antecipando</div><div class="yoy-val delta-pos">+4 (+2,7%)</div></td></tr>
+          <tr><td><div class="yoy-lbl">R$ antecipação</div><div class="yoy-val delta-neg">−R$ 794 (−0,2%)</div></td></tr>
+          <tr><td><div class="yoy-lbl">Ticket médio</div><div class="yoy-val delta-neg">−R$ 72 (−2,8%)</div></td></tr>
+          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val delta-neu">—</div></td></tr>
+          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val delta-neu">—</div></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div style="font-size:11px;color:var(--gray);background:white;border-radius:8px;padding:10px 16px;margin-bottom:16px;border-left:3px solid #9e9e9e;box-shadow:var(--shadow);">
+      <b>Interpretação:</b> os anos estão praticamente empatados em volume e número de escolas. A queda de ticket médio (−3%) é explicada pela entrada de escolas mais novas com menor penetração, o que dilui a média. Campos "Carteira FC60+" e "Taxa de adoção" serão preenchidos após integração BigQuery completa.
+    </div>
+
+    <!-- Evolution Chart -->
+    <div class="chart-card">
+      <h3>Evolução acumulada — R$ Antecipação 2026 vs 2025</h3>
+      <div class="chart-sub">Dados mensais acumulados Jan–Jun &nbsp;&#183;&nbsp; Regra FC60+ aplicada em ambos os anos &nbsp;&#183;&nbsp; Estimativa de curva (BigQuery pendente)</div>
+      <div class="chart-wrap">
+        <canvas id="chartYoY"></canvas>
+      </div>
+    </div>
+
+    <!-- Per CS Table -->
+    <div class="sec-head">Corte por CS &mdash; YTD 2026</div>
+    <div class="def-box">
+      Permite identificar CSs que melhoraram ou pioraram em relação ao mesmo período de 2025.
+      Dados serão preenchidos após integração BigQuery (campo <code>cs_label</code> + dados 2025 do arquivo Excel).
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>CS</th>
+            <th class="num">Escolas 2025</th>
+            <th class="num">R$ 2025</th>
+            <th class="num">Escolas 2026</th>
+            <th class="num">R$ 2026</th>
+            <th class="num">Δ Escolas</th>
+            <th class="num">Δ R$</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="7" style="text-align:center;color:#bbb;font-size:11px;padding:24px;">
+              Dados pendentes &mdash; serão carregados do BigQuery após integração
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /tab-yoy -->
+
+  <div class="footer">
+    Página em ajuste &nbsp;·&nbsp; Dados de exemplo na aba RV &nbsp;·&nbsp; YoY usa referência de 05/06/2026 &nbsp;·&nbsp; Integração BigQuery pendente
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ── Main tabs ── */
+function switchTab(t) {
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('tab-' + t).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(b) {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + t + "'")) {
+      b.classList.add('active');
+    }
+  });
+}
+
+/* ── Sub-tabs (RV) ── */
+function switchSub(s) {
+  document.querySelectorAll('.sub-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.sub-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('sub-' + s).classList.add('active');
+  document.querySelectorAll('.sub-tab').forEach(function(b) {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + s + "'")) {
+      b.classList.add('active');
+    }
+  });
+}
+
+/* ── YoY Chart ── */
+(function() {
+  var ctx = document.getElementById('chartYoY').getContext('2d');
+  var labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun*'];
+  var data2025 = [42000, 89000, 160000, 245000, 332000, 381000];
+  var data2026 = [38000, 82000, 151000, 233000, 320000, 380200];
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: '2025',
+          data: data2025,
+          borderColor: '#9e9e9e',
+          backgroundColor: 'rgba(158,158,158,0.08)',
+          borderWidth: 2,
+          pointRadius: 4,
+          pointBackgroundColor: '#9e9e9e',
+          tension: 0.35,
+          fill: true,
+        },
+        {
+          label: '2026',
+          data: data2026,
+          borderColor: '#7668AC',
+          backgroundColor: 'rgba(118,104,172,0.10)',
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: '#7668AC',
+          tension: 0.35,
+          fill: true,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { font: { family: 'Montserrat', size: 11, weight: '700' }, padding: 16 }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return ctx.dataset.label + ': R$ ' + ctx.raw.toLocaleString('pt-BR');
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: '#F0EEF8' },
+          ticks: { font: { family: 'Montserrat', size: 10 } }
+        },
+        y: {
+          grid: { color: '#F0EEF8' },
+          ticks: {
+            font: { family: 'Montserrat', size: 10 },
+            callback: function(v) { return 'R$ ' + (v/1000).toFixed(0) + 'k'; }
+          }
+        }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
