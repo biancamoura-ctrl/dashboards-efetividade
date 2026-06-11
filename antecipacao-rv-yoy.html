@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
 <title>Antecipação · RV & Análises · Estante Mágica</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
@@ -271,6 +272,61 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
   .tabs-bar { flex-direction: column; }
   .btn-back { top: 42px; }
 }
+
+/* ── Dark mode ── */
+html.dark { --purple-bg:#2a2440; --border:#2d2d33; --gray-light:#18181b; --shadow:0 2px 8px rgba(0,0,0,.35); }
+html.dark body { background:#18181b; color:#d4d4d0; }
+html.dark .wip-banner { background:#2a2200; border-color:#7a5800; color:#ffd166; }
+html.dark .container { color:#d4d4d0; }
+html.dark .tabs-bar,
+html.dark .sub-tabs { background:#1e1e22; }
+html.dark .tab-btn { color:#a1a1aa; }
+html.dark .tab-btn:hover { background:#2a2440; color:#c4b5fd; }
+html.dark .sub-tab { background:#1e1e22; border-color:#2d2d33; color:#a1a1aa; }
+html.dark .sub-tab:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .kpi { background:#1e1e22; border-color:#2d2d33; }
+html.dark .kpi .sub { color:#71717a; }
+html.dark .def-box { background:#1e1e22; border-left-color:var(--purple); color:#d4d4d0; }
+html.dark .regra-chip { background:#1e1e22; border-color:#2d2d33; color:#71717a; }
+html.dark .regra-chip:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .regra-chip.open { background:#2a2440; border-color:#7668AC; color:#c4b5fd; }
+html.dark .regra-body { background:#2a2440; color:#d4d4d0; }
+html.dark .regra-body.jun { background:#2a2200; }
+html.dark .regra-body th { background:#1e1e22; border-color:#2d2d33; }
+html.dark .regra-body td { border-color:#2d2d33; }
+html.dark .table-wrap { background:#1e1e22; }
+html.dark .table-wrap thead { background:#27272a; }
+html.dark .table-wrap th { background:#27272a; }
+html.dark .table-wrap td { border-color:#2d2d33; color:#d4d4d0; }
+html.dark .table-wrap tr:hover td { background:#27272a; }
+html.dark .table-wrap tr.total-row td { background:#2a2440; border-color:#7668AC; }
+html.dark .cs-filter label { color:#71717a; }
+html.dark .cs-filter select { background:#27272a; color:#d4d4d0; border-color:#2d2d33;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23c4b5fd' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); }
+html.dark .roi-card { background:#1e1e22; border-color:#2d2d33; }
+html.dark .roi-card .r-sub { color:#71717a; }
+html.dark .yoy-card { background:#1e1e22; }
+html.dark .yoy-card td { border-color:#2d2d33; color:#d4d4d0; }
+html.dark .chart-card { background:#1e1e22; color:#d4d4d0; }
+html.dark .chart-card .chart-sub { color:#71717a; }
+html.dark .sec-head { color:#71717a; }
+html.dark .footer { color:#3f3f46; }
+
+/* ── Botão tema ── */
+body,thead th,.kpi,.table-wrap td,.tabs-bar,.sub-tab,.regra-chip,.regra-body,.cs-filter select,.roi-card,.yoy-card,.chart-card {
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+@keyframes sun-glow   { 0%,100%{filter:drop-shadow(0 0 3px #FFD700) drop-shadow(0 0 6px #FF9500)} 50%{filter:drop-shadow(0 0 7px #FFD700) drop-shadow(0 0 12px #FF6B00)} }
+@keyframes sun-rays   { 0%{transform:scale(1) rotate(0deg)} 100%{transform:scale(1) rotate(360deg)} }
+@keyframes moon-twinkle { 0%,100%{filter:drop-shadow(0 0 2px #c4b5fd)} 50%{filter:drop-shadow(0 0 6px #a78bfa)} }
+.theme-btn { position:fixed; top:16px; right:16px; width:42px; height:42px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg,#FFD947,#FF8C00); box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2); z-index:9998; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center; transition:background .5s ease,box-shadow .5s ease,transform .2s ease; }
+html.dark .theme-btn { background:linear-gradient(135deg,#2d1b69,#0f0c29); box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4); }
+.theme-btn:hover { transform:scale(1.13); }
+.theme-icon-sun,.theme-icon-moon { position:absolute; font-size:22px; line-height:1; transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease; }
+.theme-icon-sun  { opacity:1; transform:scale(1) rotate(0deg) translateY(0); animation:sun-glow 2.5s ease-in-out infinite,sun-rays 12s linear infinite; }
+.theme-icon-moon { opacity:0; transform:scale(0) rotate(-40deg) translateY(10px); }
+html.dark .theme-icon-sun  { opacity:0; transform:scale(0) rotate(60deg) translateY(10px); animation:none; }
+html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translateY(0); animation:moon-twinkle 3s ease-in-out infinite; }
 </style>
 <script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
 <body>
@@ -1459,5 +1515,7 @@ function switchSub(s) {
   });
 })();
 </script>
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button>
+<script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
 </body>
 </html>
