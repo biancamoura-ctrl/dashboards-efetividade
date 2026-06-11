@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
+<title>Antecipação · RV & Análises · Estante Mágica</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --purple:      #7668AC;
+  --purple-dark: #5A4E8E;
+  --purple-bg:   #F0EEF8;
+  --yellow:      #F9DC45;
+  --yellow-dark: #C9AC00;
+  --blue:        #008ECF;
+  --blue-bg:     #E0F3FC;
+  --red:         #E94B56;
+  --red-bg:      #FEE8EA;
+  --green:       #2E7D32;
+  --green-bg:    #E8F5E9;
+  --gray:        #595959;
+  --gray-light:  #F5F4F9;
+  --border:      #E2DEEF;
+  --shadow:      0 2px 8px rgba(118,104,172,0.10);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', sans-serif;
+  background: var(--gray-light);
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+/* ── WIP Banner ── */
+.wip-banner {
+  background: #fff3cd;
+  border-bottom: 2px solid var(--yellow-dark);
+  color: #7a5800;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  padding: 7px 16px;
+  letter-spacing: 0.3px;
+  position: sticky; top: 0; z-index: 100;
+}
+
+/* ── Back button ── */
+.btn-back {
+  position: fixed; top: 48px; left: 14px;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--purple); color: white;
+  text-decoration: none; padding: 7px 14px;
+  border-radius: 8px; font-size: 11px; font-weight: 700;
+  box-shadow: 0 2px 6px rgba(118,104,172,.4); z-index: 9999;
+  transition: opacity .15s;
+}
+.btn-back:hover { opacity: .85; }
+
+/* ── Container ── */
+.container { max-width: 1280px; margin: 0 auto; padding: 20px 16px 60px; }
+
+/* ── Header ── */
+header {
+  background: var(--purple); color: white;
+  padding: 20px 28px; border-radius: 12px;
+  margin-bottom: 16px; margin-top: 52px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow);
+}
+header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; }
+.badge-ajuste {
+  background: var(--yellow); color: #2B2200;
+  padding: 5px 13px; border-radius: 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ── Main Tabs ── */
+.tabs-bar {
+  display: flex; gap: 4px; margin-bottom: 16px;
+  background: white; border-radius: 10px; padding: 6px;
+  box-shadow: var(--shadow);
+}
+.tab-btn {
+  flex: 1; padding: 10px 20px; border: none; border-radius: 7px;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+  color: var(--gray); background: transparent; cursor: pointer;
+  letter-spacing: 0.3px; transition: all .18s;
+}
+.tab-btn:hover { background: var(--purple-bg); color: var(--purple); }
+.tab-btn.active { background: var(--purple); color: white; box-shadow: 0 2px 6px rgba(118,104,172,.25); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Sub-tabs (pills) ── */
+.sub-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.sub-tab {
+  padding: 5px 16px; border: 1.5px solid var(--border); border-radius: 20px;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--gray); background: white; cursor: pointer;
+  transition: all .15s;
+}
+.sub-tab:hover { border-color: var(--purple); color: var(--purple); }
+.sub-tab.active { background: var(--purple); color: white; border-color: var(--purple); }
+.sub-panel { display: none; }
+.sub-panel.active { display: block; }
+
+/* ── KPI cards ── */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.kpi {
+  background: white; border-radius: 10px; padding: 15px 16px;
+  box-shadow: var(--shadow); border-top: 3px solid var(--purple);
+  position: relative;
+}
+.kpi.yellow { border-top-color: var(--yellow-dark); }
+.kpi.blue   { border-top-color: var(--blue); }
+.kpi.green  { border-top-color: var(--green); }
+.kpi.red    { border-top-color: var(--red); }
+.kpi .lbl { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: #aaa; text-transform: uppercase; }
+.kpi .val { font-size: 22px; font-weight: 800; color: var(--purple); line-height: 1.1; margin-top: 5px; }
+.kpi.blue .val  { color: var(--blue); }
+.kpi.green .val { color: var(--green); }
+.kpi.red .val   { color: var(--red); }
+.kpi.yellow .val { color: var(--yellow-dark); }
+.kpi .sub { font-size: 10px; color: #bbb; margin-top: 3px; }
+
+/* ── Definition box ── */
+.def-box {
+  background: white; padding: 10px 16px; border-radius: 8px;
+  font-size: 11px; color: var(--gray); margin-bottom: 14px;
+  border-left: 3px solid var(--purple); box-shadow: var(--shadow);
+  line-height: 1.7;
+}
+.def-box b { color: var(--purple); }
+.def-box .warn { color: var(--yellow-dark); font-weight: 700; }
+
+/* ── Section heading ── */
+.sec-head {
+  font-size: 10px; font-weight: 800; color: #9a9a9a;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 10px; margin-top: 4px;
+}
+
+/* ── Table ── */
+.table-wrap { background: white; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 16px; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.table-wrap thead { background: var(--purple); color: white; }
+.table-wrap th {
+  padding: 10px 11px; text-align: center;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.8px;
+  text-transform: uppercase; white-space: nowrap;
+}
+.table-wrap td { padding: 8px 11px; border-bottom: 1px solid var(--purple-bg); text-align: center; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tr:hover td { background: #FAF9FE; }
+.table-wrap tr.total-row td { background: var(--purple-bg); font-weight: 700; font-size: 11px; border-top: 2px solid var(--purple); }
+.num { text-align: center; font-variant-numeric: tabular-nums; }
+.pill {
+  display: inline-block; padding: 2px 8px; border-radius: 12px;
+  font-size: 10px; font-weight: 700; white-space: nowrap;
+}
+.pill-t1    { background: var(--blue-bg); color: var(--blue); }
+.pill-t1t2  { background: var(--green-bg); color: var(--green); }
+.pill-spec  { background: #FFF3E0; color: #E65100; }
+.pill-pago  { background: var(--green-bg); color: var(--green); }
+.pill-pend  { background: #FFF3E0; color: #E65100; }
+.pill-sim   { background: var(--green-bg); color: var(--green); }
+.pill-nao   { background: var(--red-bg); color: var(--red); }
+.delta-pos  { color: var(--green); font-weight: 700; }
+.delta-neg  { color: var(--red); font-weight: 700; }
+.delta-neu  { color: #aaa; font-weight: 700; }
+
+/* ── YoY comparison table ── */
+.yoy-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.yoy-card {
+  background: white; border-radius: 10px; padding: 0;
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.yoy-card-head {
+  background: var(--purple); color: white;
+  padding: 10px 14px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.yoy-card-head.year-25 { background: #9e9e9e; }
+.yoy-card-head.delta   { background: var(--gray); }
+.yoy-card table { width: 100%; }
+.yoy-card td { padding: 9px 14px; border-bottom: 1px solid var(--purple-bg); font-size: 12px; }
+.yoy-card tr:last-child td { border-bottom: none; }
+.yoy-lbl { color: #aaa; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.yoy-val { font-size: 16px; font-weight: 800; color: var(--purple); }
+
+/* ── Chart card ── */
+.chart-card {
+  background: white; border-radius: 10px; padding: 20px;
+  box-shadow: var(--shadow); margin-bottom: 16px;
+}
+.chart-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.chart-card .chart-sub { font-size: 11px; color: #aaa; margin-bottom: 16px; }
+.chart-wrap { position: relative; height: 260px; }
+
+/* ── ROI card ── */
+.roi-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.roi-card {
+  background: white; border-radius: 10px; padding: 18px 20px;
+  box-shadow: var(--shadow); text-align: center;
+  border-top: 3px solid var(--purple);
+}
+.roi-card.blue  { border-top-color: var(--blue); }
+.roi-card.green { border-top-color: var(--green); }
+.roi-card .r-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #aaa; text-transform: uppercase; }
+.roi-card .r-val { font-size: 28px; font-weight: 800; color: var(--purple); margin: 6px 0 2px; }
+.roi-card.blue .r-val  { color: var(--blue); }
+.roi-card.green .r-val { color: var(--green); }
+.roi-card .r-sub { font-size: 11px; color: #aaa; }
+
+/* ── Chips de regras ── */
+.regras-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.regra-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 20px; padding: 4px 12px;
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+  color: #aaa; cursor: pointer; transition: all .15s;
+}
+.regra-chip:hover { border-color: var(--purple); color: var(--purple); }
+.regra-chip.open  { border-color: var(--purple); color: var(--purple); background: var(--purple-bg); }
+.regra-chip.chip-jun       { border-color: #e6c200; color: #997a00; }
+.regra-chip.chip-jun:hover { border-color: var(--yellow-dark); color: #7a5800; }
+.regra-chip.chip-jun.open  { background: #fff9e0; border-color: var(--yellow-dark); color: #7a5800; }
+.regra-chip .arrow { font-size: 8px; transition: transform .2s; }
+.regra-chip.open .arrow { transform: rotate(180deg); }
+.regra-body {
+  display: none; background: var(--purple-bg);
+  border-radius: 8px; padding: 12px 16px;
+  font-size: 11px; line-height: 1.8; margin-bottom: 12px; color: var(--gray);
+}
+.regra-body.jun { background: #fff9e0; }
+.regra-body.open { display: block; }
+.regra-body b { color: var(--purple); }
+.regra-body.jun b { color: #7a5800; }
+.regra-body .warn { color: var(--yellow-dark); font-weight: 700; }
+.regra-body table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
+.regra-body th { background: white; color: var(--purple); padding: 5px 10px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 2px solid var(--border); }
+.regra-body td { padding: 5px 10px; border-bottom: 1px solid rgba(118,104,172,.12); text-align: center; }
+.regra-body tr:last-child td { border-bottom: none; }
+
+/* ── Filtro CS (Por Escola) ── */
+.cs-filter { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.cs-filter label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+.cs-filter select {
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+  color: var(--gray); background: white;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 7px 32px 7px 12px; cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237668AC' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  transition: border-color .15s;
+}
+.cs-filter select:focus { outline: none; border-color: var(--purple); }
+
+/* ── Footer ── */
+.footer { text-align: center; font-size: 10px; color: #ccc; margin-top: 32px; }
+
+@media (max-width: 600px) {
+  .tabs-bar { flex-direction: column; }
+  .btn-back { top: 42px; }
+}
+
+/* ── Dark mode ── */
+html.dark { --purple-bg:#2a2440; --border:#2d2d33; --gray-light:#18181b; --shadow:0 2px 8px rgba(0,0,0,.35); }
+html.dark body { background:#18181b; color:#d4d4d0; }
+html.dark .wip-banner { background:#2a2200; border-color:#7a5800; color:#ffd166; }
+html.dark .container { color:#d4d4d0; }
+html.dark .tabs-bar,
+html.dark .sub-tabs { background:#1e1e22; }
+html.dark .tab-btn { color:#a1a1aa; }
+html.dark .tab-btn:hover { background:#2a2440; color:#c4b5fd; }
+html.dark .sub-tab { background:#1e1e22; border-color:#2d2d33; color:#a1a1aa; }
+html.dark .sub-tab:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .kpi { background:#1e1e22; border-color:#2d2d33; }
+html.dark .kpi .sub { color:#71717a; }
+html.dark .def-box { background:#1e1e22; border-left-color:var(--purple); color:#d4d4d0; }
+html.dark .regra-chip { background:#1e1e22; border-color:#2d2d33; color:#71717a; }
+html.dark .regra-chip:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .regra-chip.open { background:#2a2440; border-color:#7668AC; color:#c4b5fd; }
+html.dark .regra-body { background:#2a2440; color:#d4d4d0; }
+html.dark .regra-body.jun { background:#2a2200; }
+html.dark .regra-body th { background:#1e1e22; border-color:#2d2d33; }
+html.dark .regra-body td { border-color:#2d2d33; }
+html.dark .table-wrap { background:#1e1e22; }
+html.dark .table-wrap thead { background:#27272a; }
+html.dark .table-wrap th { background:#27272a; }
+html.dark .table-wrap td { border-color:#2d2d33; color:#d4d4d0; }
+html.dark .table-wrap tr:hover td { background:#27272a; }
+html.dark .table-wrap tr.total-row td { background:#2a2440; border-color:#7668AC; }
+html.dark .cs-filter label { color:#71717a; }
+html.dark .cs-filter select {
+  background-color:#27272a; color:#d4d4d0; border-color:#2d2d33;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a78bfa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 10px center; }
+html.dark .roi-card { background:#1e1e22; border-color:#2d2d33; }
+html.dark .roi-card .r-sub { color:#71717a; }
+html.dark .yoy-card { background:#1e1e22; }
+html.dark .yoy-card td { border-color:#2d2d33; color:#d4d4d0; }
+html.dark .chart-card { background:#1e1e22; color:#d4d4d0; }
+html.dark .chart-card .chart-sub { color:#71717a; }
+html.dark .sec-head { color:#71717a; }
+html.dark .footer { color:#3f3f46; }
+
+/* ── Botão tema ── */
+body,thead th,.kpi,.table-wrap td,.tabs-bar,.sub-tab,.regra-chip,.regra-body,.cs-filter select,.roi-card,.yoy-card,.chart-card {
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+@keyframes sun-glow   { 0%,100%{filter:drop-shadow(0 0 3px #FFD700) drop-shadow(0 0 6px #FF9500)} 50%{filter:drop-shadow(0 0 7px #FFD700) drop-shadow(0 0 12px #FF6B00)} }
+@keyframes sun-rays   { 0%{transform:scale(1) rotate(0deg)} 100%{transform:scale(1) rotate(360deg)} }
+@keyframes moon-twinkle { 0%,100%{filter:drop-shadow(0 0 2px #c4b5fd)} 50%{filter:drop-shadow(0 0 6px #a78bfa)} }
+.theme-btn { position:fixed; top:16px; right:16px; width:42px; height:42px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg,#FFD947,#FF8C00); box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2); z-index:9998; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center; transition:background .5s ease,box-shadow .5s ease,transform .2s ease; }
+html.dark .theme-btn { background:linear-gradient(135deg,#2d1b69,#0f0c29); box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4); }
+.theme-btn:hover { transform:scale(1.13); }
+.theme-icon-sun,.theme-icon-moon { position:absolute; font-size:22px; line-height:1; transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease; }
+.theme-icon-sun  { opacity:1; transform:scale(1) rotate(0deg) translateY(0); animation:sun-glow 2.5s ease-in-out infinite,sun-rays 12s linear infinite; }
+.theme-icon-moon { opacity:0; transform:scale(0) rotate(-40deg) translateY(10px); }
+html.dark .theme-icon-sun  { opacity:0; transform:scale(0) rotate(60deg) translateY(10px); animation:none; }
+html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translateY(0); animation:moon-twinkle 3s ease-in-out infinite; }
+</style>
+<body>
+  <div class="wip-banner">&#9888;&#65039; Página em ajuste — dados em validação</div>
+  <a href="index.html" class="btn-back">&#8592; Início</a>
+
+<div class="container">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div>
+      <h1>Antecipação de Receita &nbsp;&middot;&nbsp; Remuneração Variável</h1>
+      <div class="sub">Bônus por escola antecipada &nbsp;&#183;&nbsp; Regra FC60+ &nbsp;&#183;&nbsp; 2026</div>
+    </div>
+    <span class="badge-ajuste">EM AJUSTE</span>
+  </header>
+
+  <div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><a href="antecipacao-yoy.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:white;text-decoration:none;padding:7px 14px;border-radius:8px;font-size:11px;font-weight:700;">&#128202; Ver YoY &middot; YTD &#8594;</a></div>
+
+
+
+    <!-- Chips de regras -->
+    <div class="regras-row">
+      <button class="regra-chip" onclick="toggleRegra('maio')">
+        📋 Regras mai/2026 <span class="arrow">▾</span>
+      </button>
+      <button class="regra-chip chip-jun" onclick="toggleRegra('junho')">
+        ⚠️ Regras jun/2026 <span style="font-weight:400;opacity:.7;">(pendente)</span> <span class="arrow">▾</span>
+      </button>
+    </div>
+
+    <div id="regra-maio" class="regra-body">
+      Todos os triggers são <b>cumulativos</b>.<br><br>
+      <b>Trigger 1 — Por escola:</b> escola com <b>5 ou mais alunos que realizaram pedido</b> → <b>R$ 50 por escola</b><br>
+      <b>Trigger 2 — Por carteira:</b> CS com <b>&gt;30% da carteira total antecipada</b> → <b>+ R$ 100</b><br>
+      <b>Caso especial:</b> CS com <b>100% da carteira</b> → <b>+ R$ 200</b> (cumulativo com T1 e T2)<br>
+      <b>Regra FC60+:</b> <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code>
+      <table>
+        <tr><th>Situação</th><th>Valor total</th></tr>
+        <tr><td>Apenas T1 (escola com 5+ alunos)</td><td><b>R$ 50 por escola</b></td></tr>
+        <tr><td>T1 + T2 (escola + &gt;30% carteira)</td><td><b>R$ 50/escola + R$ 100</b></td></tr>
+        <tr><td>T1 + T2 + especial (100% carteira)</td><td><b>R$ 50/escola + R$ 100 + R$ 200</b></td></tr>
+      </table>
+    </div>
+
+    <div id="regra-junho" class="regra-body jun">
+      <table style="border-collapse:collapse;width:100%;font-size:11px;">
+        <thead>
+          <tr style="background:rgba(118,104,172,.15);">
+            <th style="padding:6px 10px;text-align:left;font-weight:700;">Trigger</th>
+            <th style="padding:6px 10px;text-align:left;font-weight:700;">Condição</th>
+            <th style="padding:6px 10px;text-align:right;font-weight:700;">Bônus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:6px 10px;font-weight:700;">T1 — Por escola</td>
+            <td style="padding:6px 10px;">5+ alunos com pedido antecipado</td>
+            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">R$ 50 / escola</td>
+          </tr>
+          <tr style="background:rgba(118,104,172,.06);">
+            <td style="padding:6px 10px;font-weight:700;">T2 — Por carteira</td>
+            <td style="padding:6px 10px;">&gt; 30% da carteira antecipada</td>
+            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 50</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 10px;font-weight:700;">T3 — Por carteira</td>
+            <td style="padding:6px 10px;">&gt; 70% da carteira antecipada</td>
+            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 100</td>
+          </tr>
+          <tr style="background:rgba(118,104,172,.06);">
+            <td style="padding:6px 10px;font-weight:700;">T4 — Por carteira</td>
+            <td style="padding:6px 10px;">= 100% da carteira antecipada</td>
+            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 200</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- KPIs resumo RV -->
+    <div class="kpis">
+      <div class="kpi green">
+        <div class="lbl">Escolas com T1</div>
+        <div class="val">119</div>
+        <div class="sub">5+ alunos antecipados</div>
+      </div>
+      <div class="kpi blue">
+        <div class="lbl">CSs com T1</div>
+        <div class="val">27</div>
+        <div class="sub">ao menos 1 escola atingida</div>
+      </div>
+      <div class="kpi blue">
+        <div class="lbl">CSs com T2</div>
+        <div class="val">0</div>
+        <div class="sub">&gt;30% da carteira antecipada</div>
+      </div>
+      <div class="kpi yellow">
+        <div class="lbl">Casos especiais</div>
+        <div class="val">0</div>
+        <div class="sub">100% da carteira</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Total bônus a pagar</div>
+        <div class="val">R$&nbsp;5.950</div>
+      </div>
+    </div>
+
+    <!-- Sub-tabs -->
+    <div class="sub-tabs">
+      <button class="sub-tab active" onclick="switchSub('cs')">Por CS</button>
+      <button class="sub-tab" onclick="switchSub('roi')">ROI</button>
+      <button class="sub-tab" onclick="switchSub('escola')">Por Escola</button>
+    </div>
+
+    <!-- ── SUB-TAB: Por Escola ── -->
+    <div id="sub-escola" class="sub-panel">
+      <button class="regra-chip" onclick="toggleRegra('info-escola')" style="margin-bottom:12px;">
+        ℹ️ Como ler esta tabela <span class="arrow">▾</span>
+      </button>
+      <div id="regra-info-escola" class="regra-body">
+        Cada linha = uma escola que <b>atingiu T1</b> (5+ alunos com pedido). Escolas encerradas permanecem registradas.<br>
+        O bônus exibido aqui é o de T1 (R$50 por escola). O adicional de T2 aparece consolidado na visão Por CS.
+      </div>
+      <!-- Filtro de CS -->
+      <div class="cs-filter">
+        <label>Filtrar por CS</label>
+        <select id="select-cs" onchange="filtrarCS(this.value)">
+                    <option value="todos">Todos os CSs</option>
+          <option value="Anaclara Peres">Anaclara Peres</option>
+          <option value="Andreina Ferreira">Andreina Ferreira</option>
+          <option value="Carla Gomes">Carla Gomes</option>
+          <option value="Erick Andrade">Erick Andrade</option>
+          <option value="Gabriela Ribeiro">Gabriela Ribeiro</option>
+          <option value="Giovanna Munhoz">Giovanna Munhoz</option>
+          <option value="Indlayse Ferreira">Indlayse Ferreira</option>
+          <option value="Julia Cordeiro">Julia Cordeiro</option>
+          <option value="Junior Gomes">Junior Gomes</option>
+          <option value="Kaian Silva">Kaian Silva</option>
+          <option value="Larissa Freitas">Larissa Freitas</option>
+          <option value="Laura Pagliuzo">Laura Pagliuzo</option>
+          <option value="Maria Elvira">Maria Elvira</option>
+          <option value="Mariaeduarda Carvalho">Mariaeduarda Carvalho</option>
+          <option value="Mariana Santana">Mariana Santana</option>
+          <option value="Mayane Costa">Mayane Costa</option>
+          <option value="Pamela Miranda">Pamela Miranda</option>
+          <option value="Renata Brandao">Renata Brandao</option>
+          <option value="Sarah Moura">Sarah Moura</option>
+          <option value="Shelry Solart">Shelry Solart</option>
+          <option value="Stefany Figueredo">Stefany Figueredo</option>
+          <option value="Talita Panassol">Talita Panassol</option>
+          <option value="Tatiana Portela">Tatiana Portela</option>
+          <option value="Thais Borges">Thais Borges</option>
+          <option value="Thayna Bastos">Thayna Bastos</option>
+          <option value="Viviancristina Souza">Viviancristina Souza</option>
+          <option value="Viviane Luz">Viviane Luz</option>
+        </select>
+        <button onclick="exportarEscolas()" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:white;border:none;border-radius:8px;padding:7px 14px;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;cursor:pointer;white-space:nowrap;">
+          ⬇ Exportar CSV
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table id="tabela-escola">
+          <thead>
+            <tr>
+              <th>Escola</th>
+              <th>CS T1</th><th>CS T2</th>
+              <th>Data 5º Pedido</th>
+              <th>Data FC</th>
+              <th class="num">Alunos Antec.</th><th class="num">R$ Antecipado</th>
+              <th>Trigger</th>
+              <th class="num">Bônus T1</th><th>Pagamento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-cs="Maria Elvira">
+              <td>COLÉGIO ALTA FLORESTA</td>
+              <td>Maria Elvira</td><td>Maria Elvira</td>
+              <td>12/03/2026</td>
+              <td>2026-09-08</td>
+              <td class="num">84</td><td class="num">R$ 30.259</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>Centro Educacional São Tomás de Aquino</td>
+              <td>Shelry Solart</td><td>Shelry Solart</td>
+              <td>29/05/2026</td>
+              <td>2026-10-08</td>
+              <td class="num">60</td><td class="num">R$ 18.562</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>VILA VERDE ESCOLA INFANTIL</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>27/04/2026</td>
+              <td>2026-07-20</td>
+              <td class="num">74</td><td class="num">R$ 17.571</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO VICENTINO SANTA ISABEL</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>12/04/2026</td>
+              <td>2026-09-01</td>
+              <td class="num">86</td><td class="num">R$ 17.513</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>Colégio Adventista de Indaial</td>
+              <td>Shelry Solart</td><td>Shelry Solart</td>
+              <td>14/05/2026</td>
+              <td>2026-09-08</td>
+              <td class="num">114</td><td class="num">R$ 17.027</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>Escola Sesi SP</td>
+              <td>Mariaeduarda Carvalho</td><td>Mariaeduarda Carvalho</td>
+              <td>27/05/2026</td>
+              <td>2026-10-22</td>
+              <td class="num">100</td><td class="num">R$ 16.425</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>Colégio GGE Boa Viagem</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>27/04/2026</td>
+              <td>2026-09-18</td>
+              <td class="num">58</td><td class="num">R$ 16.323</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>COLÉGIO SÃO FRANCISCO - UNIDADE I</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>22/05/2026</td>
+              <td>2026-08-10</td>
+              <td class="num">83</td><td class="num">R$ 13.149</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>BRIGHT BEE SCHOOL</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>08/06/2026</td>
+              <td>2026-09-17</td>
+              <td class="num">21</td><td class="num">R$ 10.915</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>PRO CAMPUS CRIANÇA</td>
+              <td>Maria Elvira</td><td>Maria Elvira</td>
+              <td>28/05/2026</td>
+              <td>2026-09-28</td>
+              <td class="num">53</td><td class="num">R$ 10.296</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Andreina Ferreira">
+              <td>COLÉGIO CARPE DIEM</td>
+              <td>Andreina Ferreira</td><td>Andreina Ferreira</td>
+              <td>28/05/2026</td>
+              <td>2026-09-30</td>
+              <td class="num">122</td><td class="num">R$ 10.232</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>Colégio Moraes Rêgo</td>
+              <td>Maria Elvira</td><td>Maria Elvira</td>
+              <td>19/05/2026</td>
+              <td>2026-09-24</td>
+              <td class="num">35</td><td class="num">R$ 9.897</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO HEXÁGONO</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>24/04/2026</td>
+              <td>2026-07-28</td>
+              <td class="num">48</td><td class="num">R$ 9.831</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>ESCOLA VIVANT</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>11/04/2026</td>
+              <td>2026-08-13</td>
+              <td class="num">42</td><td class="num">R$ 9.682</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO STATUS - TV MORENA</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>11/05/2026</td>
+              <td>2026-08-19</td>
+              <td class="num">37</td><td class="num">R$ 8.342</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>Lua De Algodão e Colégio Lua</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>27/05/2026</td>
+              <td>2026-08-17</td>
+              <td class="num">36</td><td class="num">R$ 7.938</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Andreina Ferreira">
+              <td>Colégio Tesla</td>
+              <td>Andreina Ferreira</td><td>Andreina Ferreira</td>
+              <td>18/05/2026</td>
+              <td>2026-09-28</td>
+              <td class="num">42</td><td class="num">R$ 7.424</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>COLÉGIO ADVENTISTA DE GURUPI</td>
+              <td>Mariaeduarda Carvalho</td><td>Mariaeduarda Carvalho</td>
+              <td>26/05/2026</td>
+              <td>2026-09-14</td>
+              <td class="num">36</td><td class="num">R$ 7.247</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>Escola Núcleo Municipal Teutônia</td>
+              <td>Tatiana Portela</td><td>Tatiana Portela</td>
+              <td>26/05/2026</td>
+              <td>2026-08-04</td>
+              <td class="num">103</td><td class="num">R$ 7.231</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO TRIVIUM</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>16/03/2026</td>
+              <td>2026-10-05</td>
+              <td class="num">30</td><td class="num">R$ 7.194</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO GGE PETROLINA</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>29/04/2026</td>
+              <td>2026-09-18</td>
+              <td class="num">14</td><td class="num">R$ 7.096</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Escola SESI Darcy Zacharias</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>09/03/2026</td>
+              <td>2026-11-02</td>
+              <td class="num">23</td><td class="num">R$ 6.974</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>Lmp Burini Centro de Aprendizagem</td>
+              <td>Larissa Freitas</td><td>Larissa Freitas</td>
+              <td>06/05/2026</td>
+              <td>2026-07-28</td>
+              <td class="num">30</td><td class="num">R$ 6.888</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>DRUMMOND EDUCACIONAL</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>20/05/2026</td>
+              <td>2026-08-12</td>
+              <td class="num">47</td><td class="num">R$ 6.823</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>ESCOLA MUNDO INFANTIL</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>03/06/2026</td>
+              <td>2026-08-11</td>
+              <td class="num">27</td><td class="num">R$ 6.611</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>CENTRO DE ENSINO CHARLES DARWIN</td>
+              <td>Maria Elvira</td><td>Maria Elvira</td>
+              <td>29/04/2026</td>
+              <td>2026-09-14</td>
+              <td class="num">23</td><td class="num">R$ 5.971</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>COLÉGIO O BOM PASTOR JÚNIOR</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>23/04/2026</td>
+              <td>2026-10-06</td>
+              <td class="num">27</td><td class="num">R$ 5.804</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>COLÉGIO NOVO MILÊNIO - COOTEC</td>
+              <td>Gabriela Ribeiro</td><td>Gabriela Ribeiro</td>
+              <td>10/04/2026</td>
+              <td>2026-09-25</td>
+              <td class="num">32</td><td class="num">R$ 5.660</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>COLÉGIO COC LAGES</td>
+              <td>Mariaeduarda Carvalho</td><td>Mariaeduarda Carvalho</td>
+              <td>08/04/2026</td>
+              <td>2026-10-23</td>
+              <td class="num">13</td><td class="num">R$ 5.349</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO MARISTA SÃO FRANCISCO</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>05/06/2026</td>
+              <td>2026-09-02</td>
+              <td class="num">17</td><td class="num">R$ 4.998</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>COLÉGIO DRUMMOND</td>
+              <td>Viviancristina Souza</td><td>Viviancristina Souza</td>
+              <td>09/03/2026</td>
+              <td>2026-07-01</td>
+              <td class="num">23</td><td class="num">R$ 4.996</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>Colégio N.E.E.R</td>
+              <td>Gabriela Ribeiro</td><td>Gabriela Ribeiro</td>
+              <td>11/05/2026</td>
+              <td>2026-09-16</td>
+              <td class="num">25</td><td class="num">R$ 4.891</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>ESCOLA TRAMPOLIM</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>24/03/2026</td>
+              <td>2026-06-08</td>
+              <td class="num">15</td><td class="num">R$ 4.639</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>Colégio Adventista da Asa Sul</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>25/05/2026</td>
+              <td>2026-09-25</td>
+              <td class="num">18</td><td class="num">R$ 4.517</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO MARISTA DE RIBEIRÃO PRETO</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>10/06/2026</td>
+              <td>2026-09-25</td>
+              <td class="num">15</td><td class="num">R$ 4.462</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO ADVENTISTA MARECHAL RONDON</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>27/05/2026</td>
+              <td>2026-09-08</td>
+              <td class="num">16</td><td class="num">R$ 4.290</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Erick Andrade">
+              <td>COLINHO DE MAMAE BERCARIO E EDUCACAO INFANTIL LTDA</td>
+              <td>Erick Andrade</td><td>Erick Andrade</td>
+              <td>03/04/2026</td>
+              <td>2026-08-18</td>
+              <td class="num">13</td><td class="num">R$ 4.142</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Indlayse Ferreira">
+              <td>CEPP - CENTRO EDUCACIONAL PRIMEIROS PASSOS</td>
+              <td>Indlayse Ferreira</td><td>Indlayse Ferreira</td>
+              <td>29/04/2026</td>
+              <td>2026-09-25</td>
+              <td class="num">11</td><td class="num">R$ 4.128</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Laura Pagliuzo">
+              <td>Colégio Presbiteriano</td>
+              <td>Laura Pagliuzo</td><td>Laura Pagliuzo</td>
+              <td>22/03/2026</td>
+              <td>2026-10-21</td>
+              <td class="num">13</td><td class="num">R$ 4.098</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Colégio Externato São José</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>08/03/2026</td>
+              <td>2026-10-23</td>
+              <td class="num">9</td><td class="num">R$ 3.895</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Anaclara Peres">
+              <td>Escola de Ensino Fundamental Fortunato Tarnowski</td>
+              <td>Anaclara Peres</td><td>Anaclara Peres</td>
+              <td>23/05/2026</td>
+              <td>2026-08-10</td>
+              <td class="num">20</td><td class="num">R$ 3.773</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO BATISTA RIO-PRETENSE</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>14/05/2026</td>
+              <td>2026-08-13</td>
+              <td class="num">11</td><td class="num">R$ 3.734</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>Escola  SESI Planalto</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>11/05/2026</td>
+              <td>2026-10-02</td>
+              <td class="num">13</td><td class="num">R$ 3.699</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Laura Pagliuzo">
+              <td>ESCOLA DE EDUCAÇÃO INFANTIL FERINHAS</td>
+              <td>Laura Pagliuzo</td><td>Laura Pagliuzo</td>
+              <td>27/05/2026</td>
+              <td>2026-08-16</td>
+              <td class="num">19</td><td class="num">R$ 3.538</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Giovanna Munhoz">
+              <td>EMEI DOLORES MARIA TORRENTE</td>
+              <td>Giovanna Munhoz</td><td>Giovanna Munhoz</td>
+              <td>30/05/2026</td>
+              <td>2026-08-14</td>
+              <td class="num">13</td><td class="num">R$ 3.522</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>CENTRO RENOVO DE EDUCAÇÃO</td>
+              <td>Maria Elvira</td><td>Maria Elvira</td>
+              <td>15/05/2026</td>
+              <td>2026-09-17</td>
+              <td class="num">17</td><td class="num">R$ 3.503</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Colégio Intelecto</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>11/05/2026</td>
+              <td>2026-08-04</td>
+              <td class="num">8</td><td class="num">R$ 3.432</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Escola Adventista de Tubarão</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>11/03/2026</td>
+              <td>2026-06-30</td>
+              <td class="num">19</td><td class="num">R$ 3.419</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>Colégio Saber Viver</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>08/06/2026</td>
+              <td>2026-10-16</td>
+              <td class="num">17</td><td class="num">R$ 3.399</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>APARECIDA MERINO ELIAS EMEB</td>
+              <td>Tatiana Portela</td><td>Tatiana Portela</td>
+              <td>13/05/2026</td>
+              <td>2026-10-14</td>
+              <td class="num">13</td><td class="num">R$ 3.356</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>COLÉGIO SIMETRIA</td>
+              <td>Mariaeduarda Carvalho</td><td>Mariaeduarda Carvalho</td>
+              <td>06/05/2026</td>
+              <td>2026-10-15</td>
+              <td class="num">16</td><td class="num">R$ 3.340</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO STATUS</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>20/05/2026</td>
+              <td>2026-08-12</td>
+              <td class="num">15</td><td class="num">R$ 2.845</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>Colégio Cristão</td>
+              <td>Shelry Solart</td><td>Shelry Solart</td>
+              <td>01/06/2026</td>
+              <td>2026-08-14</td>
+              <td class="num">8</td><td class="num">R$ 2.765</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO CRIATIVO</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>10/06/2026</td>
+              <td>2026-10-16</td>
+              <td class="num">6</td><td class="num">R$ 2.565</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>NÚCLEO PEDAGÓGICO COLIBRI</td>
+              <td>Larissa Freitas</td><td>Larissa Freitas</td>
+              <td>13/04/2026</td>
+              <td>2026-08-19</td>
+              <td class="num">10</td><td class="num">R$ 2.434</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Colégio Novo Éden</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>09/04/2026</td>
+              <td>2026-09-25</td>
+              <td class="num">21</td><td class="num">R$ 2.394</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>COLÉGIO COOPEN</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>02/06/2026</td>
+              <td>2026-08-07</td>
+              <td class="num">5</td><td class="num">R$ 2.390</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>Escola Pequeno Príncipe e Pequena Princesa</td>
+              <td>Shelry Solart</td><td>Shelry Solart</td>
+              <td>31/05/2026</td>
+              <td>2026-09-14</td>
+              <td class="num">8</td><td class="num">R$ 2.387</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Stefany Figueredo">
+              <td>INSTITUTO TECNOLÓGICO DO ESTADO DO PARÁ</td>
+              <td>Stefany Figueredo</td><td>Stefany Figueredo</td>
+              <td>21/05/2026</td>
+              <td>2026-08-07</td>
+              <td class="num">9</td><td class="num">R$ 2.357</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>CENTRO EDUCACIONAL SONHO DE CRIANÇA</td>
+              <td>Thayna Bastos</td><td>Thayna Bastos</td>
+              <td>21/05/2026</td>
+              <td>2026-08-21</td>
+              <td class="num">8</td><td class="num">R$ 2.269</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>COLÉGIO EQUIPE GRAU – NOVA IGUAÇU</td>
+              <td>Shelry Solart</td><td>Shelry Solart</td>
+              <td>26/05/2026</td>
+              <td>2026-07-28</td>
+              <td class="num">5</td><td class="num">R$ 2.228</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>COLÉGIO SANTA CLARA</td>
+              <td>Pamela Miranda</td><td>Pamela Miranda</td>
+              <td>01/06/2026</td>
+              <td>2026-09-11</td>
+              <td class="num">15</td><td class="num">R$ 2.083</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>COLÉGIO ADVENTISTA TAUBATÉ/TREMEMBÉ</td>
+              <td>Thayna Bastos</td><td>Thayna Bastos</td>
+              <td>12/05/2026</td>
+              <td>2026-08-10</td>
+              <td class="num">7</td><td class="num">R$ 2.079</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>COLÉGIO ALICERCE DO SABER</td>
+              <td>Mariaeduarda Carvalho</td><td>Mariaeduarda Carvalho</td>
+              <td>06/05/2026</td>
+              <td>2026-08-25</td>
+              <td class="num">6</td><td class="num">R$ 2.028</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>ESCOLA DE ENSINO MÉDIO CAPITAL DO SABER</td>
+              <td>Thayna Bastos</td><td>Thayna Bastos</td>
+              <td>09/06/2026</td>
+              <td>2026-09-24</td>
+              <td class="num">9</td><td class="num">R$ 2.019</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO GGE JOÃO PESSOA</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>11/05/2026</td>
+              <td>2026-09-18</td>
+              <td class="num">10</td><td class="num">R$ 2.018</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>COLÉGIO IMP</td>
+              <td>Mariaeduarda Carvalho</td><td>Mariaeduarda Carvalho</td>
+              <td>01/06/2026</td>
+              <td>2026-08-03</td>
+              <td class="num">9</td><td class="num">R$ 1.995</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Giovanna Munhoz">
+              <td>Colégio Anglo Aquarela</td>
+              <td>Giovanna Munhoz</td><td>Giovanna Munhoz</td>
+              <td>29/05/2026</td>
+              <td>2026-09-14</td>
+              <td class="num">7</td><td class="num">R$ 1.981</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>ESCOLA DJANIRA ALVES RODRIGUES</td>
+              <td>Gabriela Ribeiro</td><td>Gabriela Ribeiro</td>
+              <td>10/05/2026</td>
+              <td>2026-07-21</td>
+              <td class="num">8</td><td class="num">R$ 1.959</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Andreina Ferreira">
+              <td>Escola Única Santo André</td>
+              <td>Andreina Ferreira</td><td>Andreina Ferreira</td>
+              <td>24/05/2026</td>
+              <td>2026-08-20</td>
+              <td class="num">12</td><td class="num">R$ 1.939</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO ADVENTISTA DE NOVO HAMBURGO</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>30/05/2026</td>
+              <td>2026-09-25</td>
+              <td class="num">5</td><td class="num">R$ 1.903</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Viviane Luz">
+              <td>Emef Cel. Thomaz Gonçalves da Rocha Cunha</td>
+              <td>Viviane Luz</td><td>Viviane Luz</td>
+              <td>08/04/2026</td>
+              <td>2026-09-22</td>
+              <td class="num">10</td><td class="num">R$ 1.867</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>Colégio Objetivo DF - Asa Norte</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>18/05/2026</td>
+              <td>2026-09-25</td>
+              <td class="num">13</td><td class="num">R$ 1.800</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>COLÉGIO VIRGEM PODEROSA - REDE SANTA CATARINA</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>07/06/2026</td>
+              <td>2026-10-19</td>
+              <td class="num">11</td><td class="num">R$ 1.799</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Laura Pagliuzo">
+              <td>ESCOLA PORTAL</td>
+              <td>Laura Pagliuzo</td><td>Laura Pagliuzo</td>
+              <td>15/05/2026</td>
+              <td>2026-07-22</td>
+              <td class="num">5</td><td class="num">R$ 1.707</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Andreina Ferreira">
+              <td>ESCOLA MORANGUINHO E COLÉGIO ALPHA X</td>
+              <td>Andreina Ferreira</td><td>Andreina Ferreira</td>
+              <td>16/03/2026</td>
+              <td>2026-09-04</td>
+              <td class="num">6</td><td class="num">R$ 1.688</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Viviane Luz">
+              <td>EDUCANDÁRIO FRANCISCANO NHÁ CHICA</td>
+              <td>Viviane Luz</td><td>Viviane Luz</td>
+              <td>15/05/2026</td>
+              <td>2026-09-30</td>
+              <td class="num">12</td><td class="num">R$ 1.649</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>CEL INTERCULTURAL SCHOOL</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>08/06/2026</td>
+              <td>2026-08-25</td>
+              <td class="num">7</td><td class="num">R$ 1.624</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mayane Costa">
+              <td>COLÉGIO RANIERI</td>
+              <td>Mayane Costa</td><td>Mayane Costa</td>
+              <td>04/06/2026</td>
+              <td>2026-08-18</td>
+              <td class="num">6</td><td class="num">R$ 1.617</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Indlayse Ferreira">
+              <td>Colégio Objetivo - Unidade Tatuí</td>
+              <td>Indlayse Ferreira</td><td>Indlayse Ferreira</td>
+              <td>17/04/2026</td>
+              <td>2026-07-13</td>
+              <td class="num">7</td><td class="num">R$ 1.587</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO BIÂNGULO ASA NORTE</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>25/05/2026</td>
+              <td>2026-10-14</td>
+              <td class="num">8</td><td class="num">R$ 1.562</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO GGE PARNAMIRIM</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>06/06/2026</td>
+              <td>2026-09-18</td>
+              <td class="num">6</td><td class="num">R$ 1.553</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>CENTRO EDUCACIONAL CONSTRUÇÃO DO SABER</td>
+              <td>Tatiana Portela</td><td>Tatiana Portela</td>
+              <td>01/06/2026</td>
+              <td>2026-10-21</td>
+              <td class="num">19</td><td class="num">R$ 1.544</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>Colégio Romano Santa Helena</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>07/04/2026</td>
+              <td>2026-07-08</td>
+              <td class="num">7</td><td class="num">R$ 1.526</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>ESCOLA CASA DE BRINQUEDOS</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>02/06/2026</td>
+              <td>2026-08-24</td>
+              <td class="num">10</td><td class="num">R$ 1.509</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>Cooperativa de Trabalho Educacional de Pontes e Lacerda</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>10/05/2026</td>
+              <td>2026-07-29</td>
+              <td class="num">5</td><td class="num">R$ 1.450</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO ESPAÇO VERDE</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>08/06/2026</td>
+              <td>2026-10-21</td>
+              <td class="num">12</td><td class="num">R$ 1.437</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>INSTITUTO FLAVIA RAQUEL DE ENSINO LTDA - ME</td>
+              <td>Renata Brandao</td><td>Renata Brandao</td>
+              <td>06/05/2026</td>
+              <td>2026-08-11</td>
+              <td class="num">10</td><td class="num">R$ 1.413</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO BIÂNGULO - ÁGUAS CLARAS 1</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>09/05/2026</td>
+              <td>2026-10-14</td>
+              <td class="num">7</td><td class="num">R$ 1.368</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>ESCOLA REI DAVI</td>
+              <td>Shelry Solart</td><td>Shelry Solart</td>
+              <td>30/05/2026</td>
+              <td>2026-08-14</td>
+              <td class="num">8</td><td class="num">R$ 1.334</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>SESI 341 CENTRO EDUCACIONAL</td>
+              <td>Shelry Solart</td><td>Shelry Solart</td>
+              <td>25/05/2026</td>
+              <td>2026-10-16</td>
+              <td class="num">11</td><td class="num">R$ 1.326</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Escola Educativa Osasco</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>18/05/2026</td>
+              <td>2026-09-28</td>
+              <td class="num">5</td><td class="num">R$ 1.318</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>INSTITUTO EDUCACIONAL CASTRO ALVES</td>
+              <td>Renata Brandao</td><td>Renata Brandao</td>
+              <td>20/05/2026</td>
+              <td>2026-09-30</td>
+              <td class="num">7</td><td class="num">R$ 1.293</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>Colégio Vitória</td>
+              <td>Renata Brandao</td><td>Renata Brandao</td>
+              <td>16/05/2026</td>
+              <td>2026-07-21</td>
+              <td class="num">8</td><td class="num">R$ 1.270</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO BIÂNGULO - TAGUATINGA</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>14/05/2026</td>
+              <td>2026-10-14</td>
+              <td class="num">7</td><td class="num">R$ 1.238</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>COLÉGIO ÉPICO</td>
+              <td>Larissa Freitas</td><td>Larissa Freitas</td>
+              <td>06/04/2026</td>
+              <td>2026-09-04</td>
+              <td class="num">6</td><td class="num">R$ 1.224</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>COLÉGIO DOM BOSCO</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>13/03/2026</td>
+              <td>2026-05-26</td>
+              <td class="num">37</td><td class="num">R$ 1.206</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>ESCOLA CLASSE 12 DE TAGUATINGA</td>
+              <td>Larissa Freitas</td><td>Larissa Freitas</td>
+              <td>30/03/2026</td>
+              <td>2026-09-30</td>
+              <td class="num">8</td><td class="num">R$ 1.206</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Indlayse Ferreira">
+              <td>FREITAS AUREO EDUCAÇÃO</td>
+              <td>Indlayse Ferreira</td><td>Indlayse Ferreira</td>
+              <td>07/05/2026</td>
+              <td>2026-07-15</td>
+              <td class="num">7</td><td class="num">R$ 1.186</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO BIÂNGULO - SAMAMBAIA</td>
+              <td>Sarah Moura</td><td>Sarah Moura</td>
+              <td>14/05/2026</td>
+              <td>2026-10-14</td>
+              <td class="num">7</td><td class="num">R$ 1.179</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>ESCOLA SANTA MONICA</td>
+              <td>Shelry Solart</td><td>Shelry Solart</td>
+              <td>01/06/2026</td>
+              <td>2026-08-06</td>
+              <td class="num">7</td><td class="num">R$ 1.161</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>ESPAÇO DO SABER</td>
+              <td>Larissa Freitas</td><td>Larissa Freitas</td>
+              <td>09/04/2026</td>
+              <td>2026-07-03</td>
+              <td class="num">6</td><td class="num">R$ 1.153</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>COLÉGIO INTEGRAÇÃO</td>
+              <td>Gabriela Ribeiro</td><td>Gabriela Ribeiro</td>
+              <td>06/04/2026</td>
+              <td>2026-06-12</td>
+              <td class="num">8</td><td class="num">R$ 1.114</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO JOSEENSE - Unidade 2</td>
+              <td>Mariana Santana</td><td>Mariana Santana</td>
+              <td>17/04/2026</td>
+              <td>2026-07-07</td>
+              <td class="num">13</td><td class="num">R$ 1.093</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Kaian Silva">
+              <td>WATER OKANO C M E I PROF</td>
+              <td>Kaian Silva</td><td>Kaian Silva</td>
+              <td>31/05/2026</td>
+              <td>2026-08-19</td>
+              <td class="num">8</td><td class="num">R$ 991</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO SAGRADO CORAÇÃO DE JESUS QUIXADÁ</td>
+              <td>Talita Panassol</td><td>Talita Panassol</td>
+              <td>26/05/2026</td>
+              <td>2026-09-10</td>
+              <td class="num">8</td><td class="num">R$ 938</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Erick Andrade">
+              <td>COLÉGIO MONFORTE</td>
+              <td>Erick Andrade</td><td>Erick Andrade</td>
+              <td>27/05/2026</td>
+              <td>2026-08-07</td>
+              <td class="num">5</td><td class="num">R$ 916</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Junior Gomes">
+              <td>JARDIM ESCOLA VOVÓ MERCEDES</td>
+              <td>Junior Gomes</td><td>Junior Gomes</td>
+              <td>28/02/2026</td>
+              <td>2026-09-14</td>
+              <td class="num">7</td><td class="num">R$ 896</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>Colégio Caminhos e Colinas</td>
+              <td>Carla Gomes</td><td>Carla Gomes</td>
+              <td>04/05/2026</td>
+              <td>2026-07-24</td>
+              <td class="num">12</td><td class="num">R$ 883</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Junior Gomes">
+              <td>ESCOLA ARCO IRIS</td>
+              <td>Junior Gomes</td><td>Junior Gomes</td>
+              <td>16/05/2026</td>
+              <td>2026-09-21</td>
+              <td class="num">6</td><td class="num">R$ 841</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Julia Cordeiro">
+              <td>EEB COOPESG ROBUSTA</td>
+              <td>Julia Cordeiro</td><td>Julia Cordeiro</td>
+              <td>02/06/2026</td>
+              <td>2026-08-07</td>
+              <td class="num">5</td><td class="num">R$ 835</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>FENIX C EF M</td>
+              <td>Gabriela Ribeiro</td><td>Gabriela Ribeiro</td>
+              <td>14/04/2026</td>
+              <td>2026-07-10</td>
+              <td class="num">5</td><td class="num">R$ 809</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>Escola Casinha da Nietta</td>
+              <td>Renata Brandao</td><td>Renata Brandao</td>
+              <td>25/04/2026</td>
+              <td>2026-09-14</td>
+              <td class="num">12</td><td class="num">R$ 720</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Anaclara Peres">
+              <td>Escola e Jardim de Infância Pintando o Sete</td>
+              <td>Anaclara Peres</td><td>Anaclara Peres</td>
+              <td>05/06/2026</td>
+              <td>2026-08-04</td>
+              <td class="num">5</td><td class="num">R$ 696</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Julia Cordeiro">
+              <td>COLÉGIO ÁGUIA DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL E MÉDIO</td>
+              <td>Julia Cordeiro</td><td>Julia Cordeiro</td>
+              <td>26/03/2026</td>
+              <td>2026-06-10</td>
+              <td class="num">8</td><td class="num">R$ 640</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>International School of Cuiabá</td>
+              <td>Maria Elvira</td><td>Maria Elvira</td>
+              <td>10/03/2026</td>
+              <td>2026-05-19</td>
+              <td class="num">10</td><td class="num">R$ 248</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Julia Cordeiro">
+              <td>LEGACY SCHOOL - Unidade Taquara</td>
+              <td>Julia Cordeiro</td><td>Julia Cordeiro</td>
+              <td>11/05/2026</td>
+              <td>2026-09-21</td>
+              <td class="num">26</td><td class="num">R$ 78</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Junior Gomes">
+              <td>COLÉGIO SÃO GABRIEL</td>
+              <td>Junior Gomes</td><td>Junior Gomes</td>
+              <td>26/04/2026</td>
+              <td>2026-07-03</td>
+              <td class="num">11</td><td class="num">R$ 0</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr data-cs="Thais Borges">
+              <td>ESCOLA DOS AMIGUINHOS</td>
+              <td>Thais Borges</td><td>Thais Borges</td>
+              <td>18/03/2026</td>
+              <td>2026-05-29</td>
+              <td class="num">6</td><td class="num">R$ 0</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td><span class="pill pill-pend">Pendente</span></td>
+            </tr>
+            <tr class="total-row" id="escola-total">
+              <td colspan="3"><b>Total (119 escolas)</b></td>
+              <td></td><td></td><td></td><td class="num">R$ 499.134</td><td></td>
+              <td class="num">R$ 5.950</td><td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
+        Dados via BigQuery · 11/06/2026 · 119 escolas T1 · critério: houve_antecipacao = 'sim'
+      </div>
+    </div>
+
+    <!-- ── SUB-TAB: Por CS ── -->
+    <div id="sub-cs" class="sub-panel active">
+      <button class="regra-chip" onclick="toggleRegra('info-cs')" style="margin-bottom:12px;">
+        ℹ️ Como ler esta tabela <span class="arrow">▾</span>
+      </button>
+      <div id="regra-info-cs" class="regra-body">
+        <b>Valor a receber</b> = soma dos bônus T1 das escolas deste CS + R$100 se T2 atingido + R$200 se 100% carteira (todos cumulativos).<br>
+        <b>Saldo devedor</b> = valor a receber − valor já pago.<br>
+        <b>% Carteira</b> = calculado sobre total de escolas FC60+ ativas na carteira do CS.
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>CS</th>
+              <th class="num">Escolas com T1</th>
+              <th class="num">% Carteira Antecipada</th>
+              <th>T2 Atingido?</th>
+              <th class="num">Valor a Receber</th>
+              <th class="num">Já Pago</th>
+              <th class="num">Saldo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mariana Santana</td><td class="num">16</td><td class="num">25%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 800</td><td class="num">R$ 0</td><td class="num"><b>R$ 800</b></td>
+            </tr>
+            <tr>
+              <td>Talita Panassol</td><td class="num">12</td><td class="num">16%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 600</td><td class="num">R$ 0</td><td class="num"><b>R$ 600</b></td>
+            </tr>
+            <tr>
+              <td>Sarah Moura</td><td class="num">12</td><td class="num">10%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 600</td><td class="num">R$ 0</td><td class="num"><b>R$ 600</b></td>
+            </tr>
+            <tr>
+              <td>Carla Gomes</td><td class="num">9</td><td class="num">15%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 450</td><td class="num">R$ 0</td><td class="num"><b>R$ 450</b></td>
+            </tr>
+            <tr>
+              <td>Shelry Solart</td><td class="num">8</td><td class="num">13%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 400</td><td class="num">R$ 0</td><td class="num"><b>R$ 400</b></td>
+            </tr>
+            <tr>
+              <td>Maria Elvira</td><td class="num">6</td><td class="num">12%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 300</td><td class="num">R$ 0</td><td class="num"><b>R$ 300</b></td>
+            </tr>
+            <tr>
+              <td>Mariaeduarda Carvalho</td><td class="num">6</td><td class="num">5%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 300</td><td class="num">R$ 0</td><td class="num"><b>R$ 300</b></td>
+            </tr>
+            <tr>
+              <td>Larissa Freitas</td><td class="num">5</td><td class="num">7%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 250</td><td class="num">R$ 0</td><td class="num"><b>R$ 250</b></td>
+            </tr>
+            <tr>
+              <td>Gabriela Ribeiro</td><td class="num">5</td><td class="num">9%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 250</td><td class="num">R$ 0</td><td class="num"><b>R$ 250</b></td>
+            </tr>
+            <tr>
+              <td>Andreina Ferreira</td><td class="num">4</td><td class="num">6%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 200</td><td class="num">R$ 0</td><td class="num"><b>R$ 200</b></td>
+            </tr>
+            <tr>
+              <td>Renata Brandao</td><td class="num">4</td><td class="num">4%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 200</td><td class="num">R$ 0</td><td class="num"><b>R$ 200</b></td>
+            </tr>
+            <tr>
+              <td>Tatiana Portela</td><td class="num">3</td><td class="num">4%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+            </tr>
+            <tr>
+              <td>Indlayse Ferreira</td><td class="num">3</td><td class="num">4%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+            </tr>
+            <tr>
+              <td>Laura Pagliuzo</td><td class="num">3</td><td class="num">6%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+            </tr>
+            <tr>
+              <td>Thayna Bastos</td><td class="num">3</td><td class="num">4%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+            </tr>
+            <tr>
+              <td>Junior Gomes</td><td class="num">3</td><td class="num">4%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+            </tr>
+            <tr>
+              <td>Julia Cordeiro</td><td class="num">3</td><td class="num">4%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 150</td><td class="num">R$ 0</td><td class="num"><b>R$ 150</b></td>
+            </tr>
+            <tr>
+              <td>Erick Andrade</td><td class="num">2</td><td class="num">2%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
+            </tr>
+            <tr>
+              <td>Anaclara Peres</td><td class="num">2</td><td class="num">3%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
+            </tr>
+            <tr>
+              <td>Giovanna Munhoz</td><td class="num">2</td><td class="num">4%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
+            </tr>
+            <tr>
+              <td>Viviane Luz</td><td class="num">2</td><td class="num">4%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 100</td><td class="num">R$ 0</td><td class="num"><b>R$ 100</b></td>
+            </tr>
+            <tr>
+              <td>Viviancristina Souza</td><td class="num">1</td><td class="num">2%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+            </tr>
+            <tr>
+              <td>Stefany Figueredo</td><td class="num">1</td><td class="num">2%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+            </tr>
+            <tr>
+              <td>Pamela Miranda</td><td class="num">1</td><td class="num">2%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+            </tr>
+            <tr>
+              <td>Mayane Costa</td><td class="num">1</td><td class="num">3%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+            </tr>
+            <tr>
+              <td>Kaian Silva</td><td class="num">1</td><td class="num">2%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+            </tr>
+            <tr>
+              <td>Thais Borges</td><td class="num">1</td><td class="num">2%</td>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td class="num">R$ 50</td><td class="num">R$ 0</td><td class="num"><b>R$ 50</b></td>
+            </tr>
+            <tr class="total-row">
+              <td><b>Total</b></td><td class="num"><b>119</b></td>
+              <td></td><td></td>
+              <td class="num"><b>R$ 5.950</b></td><td class="num"><b>R$ 0</b></td>
+              <td class="num"><b>R$ 5.950</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
+        Dados via BigQuery · 11/06/2026 · confirmar com JP lógica de split quando CS muda durante o período
+      </div>
+    </div>
+
+    <!-- ── SUB-TAB: ROI ── -->
+    <div id="sub-roi" class="sub-panel">
+      <button class="regra-chip" onclick="toggleRegra('info-roi')" style="margin-bottom:12px;">
+        ℹ️ Como interpretar o ROI <span class="arrow">▾</span>
+      </button>
+      <div id="regra-info-roi" class="regra-body">
+        <b>ROI</b> = R$ antecipado ÷ R$ gasto em bônus.<br>
+        <b>Atenção:</b> ainda não está claro se a antecipação gera receita incremental ou apenas antecipa receita que viria de qualquer forma — análise futura com JP vai definir a interpretação.
+      </div>
+
+      <div class="roi-cards">
+        <div class="roi-card">
+          <div class="r-lbl">R$ Total Antecipado</div>
+          <div class="r-val">R$&nbsp;499.134</div>
+          <div class="r-sub">YTD Junho 2026</div>
+        </div>
+        <div class="roi-card blue">
+          <div class="r-lbl">Total Bônus Pagos</div>
+          <div class="r-val">R$&nbsp;5.950</div>
+          <div class="r-sub">Maio 2026 (piloto)</div>
+        </div>
+        <div class="roi-card green">
+          <div class="r-lbl">Relação Antecipado/Bônus</div>
+          <div class="r-val">84x</div>
+          <div class="r-sub">R$ 422 antec. por R$ 1 em bônus</div>
+        </div>
+      </div>
+
+      <div class="sec-head">Detalhamento por CS</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>CS</th>
+              <th class="num">R$ Antecipado</th>
+              <th class="num">R$ Bônus</th>
+              <th class="num">Relação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fernanda Santos</td>
+              <td class="num">R$ 5.100</td><td class="num">R$ 250</td>
+              <td class="num"><b>20,4x</b></td>
+            </tr>
+            <tr>
+              <td>Lucas Medeiros</td>
+              <td class="num">R$ 3.700</td><td class="num">R$ 100</td>
+              <td class="num"><b>37,0x</b></td>
+            </tr>
+            <tr>
+              <td>Carla Ribeiro</td>
+              <td class="num">R$ 10.000</td><td class="num">R$ 350</td>
+              <td class="num"><b>28,6x</b></td>
+            </tr>
+            <tr>
+              <td>João Paulo</td>
+              <td class="num">R$ 900</td><td class="num">R$ 200</td>
+              <td class="num"><b>4,5x</b></td>
+            </tr>
+            <tr class="total-row">
+              <td><b>Total</b></td>
+              <td class="num"><b>R$ 19.700</b></td>
+              <td class="num"><b>R$ 900</b></td>
+              <td class="num"><b>21,9x</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
+        * Dados de exemplo &mdash; integração BigQuery pendente &nbsp;&#183;&nbsp; ROI global usa R$ total antecipado YTD 2026 vs bônus pagos no piloto (mai/2026)
+      </div>
+    </div>
+
+  
+
+  <div class="footer">Dados BigQuery em tempo real &nbsp;&middot;&nbsp; Regras de bônus validadas &nbsp;&middot;&nbsp; Pagamentos pendentes de integração</div>
+
+</div><!-- /container -->
+
+<script>
+function exportarEscolas() {
+  var cs = document.getElementById('select-cs').value;
+  var rows = document.querySelectorAll('#tabela-escola tbody tr[data-cs]');
+  var lines = [['Escola','CS T1','CS T2','Data 5º Pedido','Data FC','Alunos Antec.','R$ Antecipado','Trigger','Bônus T1','Pagamento']];
+  rows.forEach(function(tr) {
+    if (cs !== 'todos' && tr.getAttribute('data-cs') !== cs) return;
+    var tds = tr.querySelectorAll('td');
+    lines.push([tds[0].textContent.trim(),tds[1].textContent.trim(),tds[2].textContent.trim(),
+      tds[3].textContent.trim(),tds[4].textContent.trim(),tds[5].textContent.trim(),
+      tds[6].textContent.trim(),tds[7].textContent.trim(),tds[8].textContent.trim(),tds[9].textContent.trim()]);
+  });
+  var csv = lines.map(function(r){return r.map(function(c){return '"'+c.replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'escolas_antecipacao_rv' + (cs !== 'todos' ? '_'+cs.replace(/ /g,'_') : '') + '.csv';
+  a.click();
+}
+function filtrarCS(cs) {
+  document.querySelectorAll('#tabela-escola tbody tr[data-cs]').forEach(function(r) {
+    r.style.display = (cs === 'todos' || r.dataset.cs === cs) ? '' : 'none';
+  });
+  var total = document.getElementById('escola-total');
+  if (total) total.style.display = cs === 'todos' ? '' : 'none';
+}
+function toggleRegra(id) {
+  var btn  = document.querySelector('.regra-chip[onclick="toggleRegra(\'' + id + '\')"]');
+  var body = document.getElementById('regra-' + id);
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  btn.classList.toggle('open', !open);
+}
+function switchSub(s) {
+  document.querySelectorAll('.sub-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.sub-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('sub-' + s).classList.add('active');
+  document.querySelectorAll('.sub-tab').forEach(function(b) {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + s + "'")) b.classList.add('active');
+  });
+}
+</script>
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button>
+<script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
+
+</body>
+</html>
