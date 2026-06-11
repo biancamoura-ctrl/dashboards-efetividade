@@ -482,14 +482,6 @@ function render() {
   document.getElementById('kpi-vencem-amanha').className   = 'kc-val v-red';
   document.getElementById('kpi-vencem-amanha').textContent = vencem_amanha.toFixed(0);
 
-  // Card 1 — Efetivas agora
-  var efEl   = document.getElementById('kpi-efetivas-agora');
-  var efSub  = document.getElementById('kpi-efetivas-agora-sub');
-  var pef_n  = C.elegiveis > 0 ? Math.round(C.efetivas / C.elegiveis * 100) : 0;
-  efEl.textContent  = C.efetivas.toLocaleString('pt-BR');
-  efSub.textContent = 'de ' + C.elegiveis.toLocaleString('pt-BR') + ' escolas — ' + pef_n + '%';
-  efEl.className    = pef_n >= 80 ? 'kc-val v-blue' : pef_n >= 60 ? 'kc-val v-orange' : 'kc-val v-red';
-
   // Card 2 — Novas ef. hoje
   var nhjEl  = document.getElementById('kpi-novas-ef-hoje');
   var nhjSub = document.getElementById('kpi-novas-ef-hoje-sub');
