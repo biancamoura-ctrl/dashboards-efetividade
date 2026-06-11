@@ -369,16 +369,16 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
     </div>
 
     <div id="regra-maio" class="regra-body">
-      Dois triggers independentes. O segundo é <b>cumulativo</b> com o primeiro.<br><br>
+      Todos os triggers são <b>cumulativos</b>.<br><br>
       <b>Trigger 1 — Por escola:</b> escola com <b>5 ou mais alunos que realizaram pedido</b> → <b>R$ 50 por escola</b><br>
-      <b>Trigger 2 — Por carteira:</b> CS com <b>&gt;30% da carteira total antecipada</b> → <b>+ R$ 100</b> (cumulativo com T1)<br>
-      <b>Caso especial:</b> CS com <b>100% da carteira</b> → <b>R$ 200</b> (substitui T1+T2, não cumulativo)<br>
+      <b>Trigger 2 — Por carteira:</b> CS com <b>&gt;30% da carteira total antecipada</b> → <b>+ R$ 100</b><br>
+      <b>Caso especial:</b> CS com <b>100% da carteira</b> → <b>+ R$ 200</b> (cumulativo com T1 e T2)<br>
       <b>Regra FC60+:</b> <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code>
       <table>
         <tr><th>Situação</th><th>Valor total</th></tr>
         <tr><td>Apenas T1 (escola com 5+ alunos)</td><td><b>R$ 50 por escola</b></td></tr>
         <tr><td>T1 + T2 (escola + &gt;30% carteira)</td><td><b>R$ 50/escola + R$ 100</b></td></tr>
-        <tr><td>100% da carteira antecipada</td><td><b>R$ 200</b></td></tr>
+        <tr><td>T1 + T2 + especial (100% carteira)</td><td><b>R$ 50/escola + R$ 100 + R$ 200</b></td></tr>
       </table>
     </div>
 
@@ -441,7 +441,6 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
       <div class="kpi">
         <div class="lbl">Total bônus a pagar</div>
         <div class="val">R$&nbsp;5.950</div>
-        <div class="sub">R$ 250 já pagos</div>
       </div>
     </div>
 
@@ -1365,7 +1364,7 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
         ℹ️ Como ler esta tabela <span class="arrow">▾</span>
       </button>
       <div id="regra-info-cs" class="regra-body">
-        <b>Valor a receber</b> = soma dos bônus T1 das escolas deste CS + R$100 se T2 atingido (ou R$200 se especial, que substitui tudo).<br>
+        <b>Valor a receber</b> = soma dos bônus T1 das escolas deste CS + R$100 se T2 atingido + R$200 se 100% carteira (todos cumulativos).<br>
         <b>Saldo devedor</b> = valor a receber − valor já pago.<br>
         <b>% Carteira</b> = calculado sobre total de escolas FC60+ ativas na carteira do CS.
       </div>
