@@ -131,7 +131,7 @@ html.dark body{background:#18181b!important}
 .hs-val.hs-yellow{color:#F9DC45}
 /* ── Controls ── */
 .controls-bar{background:#fff;border-radius:18px;padding:18px 22px;margin-bottom:16px;
-  display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end;
+  display:flex;flex-wrap:nowrap;gap:14px;align-items:flex-end;overflow-x:auto;
   box-shadow:0 2px 16px rgba(118,104,172,.10);border:1px solid rgba(118,104,172,.12)}
 .ctrl-group{display:flex;flex-direction:column;gap:5px;min-width:150px}
 .ctrl-label{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.8px}
@@ -285,35 +285,35 @@ html.dark .ev-lbl{color:#71717a}
       </select>
       <span style="font-size:9px;color:var(--muted);font-weight:600">base do ritmo atual</span>
     </div>
-    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
       <div class="kc-icon">&#128200;</div>
       <div class="kc-lbl">Novas ef./dia</div>
       <div class="kc-val" id="kpi-delta">&#8212;</div>
       <div class="kc-sub" id="kpi-delta-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
     </div>
-    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
       <div class="kc-icon">&#9200;</div>
       <div class="kc-lbl">Vencem/dia</div>
       <div class="kc-val v-red" id="kpi-vencem">&#8212;</div>
     </div>
-    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
       <div class="kc-icon">&#128197;</div>
       <div class="kc-lbl">Vencem amanh&#227;</div>
       <div class="kc-val v-red" id="kpi-vencem-amanha">&#8212;</div>
     </div>
-    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
       <div class="kc-icon">&#9989;</div>
       <div class="kc-lbl">Efetivas agora</div>
       <div class="kc-val" id="kpi-efetivas-agora">&#8212;</div>
       <div class="kc-sub" id="kpi-efetivas-agora-sub">de &#8212; escolas</div>
     </div>
-    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
       <div class="kc-icon">&#128293;</div>
       <div class="kc-lbl">Novas ef. hoje</div>
       <div class="kc-val" id="kpi-novas-ef-hoje">&#8212;</div>
       <div class="kc-sub" id="kpi-novas-ef-hoje-sub">novas efetiva&#231;&#245;es</div>
     </div>
-    <div class="kpi-c" style="margin:0;padding:14px 18px;min-width:160px">
+    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
       <div class="kc-icon">&#128197;</div>
       <div class="kc-lbl">% amanh&#227; (proje&#231;&#227;o)</div>
       <div class="kc-val" id="kpi-proj-amanha">&#8212;</div>
