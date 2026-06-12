@@ -198,16 +198,7 @@ html.dark .cp-det{color:#52525b}
 .ph-detail{font-size:11px;color:rgba(255,255,255,.55);margin-top:12px;
   border-top:1px solid rgba(255,255,255,.18);padding-top:12px}
 .ph-faltam{font-size:13px;font-weight:700;color:#F9DC45;margin-top:8px}
-/* ── Ritmo líquido KPI card ── */
-.rl-card{display:inline-flex;flex-direction:column;align-items:center;
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
-  border-radius:14px;padding:10px 20px;margin-top:16px;min-width:140px;
-  backdrop-filter:blur(4px)}
-.rl-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
-  color:rgba(255,255,255,.55);margin-bottom:4px}
-.rl-val{font-size:36px;font-weight:900;color:#F9DC45;line-height:1}
-.rl-val.rl-neg{color:#fb7185}
-.rl-unit{font-size:10px;font-weight:600;color:rgba(255,255,255,.55);margin-top:2px}
+
 /* ── Cards tabela/gráfico ── */
 .card{border-radius:18px!important;border:1px solid rgba(118,104,172,.12)!important;
   box-shadow:0 2px 16px rgba(118,104,172,.09)!important}
@@ -325,6 +316,12 @@ html.dark .ev-lbl{color:#71717a}
       <div class="kc-val" id="kpi-proj-amanha">&#8212;</div>
       <div class="kc-sub" id="kpi-proj-amanha-sub">se fecharmos na m&#233;dia</div>
     </div>
+    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0" id="rl-card-wrap">
+      <div class="kc-icon">&#9889;</div>
+      <div class="kc-lbl">Ritmo l&#237;quido</div>
+      <div class="kc-val" id="rl-val">&#8212;</div>
+      <div class="kc-sub">ef./dia (novas &minus; vencem)</div>
+    </div>
   </div>
 
   <!-- Grid de dois cargos -->
@@ -392,11 +389,6 @@ html.dark .ev-lbl{color:#71717a}
     <div class="ph-dias" id="proj-dias">&#8212;</div>
     <div class="ph-data" id="proj-data"></div>
     <div class="ph-detail" id="proj-detalhe"></div>
-    <div id="rl-card-wrap" class="rl-card" style="display:none">
-      <div class="rl-label">Ritmo l&#237;quido</div>
-      <div class="rl-val" id="rl-val">&#8212;</div>
-      <div class="rl-unit">ef./dia</div>
-    </div>
     <div id="proj-raciocinio" style="margin-top:14px;border-top:1px solid rgba(255,255,255,.18);
       padding-top:14px;font-size:12px;color:rgba(255,255,255,.75);line-height:1.9;text-align:left"></div>
   </div>
@@ -546,23 +538,22 @@ function render() {
   var statusEl  = document.getElementById('proj-status');
   var faltamEl  = document.getElementById('proj-faltam');
   var racEl     = document.getElementById('proj-raciocinio');
-  var rlCard    = document.getElementById('rl-card-wrap');
   var rlVal     = document.getElementById('rl-val');
-  function hideRlCard() { rlCard.style.display = 'none'; }
-  function showRlCard(v, neg) {
+  function updateRlCard(v, neg) {
     rlVal.textContent = neg ? v : (v > 0 ? '+' + v : v);
-    rlVal.className = 'rl-val' + (neg ? ' rl-neg' : '');
-    rlCard.style.display = 'inline-flex';
+    rlVal.className = 'kc-val' + (neg ? ' v-red' : ' v-blue');
   }
   if (faltam_proj <= 0) {
     statusEl.textContent = 'Meta ' + meta + '% atingida!';
     projDias.innerHTML   = '&#10003;'; projDias.className = 'ph-dias ph-green';
     projData.textContent = 'Efetivas hoje: ' + C.efetivas.toLocaleString('pt-BR');
-    projDet.textContent  = ''; racEl.innerHTML = ''; hideRlCard();
+    projDet.textContent  = ''; racEl.innerHTML = '';
+    updateRlCard((delta_periodo - vencem_dia).toFixed(0), (delta_periodo - vencem_dia) < 0);
   } else if (delta_periodo <= 0) {
     statusEl.textContent = 'Sem novas efetivações no período — projeção indisponível';
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
-    projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = ''; hideRlCard();
+    projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = '';
+    updateRlCard('—', false);
   } else {
     var dp_real;
     var periodo_lbl = periodo_labels[periodo] || periodo;
@@ -571,17 +562,16 @@ function render() {
     // O denominador é o ganho líquido real: quanto a base efetiva cresce por dia
     // descontando as que expiram.
     var ritmo_liq = delta_periodo - vencem_dia;
+    updateRlCard(ritmo_liq.toFixed(0), ritmo_liq <= 0);
     if (ritmo_liq <= 0) {
       statusEl.textContent = 'Ritmo líquido negativo — mais escolas expiram do que são efetivadas';
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
       projData.textContent = 'Aumente o ritmo de efetivações ou reduza expirações';
       projDet.textContent  = ''; racEl.innerHTML = '';
-      showRlCard(ritmo_liq.toFixed(0), true);
     } else {
       dp_real = Math.ceil(faltam_proj / ritmo_liq);
 
       statusEl.textContent = 'Para atingir ' + meta + '%:';
-      showRlCard(ritmo_liq.toFixed(0), false);
 
       if (dp_real > 365) {
         projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
