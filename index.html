@@ -247,6 +247,30 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
             </div>
           </div>
 
+        
+          <!-- Reuniao diaria -->
+          <div class="team-card" id="card-reuniao">
+            <div class="team-card-header" onclick="toggleTeam('reuniao')">
+              <div class="team-card-left">
+                <div class="t-icon-wrap">&#x1F4CB;</div>
+                <div>
+                  <div class="t-name">Reuni&#227;o Di&#225;ria</div>
+                  <div class="t-desc">Slides de efetividade para a reuni&#227;o do time.</div>
+                </div>
+              </div>
+              <button class="t-btn" id="tbtn-reuniao">Acessar dashboard &#8594;</button>
+            </div>
+            <div class="team-section" id="sec-reuniao">
+              <div class="btn-grid">
+                <a href="slides_reuniao_12jun2026.html" class="btn-card">
+                  <div style="font-size:38px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;">&#x1F4CA;</div>
+                  <div class="title">An&#225;lise de Efetividade</div>
+                  <div class="sub">Reuni&#227;o CS Ops &nbsp;&#183;&nbsp; 12/06/2026</div>
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div><!-- /team-grid -->
 
         <div class="footer">Atualizado &#224;s 12:02 &nbsp;&#183;&nbsp; 12/06/2026</div>
@@ -258,7 +282,7 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
 <script>
 function toggleTeam(t) {
   var isOpen = document.getElementById('sec-'+t).classList.contains('visible');
-  ['rel','atv','antec'].forEach(function(id) {
+  ['rel','atv','antec','reuniao'].forEach(function(id) {
     document.getElementById('card-'+id).classList.remove('active');
     document.getElementById('sec-'+id).classList.remove('visible');
     document.getElementById('tbtn-'+id).textContent = 'Acessar dashboard →';
