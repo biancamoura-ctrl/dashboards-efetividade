@@ -130,10 +130,10 @@ html.dark body{background:#18181b!important}
 .hs-val{font-size:26px;font-weight:900;color:#fff;line-height:1}
 .hs-val.hs-yellow{color:#F9DC45}
 /* ── Controls ── */
-.controls-bar{background:#fff;border-radius:18px;padding:18px 22px;margin-bottom:16px;
-  display:flex;flex-wrap:nowrap;gap:14px;align-items:flex-end;overflow-x:auto;
+.controls-bar{background:#fff;border-radius:18px;padding:12px 16px;margin-bottom:16px;
+  display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;
   box-shadow:0 2px 16px rgba(118,104,172,.10);border:1px solid rgba(118,104,172,.12)}
-.ctrl-group{display:flex;flex-direction:column;gap:5px;min-width:150px}
+.ctrl-group{display:flex;flex-direction:column;gap:4px;min-width:120px}
 .ctrl-label{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.8px}
 .ctrl-val{font-size:20px;font-weight:900;color:#7668AC;line-height:1;margin-bottom:2px}
 input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
@@ -147,7 +147,7 @@ input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
 .kpi-c:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(118,104,172,.16)}
 .kc-icon{font-size:20px;margin-bottom:4px}
 .kc-lbl{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.6px}
-.kc-val{font-size:30px;font-weight:900;line-height:1.1;color:#7668AC}
+.kc-val{font-size:26px;font-weight:900;line-height:1.1;color:#7668AC}
 .kc-val.v-blue{color:#008ECF}.kc-val.v-red{color:#E94B56}.kc-val.v-orange{color:#E87A20}
 .kc-sub{font-size:10px;color:#c0b8d8;margin-top:2px}
 /* ── Cargo grid ── */
@@ -286,41 +286,41 @@ html.dark .ev-lbl{color:#71717a}
       </select>
       <span style="font-size:9px;color:var(--muted);font-weight:600">base do ritmo atual</span>
     </div>
-    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
-      <div class="kc-icon">&#128200;</div>
-      <div class="kc-lbl">Novas ef./dia (m&#233;dia)</div>
-      <div class="kc-val" id="kpi-delta">&#8212;</div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#128200;</div>
+      <div class="kc-lbl">Novas ef./dia</div>
+      <div class="kc-val" style="font-size:24px" id="kpi-delta">&#8212;</div>
       <div class="kc-sub" id="kpi-delta-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
     </div>
-    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
-      <div class="kc-icon">&#9200;</div>
-      <div class="kc-lbl">Vencem/dia (m&#233;dia)</div>
-      <div class="kc-val v-red" id="kpi-vencem">&#8212;</div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0" id="rl-card-wrap">
+      <div class="kc-icon" style="font-size:16px">&#9889;</div>
+      <div class="kc-lbl">Ritmo l&#237;quido</div>
+      <div class="kc-val" style="font-size:24px" id="rl-val">&#8212;</div>
+      <div class="kc-sub">novas &minus; vencem</div>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#9200;</div>
+      <div class="kc-lbl">Vencem/dia</div>
+      <div class="kc-val v-red" style="font-size:24px" id="kpi-vencem">&#8212;</div>
       <div class="kc-sub">m&#233;dia do per&#237;odo</div>
     </div>
-    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
-      <div class="kc-icon">&#128197;</div>
-      <div class="kc-lbl" id="kpi-vencem-amanha-lbl">Vencem pr&#243;x. dia &#250;til</div>
-      <div class="kc-val v-red" id="kpi-vencem-amanha">&#8212;</div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#128197;</div>
+      <div class="kc-lbl" id="kpi-vencem-amanha-lbl">Vencem pr&#243;x. d.&#250;.</div>
+      <div class="kc-val v-red" style="font-size:24px" id="kpi-vencem-amanha">&#8212;</div>
       <div class="kc-sub">escolas no prazo</div>
     </div>
-<div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
-      <div class="kc-icon">&#128293;</div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#128293;</div>
       <div class="kc-lbl">Novas ef. hoje</div>
-      <div class="kc-val" id="kpi-novas-ef-hoje">&#8212;</div>
+      <div class="kc-val" style="font-size:24px" id="kpi-novas-ef-hoje">&#8212;</div>
       <div class="kc-sub" id="kpi-novas-ef-hoje-sub">novas efetiva&#231;&#245;es</div>
     </div>
-    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
-      <div class="kc-icon">&#128197;</div>
-      <div class="kc-lbl" id="kpi-proj-amanha-lbl">% pr&#243;x. dia &#250;til (proje&#231;&#227;o)</div>
-      <div class="kc-val" id="kpi-proj-amanha">&#8212;</div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#128197;</div>
+      <div class="kc-lbl" id="kpi-proj-amanha-lbl">% pr&#243;x. d.&#250;. (proj.)</div>
+      <div class="kc-val" style="font-size:24px" id="kpi-proj-amanha">&#8212;</div>
       <div class="kc-sub" id="kpi-proj-amanha-sub">se fecharmos na m&#233;dia</div>
-    </div>
-    <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0" id="rl-card-wrap">
-      <div class="kc-icon">&#9889;</div>
-      <div class="kc-lbl">Ritmo l&#237;quido</div>
-      <div class="kc-val" id="rl-val">&#8212;</div>
-      <div class="kc-sub">ef./dia (novas &minus; vencem)</div>
     </div>
   </div>
 
