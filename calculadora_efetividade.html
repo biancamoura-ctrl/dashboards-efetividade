@@ -198,6 +198,16 @@ html.dark .cp-det{color:#52525b}
 .ph-detail{font-size:11px;color:rgba(255,255,255,.55);margin-top:12px;
   border-top:1px solid rgba(255,255,255,.18);padding-top:12px}
 .ph-faltam{font-size:13px;font-weight:700;color:#F9DC45;margin-top:8px}
+/* ── Ritmo líquido KPI card ── */
+.rl-card{display:inline-flex;flex-direction:column;align-items:center;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  border-radius:14px;padding:10px 20px;margin-top:16px;min-width:140px;
+  backdrop-filter:blur(4px)}
+.rl-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  color:rgba(255,255,255,.55);margin-bottom:4px}
+.rl-val{font-size:36px;font-weight:900;color:#F9DC45;line-height:1}
+.rl-val.rl-neg{color:#fb7185}
+.rl-unit{font-size:10px;font-weight:600;color:rgba(255,255,255,.55);margin-top:2px}
 /* ── Cards tabela/gráfico ── */
 .card{border-radius:18px!important;border:1px solid rgba(118,104,172,.12)!important;
   box-shadow:0 2px 16px rgba(118,104,172,.09)!important}
@@ -382,6 +392,11 @@ html.dark .ev-lbl{color:#71717a}
     <div class="ph-dias" id="proj-dias">&#8212;</div>
     <div class="ph-data" id="proj-data"></div>
     <div class="ph-detail" id="proj-detalhe"></div>
+    <div id="rl-card-wrap" class="rl-card" style="display:none">
+      <div class="rl-label">Ritmo l&#237;quido</div>
+      <div class="rl-val" id="rl-val">&#8212;</div>
+      <div class="rl-unit">ef./dia</div>
+    </div>
     <div id="proj-raciocinio" style="margin-top:14px;border-top:1px solid rgba(255,255,255,.18);
       padding-top:14px;font-size:12px;color:rgba(255,255,255,.75);line-height:1.9;text-align:left"></div>
   </div>
@@ -525,21 +540,29 @@ function render() {
   renderCargo('ana', C.novas_hist_analista,   C.n_analistas,   n_du_p);
   renderCargo('est', C.novas_hist_estagiario, C.n_estagiarios, n_du_p);
 
-  var projDias = document.getElementById('proj-dias');
-  var projData = document.getElementById('proj-data');
-  var projDet  = document.getElementById('proj-detalhe');
-  var statusEl = document.getElementById('proj-status');
-  var faltamEl = document.getElementById('proj-faltam');
-  var racEl    = document.getElementById('proj-raciocinio');
+  var projDias  = document.getElementById('proj-dias');
+  var projData  = document.getElementById('proj-data');
+  var projDet   = document.getElementById('proj-detalhe');
+  var statusEl  = document.getElementById('proj-status');
+  var faltamEl  = document.getElementById('proj-faltam');
+  var racEl     = document.getElementById('proj-raciocinio');
+  var rlCard    = document.getElementById('rl-card-wrap');
+  var rlVal     = document.getElementById('rl-val');
+  function hideRlCard() { rlCard.style.display = 'none'; }
+  function showRlCard(v, neg) {
+    rlVal.textContent = neg ? v : (v > 0 ? '+' + v : v);
+    rlVal.className = 'rl-val' + (neg ? ' rl-neg' : '');
+    rlCard.style.display = 'inline-flex';
+  }
   if (faltam_proj <= 0) {
     statusEl.textContent = 'Meta ' + meta + '% atingida!';
     projDias.innerHTML   = '&#10003;'; projDias.className = 'ph-dias ph-green';
     projData.textContent = 'Efetivas hoje: ' + C.efetivas.toLocaleString('pt-BR');
-    projDet.textContent  = ''; racEl.innerHTML = '';
+    projDet.textContent  = ''; racEl.innerHTML = ''; hideRlCard();
   } else if (delta_periodo <= 0) {
     statusEl.textContent = 'Sem novas efetivações no período — projeção indisponível';
     projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
-    projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = '';
+    projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = ''; hideRlCard();
   } else {
     var dp_real;
     var periodo_lbl = periodo_labels[periodo] || periodo;
@@ -553,10 +576,12 @@ function render() {
       projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
       projData.textContent = 'Aumente o ritmo de efetivações ou reduza expirações';
       projDet.textContent  = ''; racEl.innerHTML = '';
+      showRlCard(ritmo_liq.toFixed(0), true);
     } else {
       dp_real = Math.ceil(faltam_proj / ritmo_liq);
 
-      statusEl.textContent = 'Para atingir ' + meta + '% no ritmo líquido de ' + ritmo_liq.toFixed(0) + ' ef./dia:';
+      statusEl.textContent = 'Para atingir ' + meta + '%:';
+      showRlCard(ritmo_liq.toFixed(0), false);
 
       if (dp_real > 365) {
         projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
@@ -570,7 +595,7 @@ function render() {
         projDet.textContent  = '';
         racEl.innerHTML =
           '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
-          + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + delta_periodo.toFixed(0) + '</b> &minus; vencem/dia: <b>' + vencem_dia.toFixed(0) + '</b> = ritmo líquido: <b>' + ritmo_liq.toFixed(0) + '</b><br>'
+          + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + delta_periodo.toFixed(0) + '</b> &minus; vencem/dia: <b>' + vencem_dia.toFixed(0) + '</b><br>'
           + '&#10146; Estimativa: ' + faltam_proj + ' &divide; ' + ritmo_liq.toFixed(0) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
       }
     }
