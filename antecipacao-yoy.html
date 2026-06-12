@@ -348,12 +348,17 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
 
 
 
-    <div class="def-box">
+    <div class="regras-row">
+      <button class="regra-chip" onclick="toggleRegra('definicoes')">
+        📋 Definições &amp; metodologia <span class="arrow">▾</span>
+      </button>
+    </div>
+    <div id="regra-definicoes" class="regra-body">
       <b>YTD (Year to Date):</b> acumulado do ano atual até hoje &nbsp;&#183;&nbsp;
-      <b>YoY (Year over Year):</b> YTD 2026 vs mesmo período de 2025 &nbsp;&#183;&nbsp;
+      <b>YoY (Year over Year):</b> YTD 2026 vs mesmo período de 2025<br>
       <b>Regra FC60+:</b> escola antecipou se <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code> &nbsp;&#183;&nbsp;
-      <b>Ticket médio</b> = R$ antecipado ÷ nº de escolas (não por aluno) &nbsp;&#183;&nbsp;
-      <b>Referência:</b> comparação calculada em 12/06/2026. Dados 2026 via BigQuery (FC &ge; 15/07/2026). Dados 2025 baseados em snapshot histórico.
+      <b>Ticket médio</b> = R$ antecipado ÷ nº de escolas (não por aluno)<br>
+      <b>Referência:</b> comparação calculada em 12/06/2026. Dados 2026 via BigQuery (FC &ge; 15/07/2026). <span class="warn">Dados 2025 baseados em snapshot histórico — metodologia pode diferir ligeiramente.</span>
     </div>
 
     <!-- KPI Comparison -->
@@ -391,8 +396,13 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
       </div>
     </div>
 
-    <div style="font-size:11px;color:var(--gray);background:white;border-radius:8px;padding:10px 16px;margin-bottom:16px;border-left:3px solid #9e9e9e;box-shadow:var(--shadow);">
-      <b>Interpretação:</b> 2026 apresenta crescimento expressivo vs 2025: +17,4% em escolas e +27,8% em receita antecipada (+R$ 105 mil). O ticket médio subiu 8,8% (R$ 2.782 vs R$ 2.557), indicando maior penetração por escola. A taxa de adoção dobrou (5,4%→11,0%), embora a carteira FC60+ de 2026 (1.595) seja menor que a de 2025 (2.744), o que reflete diferença no calendário de FCs das duas safras. <span style="color:#9e9e9e;">&#x2731; Dados 2025 baseados em snapshot histórico (metodologia pode diferir ligeiramente).</span>
+    <div class="regras-row">
+      <button class="regra-chip" onclick="toggleRegra('interpretacao')">
+        💡 Interpretação <span class="arrow">▾</span>
+      </button>
+    </div>
+    <div id="regra-interpretacao" class="regra-body">
+      2026 apresenta crescimento expressivo vs 2025: <b>+17,4% em escolas</b> e <b>+27,8% em receita antecipada</b> (+R$ 105 mil). O ticket médio subiu 8,8% (R$ 2.782 vs R$ 2.557), indicando maior penetração por escola. A taxa de adoção dobrou (5,4%→11,0%), embora a carteira FC60+ de 2026 (1.595) seja menor que a de 2025 (2.744) — reflete diferença no calendário de FCs das duas safras.
     </div>
 
     <!-- Evolution Chart -->
@@ -531,6 +541,15 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
     }
   });
 })();
+</script>
+<script>
+function toggleRegra(id) {
+  var btn  = document.querySelector('.regra-chip[onclick="toggleRegra(\'' + id + '\')"]');
+  var body = document.getElementById('regra-' + id);
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  btn.classList.toggle('open', !open);
+}
 </script>
 <button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button>
 <script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
