@@ -219,6 +219,31 @@ header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; 
 .roi-card.green .r-val { color: var(--green); }
 .roi-card .r-sub { font-size: 11px; color: #aaa; }
 
+/* ── Tier cards ── */
+.tier-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.tier-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+.tier-head { padding: 10px 14px; color: white; display: flex; justify-content: space-between; align-items: baseline; }
+.tier-head .t-lbl { font-size: 14px; font-weight: 800; letter-spacing: -.3px; }
+.tier-head .t-cond { font-size: 10px; opacity: .85; font-weight: 400; }
+.tier-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.tier-stat { padding: 10px 8px; text-align: center; border-right: 1px solid var(--border); }
+.tier-stat:last-child { border-right: none; }
+.tier-stat .s-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #aaa; }
+.tier-stat .s-val { font-size: 17px; font-weight: 800; margin-top: 4px; color: var(--purple); }
+.tier-card.t1 .tier-head { background: var(--green); }
+.tier-card.t1 .s-val { color: var(--green); }
+.tier-card.t2 .tier-head { background: var(--blue); }
+.tier-card.t2 .s-val { color: var(--blue); }
+.tier-card.t3 .tier-head { background: var(--purple); }
+.tier-card.t3 .s-val { color: var(--purple); }
+.tier-card.t4 .tier-head { background: #E65100; }
+.tier-card.t4 .s-val { color: #E65100; }
+.tier-card.total .tier-head { background: #37474F; }
+.tier-card.total .s-val { color: #37474F; }
+html.dark .tier-card { background: #1e1e22; }
+html.dark .tier-stat { border-color: #2d2d33; }
+html.dark .tier-stat .s-val { color: inherit; }
+
 /* ── Chips de regras ── */
 .regras-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
 .regra-chip {
@@ -419,38 +444,114 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
       </table>
     </div>
 
-    <!-- KPIs resumo RV -->
-    <div class="kpis">
-      <div class="kpi green">
-        <div class="lbl">Escolas com T1</div>
-        <div class="val">120</div>
-        <div class="sub">5+ alunos antecipados</div>
+    <!-- KPIs resumo RV — um card por tier -->
+    <div class="tier-cards">
+
+      <div class="tier-card t1">
+        <div class="tier-head">
+          <span class="t-lbl">T1</span>
+          <span class="t-cond">5+ alunos antecipados</span>
+        </div>
+        <div class="tier-stats">
+          <div class="tier-stat">
+            <div class="s-lbl">Escolas</div>
+            <div class="s-val">119</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">CSs</div>
+            <div class="s-val">27</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">Bônus</div>
+            <div class="s-val" style="font-size:13px;">R$ 5.950</div>
+          </div>
+        </div>
       </div>
-      <div class="kpi blue">
-        <div class="lbl">CSs com T1</div>
-        <div class="val">33</div>
-        <div class="sub">ao menos 1 escola atingida</div>
+
+      <div class="tier-card t2">
+        <div class="tier-head">
+          <span class="t-lbl">T2</span>
+          <span class="t-cond">&gt;30% dos alunos</span>
+        </div>
+        <div class="tier-stats">
+          <div class="tier-stat">
+            <div class="s-lbl">Escolas</div>
+            <div class="s-val">14</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">CSs</div>
+            <div class="s-val">12</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">Bônus</div>
+            <div class="s-val" style="font-size:13px;">R$ 700</div>
+          </div>
+        </div>
       </div>
-      <div class="kpi blue">
-        <div class="lbl">Escolas com T2</div>
-        <div class="val">14</div>
-        <div class="sub">&gt;30% dos alunos antecipados</div>
+
+      <div class="tier-card t3">
+        <div class="tier-head">
+          <span class="t-lbl">T3</span>
+          <span class="t-cond">&gt;70% dos alunos</span>
+        </div>
+        <div class="tier-stats">
+          <div class="tier-stat">
+            <div class="s-lbl">Escolas</div>
+            <div class="s-val">4</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">CSs</div>
+            <div class="s-val">4</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">Bônus</div>
+            <div class="s-val" style="font-size:13px;">R$ 400</div>
+          </div>
+        </div>
       </div>
-      <div class="kpi blue">
-        <div class="lbl">Escolas com T3</div>
-        <div class="val">4</div>
-        <div class="sub">&gt;70% dos alunos antecipados</div>
+
+      <div class="tier-card t4">
+        <div class="tier-head">
+          <span class="t-lbl">T4</span>
+          <span class="t-cond">100% dos alunos</span>
+        </div>
+        <div class="tier-stats">
+          <div class="tier-stat">
+            <div class="s-lbl">Escolas</div>
+            <div class="s-val">1</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">CSs</div>
+            <div class="s-val">1</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">Bônus</div>
+            <div class="s-val" style="font-size:13px;">R$ 200</div>
+          </div>
+        </div>
       </div>
-      <div class="kpi yellow">
-        <div class="lbl">Escolas com T4</div>
-        <div class="val">1</div>
-        <div class="sub">100% dos alunos antecipados</div>
+
+      <div class="tier-card total">
+        <div class="tier-head">
+          <span class="t-lbl">Total</span>
+          <span class="t-cond">Jun 2026</span>
+        </div>
+        <div class="tier-stats">
+          <div class="tier-stat">
+            <div class="s-lbl">Escolas</div>
+            <div class="s-val">119</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">CSs</div>
+            <div class="s-val">27</div>
+          </div>
+          <div class="tier-stat">
+            <div class="s-lbl">A pagar</div>
+            <div class="s-val" style="font-size:12px;">R$ 7.300</div>
+          </div>
+        </div>
       </div>
-      <div class="kpi">
-        <div class="lbl">Total bônus a pagar</div>
-        <div class="val">R$ 7.300</div>
-        <div class="sub">T1+T2+T3+T4 (regra junho)</div>
-      </div>
+
     </div>
 
     <!-- Sub-tabs -->
