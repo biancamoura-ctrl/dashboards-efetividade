@@ -24,9 +24,7 @@
     --gray-light:  #F5F4F9;
     --border:      #E2DEEF;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     font-family: 'Montserrat', sans-serif;
     background: #1a1a2e;
@@ -36,10 +34,7 @@
     display: flex;
     flex-direction: column;
   }
-
-  /* ── SLIDES ── */
   .deck { flex: 1; position: relative; }
-
   .slide {
     position: absolute; inset: 0;
     display: none;
@@ -49,8 +44,6 @@
     transition: opacity 0.3s ease;
   }
   .slide.active { display: flex; opacity: 1; }
-
-  /* ── HEADER FIXO ── */
   .slide-header {
     background: var(--purple-dark);
     padding: 14px 36px;
@@ -60,32 +53,10 @@
     border-bottom: 3px solid var(--yellow);
     flex-shrink: 0;
   }
-  .logo-text {
-    font-size: 15px; font-weight: 800;
-    color: #fff;
-    letter-spacing: 0.5px;
-  }
+  .logo-text { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
   .logo-text span { color: var(--yellow); }
-  .slide-label {
-    font-size: 10px; font-weight: 600;
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-  .slide-date {
-    font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6);
-  }
-  .btn-back {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.28);
-    color: #fff; text-decoration: none;
-    padding: 5px 13px; border-radius: 8px;
-    font-family: inherit; font-size: 11px; font-weight: 700;
-    transition: background 0.15s;
-  }
-  .btn-back:hover { background: rgba(255,255,255,0.24); }
-
-  /* ── BODY ── */
+  .slide-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.55); letter-spacing: 1.5px; text-transform: uppercase; }
+  .slide-date { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); }
   .slide-body {
     flex: 1;
     display: flex;
@@ -94,18 +65,8 @@
     padding: 28px 48px;
     overflow: hidden;
   }
-
-  /* ── TYPOGRAPHY ── */
-  .slide-title {
-    font-size: 28px; font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 6px;
-  }
-  .slide-subtitle {
-    font-size: 14px; font-weight: 500;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 24px;
-  }
+  .slide-title { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 6px; }
+  .slide-subtitle { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
   .section-tag {
     display: inline-block;
     font-size: 10px; font-weight: 700;
@@ -119,17 +80,10 @@
   .tag-blue    { background: var(--blue);    color: #fff; }
   .tag-purple  { background: var(--purple);  color: #fff; }
   .tag-gray    { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8); }
-
-  /* ── CARDS ── */
-  .cards-row {
-    display: grid;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
+  .cards-row { display: grid; gap: 16px; margin-bottom: 20px; }
   .cards-4 { grid-template-columns: repeat(4, 1fr); }
   .cards-3 { grid-template-columns: repeat(3, 1fr); }
   .cards-2 { grid-template-columns: repeat(2, 1fr); }
-
   .card {
     background: rgba(255,255,255,0.07);
     border: 1.5px solid rgba(255,255,255,0.12);
@@ -142,24 +96,12 @@
   .card.green  { border-color: var(--green-mid); background: rgba(67,160,71,0.12); }
   .card.yellow { border-color: var(--yellow-dark); background: rgba(249,220,69,0.10); }
   .card.purple { border-color: var(--purple); background: rgba(118,104,172,0.18); }
-
-  .card-value {
-    font-size: 40px; font-weight: 800; line-height: 1;
-    margin-bottom: 6px;
-  }
+  .card-value { font-size: 40px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
   .card-value.red    { color: var(--red); }
   .card-value.green  { color: #66BB6A; }
   .card-value.yellow { color: var(--yellow); }
   .card-value.white  { color: #fff; }
-
-  .card-label {
-    font-size: 11px; font-weight: 600;
-    color: rgba(255,255,255,0.55);
-    text-transform: uppercase; letter-spacing: 0.8px;
-    line-height: 1.3;
-  }
-
-  /* ── TABELAS ── */
+  .card-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.8px; line-height: 1.3; }
   .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -168,29 +110,14 @@
     overflow: hidden;
     margin-bottom: 14px;
   }
-  .data-table th {
-    background: var(--purple);
-    color: #fff;
-    font-weight: 700;
-    padding: 10px 12px;
-    text-align: center;
-    font-size: 11px;
-    letter-spacing: 0.3px;
-  }
-  .data-table td {
-    padding: 9px 12px;
-    text-align: center;
-    color: #fff;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
+  .data-table th { background: var(--purple); color: #fff; font-weight: 700; padding: 10px 12px; text-align: center; font-size: 11px; letter-spacing: 0.3px; }
+  .data-table td { padding: 9px 12px; text-align: center; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.07); }
   .data-table tr:nth-child(even) td { background: rgba(255,255,255,0.04); }
   .data-table tr:last-child td { background: rgba(118,104,172,0.25); font-weight: 700; }
   .data-table td:first-child { text-align: left; font-weight: 600; }
   .data-table .hl { color: var(--yellow); font-weight: 700; }
   .data-table .hl-red { color: #FF6B75; font-weight: 700; }
   .data-table .hl-green { color: #66BB6A; font-weight: 700; }
-
-  /* ── DESTAQUE BOX ── */
   .insight-box {
     background: rgba(249,220,69,0.10);
     border: 1.5px solid var(--yellow-dark);
@@ -202,7 +129,6 @@
     margin-top: 12px;
   }
   .insight-box b { color: var(--yellow); }
-
   .info-box {
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.12);
@@ -213,92 +139,30 @@
     margin-bottom: 10px;
   }
   .info-box b { color: #fff; }
-
-  /* ── LISTAS ── */
   .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .bullet-list li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px; line-height: 1.5;
-    color: rgba(255,255,255,0.85);
-  }
-  .bullet-list li .dot {
-    flex-shrink: 0; width: 28px; height: 28px;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 13px; margin-top: 1px;
-  }
+  .bullet-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.85); }
+  .bullet-list li .dot { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; margin-top: 1px; }
   .dot-red    { background: var(--red);     color: #fff; }
   .dot-yellow { background: var(--yellow);  color: #333; }
   .dot-blue   { background: var(--blue);    color: #fff; }
-
-  /* ── DIAG ROWS ── */
-  .diag-row {
-    display: grid;
-    grid-template-columns: 2fr 3fr 1fr;
-    gap: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 8px;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .diag-cell {
-    padding: 12px 14px;
-    font-size: 13px;
-    line-height: 1.45;
-  }
+  .diag-row { display: grid; grid-template-columns: 2fr 3fr 1fr; gap: 0; border-radius: 8px; overflow: hidden; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.1); }
+  .diag-cell { padding: 12px 14px; font-size: 13px; line-height: 1.45; }
   .diag-cell:first-child { font-weight: 700; background: rgba(255,255,255,0.07); }
   .diag-cell:nth-child(2) { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.03); font-size: 12px; }
   .diag-cell:last-child { text-align: center; font-weight: 800; display: flex; align-items: center; justify-content: center; }
-  .peso-parcial   { background: rgba(249,220,69,0.15); color: var(--yellow); }
-  .peso-principal { background: rgba(233,75,86,0.18); color: #FF6B75; }
-  .peso-estrutural{ background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
-
-  /* ── PROGRESS BAR ── */
-  .progress-bar {
-    height: 3px;
-    background: rgba(255,255,255,0.1);
-    flex-shrink: 0;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--yellow);
-    transition: width 0.3s ease;
-  }
-
-  /* ── NAV ── */
-  .nav {
-    background: rgba(90,78,142,0.95);
-    padding: 10px 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-  }
-  .nav-btn {
-    background: rgba(255,255,255,0.1);
-    border: 1.5px solid rgba(255,255,255,0.2);
-    color: #fff;
-    padding: 7px 20px;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 12px; font-weight: 700;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
+  .peso-parcial    { background: rgba(249,220,69,0.15); color: var(--yellow); }
+  .peso-principal  { background: rgba(233,75,86,0.18); color: #FF6B75; }
+  .peso-estrutural { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+  .progress-fill { height: 100%; background: var(--yellow); transition: width 0.3s ease; }
+  .nav { background: rgba(90,78,142,0.95); padding: 10px 36px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .nav-btn { background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2); color: #fff; padding: 7px 20px; border-radius: 8px; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
   .nav-btn:hover { background: rgba(255,255,255,0.2); }
   .nav-btn:disabled { opacity: 0.25; cursor: default; }
-  .nav-counter {
-    font-size: 12px; font-weight: 600;
-    color: rgba(255,255,255,0.5);
-  }
+  .nav-counter { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); }
   .nav-dots { display: flex; gap: 6px; }
-  .nav-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    cursor: pointer; transition: background 0.15s;
-  }
+  .nav-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: background 0.15s; }
   .nav-dot.active { background: var(--yellow); }
-
-  /* ── COVER ESPECIAL ── */
   .cover-body {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -306,45 +170,24 @@
     padding: 40px 60px;
     background: linear-gradient(135deg, #1a1a2e 0%, #2d2060 60%, #3a1a5e 100%);
   }
-  .cover-badge {
-    background: var(--yellow);
-    color: #333;
-    font-size: 11px; font-weight: 800;
-    letter-spacing: 2px; text-transform: uppercase;
-    padding: 5px 16px; border-radius: 20px;
-    margin-bottom: 20px;
-  }
-  .cover-title {
-    font-size: 42px; font-weight: 800;
-    line-height: 1.15; margin-bottom: 12px;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-  }
+  .cover-badge { background: var(--yellow); color: #333; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 5px 16px; border-radius: 20px; margin-bottom: 20px; }
+  .cover-title { font-size: 42px; font-weight: 800; line-height: 1.15; margin-bottom: 12px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
   .cover-title span { color: var(--yellow); }
-  .cover-sub {
-    font-size: 16px; color: rgba(255,255,255,0.6);
-    font-weight: 500; margin-bottom: 36px;
-  }
-  .cover-stats {
-    display: flex; gap: 32px;
-    align-items: center;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 14px;
-    padding: 18px 32px;
-  }
+  .cover-sub { font-size: 16px; color: rgba(255,255,255,0.6); font-weight: 500; margin-bottom: 36px; }
+  .cover-stats { display: flex; gap: 32px; align-items: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 18px 32px; }
   .cover-stat-item { text-align: center; }
   .cover-stat-val { font-size: 30px; font-weight: 800; }
   .cover-stat-val.red { color: var(--red); }
   .cover-stat-val.yellow { color: var(--yellow); }
+  .cover-stat-val.green { color: #66BB6A; }
+  .cover-stat-val.white { color: #fff; }
   .cover-stat-label { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 600; letter-spacing: 0.5px; margin-top: 2px; }
   .cover-sep { width: 1px; height: 48px; background: rgba(255,255,255,0.15); }
-
-  /* ── SLIDE BACKGROUNDS ── */
   .bg-default { background: #1a1a2e; }
   .bg-alt { background: #1e1a35; }
-
-  /* COLS */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .btn-back { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.28); color: #fff; text-decoration: none; padding: 5px 13px; border-radius: 8px; font-family: inherit; font-size: 11px; font-weight: 700; transition: background 0.15s; }
+  .btn-back:hover { background: rgba(255,255,255,0.24); }
 
 </style>
 </head>
@@ -352,7 +195,7 @@
 
 <div class="deck" id="deck">
 
-  <!-- ═══════════════════════════════════════════════════════ SLIDE 1: CAPA -->
+  <!-- SLIDE 1: CAPA -->
   <div class="slide active" id="s1">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
@@ -361,22 +204,22 @@
       <div class="slide-date">12 de junho de 2026</div>
     </div>
     <div class="cover-body">
-      <div class="cover-badge">Análise Semanal · 09–12 jun 2026</div>
+      <div class="cover-badge">Análise Semanal · 08–12 junho 2026</div>
       <div class="cover-title">Efetividade do Time<br><span>de Relacionamento</span></div>
       <div class="cover-sub">O que aconteceu essa semana · causas · próximos passos</div>
       <div class="cover-stats">
         <div class="cover-stat-item">
-          <div class="cover-stat-val red">62,8%</div>
+          <div class="cover-stat-val red">66,6%</div>
           <div class="cover-stat-label">Efetividade hoje</div>
         </div>
         <div class="cover-sep"></div>
         <div class="cover-stat-item">
-          <div class="cover-stat-val white">1.966</div>
+          <div class="cover-stat-val white">1.965</div>
           <div class="cover-stat-label">Escolas elegíveis</div>
         </div>
         <div class="cover-sep"></div>
         <div class="cover-stat-item">
-          <div class="cover-stat-val red">822</div>
+          <div class="cover-stat-val red">2.054</div>
           <div class="cover-stat-label">Já vencidas</div>
         </div>
         <div class="cover-sep"></div>
@@ -388,7 +231,7 @@
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════ SLIDE 2: SITUAÇÃO ATUAL -->
+  <!-- SLIDE 2: SITUAÇÃO ATUAL -->
   <div class="slide bg-default" id="s2">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
@@ -398,20 +241,19 @@
     </div>
     <div class="slide-body">
       <div class="section-tag tag-gray">Ponto de partida</div>
-      <div class="slide-title">Como chegamos na sexta-feira</div>
+      <div class="slide-title">Como chegamos na sex-feira</div>
       <div class="slide-subtitle">Snapshot do time ao final da semana</div>
-
       <div class="cards-row cards-4">
         <div class="card red">
-          <div class="card-value red">62,8%</div>
+          <div class="card-value red">66,6%</div>
           <div class="card-label">Efetividade<br>atual</div>
         </div>
         <div class="card">
-          <div class="card-value white">1.966</div>
+          <div class="card-value white">1.965</div>
           <div class="card-label">Escolas<br>elegíveis</div>
         </div>
         <div class="card red">
-          <div class="card-value red">822</div>
+          <div class="card-value red">2.054</div>
           <div class="card-label">Já<br>vencidas</div>
         </div>
         <div class="card green">
@@ -419,14 +261,11 @@
           <div class="card-label">Meta<br>do time</div>
         </div>
       </div>
-
-      <div class="insight-box">
-        Estamos <b>17,2 pp abaixo da meta de 80%</b>. O time manteve o ritmo de <b>900–1.000 atividades/dia</b> durante toda a semana — o problema não é esforço. O motor do 63% são as <b>822 escolas já vencidas</b> que puxam o denominador para baixo. Só recuperar esse estoque move o número de volta.
-      </div>
+      <div class="insight-box">Estamos <b>13,4% abaixo da meta de 80%</b>. O motor do 66,6% são as <b>2.054 escolas já vencidas</b> que puxam o denominador para baixo. Só recuperar esse estoque move o número de volta.</div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════ SLIDE 3: ESFORÇO DO TIME -->
+  <!-- SLIDE 3: ESFORÇO DO TIME -->
   <div class="slide bg-alt" id="s3">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
@@ -436,9 +275,8 @@
     </div>
     <div class="slide-body">
       <div class="section-tag tag-green">Insight 1 de 3</div>
-      <div class="slide-title">Novas efetivas caem ao longo da semana</div>
-      <div class="slide-subtitle">O esforço caiu levemente, mas a conversão caiu muito mais</div>
-
+      <div class="slide-title">Novas efetivas ao longo da semana</div>
+      <div class="slide-subtitle">Esforço vs. conversão dia a dia</div>
       <table class="data-table">
         <thead>
           <tr>
@@ -449,21 +287,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Segunda  08/06</td><td>~1.000</td><td class="hl-green">169</td><td>—</td></tr>
-          <tr><td>Terça    09/06</td><td>~960</td><td>152</td><td>120</td></tr>
-          <tr><td>Quarta   10/06</td><td>~910</td><td>133</td><td>123</td></tr>
-          <tr><td>Quinta   11/06</td><td>~910</td><td class="hl-red">114</td><td>112</td></tr>
-          <tr><td>Sexta    12/06</td><td class="hl">8 (parcial)</td><td class="hl">—</td><td>90</td></tr>
+          <tr><td>Seg&nbsp;&nbsp;08/06</td><td>~1010</td><td class="hl-green">170</td><td>—</td></tr>
+<tr><td>Ter&nbsp;&nbsp;09/06</td><td>~1010</td><td>152</td><td>—</td></tr>
+<tr><td>Qua&nbsp;&nbsp;10/06</td><td>~950</td><td>134</td><td>—</td></tr>
+<tr><td>Qui&nbsp;&nbsp;11/06</td><td>~900</td><td>125</td><td>—</td></tr>
+<tr><td>Sex&nbsp;&nbsp;12/06</td><td class="hl">598</td><td class="hl-red">63</td><td>—</td></tr>
+
         </tbody>
       </table>
-
-      <div class="insight-box">
-        As atividades caíram <b>~9%</b> (esforço levemente menor), mas as novas efetivas caíram <b>~33%</b> — muito mais do que o esforço explica. São dois fatores combinados: <b>esforço levemente menor</b> + <b>conversão pior</b> (escolas mais difíceis de reativar conforme a semana avança).
-      </div>
+      <div class="insight-box">As atividades caíram <b>~41%</b> (esforço levemente menor), mas as novas efetivas caíram <b>~63%</b> — muito mais do que o esforço explica. São dois fatores combinados: <b>esforço levemente menor</b> + <b>conversão pior</b> (escolas mais difíceis de reativar conforme a semana avança).</div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════ SLIDE 4: SELEÇÃO ADVERSA -->
+  <!-- SLIDE 4: SELEÇÃO ADVERSA -->
   <div class="slide bg-default" id="s4">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
@@ -474,8 +310,7 @@
     <div class="slide-body">
       <div class="section-tag tag-yellow">Insight 2 de 3</div>
       <div class="slide-title">O time consome as escolas fáceis primeiro</div>
-      <div class="slide-subtitle">Analisamos quanto tempo cada escola estava vencida quando foi reativada</div>
-
+      <div class="slide-subtitle">Quanto tempo cada escola estava vencida quando foi reativada</div>
       <table class="data-table">
         <thead>
           <tr>
@@ -488,20 +323,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Seg 08/06</td><td>169</td><td>4,8 dias</td><td class="hl-green">96</td><td>55</td><td>18</td></tr>
-          <tr><td>Ter 09/06</td><td>152</td><td>5,3 dias</td><td class="hl-green">80</td><td>47</td><td>25</td></tr>
-          <tr><td>Qua 10/06</td><td>133</td><td>6,6 dias</td><td class="hl">54</td><td>51</td><td>28</td></tr>
-          <tr><td>Qui 11/06</td><td>114</td><td>6,4 dias</td><td class="hl-red">47</td><td>41</td><td>26</td></tr>
+          <tr><td>Seg 08/06</td><td>170</td><td>12.8 dias</td><td class="hl-green">104</td><td>55</td><td>11</td></tr>
+<tr><td>Ter 09/06</td><td>152</td><td>12.9 dias</td><td>86</td><td>47</td><td>19</td></tr>
+<tr><td>Qua 10/06</td><td>134</td><td>14.9 dias</td><td class="hl">59</td><td>51</td><td>24</td></tr>
+<tr><td>Qui 11/06</td><td>125</td><td>15.0 dias</td><td class="hl-red">54</td><td>46</td><td>25</td></tr>
+
         </tbody>
       </table>
-
-      <div class="insight-box">
-        Na segunda, <b>96 das 169 escolas reativadas tinham vencido há apenas 0–3 dias</b> — escolas recém-saídas do prazo, mais fáceis de contatar. Na quinta, esse número caiu para <b>47</b>. O estoque de escolas "fáceis" foi consumido ao longo da semana; o que sobrou exige mais toques para converter.
-      </div>
+      <div class="insight-box">Na seg, <b>104 das 170 escolas reativadas tinham vencido há apenas 0–3 dias</b> — escolas recém-saídas do prazo, mais fáceis de contatar. Na qui, esse número caiu para <b>54</b>. O estoque de escolas "fáceis" foi consumido ao longo da semana; o que sobrou exige mais toques para converter.</div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════ SLIDE 5: EFETIVIDADE HISTÓRICA -->
+  <!-- SLIDE 5: EFETIVIDADE HISTÓRICA -->
   <div class="slide bg-alt" id="s5">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
@@ -511,9 +344,8 @@
     </div>
     <div class="slide-body">
       <div class="section-tag tag-blue">Insight 3 de 3</div>
-      <div class="slide-title">Efetividade subindo — mas lentamente</div>
-      <div class="slide-subtitle">Evolução dia a dia na semana</div>
-
+      <div class="slide-title">Evolução da efetividade — semana atual</div>
+      <div class="slide-subtitle">Efetividade dia a dia na semana</div>
       <table class="data-table">
         <thead>
           <tr>
@@ -525,20 +357,18 @@
         </thead>
         <tbody>
           <tr><td>08/06 (Seg)</td><td>1.167</td><td>1.923</td><td>60,7%</td></tr>
-          <tr><td>09/06 (Ter)</td><td>1.179</td><td>1.923</td><td>61,3%</td></tr>
-          <tr><td>10/06 (Qua)</td><td>1.186</td><td>1.923</td><td>61,7%</td></tr>
-          <tr><td>11/06 (Qui)</td><td>1.190</td><td>1.928</td><td>61,7%</td></tr>
-          <tr><td>12/06 (Sex)</td><td>1.235</td><td>1.966</td><td class="hl-green">62,8%</td></tr>
+<tr><td>09/06 (Ter)</td><td>1.179</td><td>1.923</td><td>61,3%</td></tr>
+<tr><td>10/06 (Qua)</td><td>1.186</td><td>1.923</td><td>61,7%</td></tr>
+<tr><td>11/06 (Qui)</td><td>1.190</td><td>1.928</td><td>61,7%</td></tr>
+<tr><td>12/06 (Sex)</td><td>1.229</td><td>1.949</td><td class="hl-green">63,1%</td></tr>
+
         </tbody>
       </table>
-
-      <div class="insight-box">
-        A efetividade subiu <b>+2,1 pp</b> ao longo da semana (60,7% → 62,8%), com o denominador também crescendo (+43 elegíveis). O esforço do time está sustentando a recuperação, mas o ritmo é lento porque o <b>estoque de 822 vencidas é grande</b> — e elas continuam puxando o denominador sem serem recuperadas.
-      </div>
+      <div class="insight-box">A efetividade subiu <b>+2,4%</b> ao longo da semana (60,7% → 66,6%), com o denominador também crescendo (+26 elegíveis). O esforço do time está sustentando a recuperação, mas o ritmo é lento porque o <b>estoque de 2.054 vencidas é grande</b> — e elas continuam puxando o denominador sem serem recuperadas.</div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════ SLIDE 6: DIAGNÓSTICO FINAL -->
+  <!-- SLIDE 6: DIAGNÓSTICO FINAL -->
   <div class="slide bg-default" id="s6">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
@@ -548,30 +378,30 @@
     </div>
     <div class="slide-body">
       <div class="section-tag tag-purple">Diagnóstico</div>
-      <div class="slide-title">Por que estamos em 62,8%?</div>
-      <div class="slide-subtitle">Três causas combinadas, com pesos diferentes</div>
+      <div class="slide-title">Por que estamos em 66,6%?</div>
+      <div class="slide-subtitle">Causas combinadas, com pesos diferentes</div>
 
       <div class="diag-row">
-        <div class="diag-cell">Esforço levemente menor<br>ao longo da semana</div>
-        <div class="diag-cell">Atividades caíram ~9% (de ~1.000 Seg para ~910 Qui). Não explica sozinho a queda de 33% nas novas efetivas.</div>
-        <div class="diag-cell peso-parcial">Parcial</div>
-      </div>
-
-      <div class="diag-row">
-        <div class="diag-cell">Seleção adversa<br>(estoque fácil esgotou)</div>
-        <div class="diag-cell">Média de dias vencida subiu 4,8 → 6,6 dias. Recém-vencidas caíram de 96 para 47. Cada atividade converte menos.</div>
+        <div class="diag-cell">Esforço ao longo<br>da semana</div>
+        <div class="diag-cell">Atividades caíram ~41% (de ~1007 Seg para ~598 Sex). Impacto relevante no volume de novas efetivas.</div>
         <div class="diag-cell peso-principal">Principal</div>
       </div>
 
       <div class="diag-row">
-        <div class="diag-cell">Estoque acumulado<br>de 822 vencidas</div>
-        <div class="diag-cell">Motor do 63% — não é erro do time, é o denominador. Recuperar esse estoque é o que move a efetividade de volta para 80%.</div>
+        <div class="diag-cell">Conversão<br>(qualidade do contato)</div>
+        <div class="diag-cell">Taxa de conversão caiu 7.8 pp (30.7%→22.9%). Escolas respondendo pior ao longo da semana.</div>
+        <div class="diag-cell peso-principal">Principal</div>
+      </div>
+
+      <div class="diag-row">
+        <div class="diag-cell">Estoque acumulado<br>de 2.054 vencidas</div>
+        <div class="diag-cell">Motor do 66,6% — não é erro do time, é o denominador. Recuperar esse estoque é o que move a efetividade de volta para 80%.</div>
         <div class="diag-cell peso-estrutural">Estrutural</div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ SLIDE 7: RECOMENDAÇÕES -->
+  <!-- SLIDE 7: RECOMENDAÇÕES -->
   <div class="slide bg-alt" id="s7">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
@@ -583,20 +413,19 @@
       <div class="section-tag tag-red">O que fazer agora</div>
       <div class="slide-title">3 ações para a próxima semana</div>
       <div class="slide-subtitle">Priorizadas por impacto na efetividade</div>
-
       <ul class="bullet-list">
         <li>
           <div class="dot dot-red">1</div>
           <div>
-            <b style="color:#fff">Mutirão de recuperação das 822 vencidas</b><br>
-            <span style="color:rgba(255,255,255,0.65);font-size:13px">Evitar novos vencimentos mantém em 63%. Só atacar o estoque vencido move o número. Priorizar as recém-vencidas (0–3 dias) — maior taxa de conversão.</span>
+            <b style="color:#fff">Mutirão de recuperação das 2.054 vencidas</b><br>
+            <span style="color:rgba(255,255,255,0.65);font-size:13px">Evitar novos vencimentos mantém em 66,6%. Só atacar o estoque vencido move o número. Priorizar as recém-vencidas (0–3 dias) — maior taxa de conversão.</span>
           </div>
         </li>
         <li>
           <div class="dot dot-yellow">2</div>
           <div>
             <b style="color:#fff">Investigar a queda de esforço</b><br>
-            <span style="color:rgba(255,255,255,0.65);font-size:13px">Atividades caíram ~9% de segunda para quinta. Checar com supervisores se houve motivo pontual (reuniões, ausências) ou tendência comportamental.</span>
+            <span style="color:rgba(255,255,255,0.65);font-size:13px">Atividades caíram ~41% de seg para sex. Checar com supervisores se houve motivo pontual (reuniões, ausências) ou tendência comportamental.</span>
           </div>
         </li>
         <li>
@@ -610,7 +439,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════ SLIDE 8: PRÓXIMOS PASSOS -->
+  <!-- SLIDE 8: PRÓXIMOS PASSOS -->
   <div class="slide bg-default" id="s8">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
@@ -622,22 +451,21 @@
       <div class="section-tag tag-purple">O que vem pela frente</div>
       <div class="slide-title">Foco para a semana que começa</div>
       <div class="slide-subtitle">A segunda-feira vai redefinir o ritmo</div>
-
       <div class="two-col" style="margin-top:8px">
         <div>
           <div class="info-box">
             <b>Segunda-feira (15/06)</b><br>
-            Pool de recém-vencidas se reabastece no fim de semana. Esperar pico de novas efetivas como na última segunda (169). Prioritizar quem venceu sáb/dom.
+            Pool de recém-vencidas se reabastece no fim de semana. Esperar pico de novas efetivas como nos melhores dias da semana. Priorizar quem venceu sáb/dom.
           </div>
           <div class="info-box">
             <b>Mutirão de vencidas</b><br>
-            822 escolas aguardam. Consultor por consultor, identificar quais vencidas estão na carteira e atacar as mais recentes primeiro.
+            2.054 escolas aguardam. Consultor por consultor, identificar quais vencidas estão na carteira e atacar as mais recentes primeiro.
           </div>
         </div>
         <div>
           <div class="info-box">
             <b>Alvo da semana</b><br>
-            Para chegar em 70%: precisamos recuperar ~140 escolas vencidas além do ritmo normal. Para 80%: +360 além do normal. Esforço concentrado é o caminho.
+            Para chegar em 70%: precisamos recuperar ~68 escolas vencidas além do ritmo normal. Para 80%: +264 além do normal. Esforço concentrado é o caminho.
           </div>
           <div class="insight-box" style="margin-top:0">
             <b>Lembrete:</b> acompanharemos o padrão de seleção adversa semana a semana — se a média de dias vencida na segunda começar alta, o estoque fácil não se reabasteceu e o ritmo de recuperação será mais lento.
@@ -649,10 +477,8 @@
 
 </div><!-- /deck -->
 
-<!-- PROGRESS -->
 <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
 
-<!-- NAV -->
 <div class="nav">
   <button class="nav-btn" id="btnPrev" onclick="go(-1)" disabled>← Anterior</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
@@ -665,22 +491,18 @@
 <script>
   const TOTAL = 8;
   let cur = 0;
-
   const slides = document.querySelectorAll('.slide');
   const dotsEl = document.getElementById('dots');
   const counter = document.getElementById('counter');
   const prog = document.getElementById('prog');
   const btnPrev = document.getElementById('btnPrev');
   const btnNext = document.getElementById('btnNext');
-
-  // Build dots
   for (let i = 0; i < TOTAL; i++) {
     const d = document.createElement('div');
     d.className = 'nav-dot' + (i === 0 ? ' active' : '');
     d.onclick = () => goto(i);
     dotsEl.appendChild(d);
   }
-
   function goto(n) {
     slides[cur].classList.remove('active');
     dotsEl.children[cur].classList.remove('active');
@@ -692,15 +514,11 @@
     btnPrev.disabled = cur === 0;
     btnNext.disabled = cur === TOTAL - 1;
   }
-
   function go(dir) { goto(cur + dir); }
-
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
     if (e.key === 'ArrowLeft')  { e.preventDefault(); go(-1); }
   });
-
-  // init
   prog.style.width = (1 / TOTAL * 100) + '%';
 </script>
 </body>
