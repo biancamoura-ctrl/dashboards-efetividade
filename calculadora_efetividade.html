@@ -299,7 +299,7 @@ html.dark .ev-lbl{color:#71717a}
     </div>
     <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
       <div class="kc-icon">&#128197;</div>
-      <div class="kc-lbl">Vencem amanh&#227;</div>
+      <div class="kc-lbl" id="kpi-vencem-amanha-lbl">Vencem pr&#243;x. dia &#250;til</div>
       <div class="kc-val v-red" id="kpi-vencem-amanha">&#8212;</div>
       <div class="kc-sub">escolas no prazo</div>
     </div>
@@ -311,7 +311,7 @@ html.dark .ev-lbl{color:#71717a}
     </div>
     <div class="kpi-c" style="margin:0;padding:10px 12px;min-width:110px;flex-shrink:0">
       <div class="kc-icon">&#128197;</div>
-      <div class="kc-lbl">% amanh&#227; (proje&#231;&#227;o)</div>
+      <div class="kc-lbl" id="kpi-proj-amanha-lbl">% pr&#243;x. dia &#250;til (proje&#231;&#227;o)</div>
       <div class="kc-val" id="kpi-proj-amanha">&#8212;</div>
       <div class="kc-sub" id="kpi-proj-amanha-sub">se fecharmos na m&#233;dia</div>
     </div>
@@ -479,7 +479,7 @@ function render() {
     : 100;
   document.getElementById('kpi-vencem').className   = 'kc-val v-red';
   document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(0) + '/dia';
-  // KPI vencem amanhã — sempre fixo em expiracoes[1], independente do período
+  // KPI vencem próx. dia útil — expiracoes já está em dias úteis, índice 1 = próximo dia útil
   var vencem_amanha = (C.expiracoes && C.expiracoes.length > 1 ? C.expiracoes[1] : 0);
   document.getElementById('kpi-vencem-amanha').className   = 'kc-val v-red';
   document.getElementById('kpi-vencem-amanha').textContent = vencem_amanha.toFixed(0);
