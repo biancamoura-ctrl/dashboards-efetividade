@@ -372,16 +372,16 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
     </div>
 
     <div id="regra-maio" class="regra-body">
-      Todos os triggers são <b>cumulativos</b>.<br><br>
-      <b>Trigger 1 — Por escola:</b> escola com <b>5 ou mais alunos que realizaram pedido</b> → <b>R$ 50 por escola</b><br>
-      <b>Trigger 2 — Por carteira:</b> CS com <b>&gt;30% da carteira total antecipada</b> → <b>+ R$ 100</b><br>
-      <b>Caso especial:</b> CS com <b>100% da carteira</b> → <b>+ R$ 200</b> (cumulativo com T1 e T2)<br>
+      Todos os triggers são <b>cumulativos e avaliados por escola</b> (marco da escola, não do consultor).<br><br>
+      <b>Trigger 1 — Por escola:</b> escola com <b>5 ou mais alunos com pedido antecipado</b> → <b>R$ 50 por escola</b><br>
+      <b>Trigger 2 — Por escola:</b> escola com <b>&gt;30% dos alunos com compra antecipada</b> → <b>+ R$ 100 por escola</b><br>
+      <b>Trigger 4 — Por escola:</b> escola com <b>100% dos alunos com compra antecipada</b> → <b>+ R$ 200 por escola</b><br>
       <b>Regra FC60+:</b> <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code>
       <table>
-        <tr><th>Situação</th><th>Valor total</th></tr>
-        <tr><td>Apenas T1 (escola com 5+ alunos)</td><td><b>R$ 50 por escola</b></td></tr>
-        <tr><td>T1 + T2 (escola + &gt;30% carteira)</td><td><b>R$ 50/escola + R$ 100</b></td></tr>
-        <tr><td>T1 + T2 + especial (100% carteira)</td><td><b>R$ 50/escola + R$ 100 + R$ 200</b></td></tr>
+        <tr><th>Situação da escola</th><th>Valor por escola</th></tr>
+        <tr><td>T1 — 5+ alunos antecipados</td><td><b>R$ 50</b></td></tr>
+        <tr><td>T1 + T2 — &gt;30% dos alunos antecipados</td><td><b>R$ 150</b></td></tr>
+        <tr><td>T1 + T2 + T4 — 100% dos alunos antecipados</td><td><b>R$ 350</b></td></tr>
       </table>
     </div>
 
@@ -401,19 +401,19 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">R$ 50 / escola</td>
           </tr>
           <tr style="background:rgba(118,104,172,.06);">
-            <td style="padding:6px 10px;font-weight:700;">T2 — Por carteira</td>
-            <td style="padding:6px 10px;">&gt; 30% da carteira antecipada</td>
-            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 50</td>
+            <td style="padding:6px 10px;font-weight:700;">T2 — Por escola</td>
+            <td style="padding:6px 10px;">&gt; 30% dos alunos da escola com compra antecipada</td>
+            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 50 / escola</td>
           </tr>
           <tr>
-            <td style="padding:6px 10px;font-weight:700;">T3 — Por carteira</td>
-            <td style="padding:6px 10px;">&gt; 70% da carteira antecipada</td>
-            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 100</td>
+            <td style="padding:6px 10px;font-weight:700;">T3 — Por escola</td>
+            <td style="padding:6px 10px;">&gt; 70% dos alunos da escola com compra antecipada</td>
+            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 100 / escola</td>
           </tr>
           <tr style="background:rgba(118,104,172,.06);">
-            <td style="padding:6px 10px;font-weight:700;">T4 — Por carteira</td>
-            <td style="padding:6px 10px;">= 100% da carteira antecipada</td>
-            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 200</td>
+            <td style="padding:6px 10px;font-weight:700;">T4 — Por escola</td>
+            <td style="padding:6px 10px;">100% dos alunos da escola com compra antecipada</td>
+            <td style="padding:6px 10px;text-align:right;font-weight:700;color:var(--green);">+ R$ 200 / escola</td>
           </tr>
         </tbody>
       </table>
@@ -423,27 +423,33 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
     <div class="kpis">
       <div class="kpi green">
         <div class="lbl">Escolas com T1</div>
-        <div class="val">119</div>
+        <div class="val">266</div>
         <div class="sub">5+ alunos antecipados</div>
       </div>
       <div class="kpi blue">
         <div class="lbl">CSs com T1</div>
-        <div class="val">27</div>
+        <div class="val">33</div>
         <div class="sub">ao menos 1 escola atingida</div>
       </div>
       <div class="kpi blue">
-        <div class="lbl">CSs com T2</div>
-        <div class="val">0</div>
-        <div class="sub">&gt;30% da carteira antecipada</div>
+        <div class="lbl">Escolas com T2</div>
+        <div class="val">136</div>
+        <div class="sub">&gt;30% dos alunos antecipados</div>
+      </div>
+      <div class="kpi blue">
+        <div class="lbl">Escolas com T3</div>
+        <div class="val">63</div>
+        <div class="sub">&gt;70% dos alunos antecipados</div>
       </div>
       <div class="kpi yellow">
-        <div class="lbl">Casos especiais</div>
-        <div class="val">0</div>
-        <div class="sub">100% da carteira</div>
+        <div class="lbl">Escolas com T4</div>
+        <div class="val">15</div>
+        <div class="sub">100% dos alunos antecipados</div>
       </div>
       <div class="kpi">
         <div class="lbl">Total bônus a pagar</div>
-        <div class="val">R$&nbsp;5.950</div>
+        <div class="val">R$&nbsp;29,400</div>
+        <div class="sub">T1+T2+T3+T4 (regra junho)</div>
       </div>
     </div>
 
@@ -461,32 +467,39 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
       </button>
       <div id="regra-info-escola" class="regra-body">
         Cada linha = uma escola que <b>atingiu T1</b> (5+ alunos com pedido). Escolas encerradas permanecem registradas.<br>
-        O bônus exibido aqui é o de T1 (R$50 por escola). O adicional de T2 aparece consolidado na visão Por CS.
+        <b>T2/T3/T4</b> = marco atingido por <b>esta escola</b> com base no % dos seus próprios alunos com compra antecipada (não % da carteira do CS).<br>
+        <b>T2/T3/T4 calculados</b> — dados de 266 escolas via BigQuery em 12/06/2026.
       </div>
       <!-- Filtro de CS -->
       <div class="cs-filter">
         <label>Filtrar por CS</label>
         <select id="select-cs" onchange="filtrarCS(this.value)">
-                    <option value="todos">Todos os CSs</option>
+          <option value="todos">Todos os CSs</option>
           <option value="Anaclara Peres">Anaclara Peres</option>
           <option value="Andreina Ferreira">Andreina Ferreira</option>
           <option value="Carla Gomes">Carla Gomes</option>
+          <option value="Carla Santosdasilva">Carla Santosdasilva</option>
+          <option value="Dalva Paschoalini">Dalva Paschoalini</option>
           <option value="Erick Andrade">Erick Andrade</option>
           <option value="Gabriela Ribeiro">Gabriela Ribeiro</option>
           <option value="Giovanna Munhoz">Giovanna Munhoz</option>
           <option value="Indlayse Ferreira">Indlayse Ferreira</option>
+          <option value="Jennifer Anjos">Jennifer Anjos</option>
           <option value="Julia Cordeiro">Julia Cordeiro</option>
           <option value="Junior Gomes">Junior Gomes</option>
           <option value="Kaian Silva">Kaian Silva</option>
+          <option value="Lara Farnesi">Lara Farnesi</option>
           <option value="Larissa Freitas">Larissa Freitas</option>
           <option value="Laura Pagliuzo">Laura Pagliuzo</option>
           <option value="Maria Elvira">Maria Elvira</option>
           <option value="Mariaeduarda Carvalho">Mariaeduarda Carvalho</option>
           <option value="Mariana Santana">Mariana Santana</option>
           <option value="Mayane Costa">Mayane Costa</option>
+          <option value="Nicole Cavalcante">Nicole Cavalcante</option>
           <option value="Pamela Miranda">Pamela Miranda</option>
           <option value="Renata Brandao">Renata Brandao</option>
           <option value="Sarah Moura">Sarah Moura</option>
+          <option value="Sem CS">Sem CS</option>
           <option value="Shelry Solart">Shelry Solart</option>
           <option value="Stefany Figueredo">Stefany Figueredo</option>
           <option value="Talita Panassol">Talita Panassol</option>
@@ -505,64 +518,334 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
           <thead>
             <tr>
               <th>Escola</th>
-              <th>CS T1</th><th>CS T2</th><th>CS T3</th><th>CS T4</th>
+              <th>CS</th><th>T2<br><span style="font-weight:400;opacity:.7">&gt;30% alunos</span></th><th>T3<br><span style="font-weight:400;opacity:.7">&gt;70% alunos</span></th><th>T4<br><span style="font-weight:400;opacity:.7">100% alunos</span></th>
               <th>Data 5º Pedido</th>
               <th>Data FC</th>
               <th class="num">Alunos Antec.</th>
               <th class="num">R$ Antecipado</th>
-              <th class="num">Bônus T1</th>
+              <th class="num">Bônus</th>
             </tr>
           </thead>
           <tbody>
+            <tr data-cs="Indlayse Ferreira">
+              <td>ESCOLA AMERICANA DO RIO DE JANEIRO</td>
+              <td>Indlayse Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>19/03/2026</td>
+              <td>28/04/2026</td>
+              <td class="num">336</td>
+              <td class="num">R$&nbsp;122.650</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>Colégio Mendel Vilas</td>
+              <td>Maria Elvira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>11/05/2026</td>
+              <td>18/06/2026</td>
+              <td class="num">232</td>
+              <td class="num">R$&nbsp;48.366</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>Nova Escola Crescimento</td>
+              <td>Maria Elvira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>17/03/2026</td>
+              <td>22/04/2026</td>
+              <td class="num">342</td>
+              <td class="num">R$&nbsp;44.547</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>International School of Cuiabá</td>
+              <td>Maria Elvira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>17/03/2026</td>
+              <td>19/05/2026</td>
+              <td class="num">160</td>
+              <td class="num">R$&nbsp;43.976</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO INTELLECTUS - UNIDADE FREGUESIA</td>
+              <td>Sarah Moura</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>29/03/2026</td>
+              <td>23/04/2026</td>
+              <td class="num">277</td>
+              <td class="num">R$&nbsp;41.735</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Colégio Profª Yeda Maria</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>27/03/2026</td>
+              <td>14/05/2026</td>
+              <td class="num">138</td>
+              <td class="num">R$&nbsp;36.817</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO ARTEMAIOR</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>23/03/2026</td>
+              <td>13/05/2026</td>
+              <td class="num">142</td>
+              <td class="num">R$&nbsp;36.261</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>ESCOLA TRAMPOLIM</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>25/03/2026</td>
+              <td>08/06/2026</td>
+              <td class="num">113</td>
+              <td class="num">R$&nbsp;36.008</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>COLÉGIO INTEGRAÇÃO</td>
+              <td>Gabriela Ribeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>08/04/2026</td>
+              <td>12/06/2026</td>
+              <td class="num">184</td>
+              <td class="num">R$&nbsp;33.723</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>COLÉGIO DE ÁGHAPE</td>
+              <td>Larissa Freitas</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>22/04/2026</td>
+              <td>26/05/2026</td>
+              <td class="num">152</td>
+              <td class="num">R$&nbsp;31.534</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Julia Cordeiro">
+              <td>Colégio Paraíso</td>
+              <td>Julia Cordeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>25/02/2026</td>
+              <td>13/04/2026</td>
+              <td class="num">281</td>
+              <td class="num">R$&nbsp;30.655</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
             <tr data-cs="Maria Elvira">
               <td>COLÉGIO ALTA FLORESTA</td>
               <td>Maria Elvira</td>
-              <td></td><td></td><td></td>
-              <td>12/03/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>13/03/2026</td>
               <td>08/09/2026</td>
-              <td class="num">84</td>
-              <td class="num">R$ 30.259</td>
-              <td class="num">R$ 50</td>
+              <td class="num">82</td>
+              <td class="num">R$&nbsp;30.259</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
-            <tr data-cs="Shelry Solart">
-              <td>Centro Educacional São Tomás de Aquino</td>
-              <td>Shelry Solart</td>
-              <td></td><td></td><td></td>
-              <td>29/05/2026</td>
-              <td>08/10/2026</td>
-              <td class="num">60</td>
-              <td class="num">R$ 18.562</td>
-              <td class="num">R$ 50</td>
+            <tr data-cs="Thayna Bastos">
+              <td>COLÉGIO AMÉRICO MELO</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>21/04/2026</td>
+              <td>20/05/2026</td>
+              <td class="num">140</td>
+              <td class="num">R$&nbsp;30.212</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Jennifer Anjos">
+              <td>Escola Beth Shalom</td>
+              <td>Jennifer Anjos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>02/05/2026</td>
+              <td>02/06/2026</td>
+              <td class="num">201</td>
+              <td class="num">R$&nbsp;28.995</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO INTELLECTUS - UNIDADE ICARAÍ</td>
+              <td>Sarah Moura</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>03/04/2026</td>
+              <td>23/04/2026</td>
+              <td class="num">176</td>
+              <td class="num">R$&nbsp;27.818</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO RODRIGUES DIAS</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>16/04/2026</td>
+              <td>13/05/2026</td>
+              <td class="num">149</td>
+              <td class="num">R$&nbsp;27.396</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>Colégio Tema Novo</td>
+              <td>Mariana Santana</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>07/04/2026</td>
+              <td>18/05/2026</td>
+              <td class="num">119</td>
+              <td class="num">R$&nbsp;26.617</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Erick Andrade">
+              <td>CNA</td>
+              <td>Erick Andrade</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>23/04/2026</td>
+              <td>27/05/2026</td>
+              <td class="num">126</td>
+              <td class="num">R$&nbsp;25.463</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Colégio MAPER</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>05/05/2026</td>
+              <td>25/05/2026</td>
+              <td class="num">109</td>
+              <td class="num">R$&nbsp;24.992</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO VINICIUS DE MORAES</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>03/05/2026</td>
+              <td>01/06/2026</td>
+              <td class="num">51</td>
+              <td class="num">R$&nbsp;24.800</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>Objetivo Monte Mor</td>
+              <td>Gabriela Ribeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>04/05/2026</td>
+              <td>26/05/2026</td>
+              <td class="num">123</td>
+              <td class="num">R$&nbsp;24.247</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>Centro Educacional Celina Vitória</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>27/03/2026</td>
+              <td>18/05/2026</td>
+              <td class="num">196</td>
+              <td class="num">R$&nbsp;23.981</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>COLÉGIO DOM BOSCO</td>
+              <td>Carla Gomes</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>13/03/2026</td>
+              <td>26/05/2026</td>
+              <td class="num">146</td>
+              <td class="num">R$&nbsp;22.517</td>
+              <td class="num">R$&nbsp;200</td>
             </tr>
             <tr data-cs="Carla Gomes">
               <td>VILA VERDE ESCOLA INFANTIL</td>
               <td>Carla Gomes</td>
-              <td></td><td></td><td></td>
-              <td>27/04/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>28/04/2026</td>
               <td>20/07/2026</td>
-              <td class="num">74</td>
-              <td class="num">R$ 17.571</td>
-              <td class="num">R$ 50</td>
+              <td class="num">97</td>
+              <td class="num">R$&nbsp;21.900</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>COLÉGIO VICENTINO SANTA ISABEL</td>
+              <td>Escola Novas ideias</td>
               <td>Talita Panassol</td>
-              <td></td><td></td><td></td>
-              <td>12/04/2026</td>
-              <td>01/09/2026</td>
-              <td class="num">86</td>
-              <td class="num">R$ 17.513</td>
-              <td class="num">R$ 50</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>26/04/2026</td>
+              <td>12/06/2026</td>
+              <td class="num">70</td>
+              <td class="num">R$&nbsp;21.690</td>
+              <td class="num">R$&nbsp;200</td>
             </tr>
-            <tr data-cs="Shelry Solart">
-              <td>Colégio Adventista de Indaial</td>
-              <td>Shelry Solart</td>
-              <td></td><td></td><td></td>
-              <td>14/05/2026</td>
-              <td>08/09/2026</td>
-              <td class="num">114</td>
-              <td class="num">R$ 17.027</td>
-              <td class="num">R$ 50</td>
+            <tr data-cs="Erick Andrade">
+              <td>Maple Bear Jacareí</td>
+              <td>Erick Andrade</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>12/05/2026</td>
+              <td>03/06/2026</td>
+              <td class="num">87</td>
+              <td class="num">R$&nbsp;21.158</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>COLÉGIO FUTURUM</td>
+              <td>Viviancristina Souza</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>14/04/2026</td>
+              <td>24/04/2026</td>
+              <td class="num">135</td>
+              <td class="num">R$&nbsp;20.580</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO SÃO GONÇALO DE BRASNORTE - MT</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>04/05/2026</td>
+              <td>15/06/2026</td>
+              <td class="num">80</td>
+              <td class="num">R$&nbsp;20.557</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>Escola Municipal Nova Canaã</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>19/04/2026</td>
+              <td>10/05/2026</td>
+              <td class="num">202</td>
+              <td class="num">R$&nbsp;20.234</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Nicole Cavalcante">
+              <td>Maple Bear Maringá</td>
+              <td>Nicole Cavalcante</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>22/05/2026</td>
+              <td>01/06/2026</td>
+              <td class="num">98</td>
+              <td class="num">R$&nbsp;19.988</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO INTELLECTUS - UNIDADE TIJUCA</td>
+              <td>Sarah Moura</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>05/04/2026</td>
+              <td>23/04/2026</td>
+              <td class="num">131</td>
+              <td class="num">R$&nbsp;19.736</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Laura Pagliuzo">
+              <td>ESCOLA PORTAL</td>
+              <td>Laura Pagliuzo</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>19/05/2026</td>
+              <td>22/07/2026</td>
+              <td class="num">45</td>
+              <td class="num">R$&nbsp;19.509</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
               <td>Escola Sesi SP</td>
@@ -570,259 +853,1139 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td></td><td></td><td></td>
               <td>27/05/2026</td>
               <td>22/10/2026</td>
-              <td class="num">100</td>
-              <td class="num">R$ 16.425</td>
-              <td class="num">R$ 50</td>
+              <td class="num">109</td>
+              <td class="num">R$&nbsp;18.961</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>Centro Educacional São Tomás de Aquino</td>
+              <td>Shelry Solart</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>01/06/2026</td>
+              <td>08/10/2026</td>
+              <td class="num">61</td>
+              <td class="num">R$&nbsp;18.843</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>INSTITUTO EDUCACIONAL REINO DO SABER</td>
+              <td>Shelry Solart</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>10/04/2026</td>
+              <td>08/05/2026</td>
+              <td class="num">104</td>
+              <td class="num">R$&nbsp;18.211</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Julia Cordeiro">
+              <td>COLÉGIO ÁGUIA DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL E MÉDIO</td>
+              <td>Julia Cordeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>29/03/2026</td>
+              <td>10/06/2026</td>
+              <td class="num">122</td>
+              <td class="num">R$&nbsp;17.904</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>COLÉGIO VICENTINO SANTA ISABEL</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>14/04/2026</td>
+              <td>01/09/2026</td>
+              <td class="num">85</td>
+              <td class="num">R$&nbsp;17.513</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>ESCOLA DOM PEDRO II</td>
+              <td>Maria Elvira</td>
+              <td></td><td></td><td></td>
+              <td>27/05/2026</td>
+              <td>13/07/2026</td>
+              <td class="num">59</td>
+              <td class="num">R$&nbsp;17.387</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Thais Borges">
+              <td>CULTURA INGLESA MARINGÁ</td>
+              <td>Thais Borges</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>11/05/2026</td>
+              <td>26/05/2026</td>
+              <td class="num">71</td>
+              <td class="num">R$&nbsp;17.362</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Julia Cordeiro">
+              <td>Centro Educacional Sagrado Coração de Jesus</td>
+              <td>Julia Cordeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>09/04/2026</td>
+              <td>27/04/2026</td>
+              <td class="num">93</td>
+              <td class="num">R$&nbsp;17.193</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>Colégio Adventista de Indaial</td>
+              <td>Shelry Solart</td>
+              <td></td><td></td><td></td>
+              <td>14/05/2026</td>
+              <td>08/09/2026</td>
+              <td class="num">110</td>
+              <td class="num">R$&nbsp;17.027</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Laura Pagliuzo">
+              <td>COLÉGIO MARISTA FREI ROGÉRIO</td>
+              <td>Laura Pagliuzo</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>01/06/2026</td>
+              <td>11/06/2026</td>
+              <td class="num">50</td>
+              <td class="num">R$&nbsp;17.010</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>CRECHE ESCOLA FURA BOLO</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>27/04/2026</td>
+              <td>13/06/2026</td>
+              <td class="num">70</td>
+              <td class="num">R$&nbsp;16.615</td>
+              <td class="num">R$&nbsp;200</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>Colégio GGE Boa Viagem</td>
               <td>Sarah Moura</td>
-              <td></td><td></td><td></td>
-              <td>27/04/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>29/04/2026</td>
               <td>18/09/2026</td>
               <td class="num">58</td>
-              <td class="num">R$ 16.323</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;16.323</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Nicole Cavalcante">
+              <td>COLÉGIO SÃO JOSÉ</td>
+              <td>Nicole Cavalcante</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>30/04/2026</td>
+              <td>31/05/2026</td>
+              <td class="num">77</td>
+              <td class="num">R$&nbsp;16.204</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Carla Santosdasilva">
+              <td>ESCOLA PEQUENO APRENDIZ</td>
+              <td>Carla Santosdasilva</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>02/06/2026</td>
+              <td>12/06/2026</td>
+              <td class="num">160</td>
+              <td class="num">R$&nbsp;16.136</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>Colégio Posicruz</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>08/04/2026</td>
+              <td>08/05/2026</td>
+              <td class="num">58</td>
+              <td class="num">R$&nbsp;15.999</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO INTELLECTUS - UNIDADE BOTAFOGO</td>
+              <td>Sarah Moura</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>29/03/2026</td>
+              <td>26/04/2026</td>
+              <td class="num">90</td>
+              <td class="num">R$&nbsp;15.593</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Thais Borges">
+              <td>ESCOLA DOS AMIGUINHOS</td>
+              <td>Thais Borges</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>23/03/2026</td>
+              <td>29/05/2026</td>
+              <td class="num">125</td>
+              <td class="num">R$&nbsp;15.283</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Thais Borges">
+              <td>COLÉGIO MARIA JOSÉ DA SILVA MELO</td>
+              <td>Thais Borges</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>31/03/2026</td>
+              <td>20/05/2026</td>
+              <td class="num">103</td>
+              <td class="num">R$&nbsp;14.550</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Nicole Cavalcante">
+              <td>VILA PRIMER EDUCAÇÃO INFANTIL</td>
+              <td>Nicole Cavalcante</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>24/04/2026</td>
+              <td>26/05/2026</td>
+              <td class="num">59</td>
+              <td class="num">R$&nbsp;14.210</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Carla Santosdasilva">
+              <td>CMEI MÃE VICÊNCIA</td>
+              <td>Carla Santosdasilva</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>16/05/2026</td>
+              <td>09/06/2026</td>
+              <td class="num">77</td>
+              <td class="num">R$&nbsp;14.092</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>ESCOLA DE EDUCAÇÃO INFANTIL VILLA DEI BAMBINI</td>
+              <td>Tatiana Portela</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>29/04/2026</td>
+              <td>13/05/2026</td>
+              <td class="num">74</td>
+              <td class="num">R$&nbsp;13.700</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>ESCOLA CASA DAS LETRAS</td>
+              <td>Carla Gomes</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>27/04/2026</td>
+              <td>13/05/2026</td>
+              <td class="num">61</td>
+              <td class="num">R$&nbsp;13.570</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Junior Gomes">
+              <td>COLÉGIO SÃO GABRIEL</td>
+              <td>Junior Gomes</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>27/04/2026</td>
+              <td>03/07/2026</td>
+              <td class="num">77</td>
+              <td class="num">R$&nbsp;13.549</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Anaclara Peres">
+              <td>Colégio Anjos do Saber</td>
+              <td>Anaclara Peres</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>14/04/2026</td>
+              <td>23/04/2026</td>
+              <td class="num">55</td>
+              <td class="num">R$&nbsp;13.511</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Nicole Cavalcante">
+              <td>Colégio Orbe - Berçário Tia Ana</td>
+              <td>Nicole Cavalcante</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>13/04/2026</td>
+              <td>24/05/2026</td>
+              <td class="num">75</td>
+              <td class="num">R$&nbsp;13.403</td>
+              <td class="num">R$&nbsp;200</td>
             </tr>
             <tr data-cs="Carla Gomes">
               <td>COLÉGIO SÃO FRANCISCO - UNIDADE I</td>
               <td>Carla Gomes</td>
-              <td></td><td></td><td></td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
               <td>22/05/2026</td>
               <td>10/08/2026</td>
+              <td class="num">82</td>
+              <td class="num">R$&nbsp;13.149</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>COLÉGIO IMPACTO</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>27/04/2026</td>
+              <td>28/05/2026</td>
+              <td class="num">100</td>
+              <td class="num">R$&nbsp;13.068</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>COLÉGIO MARISTA PIO XII</td>
+              <td>Viviancristina Souza</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>28/04/2026</td>
+              <td>26/05/2026</td>
+              <td class="num">34</td>
+              <td class="num">R$&nbsp;12.933</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>CENC - CENTRO EDUCACIONAL NATUREZA E CULTURA</td>
+              <td>Larissa Freitas</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>13/05/2026</td>
+              <td>28/05/2026</td>
               <td class="num">83</td>
-              <td class="num">R$ 13.149</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;12.818</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Carla Gomes">
               <td>BRIGHT BEE SCHOOL</td>
               <td>Carla Gomes</td>
               <td></td><td></td><td></td>
-              <td>08/06/2026</td>
+              <td>09/06/2026</td>
               <td>17/09/2026</td>
-              <td class="num">21</td>
-              <td class="num">R$ 10.915</td>
-              <td class="num">R$ 50</td>
+              <td class="num">22</td>
+              <td class="num">R$&nbsp;12.795</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Maria Elvira">
-              <td>PRO CAMPUS CRIANÇA</td>
-              <td>Maria Elvira</td>
+            <tr data-cs="Indlayse Ferreira">
+              <td>Escola Municipal Maestro Andréa Nuzzi</td>
+              <td>Indlayse Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>05/05/2026</td>
+              <td>28/05/2026</td>
+              <td class="num">101</td>
+              <td class="num">R$&nbsp;12.738</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>Instituto de Educação Raízes</td>
+              <td>Tatiana Portela</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>11/05/2026</td>
+              <td>22/05/2026</td>
+              <td class="num">26</td>
+              <td class="num">R$&nbsp;12.654</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Nicole Cavalcante">
+              <td>EMEB STEPHANO LOCKS</td>
+              <td>Nicole Cavalcante</td>
               <td></td><td></td><td></td>
               <td>28/05/2026</td>
-              <td>28/09/2026</td>
-              <td class="num">53</td>
-              <td class="num">R$ 10.296</td>
-              <td class="num">R$ 50</td>
+              <td>24/06/2026</td>
+              <td class="num">83</td>
+              <td class="num">R$&nbsp;12.593</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Andreina Ferreira">
-              <td>COLÉGIO CARPE DIEM</td>
-              <td>Andreina Ferreira</td>
-              <td></td><td></td><td></td>
-              <td>28/05/2026</td>
-              <td>30/09/2026</td>
-              <td class="num">122</td>
-              <td class="num">R$ 10.232</td>
-              <td class="num">R$ 50</td>
+            <tr data-cs="Carla Gomes">
+              <td>ESCOLA ESTADUAL CORINTHO BORGES FAÇANHA</td>
+              <td>Carla Gomes</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>21/05/2026</td>
+              <td>28/06/2026</td>
+              <td class="num">32</td>
+              <td class="num">R$&nbsp;12.491</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
-            <tr data-cs="Maria Elvira">
-              <td>Colégio Moraes Rêgo</td>
-              <td>Maria Elvira</td>
-              <td></td><td></td><td></td>
+            <tr data-cs="Indlayse Ferreira">
+              <td>UNIVERSO INFANTIL CRECHE ESCOLA</td>
+              <td>Indlayse Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>07/04/2026</td>
               <td>19/05/2026</td>
-              <td>24/09/2026</td>
-              <td class="num">35</td>
-              <td class="num">R$ 9.897</td>
-              <td class="num">R$ 50</td>
+              <td class="num">94</td>
+              <td class="num">R$&nbsp;12.381</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>Colégio Arco-Íris</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>15/05/2026</td>
+              <td>03/06/2026</td>
+              <td class="num">88</td>
+              <td class="num">R$&nbsp;11.956</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>CRECHE ESCOLA FURA BOLO</td>
+              <td>Talita Panassol</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>30/04/2026</td>
+              <td>24/06/2026</td>
+              <td class="num">47</td>
+              <td class="num">R$&nbsp;11.956</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO JOSEENSE - Unidade 2</td>
+              <td>Mariana Santana</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>18/04/2026</td>
+              <td>07/07/2026</td>
+              <td class="num">69</td>
+              <td class="num">R$&nbsp;11.891</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>GA - Escola Caminho Suave</td>
+              <td>Shelry Solart</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>15/04/2026</td>
+              <td>08/05/2026</td>
+              <td class="num">41</td>
+              <td class="num">R$&nbsp;10.923</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>Colégio Vital Brazil</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>11/05/2026</td>
+              <td>14/05/2026</td>
+              <td class="num">99</td>
+              <td class="num">R$&nbsp;10.920</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>Colégio Império UP</td>
+              <td>Maria Elvira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>20/05/2026</td>
+              <td>14/07/2026</td>
+              <td class="num">62</td>
+              <td class="num">R$&nbsp;10.855</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>Ceas Creche Escola</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>26/05/2026</td>
+              <td>03/06/2026</td>
+              <td class="num">56</td>
+              <td class="num">R$&nbsp;10.750</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Talita Panassol">
               <td>COLÉGIO HEXÁGONO</td>
               <td>Talita Panassol</td>
               <td></td><td></td><td></td>
-              <td>24/04/2026</td>
+              <td>29/04/2026</td>
               <td>28/07/2026</td>
-              <td class="num">48</td>
-              <td class="num">R$ 9.831</td>
-              <td class="num">R$ 50</td>
+              <td class="num">49</td>
+              <td class="num">R$&nbsp;10.728</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>CENTRO EDUCACIONAL GÊNESIS</td>
+              <td>Renata Brandao</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>17/04/2026</td>
+              <td>17/05/2026</td>
+              <td class="num">50</td>
+              <td class="num">R$&nbsp;10.451</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>Maple Bear Taubaté</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>25/05/2026</td>
+              <td>25/05/2026</td>
+              <td class="num">142</td>
+              <td class="num">R$&nbsp;10.404</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>PRO CAMPUS CRIANÇA</td>
+              <td>Maria Elvira</td>
+              <td></td><td></td><td></td>
+              <td>29/05/2026</td>
+              <td>28/09/2026</td>
+              <td class="num">51</td>
+              <td class="num">R$&nbsp;10.296</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Andreina Ferreira">
+              <td>COLÉGIO CARPE DIEM</td>
+              <td>Andreina Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>28/05/2026</td>
+              <td>30/09/2026</td>
+              <td class="num">121</td>
+              <td class="num">R$&nbsp;10.232</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>Cultura Inglesa Tambauzinho João Pessoa</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>30/04/2026</td>
+              <td>05/05/2026</td>
+              <td class="num">22</td>
+              <td class="num">R$&nbsp;9.969</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>Colégio Moraes Rêgo</td>
+              <td>Maria Elvira</td>
+              <td></td><td></td><td></td>
+              <td>20/05/2026</td>
+              <td>24/09/2026</td>
+              <td class="num">34</td>
+              <td class="num">R$&nbsp;9.897</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>ESCOLA MAPLE BEAR CANADIAN SCHOOL BOA VISTA</td>
+              <td>Talita Panassol</td>
+              <td></td><td></td><td></td>
+              <td>08/06/2026</td>
+              <td>22/06/2026</td>
+              <td class="num">19</td>
+              <td class="num">R$&nbsp;9.838</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>ESCOLA VIVANT</td>
               <td>Mariana Santana</td>
-              <td></td><td></td><td></td>
-              <td>11/04/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>08/05/2026</td>
               <td>13/08/2026</td>
               <td class="num">42</td>
-              <td class="num">R$ 9.682</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;9.682</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>COLÉGIO CLEMENTE PAVAN</td>
+              <td>Viviancristina Souza</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>05/04/2026</td>
+              <td>24/04/2026</td>
+              <td class="num">45</td>
+              <td class="num">R$&nbsp;9.618</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>INSTITUTO DE EDUCAÇÃO MARIA SALOMÉ</td>
+              <td>Carla Gomes</td>
+              <td></td><td></td><td></td>
+              <td>24/05/2026</td>
+              <td>15/06/2026</td>
+              <td class="num">44</td>
+              <td class="num">R$&nbsp;9.508</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>Instituto Presbiteriano Crianças do Brasil</td>
+              <td>Gabriela Ribeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>19/05/2026</td>
+              <td>03/06/2026</td>
+              <td class="num">140</td>
+              <td class="num">R$&nbsp;9.388</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>EDUCANDÁRIO AURELINA BAPTISTA</td>
+              <td>Renata Brandao</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>27/05/2026</td>
+              <td>15/06/2026</td>
+              <td class="num">65</td>
+              <td class="num">R$&nbsp;9.368</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>Colégio Luterano Rui Barbosa</td>
+              <td>Shelry Solart</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>31/03/2026</td>
+              <td>22/04/2026</td>
+              <td class="num">77</td>
+              <td class="num">R$&nbsp;9.338</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Dalva Paschoalini">
+              <td>ESCOLA DE ENSINO MÉDIO DIVINO CORAÇÃO</td>
+              <td>Dalva Paschoalini</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>25/05/2026</td>
+              <td>09/06/2026</td>
+              <td class="num">39</td>
+              <td class="num">R$&nbsp;9.163</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>Escola CEI</td>
+              <td>Viviancristina Souza</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>23/03/2026</td>
+              <td>10/04/2026</td>
+              <td class="num">71</td>
+              <td class="num">R$&nbsp;9.074</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>COLÉGIO BATISTA INDEPENDENTE DE RIBEIRÃO PRETO</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>29/04/2026</td>
+              <td>27/05/2026</td>
+              <td class="num">57</td>
+              <td class="num">R$&nbsp;9.033</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>Colégio Bethel</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>08/04/2026</td>
+              <td>23/04/2026</td>
+              <td class="num">36</td>
+              <td class="num">R$&nbsp;9.026</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>ESCOLA MUNICIPAL CHIRLENE CRISTINA PEREIRA</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>28/05/2026</td>
+              <td>10/06/2026</td>
+              <td class="num">61</td>
+              <td class="num">R$&nbsp;8.828</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>IPÊ AMARELO - BERÇÁRIO E EDUCAÇÃO INFANTIL</td>
+              <td>Viviancristina Souza</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>28/05/2026</td>
+              <td>11/06/2026</td>
+              <td class="num">23</td>
+              <td class="num">R$&nbsp;8.737</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>MARCELINO BERALDO C EI EF M</td>
+              <td>Thayna Bastos</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>29/04/2026</td>
+              <td>24/05/2026</td>
+              <td class="num">39</td>
+              <td class="num">R$&nbsp;8.672</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Kaian Silva">
+              <td>Escola Municipal Joaquim Emílio Baptista</td>
+              <td>Kaian Silva</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>10/05/2026</td>
+              <td>25/05/2026</td>
+              <td class="num">70</td>
+              <td class="num">R$&nbsp;8.518</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>ESCOLA MUNICIPAL GERALDO DE ASSIS</td>
+              <td>Carla Gomes</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>07/05/2026</td>
+              <td>07/06/2026</td>
+              <td class="num">58</td>
+              <td class="num">R$&nbsp;8.445</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO INTELLECTUS - UNIDADE BOTAFOGO II</td>
+              <td>Sarah Moura</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>04/04/2026</td>
+              <td>23/04/2026</td>
+              <td class="num">53</td>
+              <td class="num">R$&nbsp;8.395</td>
+              <td class="num">R$&nbsp;200</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>COLÉGIO STATUS - TV MORENA</td>
               <td>Sarah Moura</td>
               <td></td><td></td><td></td>
-              <td>11/05/2026</td>
+              <td>13/05/2026</td>
               <td>19/08/2026</td>
               <td class="num">37</td>
-              <td class="num">R$ 8.342</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;8.342</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>DESAFIO EDUCACIONAL</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>24/04/2026</td>
+              <td>20/05/2026</td>
+              <td class="num">51</td>
+              <td class="num">R$&nbsp;8.271</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>Lua De Algodão e Colégio Lua</td>
               <td>Mariana Santana</td>
-              <td></td><td></td><td></td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
               <td>27/05/2026</td>
               <td>17/08/2026</td>
               <td class="num">36</td>
-              <td class="num">R$ 7.938</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;7.938</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
-            <tr data-cs="Andreina Ferreira">
-              <td>Colégio Tesla</td>
-              <td>Andreina Ferreira</td>
-              <td></td><td></td><td></td>
-              <td>18/05/2026</td>
-              <td>28/09/2026</td>
-              <td class="num">42</td>
-              <td class="num">R$ 7.424</td>
-              <td class="num">R$ 50</td>
+            <tr data-cs="Stefany Figueredo">
+              <td>Centro Educacional Ponto de Partida</td>
+              <td>Stefany Figueredo</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>11/05/2026</td>
+              <td>07/06/2026</td>
+              <td class="num">58</td>
+              <td class="num">R$&nbsp;7.914</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>COLÉGIO EQUIPE GRAU – NOVA IGUAÇU</td>
+              <td>Shelry Solart</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>29/05/2026</td>
+              <td>28/07/2026</td>
+              <td class="num">26</td>
+              <td class="num">R$&nbsp;7.845</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
               <td>COLÉGIO ADVENTISTA DE GURUPI</td>
               <td>Mariaeduarda Carvalho</td>
               <td></td><td></td><td></td>
-              <td>26/05/2026</td>
+              <td>28/05/2026</td>
               <td>14/09/2026</td>
-              <td class="num">36</td>
-              <td class="num">R$ 7.247</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Tatiana Portela">
-              <td>Escola Núcleo Municipal Teutônia</td>
-              <td>Tatiana Portela</td>
-              <td></td><td></td><td></td>
-              <td>26/05/2026</td>
-              <td>04/08/2026</td>
-              <td class="num">103</td>
-              <td class="num">R$ 7.231</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Mariana Santana">
-              <td>COLÉGIO TRIVIUM</td>
-              <td>Mariana Santana</td>
-              <td></td><td></td><td></td>
-              <td>16/03/2026</td>
-              <td>05/10/2026</td>
-              <td class="num">30</td>
-              <td class="num">R$ 7.194</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Sarah Moura">
-              <td>COLÉGIO GGE PETROLINA</td>
-              <td>Sarah Moura</td>
-              <td></td><td></td><td></td>
-              <td>29/04/2026</td>
-              <td>18/09/2026</td>
-              <td class="num">14</td>
-              <td class="num">R$ 7.096</td>
-              <td class="num">R$ 50</td>
+              <td class="num">37</td>
+              <td class="num">R$&nbsp;7.806</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Talita Panassol">
-              <td>Escola SESI Darcy Zacharias</td>
+              <td>ESCOLA CASA DE BRINQUEDOS</td>
               <td>Talita Panassol</td>
-              <td></td><td></td><td></td>
-              <td>09/03/2026</td>
-              <td>02/11/2026</td>
-              <td class="num">23</td>
-              <td class="num">R$ 6.974</td>
-              <td class="num">R$ 50</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>04/05/2026</td>
+              <td>19/05/2026</td>
+              <td class="num">39</td>
+              <td class="num">R$&nbsp;7.791</td>
+              <td class="num">R$&nbsp;200</td>
             </tr>
             <tr data-cs="Larissa Freitas">
               <td>Lmp Burini Centro de Aprendizagem</td>
               <td>Larissa Freitas</td>
               <td></td><td></td><td></td>
-              <td>06/05/2026</td>
+              <td>08/05/2026</td>
               <td>28/07/2026</td>
-              <td class="num">30</td>
-              <td class="num">R$ 6.888</td>
-              <td class="num">R$ 50</td>
+              <td class="num">33</td>
+              <td class="num">R$&nbsp;7.668</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Escola Adventista de Tubarão</td>
+              <td>Talita Panassol</td>
+              <td></td><td></td><td></td>
+              <td>18/03/2026</td>
+              <td>30/06/2026</td>
+              <td class="num">42</td>
+              <td class="num">R$&nbsp;7.436</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Andreina Ferreira">
+              <td>Colégio Tesla</td>
+              <td>Andreina Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>18/05/2026</td>
+              <td>28/09/2026</td>
+              <td class="num">42</td>
+              <td class="num">R$&nbsp;7.424</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>Escola Núcleo Municipal Teutônia</td>
+              <td>Tatiana Portela</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>26/05/2026</td>
+              <td>04/08/2026</td>
+              <td class="num">103</td>
+              <td class="num">R$&nbsp;7.231</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO TRIVIUM</td>
+              <td>Mariana Santana</td>
+              <td></td><td></td><td></td>
+              <td>25/03/2026</td>
+              <td>05/10/2026</td>
+              <td class="num">29</td>
+              <td class="num">R$&nbsp;7.194</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Kaian Silva">
+              <td>Colégio Santanna</td>
+              <td>Kaian Silva</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>18/05/2026</td>
+              <td>09/06/2026</td>
+              <td class="num">47</td>
+              <td class="num">R$&nbsp;7.143</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO GGE PETROLINA</td>
+              <td>Sarah Moura</td>
+              <td></td><td></td><td></td>
+              <td>28/05/2026</td>
+              <td>18/09/2026</td>
+              <td class="num">14</td>
+              <td class="num">R$&nbsp;7.096</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Kaian Silva">
+              <td>Colégio Emmái</td>
+              <td>Kaian Silva</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>30/05/2026</td>
+              <td>08/06/2026</td>
+              <td class="num">44</td>
+              <td class="num">R$&nbsp;6.993</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Andreina Ferreira">
+              <td>CENTRO EDUCACIONAL INFANTIL ARCA DE NOE</td>
+              <td>Andreina Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>03/06/2026</td>
+              <td>26/06/2026</td>
+              <td class="num">126</td>
+              <td class="num">R$&nbsp;6.985</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Escola SESI Darcy Zacharias</td>
+              <td>Talita Panassol</td>
+              <td></td><td></td><td></td>
+              <td>31/03/2026</td>
+              <td>02/11/2026</td>
+              <td class="num">22</td>
+              <td class="num">R$&nbsp;6.974</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>Escola Gênesis</td>
+              <td>Shelry Solart</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>05/05/2026</td>
+              <td>21/05/2026</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;6.972</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>MAPLE BEAR TERESINA</td>
+              <td>Mariana Santana</td>
+              <td></td><td></td><td></td>
+              <td>25/05/2026</td>
+              <td>25/06/2026</td>
+              <td class="num">17</td>
+              <td class="num">R$&nbsp;6.945</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>CENTRO EDUCACIONAL COLO DE MÃE</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>23/04/2026</td>
+              <td>02/06/2026</td>
+              <td class="num">68</td>
+              <td class="num">R$&nbsp;6.923</td>
+              <td class="num">R$&nbsp;400</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>DRUMMOND EDUCACIONAL</td>
               <td>Mariana Santana</td>
-              <td></td><td></td><td></td>
-              <td>20/05/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>22/05/2026</td>
               <td>12/08/2026</td>
-              <td class="num">47</td>
-              <td class="num">R$ 6.823</td>
-              <td class="num">R$ 50</td>
+              <td class="num">44</td>
+              <td class="num">R$&nbsp;6.823</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
-            <tr data-cs="Carla Gomes">
-              <td>ESCOLA MUNDO INFANTIL</td>
-              <td>Carla Gomes</td>
-              <td></td><td></td><td></td>
-              <td>03/06/2026</td>
-              <td>11/08/2026</td>
-              <td class="num">27</td>
-              <td class="num">R$ 6.611</td>
-              <td class="num">R$ 50</td>
+            <tr data-cs="Pamela Miranda">
+              <td>Complexo Geração Samuel</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>21/05/2026</td>
+              <td>24/05/2026</td>
+              <td class="num">99</td>
+              <td class="num">R$&nbsp;6.800</td>
+              <td class="num">R$&nbsp;400</td>
             </tr>
-            <tr data-cs="Maria Elvira">
-              <td>CENTRO DE ENSINO CHARLES DARWIN</td>
-              <td>Maria Elvira</td>
-              <td></td><td></td><td></td>
-              <td>29/04/2026</td>
-              <td>14/09/2026</td>
-              <td class="num">23</td>
-              <td class="num">R$ 5.971</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Carla Gomes">
-              <td>COLÉGIO O BOM PASTOR JÚNIOR</td>
-              <td>Carla Gomes</td>
-              <td></td><td></td><td></td>
-              <td>23/04/2026</td>
-              <td>06/10/2026</td>
-              <td class="num">27</td>
-              <td class="num">R$ 5.804</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Gabriela Ribeiro">
-              <td>COLÉGIO NOVO MILÊNIO - COOTEC</td>
-              <td>Gabriela Ribeiro</td>
-              <td></td><td></td><td></td>
-              <td>10/04/2026</td>
-              <td>25/09/2026</td>
+            <tr data-cs="Viviancristina Souza">
+              <td>Colégio Aprender e Educar</td>
+              <td>Viviancristina Souza</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>15/05/2026</td>
+              <td>25/05/2026</td>
               <td class="num">32</td>
-              <td class="num">R$ 5.660</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Mariaeduarda Carvalho">
-              <td>COLÉGIO COC LAGES</td>
-              <td>Mariaeduarda Carvalho</td>
-              <td></td><td></td><td></td>
-              <td>08/04/2026</td>
-              <td>23/10/2026</td>
-              <td class="num">13</td>
-              <td class="num">R$ 5.349</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;6.732</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>COLÉGIO MARISTA SÃO FRANCISCO</td>
               <td>Mariana Santana</td>
               <td></td><td></td><td></td>
-              <td>05/06/2026</td>
+              <td>09/06/2026</td>
               <td>02/09/2026</td>
-              <td class="num">17</td>
-              <td class="num">R$ 4.998</td>
-              <td class="num">R$ 50</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;6.700</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>ESCOLA MUNDO INFANTIL</td>
+              <td>Carla Gomes</td>
+              <td></td><td></td><td></td>
+              <td>04/06/2026</td>
+              <td>11/08/2026</td>
+              <td class="num">27</td>
+              <td class="num">R$&nbsp;6.691</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO INTELLECTUS - UNIDADE BANGU</td>
+              <td>Sarah Moura</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>13/04/2026</td>
+              <td>27/04/2026</td>
+              <td class="num">41</td>
+              <td class="num">R$&nbsp;6.672</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Indlayse Ferreira">
+              <td>COLÉGIO NOSSA SENHORA DOS REMÉDIOS</td>
+              <td>Indlayse Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>15/05/2026</td>
+              <td>18/06/2026</td>
+              <td class="num">61</td>
+              <td class="num">R$&nbsp;6.634</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Erick Andrade">
+              <td>ESCOLA JOAO GOMES DE SA</td>
+              <td>Erick Andrade</td>
+              <td></td><td></td><td></td>
+              <td>29/05/2026</td>
+              <td>18/06/2026</td>
+              <td class="num">38</td>
+              <td class="num">R$&nbsp;6.553</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>CONSTRUTIVA E EI EF</td>
+              <td>Gabriela Ribeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>21/05/2026</td>
+              <td>19/06/2026</td>
+              <td class="num">25</td>
+              <td class="num">R$&nbsp;6.536</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Thais Borges">
+              <td>EMEF Raimundo Nonato Sobrinho</td>
+              <td>Thais Borges</td>
+              <td></td><td></td><td></td>
+              <td>28/04/2026</td>
+              <td>22/06/2026</td>
+              <td class="num">57</td>
+              <td class="num">R$&nbsp;6.194</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>COLÉGIO DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL EQUIPE</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>02/06/2026</td>
+              <td>12/06/2026</td>
+              <td class="num">58</td>
+              <td class="num">R$&nbsp;6.141</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Sem CS">
+              <td>Centro Educacional Criativo</td>
+              <td>Sem CS</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>27/04/2026</td>
+              <td>11/05/2026</td>
+              <td class="num">26</td>
+              <td class="num">R$&nbsp;6.071</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>ESCOLA BAMBI</td>
+              <td>Larissa Freitas</td>
+              <td></td><td></td><td></td>
+              <td>20/05/2026</td>
+              <td>12/06/2026</td>
+              <td class="num">54</td>
+              <td class="num">R$&nbsp;6.065</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Dalva Paschoalini">
+              <td>Colégio Motivação</td>
+              <td>Dalva Paschoalini</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>03/05/2026</td>
+              <td>20/05/2026</td>
+              <td class="num">25</td>
+              <td class="num">R$&nbsp;5.998</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>ESCOLA VALE DO SOL</td>
+              <td>Talita Panassol</td>
+              <td></td><td></td><td></td>
+              <td>24/05/2026</td>
+              <td>10/07/2026</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;5.982</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Maria Elvira">
+              <td>CENTRO DE ENSINO CHARLES DARWIN</td>
+              <td>Maria Elvira</td>
+              <td></td><td></td><td></td>
+              <td>01/05/2026</td>
+              <td>14/09/2026</td>
+              <td class="num">23</td>
+              <td class="num">R$&nbsp;5.971</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Indlayse Ferreira">
+              <td>Colégio Objetivo - Unidade Tatuí</td>
+              <td>Indlayse Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>23/04/2026</td>
+              <td>13/07/2026</td>
+              <td class="num">21</td>
+              <td class="num">R$&nbsp;5.933</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>ESCOLA CHAVE</td>
+              <td>Tatiana Portela</td>
+              <td></td><td></td><td></td>
+              <td>19/05/2026</td>
+              <td>18/06/2026</td>
+              <td class="num">32</td>
+              <td class="num">R$&nbsp;5.884</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>COLÉGIO O BOM PASTOR JÚNIOR</td>
+              <td>Carla Gomes</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>30/04/2026</td>
+              <td>06/10/2026</td>
+              <td class="num">27</td>
+              <td class="num">R$&nbsp;5.804</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>ESCOLA PRESBITERIANA ZENAIDE MAGALHÃES</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>25/04/2026</td>
+              <td>05/05/2026</td>
+              <td class="num">38</td>
+              <td class="num">R$&nbsp;5.709</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Stefany Figueredo">
+              <td>ESPAÇO EDUCATIVO PENSAR E AGIR</td>
+              <td>Stefany Figueredo</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>26/05/2026</td>
+              <td>12/06/2026</td>
+              <td class="num">37</td>
+              <td class="num">R$&nbsp;5.677</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>COLÉGIO NOVO MILÊNIO - COOTEC</td>
+              <td>Gabriela Ribeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>17/04/2026</td>
+              <td>25/09/2026</td>
+              <td class="num">30</td>
+              <td class="num">R$&nbsp;5.660</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Anaclara Peres">
+              <td>COLÉGIO MÚLTIPLA ESCOLHA</td>
+              <td>Anaclara Peres</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>26/04/2026</td>
+              <td>14/05/2026</td>
+              <td class="num">23</td>
+              <td class="num">R$&nbsp;5.564</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>COLÉGIO COC LAGES</td>
+              <td>Mariaeduarda Carvalho</td>
+              <td></td><td></td><td></td>
+              <td>23/04/2026</td>
+              <td>23/10/2026</td>
+              <td class="num">13</td>
+              <td class="num">R$&nbsp;5.349</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>ESCOLA MUNICIPAL JOSE PEIXOTO DA SILVEIRA</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td>
+              <td>17/04/2026</td>
+              <td>08/05/2026</td>
+              <td class="num">55</td>
+              <td class="num">R$&nbsp;5.222</td>
+              <td class="num">R$&nbsp;200</td>
+            </tr>
+            <tr data-cs="Kaian Silva">
+              <td>Colégio Nossa Senhora das Mercês</td>
+              <td>Kaian Silva</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>27/05/2026</td>
+              <td>12/06/2026</td>
+              <td class="num">19</td>
+              <td class="num">R$&nbsp;5.201</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Kaian Silva">
+              <td>Oficina da Criança</td>
+              <td>Kaian Silva</td>
+              <td></td><td></td><td></td>
+              <td>13/05/2026</td>
+              <td>09/07/2026</td>
+              <td class="num">22</td>
+              <td class="num">R$&nbsp;5.032</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Viviancristina Souza">
               <td>COLÉGIO DRUMMOND</td>
               <td>Viviancristina Souza</td>
-              <td></td><td></td><td></td>
-              <td>09/03/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>14/03/2026</td>
               <td>01/07/2026</td>
-              <td class="num">23</td>
-              <td class="num">R$ 4.996</td>
-              <td class="num">R$ 50</td>
+              <td class="num">22</td>
+              <td class="num">R$&nbsp;4.996</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Gabriela Ribeiro">
               <td>Colégio N.E.E.R</td>
@@ -831,18 +1994,28 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>11/05/2026</td>
               <td>16/09/2026</td>
               <td class="num">25</td>
-              <td class="num">R$ 4.891</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;4.891</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Talita Panassol">
-              <td>ESCOLA TRAMPOLIM</td>
-              <td>Talita Panassol</td>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO MARISTA DE RIBEIRÃO PRETO</td>
+              <td>Mariana Santana</td>
               <td></td><td></td><td></td>
-              <td>24/03/2026</td>
-              <td>08/06/2026</td>
-              <td class="num">15</td>
-              <td class="num">R$ 4.639</td>
-              <td class="num">R$ 50</td>
+              <td>10/06/2026</td>
+              <td>25/09/2026</td>
+              <td class="num">18</td>
+              <td class="num">R$&nbsp;4.860</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Indlayse Ferreira">
+              <td>EMEF "PROFESSORA MARIA RODRIGUES LEITE"</td>
+              <td>Indlayse Ferreira</td>
+              <td></td><td></td><td></td>
+              <td>31/05/2026</td>
+              <td>14/07/2026</td>
+              <td class="num">30</td>
+              <td class="num">R$&nbsp;4.706</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>Colégio Adventista da Asa Sul</td>
@@ -851,18 +2024,38 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>25/05/2026</td>
               <td>25/09/2026</td>
               <td class="num">18</td>
-              <td class="num">R$ 4.517</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;4.517</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Mariana Santana">
-              <td>COLÉGIO MARISTA DE RIBEIRÃO PRETO</td>
-              <td>Mariana Santana</td>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>ESCOLA DJANIRA ALVES RODRIGUES</td>
+              <td>Gabriela Ribeiro</td>
               <td></td><td></td><td></td>
-              <td>10/06/2026</td>
-              <td>25/09/2026</td>
-              <td class="num">15</td>
-              <td class="num">R$ 4.462</td>
-              <td class="num">R$ 50</td>
+              <td>12/05/2026</td>
+              <td>21/07/2026</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;4.478</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>Educandário Américo Mesquita</td>
+              <td>Viviancristina Souza</td>
+              <td></td><td></td><td></td>
+              <td>11/05/2026</td>
+              <td>19/06/2026</td>
+              <td class="num">33</td>
+              <td class="num">R$&nbsp;4.370</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Julia Cordeiro">
+              <td>LEGACY SCHOOL - Unidade Taquara</td>
+              <td>Julia Cordeiro</td>
+              <td></td><td></td><td></td>
+              <td>13/05/2026</td>
+              <td>21/09/2026</td>
+              <td class="num">26</td>
+              <td class="num">R$&nbsp;4.303</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Talita Panassol">
               <td>COLÉGIO ADVENTISTA MARECHAL RONDON</td>
@@ -871,88 +2064,198 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>27/05/2026</td>
               <td>08/09/2026</td>
               <td class="num">16</td>
-              <td class="num">R$ 4.290</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;4.290</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Erick Andrade">
               <td>COLINHO DE MAMAE BERCARIO E EDUCACAO INFANTIL LTDA</td>
               <td>Erick Andrade</td>
               <td></td><td></td><td></td>
-              <td>03/04/2026</td>
+              <td>03/05/2026</td>
               <td>18/08/2026</td>
               <td class="num">13</td>
-              <td class="num">R$ 4.142</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;4.142</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Indlayse Ferreira">
               <td>CEPP - CENTRO EDUCACIONAL PRIMEIROS PASSOS</td>
               <td>Indlayse Ferreira</td>
               <td></td><td></td><td></td>
-              <td>29/04/2026</td>
+              <td>11/05/2026</td>
               <td>25/09/2026</td>
               <td class="num">11</td>
-              <td class="num">R$ 4.128</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;4.128</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Laura Pagliuzo">
               <td>Colégio Presbiteriano</td>
               <td>Laura Pagliuzo</td>
-              <td></td><td></td><td></td>
-              <td>22/03/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>28/03/2026</td>
               <td>21/10/2026</td>
               <td class="num">13</td>
-              <td class="num">R$ 4.098</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;4.098</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Erick Andrade">
+              <td>MARGARIDA MARIA ORGANIZACAO EDUCACIONAL OEMAR</td>
+              <td>Erick Andrade</td>
+              <td></td><td></td><td></td>
+              <td>07/06/2026</td>
+              <td>23/07/2026</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;4.078</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO JOSEENSE</td>
+              <td>Mariana Santana</td>
+              <td></td><td></td><td></td>
+              <td>26/05/2026</td>
+              <td>07/07/2026</td>
+              <td class="num">34</td>
+              <td class="num">R$&nbsp;4.072</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>Cultura Inglesa - Canoas</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>07/06/2026</td>
+              <td>10/06/2026</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;4.025</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Andreina Ferreira">
+              <td>COLEGIO CENECISTA PARACAMBI</td>
+              <td>Andreina Ferreira</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>21/05/2026</td>
+              <td>27/05/2026</td>
+              <td class="num">16</td>
+              <td class="num">R$&nbsp;3.996</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>Colégio Caminhos e Colinas</td>
+              <td>Carla Gomes</td>
+              <td></td><td></td><td></td>
+              <td>06/05/2026</td>
+              <td>24/07/2026</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;3.974</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>Colégio Romano Santa Helena</td>
+              <td>Sarah Moura</td>
+              <td></td><td></td><td></td>
+              <td>07/04/2026</td>
+              <td>08/07/2026</td>
+              <td class="num">14</td>
+              <td class="num">R$&nbsp;3.965</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Mayane Costa">
+              <td>ESCOLA GAPPE</td>
+              <td>Mayane Costa</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>08/06/2026</td>
+              <td>22/06/2026</td>
+              <td class="num">12</td>
+              <td class="num">R$&nbsp;3.964</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>Winner School Ponta de Pedras</td>
+              <td>Viviancristina Souza</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>19/05/2026</td>
+              <td>02/06/2026</td>
+              <td class="num">28</td>
+              <td class="num">R$&nbsp;3.935</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Talita Panassol">
               <td>Colégio Externato São José</td>
               <td>Talita Panassol</td>
               <td></td><td></td><td></td>
-              <td>08/03/2026</td>
+              <td>06/04/2026</td>
               <td>23/10/2026</td>
               <td class="num">9</td>
-              <td class="num">R$ 3.895</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;3.895</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>COLÉGIO ARMANDO XAVIER DE OLIVEIRA</td>
+              <td>Larissa Freitas</td>
+              <td></td><td></td><td></td>
+              <td>04/06/2026</td>
+              <td>16/07/2026</td>
+              <td class="num">24</td>
+              <td class="num">R$&nbsp;3.849</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Anaclara Peres">
               <td>Escola de Ensino Fundamental Fortunato Tarnowski</td>
               <td>Anaclara Peres</td>
-              <td></td><td></td><td></td>
-              <td>23/05/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>26/05/2026</td>
               <td>10/08/2026</td>
-              <td class="num">20</td>
-              <td class="num">R$ 3.773</td>
-              <td class="num">R$ 50</td>
+              <td class="num">19</td>
+              <td class="num">R$&nbsp;3.773</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>COLÉGIO BATISTA RIO-PRETENSE</td>
               <td>Mariana Santana</td>
               <td></td><td></td><td></td>
-              <td>14/05/2026</td>
+              <td>28/05/2026</td>
               <td>13/08/2026</td>
               <td class="num">11</td>
-              <td class="num">R$ 3.734</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;3.734</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>Escola  SESI Planalto</td>
               <td>Mariana Santana</td>
               <td></td><td></td><td></td>
-              <td>11/05/2026</td>
+              <td>13/05/2026</td>
               <td>02/10/2026</td>
               <td class="num">13</td>
-              <td class="num">R$ 3.699</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;3.699</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLEGIO ROMANO SENHOR BOM JESUS</td>
+              <td>Sarah Moura</td>
+              <td></td><td></td><td></td>
+              <td>25/05/2026</td>
+              <td>14/07/2026</td>
+              <td class="num">16</td>
+              <td class="num">R$&nbsp;3.694</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>FENIX C EF M</td>
+              <td>Gabriela Ribeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>08/05/2026</td>
+              <td>10/07/2026</td>
+              <td class="num">16</td>
+              <td class="num">R$&nbsp;3.574</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Laura Pagliuzo">
               <td>ESCOLA DE EDUCAÇÃO INFANTIL FERINHAS</td>
               <td>Laura Pagliuzo</td>
-              <td></td><td></td><td></td>
-              <td>27/05/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>28/05/2026</td>
               <td>16/08/2026</td>
               <td class="num">19</td>
-              <td class="num">R$ 3.538</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;3.538</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Giovanna Munhoz">
               <td>EMEI DOLORES MARIA TORRENTE</td>
@@ -960,9 +2263,9 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td></td><td></td><td></td>
               <td>30/05/2026</td>
               <td>14/08/2026</td>
-              <td class="num">13</td>
-              <td class="num">R$ 3.522</td>
-              <td class="num">R$ 50</td>
+              <td class="num">11</td>
+              <td class="num">R$&nbsp;3.522</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Maria Elvira">
               <td>CENTRO RENOVO DE EDUCAÇÃO</td>
@@ -971,28 +2274,8 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>15/05/2026</td>
               <td>17/09/2026</td>
               <td class="num">17</td>
-              <td class="num">R$ 3.503</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Talita Panassol">
-              <td>Colégio Intelecto</td>
-              <td>Talita Panassol</td>
-              <td></td><td></td><td></td>
-              <td>11/05/2026</td>
-              <td>04/08/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 3.432</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Talita Panassol">
-              <td>Escola Adventista de Tubarão</td>
-              <td>Talita Panassol</td>
-              <td></td><td></td><td></td>
-              <td>11/03/2026</td>
-              <td>30/06/2026</td>
-              <td class="num">19</td>
-              <td class="num">R$ 3.419</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;3.503</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>Colégio Saber Viver</td>
@@ -1001,28 +2284,118 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>08/06/2026</td>
               <td>16/10/2026</td>
               <td class="num">17</td>
-              <td class="num">R$ 3.399</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;3.469</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>Colégio Ágape</td>
+              <td>Renata Brandao</td>
+              <td></td><td></td><td></td>
+              <td>23/05/2026</td>
+              <td>15/07/2026</td>
+              <td class="num">17</td>
+              <td class="num">R$&nbsp;3.466</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Talita Panassol">
+              <td>Colégio Intelecto</td>
+              <td>Talita Panassol</td>
+              <td></td><td></td><td></td>
+              <td>26/05/2026</td>
+              <td>04/08/2026</td>
+              <td class="num">7</td>
+              <td class="num">R$&nbsp;3.432</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>Colégio Mundial - Francisco Beltrão - PR</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>24/04/2026</td>
+              <td>12/05/2026</td>
+              <td class="num">19</td>
+              <td class="num">R$&nbsp;3.417</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Julia Cordeiro">
+              <td>CENTRO EDUCACIONAL SANTA ISABEL - CESI JÚNIOR</td>
+              <td>Julia Cordeiro</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>28/05/2026</td>
+              <td>03/07/2026</td>
+              <td class="num">30</td>
+              <td class="num">R$&nbsp;3.389</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Tatiana Portela">
               <td>APARECIDA MERINO ELIAS EMEB</td>
               <td>Tatiana Portela</td>
               <td></td><td></td><td></td>
-              <td>13/05/2026</td>
+              <td>18/05/2026</td>
               <td>14/10/2026</td>
-              <td class="num">13</td>
-              <td class="num">R$ 3.356</td>
-              <td class="num">R$ 50</td>
+              <td class="num">12</td>
+              <td class="num">R$&nbsp;3.356</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
               <td>COLÉGIO SIMETRIA</td>
               <td>Mariaeduarda Carvalho</td>
               <td></td><td></td><td></td>
-              <td>06/05/2026</td>
+              <td>13/05/2026</td>
               <td>15/10/2026</td>
-              <td class="num">16</td>
-              <td class="num">R$ 3.340</td>
-              <td class="num">R$ 50</td>
+              <td class="num">15</td>
+              <td class="num">R$&nbsp;3.340</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>CENTRO DE EDUCACAO INFANTIL JOSE DE PAIVA NETTO</td>
+              <td>Renata Brandao</td>
+              <td></td><td></td><td></td>
+              <td>19/05/2026</td>
+              <td>25/06/2026</td>
+              <td class="num">25</td>
+              <td class="num">R$&nbsp;3.336</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Mariana Santana">
+              <td>Cooperativa de Trabalho Educacional de Pontes e Lacerda</td>
+              <td>Mariana Santana</td>
+              <td></td><td></td><td></td>
+              <td>29/05/2026</td>
+              <td>29/07/2026</td>
+              <td class="num">9</td>
+              <td class="num">R$&nbsp;3.299</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Anaclara Peres">
+              <td>COOPERATIVA DE ENSINO MONTE CARMELO</td>
+              <td>Anaclara Peres</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>02/06/2026</td>
+              <td>10/07/2026</td>
+              <td class="num">21</td>
+              <td class="num">R$&nbsp;3.274</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>TEREZA CRISTINA AMARAL MELLO BIZELLI</td>
+              <td>Shelry Solart</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
+              <td>10/05/2026</td>
+              <td>26/05/2026</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;3.116</td>
+              <td class="num">R$&nbsp;400</td>
+            </tr>
+            <tr data-cs="Indlayse Ferreira">
+              <td>FREITAS AUREO EDUCAÇÃO</td>
+              <td>Indlayse Ferreira</td>
+              <td></td><td></td><td></td>
+              <td>07/05/2026</td>
+              <td>15/07/2026</td>
+              <td class="num">21</td>
+              <td class="num">R$&nbsp;2.997</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>COLÉGIO STATUS</td>
@@ -1030,19 +2403,99 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td></td><td></td><td></td>
               <td>20/05/2026</td>
               <td>12/08/2026</td>
-              <td class="num">15</td>
-              <td class="num">R$ 2.845</td>
-              <td class="num">R$ 50</td>
+              <td class="num">14</td>
+              <td class="num">R$&nbsp;2.845</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Shelry Solart">
               <td>Colégio Cristão</td>
               <td>Shelry Solart</td>
               <td></td><td></td><td></td>
-              <td>01/06/2026</td>
+              <td>03/06/2026</td>
               <td>14/08/2026</td>
               <td class="num">8</td>
-              <td class="num">R$ 2.765</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.765</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>COLÉGIO INTELLECTUS - UNIDADE VILA ISABEL</td>
+              <td>Sarah Moura</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>12/04/2026</td>
+              <td>23/04/2026</td>
+              <td class="num">23</td>
+              <td class="num">R$&nbsp;2.698</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>COLÉGIO IMP</td>
+              <td>Mariaeduarda Carvalho</td>
+              <td></td><td></td><td></td>
+              <td>02/06/2026</td>
+              <td>03/08/2026</td>
+              <td class="num">12</td>
+              <td class="num">R$&nbsp;2.685</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Stefany Figueredo">
+              <td>Colégio Dom Bosco</td>
+              <td>Stefany Figueredo</td>
+              <td></td><td></td><td></td>
+              <td>04/06/2026</td>
+              <td>06/07/2026</td>
+              <td class="num">10</td>
+              <td class="num">R$&nbsp;2.648</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Stefany Figueredo">
+              <td>INSTITUTO TECNOLÓGICO DO ESTADO DO PARÁ</td>
+              <td>Stefany Figueredo</td>
+              <td></td><td></td><td></td>
+              <td>27/05/2026</td>
+              <td>07/08/2026</td>
+              <td class="num">10</td>
+              <td class="num">R$&nbsp;2.638</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Anaclara Peres">
+              <td>COLÉGIO PORTO ALVORADA</td>
+              <td>Anaclara Peres</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>02/06/2026</td>
+              <td>03/07/2026</td>
+              <td class="num">10</td>
+              <td class="num">R$&nbsp;2.635</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>NÚCLEO PEDAGÓGICO COLIBRI</td>
+              <td>Larissa Freitas</td>
+              <td></td><td></td><td></td>
+              <td>02/06/2026</td>
+              <td>19/08/2026</td>
+              <td class="num">11</td>
+              <td class="num">R$&nbsp;2.624</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Renata Brandao">
+              <td>Escola Casinha da Nietta</td>
+              <td>Renata Brandao</td>
+              <td></td><td></td><td></td>
+              <td>26/04/2026</td>
+              <td>14/09/2026</td>
+              <td class="num">12</td>
+              <td class="num">R$&nbsp;2.619</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Lara Farnesi">
+              <td>Colégio Fundação Educacional Dr. Raul Bauab</td>
+              <td>Lara Farnesi</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>17/05/2026</td>
+              <td>18/05/2026</td>
+              <td class="num">19</td>
+              <td class="num">R$&nbsp;2.566</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>COLÉGIO CRIATIVO</td>
@@ -1051,18 +2504,38 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>10/06/2026</td>
               <td>16/10/2026</td>
               <td class="num">6</td>
-              <td class="num">R$ 2.565</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.565</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Larissa Freitas">
-              <td>NÚCLEO PEDAGÓGICO COLIBRI</td>
-              <td>Larissa Freitas</td>
+            <tr data-cs="Thayna Bastos">
+              <td>CENTRO EDUCACIONAL SONHO DE CRIANÇA</td>
+              <td>Thayna Bastos</td>
               <td></td><td></td><td></td>
-              <td>13/04/2026</td>
-              <td>19/08/2026</td>
-              <td class="num">10</td>
-              <td class="num">R$ 2.434</td>
-              <td class="num">R$ 50</td>
+              <td>27/05/2026</td>
+              <td>21/08/2026</td>
+              <td class="num">8</td>
+              <td class="num">R$&nbsp;2.557</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Viviancristina Souza">
+              <td>COLÉGIO EQUIPE GRAU – NILÓPOLIS</td>
+              <td>Viviancristina Souza</td>
+              <td></td><td></td><td></td>
+              <td>05/06/2026</td>
+              <td>27/07/2026</td>
+              <td class="num">8</td>
+              <td class="num">R$&nbsp;2.527</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>E.M.E.F. PROFESSOR ANTONIO DE FREITAS FILHO</td>
+              <td>Tatiana Portela</td>
+              <td></td><td></td><td></td>
+              <td>31/05/2026</td>
+              <td>07/07/2026</td>
+              <td class="num">11</td>
+              <td class="num">R$&nbsp;2.414</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Talita Panassol">
               <td>Colégio Novo Éden</td>
@@ -1070,79 +2543,79 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td></td><td></td><td></td>
               <td>09/04/2026</td>
               <td>25/09/2026</td>
-              <td class="num">21</td>
-              <td class="num">R$ 2.394</td>
-              <td class="num">R$ 50</td>
+              <td class="num">20</td>
+              <td class="num">R$&nbsp;2.394</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Carla Gomes">
               <td>COLÉGIO COOPEN</td>
               <td>Carla Gomes</td>
               <td></td><td></td><td></td>
-              <td>02/06/2026</td>
+              <td>08/06/2026</td>
               <td>07/08/2026</td>
               <td class="num">5</td>
-              <td class="num">R$ 2.390</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.390</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Shelry Solart">
               <td>Escola Pequeno Príncipe e Pequena Princesa</td>
               <td>Shelry Solart</td>
-              <td></td><td></td><td></td>
-              <td>31/05/2026</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>03/06/2026</td>
               <td>14/09/2026</td>
               <td class="num">8</td>
-              <td class="num">R$ 2.387</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.387</td>
+              <td class="num">R$&nbsp;100</td>
             </tr>
-            <tr data-cs="Stefany Figueredo">
-              <td>INSTITUTO TECNOLÓGICO DO ESTADO DO PARÁ</td>
-              <td>Stefany Figueredo</td>
+            <tr data-cs="Larissa Freitas">
+              <td>ESPAÇO DO SABER</td>
+              <td>Larissa Freitas</td>
               <td></td><td></td><td></td>
-              <td>21/05/2026</td>
-              <td>07/08/2026</td>
-              <td class="num">9</td>
-              <td class="num">R$ 2.357</td>
-              <td class="num">R$ 50</td>
+              <td>10/04/2026</td>
+              <td>03/07/2026</td>
+              <td class="num">16</td>
+              <td class="num">R$&nbsp;2.366</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Thayna Bastos">
-              <td>CENTRO EDUCACIONAL SONHO DE CRIANÇA</td>
-              <td>Thayna Bastos</td>
+            <tr data-cs="Larissa Freitas">
+              <td>EDUCANDÁRIO NASCENTES DO ARAGUAIA</td>
+              <td>Larissa Freitas</td>
               <td></td><td></td><td></td>
-              <td>21/05/2026</td>
-              <td>21/08/2026</td>
+              <td>03/06/2026</td>
+              <td>25/06/2026</td>
               <td class="num">8</td>
-              <td class="num">R$ 2.269</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.346</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Shelry Solart">
-              <td>COLÉGIO EQUIPE GRAU – NOVA IGUAÇU</td>
-              <td>Shelry Solart</td>
+            <tr data-cs="Laura Pagliuzo">
+              <td>COLEGIO EDUC</td>
+              <td>Laura Pagliuzo</td>
               <td></td><td></td><td></td>
-              <td>26/05/2026</td>
-              <td>28/07/2026</td>
-              <td class="num">5</td>
-              <td class="num">R$ 2.228</td>
-              <td class="num">R$ 50</td>
+              <td>05/06/2026</td>
+              <td>10/07/2026</td>
+              <td class="num">13</td>
+              <td class="num">R$&nbsp;2.270</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Pamela Miranda">
-              <td>COLÉGIO SANTA CLARA</td>
-              <td>Pamela Miranda</td>
+            <tr data-cs="Mariana Santana">
+              <td>COLÉGIO ESPAÇO VERDE</td>
+              <td>Mariana Santana</td>
               <td></td><td></td><td></td>
-              <td>01/06/2026</td>
-              <td>11/09/2026</td>
+              <td>08/06/2026</td>
+              <td>21/10/2026</td>
               <td class="num">15</td>
-              <td class="num">R$ 2.083</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.258</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Thayna Bastos">
-              <td>COLÉGIO ADVENTISTA TAUBATÉ/TREMEMBÉ</td>
-              <td>Thayna Bastos</td>
+            <tr data-cs="Giovanna Munhoz">
+              <td>Colégio Anglo Aquarela</td>
+              <td>Giovanna Munhoz</td>
               <td></td><td></td><td></td>
-              <td>12/05/2026</td>
-              <td>10/08/2026</td>
-              <td class="num">7</td>
-              <td class="num">R$ 2.079</td>
-              <td class="num">R$ 50</td>
+              <td>03/06/2026</td>
+              <td>14/09/2026</td>
+              <td class="num">8</td>
+              <td class="num">R$&nbsp;2.231</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mariaeduarda Carvalho">
               <td>COLÉGIO ALICERCE DO SABER</td>
@@ -1151,8 +2624,48 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>06/05/2026</td>
               <td>25/08/2026</td>
               <td class="num">6</td>
-              <td class="num">R$ 2.028</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.217</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Kaian Silva">
+              <td>COLÉGIO PASSO A PASSO S/S LTDA ME</td>
+              <td>Kaian Silva</td>
+              <td></td><td></td><td></td>
+              <td>31/05/2026</td>
+              <td>09/07/2026</td>
+              <td class="num">9</td>
+              <td class="num">R$&nbsp;2.154</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Larissa Freitas">
+              <td>COLÉGIO PERES</td>
+              <td>Larissa Freitas</td>
+              <td></td><td></td><td></td>
+              <td>08/06/2026</td>
+              <td>17/07/2026</td>
+              <td class="num">6</td>
+              <td class="num">R$&nbsp;2.086</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>COLÉGIO SANTA CLARA</td>
+              <td>Pamela Miranda</td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td></td><td></td>
+              <td>02/06/2026</td>
+              <td>11/09/2026</td>
+              <td class="num">14</td>
+              <td class="num">R$&nbsp;2.083</td>
+              <td class="num">R$&nbsp;100</td>
+            </tr>
+            <tr data-cs="Thayna Bastos">
+              <td>COLÉGIO ADVENTISTA TAUBATÉ/TREMEMBÉ</td>
+              <td>Thayna Bastos</td>
+              <td></td><td></td><td></td>
+              <td>25/05/2026</td>
+              <td>10/08/2026</td>
+              <td class="num">7</td>
+              <td class="num">R$&nbsp;2.079</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Thayna Bastos">
               <td>ESCOLA DE ENSINO MÉDIO CAPITAL DO SABER</td>
@@ -1161,78 +2674,88 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>09/06/2026</td>
               <td>24/09/2026</td>
               <td class="num">9</td>
-              <td class="num">R$ 2.019</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.019</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>COLÉGIO GGE JOÃO PESSOA</td>
               <td>Sarah Moura</td>
               <td></td><td></td><td></td>
-              <td>11/05/2026</td>
+              <td>25/05/2026</td>
               <td>18/09/2026</td>
               <td class="num">10</td>
-              <td class="num">R$ 2.018</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;2.018</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Mariaeduarda Carvalho">
-              <td>COLÉGIO IMP</td>
-              <td>Mariaeduarda Carvalho</td>
+            <tr data-cs="Tatiana Portela">
+              <td>Colégio Bela Vista</td>
+              <td>Tatiana Portela</td>
               <td></td><td></td><td></td>
-              <td>01/06/2026</td>
-              <td>03/08/2026</td>
-              <td class="num">9</td>
-              <td class="num">R$ 1.995</td>
-              <td class="num">R$ 50</td>
+              <td>18/05/2026</td>
+              <td>07/07/2026</td>
+              <td class="num">14</td>
+              <td class="num">R$&nbsp;1.969</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Giovanna Munhoz">
-              <td>Colégio Anglo Aquarela</td>
-              <td>Giovanna Munhoz</td>
+            <tr data-cs="Julia Cordeiro">
+              <td>EEB COOPESG ROBUSTA</td>
+              <td>Julia Cordeiro</td>
               <td></td><td></td><td></td>
-              <td>29/05/2026</td>
-              <td>14/09/2026</td>
+              <td>08/06/2026</td>
+              <td>07/08/2026</td>
               <td class="num">7</td>
-              <td class="num">R$ 1.981</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Gabriela Ribeiro">
-              <td>ESCOLA DJANIRA ALVES RODRIGUES</td>
-              <td>Gabriela Ribeiro</td>
-              <td></td><td></td><td></td>
-              <td>10/05/2026</td>
-              <td>21/07/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 1.959</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.954</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Andreina Ferreira">
               <td>Escola Única Santo André</td>
               <td>Andreina Ferreira</td>
               <td></td><td></td><td></td>
-              <td>24/05/2026</td>
+              <td>25/05/2026</td>
               <td>20/08/2026</td>
               <td class="num">12</td>
-              <td class="num">R$ 1.939</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.939</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>COLÉGIO ADVENTISTA DE NOVO HAMBURGO</td>
               <td>Mariana Santana</td>
               <td></td><td></td><td></td>
-              <td>30/05/2026</td>
+              <td>11/06/2026</td>
               <td>25/09/2026</td>
               <td class="num">5</td>
-              <td class="num">R$ 1.903</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.903</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Gabriela Ribeiro">
+              <td>COLÉGIO DA POLICIA MILITAR</td>
+              <td>Gabriela Ribeiro</td>
+              <td></td><td></td><td></td>
+              <td>01/06/2026</td>
+              <td>30/06/2026</td>
+              <td class="num">8</td>
+              <td class="num">R$&nbsp;1.899</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Carla Gomes">
+              <td>COLÉGIO VIRGEM PODEROSA - REDE SANTA CATARINA</td>
+              <td>Carla Gomes</td>
+              <td></td><td></td><td></td>
+              <td>10/06/2026</td>
+              <td>19/10/2026</td>
+              <td class="num">11</td>
+              <td class="num">R$&nbsp;1.871</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Viviane Luz">
               <td>Emef Cel. Thomaz Gonçalves da Rocha Cunha</td>
               <td>Viviane Luz</td>
               <td></td><td></td><td></td>
-              <td>08/04/2026</td>
+              <td>24/04/2026</td>
               <td>22/09/2026</td>
-              <td class="num">10</td>
-              <td class="num">R$ 1.867</td>
-              <td class="num">R$ 50</td>
+              <td class="num">8</td>
+              <td class="num">R$&nbsp;1.867</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>Colégio Objetivo DF - Asa Norte</td>
@@ -1241,78 +2764,88 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>18/05/2026</td>
               <td>25/09/2026</td>
               <td class="num">13</td>
-              <td class="num">R$ 1.800</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.801</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Carla Gomes">
-              <td>COLÉGIO VIRGEM PODEROSA - REDE SANTA CATARINA</td>
-              <td>Carla Gomes</td>
+            <tr data-cs="Renata Brandao">
+              <td>Colégio Vitória</td>
+              <td>Renata Brandao</td>
               <td></td><td></td><td></td>
-              <td>07/06/2026</td>
-              <td>19/10/2026</td>
-              <td class="num">11</td>
-              <td class="num">R$ 1.799</td>
-              <td class="num">R$ 50</td>
+              <td>17/05/2026</td>
+              <td>21/07/2026</td>
+              <td class="num">13</td>
+              <td class="num">R$&nbsp;1.780</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Laura Pagliuzo">
-              <td>ESCOLA PORTAL</td>
-              <td>Laura Pagliuzo</td>
+            <tr data-cs="Anaclara Peres">
+              <td>COLÉGIO PUERI PAX</td>
+              <td>Anaclara Peres</td>
               <td></td><td></td><td></td>
-              <td>15/05/2026</td>
-              <td>22/07/2026</td>
-              <td class="num">5</td>
-              <td class="num">R$ 1.707</td>
-              <td class="num">R$ 50</td>
+              <td>20/05/2026</td>
+              <td>29/06/2026</td>
+              <td class="num">13</td>
+              <td class="num">R$&nbsp;1.760</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Mariaeduarda Carvalho">
+              <td>CESI VIAMOPÓLIS JÚNIOR</td>
+              <td>Mariaeduarda Carvalho</td>
+              <td></td><td></td><td></td>
+              <td>28/05/2026</td>
+              <td>10/07/2026</td>
+              <td class="num">8</td>
+              <td class="num">R$&nbsp;1.749</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Andreina Ferreira">
               <td>ESCOLA MORANGUINHO E COLÉGIO ALPHA X</td>
               <td>Andreina Ferreira</td>
               <td></td><td></td><td></td>
-              <td>16/03/2026</td>
+              <td>01/06/2026</td>
               <td>04/09/2026</td>
-              <td class="num">6</td>
-              <td class="num">R$ 1.688</td>
-              <td class="num">R$ 50</td>
+              <td class="num">5</td>
+              <td class="num">R$&nbsp;1.688</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Viviane Luz">
               <td>EDUCANDÁRIO FRANCISCANO NHÁ CHICA</td>
               <td>Viviane Luz</td>
               <td></td><td></td><td></td>
-              <td>15/05/2026</td>
+              <td>18/05/2026</td>
               <td>30/09/2026</td>
               <td class="num">12</td>
-              <td class="num">R$ 1.649</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.649</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>Instituto de Educação, Ciência e Tecnologia do Maranhão – IEMA Bilíngue e Integral</td>
+              <td>Pamela Miranda</td>
+              <td></td><td></td><td></td>
+              <td>03/06/2026</td>
+              <td>03/07/2026</td>
+              <td class="num">13</td>
+              <td class="num">R$&nbsp;1.631</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mariana Santana">
               <td>CEL INTERCULTURAL SCHOOL</td>
               <td>Mariana Santana</td>
               <td></td><td></td><td></td>
-              <td>08/06/2026</td>
+              <td>09/06/2026</td>
               <td>25/08/2026</td>
-              <td class="num">7</td>
-              <td class="num">R$ 1.624</td>
-              <td class="num">R$ 50</td>
+              <td class="num">6</td>
+              <td class="num">R$&nbsp;1.624</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Mayane Costa">
               <td>COLÉGIO RANIERI</td>
               <td>Mayane Costa</td>
               <td></td><td></td><td></td>
-              <td>04/06/2026</td>
+              <td>06/06/2026</td>
               <td>18/08/2026</td>
               <td class="num">6</td>
-              <td class="num">R$ 1.617</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Indlayse Ferreira">
-              <td>Colégio Objetivo - Unidade Tatuí</td>
-              <td>Indlayse Ferreira</td>
-              <td></td><td></td><td></td>
-              <td>17/04/2026</td>
-              <td>13/07/2026</td>
-              <td class="num">7</td>
-              <td class="num">R$ 1.587</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.617</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>COLÉGIO BIÂNGULO ASA NORTE</td>
@@ -1321,68 +2854,78 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>25/05/2026</td>
               <td>14/10/2026</td>
               <td class="num">8</td>
-              <td class="num">R$ 1.562</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.562</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>COLÉGIO GGE PARNAMIRIM</td>
               <td>Sarah Moura</td>
               <td></td><td></td><td></td>
-              <td>06/06/2026</td>
+              <td>08/06/2026</td>
               <td>18/09/2026</td>
               <td class="num">6</td>
-              <td class="num">R$ 1.553</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.553</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Tatiana Portela">
               <td>CENTRO EDUCACIONAL CONSTRUÇÃO DO SABER</td>
               <td>Tatiana Portela</td>
-              <td></td><td></td><td></td>
+              <td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td><td><span style="color:var(--green);font-weight:700;">&#10003;</span></td>
               <td>01/06/2026</td>
               <td>21/10/2026</td>
               <td class="num">19</td>
-              <td class="num">R$ 1.544</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Sarah Moura">
-              <td>Colégio Romano Santa Helena</td>
-              <td>Sarah Moura</td>
-              <td></td><td></td><td></td>
-              <td>07/04/2026</td>
-              <td>08/07/2026</td>
-              <td class="num">7</td>
-              <td class="num">R$ 1.526</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.544</td>
+              <td class="num">R$&nbsp;400</td>
             </tr>
             <tr data-cs="Talita Panassol">
               <td>ESCOLA CASA DE BRINQUEDOS</td>
               <td>Talita Panassol</td>
               <td></td><td></td><td></td>
-              <td>02/06/2026</td>
+              <td>03/06/2026</td>
               <td>24/08/2026</td>
-              <td class="num">10</td>
-              <td class="num">R$ 1.509</td>
-              <td class="num">R$ 50</td>
+              <td class="num">9</td>
+              <td class="num">R$&nbsp;1.509</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Mariana Santana">
-              <td>COLÉGIO ESPAÇO VERDE</td>
-              <td>Mariana Santana</td>
+            <tr data-cs="Erick Andrade">
+              <td>COLÉGIO MONFORTE</td>
+              <td>Erick Andrade</td>
               <td></td><td></td><td></td>
-              <td>08/06/2026</td>
-              <td>21/10/2026</td>
-              <td class="num">13</td>
-              <td class="num">R$ 1.509</td>
-              <td class="num">R$ 50</td>
+              <td>28/05/2026</td>
+              <td>07/08/2026</td>
+              <td class="num">7</td>
+              <td class="num">R$&nbsp;1.446</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Mariana Santana">
-              <td>Cooperativa de Trabalho Educacional de Pontes e Lacerda</td>
-              <td>Mariana Santana</td>
+            <tr data-cs="Sarah Moura">
+              <td>COLEGIO ROMANO SANTA MARTA</td>
+              <td>Sarah Moura</td>
               <td></td><td></td><td></td>
-              <td>10/05/2026</td>
-              <td>29/07/2026</td>
+              <td>10/06/2026</td>
+              <td>22/06/2026</td>
+              <td class="num">6</td>
+              <td class="num">R$&nbsp;1.427</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>COLÉGIO OBJETIVO RE</td>
+              <td>Tatiana Portela</td>
+              <td></td><td></td><td></td>
+              <td>11/06/2026</td>
+              <td>20/07/2026</td>
               <td class="num">5</td>
-              <td class="num">R$ 1.450</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.424</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Shelry Solart">
+              <td>ESCOLA REI DAVI</td>
+              <td>Shelry Solart</td>
+              <td></td><td></td><td></td>
+              <td>11/06/2026</td>
+              <td>14/08/2026</td>
+              <td class="num">9</td>
+              <td class="num">R$&nbsp;1.414</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Renata Brandao">
               <td>INSTITUTO FLAVIA RAQUEL DE ENSINO LTDA - ME</td>
@@ -1391,28 +2934,18 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>06/05/2026</td>
               <td>11/08/2026</td>
               <td class="num">10</td>
-              <td class="num">R$ 1.413</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.413</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>COLÉGIO BIÂNGULO - ÁGUAS CLARAS 1</td>
               <td>Sarah Moura</td>
               <td></td><td></td><td></td>
-              <td>09/05/2026</td>
+              <td>12/05/2026</td>
               <td>14/10/2026</td>
               <td class="num">7</td>
-              <td class="num">R$ 1.368</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Shelry Solart">
-              <td>ESCOLA REI DAVI</td>
-              <td>Shelry Solart</td>
-              <td></td><td></td><td></td>
-              <td>30/05/2026</td>
-              <td>14/08/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 1.334</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.368</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Shelry Solart">
               <td>SESI 341 CENTRO EDUCACIONAL</td>
@@ -1420,19 +2953,19 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td></td><td></td><td></td>
               <td>25/05/2026</td>
               <td>16/10/2026</td>
-              <td class="num">11</td>
-              <td class="num">R$ 1.326</td>
-              <td class="num">R$ 50</td>
+              <td class="num">10</td>
+              <td class="num">R$&nbsp;1.326</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Talita Panassol">
               <td>Escola Educativa Osasco</td>
               <td>Talita Panassol</td>
               <td></td><td></td><td></td>
-              <td>18/05/2026</td>
+              <td>28/05/2026</td>
               <td>28/09/2026</td>
               <td class="num">5</td>
-              <td class="num">R$ 1.318</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.318</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Renata Brandao">
               <td>INSTITUTO EDUCACIONAL CASTRO ALVES</td>
@@ -1441,18 +2974,18 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>20/05/2026</td>
               <td>30/09/2026</td>
               <td class="num">7</td>
-              <td class="num">R$ 1.293</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.293</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Renata Brandao">
-              <td>Colégio Vitória</td>
-              <td>Renata Brandao</td>
+            <tr data-cs="Stefany Figueredo">
+              <td>ESCOLA INFANTIL TRANSFORMARE BAMBINI</td>
+              <td>Stefany Figueredo</td>
               <td></td><td></td><td></td>
-              <td>16/05/2026</td>
+              <td>26/05/2026</td>
               <td>21/07/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 1.270</td>
-              <td class="num">R$ 50</td>
+              <td class="num">15</td>
+              <td class="num">R$&nbsp;1.282</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>COLÉGIO BIÂNGULO - TAGUATINGA</td>
@@ -1461,98 +2994,78 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>14/05/2026</td>
               <td>14/10/2026</td>
               <td class="num">7</td>
-              <td class="num">R$ 1.238</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.238</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Larissa Freitas">
               <td>COLÉGIO ÉPICO</td>
               <td>Larissa Freitas</td>
               <td></td><td></td><td></td>
-              <td>06/04/2026</td>
+              <td>03/06/2026</td>
               <td>04/09/2026</td>
               <td class="num">6</td>
-              <td class="num">R$ 1.224</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Carla Gomes">
-              <td>COLÉGIO DOM BOSCO</td>
-              <td>Carla Gomes</td>
-              <td></td><td></td><td></td>
-              <td>13/03/2026</td>
-              <td>26/05/2026</td>
-              <td class="num">37</td>
-              <td class="num">R$ 1.206</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.224</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Larissa Freitas">
               <td>ESCOLA CLASSE 12 DE TAGUATINGA</td>
               <td>Larissa Freitas</td>
               <td></td><td></td><td></td>
-              <td>30/03/2026</td>
+              <td>20/04/2026</td>
               <td>30/09/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 1.206</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Indlayse Ferreira">
-              <td>FREITAS AUREO EDUCAÇÃO</td>
-              <td>Indlayse Ferreira</td>
-              <td></td><td></td><td></td>
-              <td>07/05/2026</td>
-              <td>15/07/2026</td>
               <td class="num">7</td>
-              <td class="num">R$ 1.186</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.206</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Sarah Moura">
               <td>COLÉGIO BIÂNGULO - SAMAMBAIA</td>
               <td>Sarah Moura</td>
               <td></td><td></td><td></td>
-              <td>14/05/2026</td>
+              <td>17/05/2026</td>
               <td>14/10/2026</td>
-              <td class="num">7</td>
-              <td class="num">R$ 1.179</td>
-              <td class="num">R$ 50</td>
+              <td class="num">6</td>
+              <td class="num">R$&nbsp;1.179</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Shelry Solart">
               <td>ESCOLA SANTA MONICA</td>
               <td>Shelry Solart</td>
               <td></td><td></td><td></td>
-              <td>01/06/2026</td>
+              <td>04/06/2026</td>
               <td>06/08/2026</td>
               <td class="num">7</td>
-              <td class="num">R$ 1.161</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.161</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Larissa Freitas">
-              <td>ESPAÇO DO SABER</td>
-              <td>Larissa Freitas</td>
+            <tr data-cs="Carla Gomes">
+              <td>INSTITUTO CASSIO MAGNANI</td>
+              <td>Carla Gomes</td>
               <td></td><td></td><td></td>
-              <td>09/04/2026</td>
-              <td>03/07/2026</td>
+              <td>11/06/2026</td>
+              <td>10/08/2026</td>
+              <td class="num">5</td>
+              <td class="num">R$&nbsp;1.095</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Anaclara Peres">
+              <td>COLÉGIO MAX</td>
+              <td>Anaclara Peres</td>
+              <td></td><td></td><td></td>
+              <td>04/06/2026</td>
+              <td>01/07/2026</td>
               <td class="num">6</td>
-              <td class="num">R$ 1.153</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;1.071</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Gabriela Ribeiro">
-              <td>COLÉGIO INTEGRAÇÃO</td>
-              <td>Gabriela Ribeiro</td>
+            <tr data-cs="Sarah Moura">
+              <td>COLEGIO ROMANO NOSSA SENHORA AUXILIADORA</td>
+              <td>Sarah Moura</td>
               <td></td><td></td><td></td>
-              <td>06/04/2026</td>
-              <td>12/06/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 1.114</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Mariana Santana">
-              <td>COLÉGIO JOSEENSE - Unidade 2</td>
-              <td>Mariana Santana</td>
-              <td></td><td></td><td></td>
-              <td>17/04/2026</td>
-              <td>07/07/2026</td>
-              <td class="num">13</td>
-              <td class="num">R$ 1.093</td>
-              <td class="num">R$ 50</td>
+              <td>11/06/2026</td>
+              <td>02/07/2026</td>
+              <td class="num">7</td>
+              <td class="num">R$&nbsp;1.057</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Kaian Silva">
               <td>WATER OKANO C M E I PROF</td>
@@ -1560,9 +3073,9 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td></td><td></td><td></td>
               <td>31/05/2026</td>
               <td>19/08/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 991</td>
-              <td class="num">R$ 50</td>
+              <td class="num">7</td>
+              <td class="num">R$&nbsp;991</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Talita Panassol">
               <td>COLÉGIO SAGRADO CORAÇÃO DE JESUS QUIXADÁ</td>
@@ -1570,79 +3083,89 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td></td><td></td><td></td>
               <td>26/05/2026</td>
               <td>10/09/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 938</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Erick Andrade">
-              <td>COLÉGIO MONFORTE</td>
-              <td>Erick Andrade</td>
-              <td></td><td></td><td></td>
-              <td>27/05/2026</td>
-              <td>07/08/2026</td>
-              <td class="num">5</td>
-              <td class="num">R$ 916</td>
-              <td class="num">R$ 50</td>
+              <td class="num">7</td>
+              <td class="num">R$&nbsp;938</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Junior Gomes">
               <td>JARDIM ESCOLA VOVÓ MERCEDES</td>
               <td>Junior Gomes</td>
               <td></td><td></td><td></td>
-              <td>28/02/2026</td>
+              <td>23/05/2026</td>
               <td>14/09/2026</td>
               <td class="num">7</td>
-              <td class="num">R$ 896</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;896</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Carla Gomes">
-              <td>Colégio Caminhos e Colinas</td>
-              <td>Carla Gomes</td>
+            <tr data-cs="Carla Santosdasilva">
+              <td>EEI PEQUENO APRENDIZ</td>
+              <td>Carla Santosdasilva</td>
               <td></td><td></td><td></td>
-              <td>04/05/2026</td>
-              <td>24/07/2026</td>
-              <td class="num">12</td>
-              <td class="num">R$ 883</td>
-              <td class="num">R$ 50</td>
+              <td>04/06/2026</td>
+              <td>06/07/2026</td>
+              <td class="num">7</td>
+              <td class="num">R$&nbsp;886</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Sarah Moura">
+              <td>Escola Fundamental Romano São Paulo</td>
+              <td>Sarah Moura</td>
+              <td></td><td></td><td></td>
+              <td>08/06/2026</td>
+              <td>26/06/2026</td>
+              <td class="num">5</td>
+              <td class="num">R$&nbsp;874</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Tatiana Portela">
+              <td>ESCOLA MUNICIPAL PADRE JOÃO GERALDO RODRIGUES</td>
+              <td>Tatiana Portela</td>
+              <td></td><td></td><td></td>
+              <td>08/06/2026</td>
+              <td>26/06/2026</td>
+              <td class="num">10</td>
+              <td class="num">R$&nbsp;857</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Junior Gomes">
               <td>ESCOLA ARCO IRIS</td>
               <td>Junior Gomes</td>
               <td></td><td></td><td></td>
-              <td>16/05/2026</td>
+              <td>10/06/2026</td>
               <td>21/09/2026</td>
               <td class="num">6</td>
-              <td class="num">R$ 841</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Julia Cordeiro">
-              <td>EEB COOPESG ROBUSTA</td>
-              <td>Julia Cordeiro</td>
-              <td></td><td></td><td></td>
-              <td>02/06/2026</td>
-              <td>07/08/2026</td>
-              <td class="num">5</td>
-              <td class="num">R$ 835</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;841</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Gabriela Ribeiro">
-              <td>FENIX C EF M</td>
+              <td>CENTRO DE EDUCAÇÃO BÁSICA CORA CORALINA</td>
               <td>Gabriela Ribeiro</td>
               <td></td><td></td><td></td>
-              <td>14/04/2026</td>
-              <td>10/07/2026</td>
-              <td class="num">5</td>
-              <td class="num">R$ 809</td>
-              <td class="num">R$ 50</td>
+              <td>30/05/2026</td>
+              <td>29/06/2026</td>
+              <td class="num">9</td>
+              <td class="num">R$&nbsp;782</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Renata Brandao">
-              <td>Escola Casinha da Nietta</td>
-              <td>Renata Brandao</td>
+            <tr data-cs="Shelry Solart">
+              <td>Colégio Frei Zacarias</td>
+              <td>Shelry Solart</td>
               <td></td><td></td><td></td>
-              <td>25/04/2026</td>
-              <td>14/09/2026</td>
-              <td class="num">12</td>
-              <td class="num">R$ 720</td>
-              <td class="num">R$ 50</td>
+              <td>04/06/2026</td>
+              <td>18/06/2026</td>
+              <td class="num">8</td>
+              <td class="num">R$&nbsp;719</td>
+              <td class="num">R$&nbsp;50</td>
+            </tr>
+            <tr data-cs="Pamela Miranda">
+              <td>Educandário João Henrique Mendonça</td>
+              <td>Pamela Miranda</td>
+              <td></td><td></td><td></td>
+              <td>09/06/2026</td>
+              <td>08/07/2026</td>
+              <td class="num">5</td>
+              <td class="num">R$&nbsp;703</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr data-cs="Anaclara Peres">
               <td>Escola e Jardim de Infância Pintando o Sete</td>
@@ -1651,70 +3174,30 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
               <td>05/06/2026</td>
               <td>04/08/2026</td>
               <td class="num">5</td>
-              <td class="num">R$ 696</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;696</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
-            <tr data-cs="Julia Cordeiro">
-              <td>COLÉGIO ÁGUIA DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL E MÉDIO</td>
-              <td>Julia Cordeiro</td>
+            <tr data-cs="Indlayse Ferreira">
+              <td>ESCOLA RAIOS DE SOL</td>
+              <td>Indlayse Ferreira</td>
               <td></td><td></td><td></td>
-              <td>26/03/2026</td>
-              <td>10/06/2026</td>
-              <td class="num">8</td>
-              <td class="num">R$ 640</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Maria Elvira">
-              <td>International School of Cuiabá</td>
-              <td>Maria Elvira</td>
-              <td></td><td></td><td></td>
-              <td>10/03/2026</td>
-              <td>19/05/2026</td>
-              <td class="num">10</td>
-              <td class="num">R$ 248</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Julia Cordeiro">
-              <td>LEGACY SCHOOL - Unidade Taquara</td>
-              <td>Julia Cordeiro</td>
-              <td></td><td></td><td></td>
-              <td>11/05/2026</td>
-              <td>21/09/2026</td>
-              <td class="num">26</td>
-              <td class="num">R$ 78</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Thais Borges">
-              <td>ESCOLA DOS AMIGUINHOS</td>
-              <td>Thais Borges</td>
-              <td></td><td></td><td></td>
-              <td>18/03/2026</td>
-              <td>29/05/2026</td>
+              <td>11/06/2026</td>
+              <td>30/07/2026</td>
               <td class="num">6</td>
-              <td class="num">R$ 0</td>
-              <td class="num">R$ 50</td>
-            </tr>
-            <tr data-cs="Junior Gomes">
-              <td>COLÉGIO SÃO GABRIEL</td>
-              <td>Junior Gomes</td>
-              <td></td><td></td><td></td>
-              <td>26/04/2026</td>
-              <td>03/07/2026</td>
-              <td class="num">11</td>
-              <td class="num">R$ 0</td>
-              <td class="num">R$ 50</td>
+              <td class="num">R$&nbsp;694</td>
+              <td class="num">R$&nbsp;50</td>
             </tr>
             <tr class="total-row" id="escola-total">
-              <td colspan="5"><b>Total (119 escolas)</b></td>
-              <td></td><td></td><td></td>
-              <td class="num">R$ 499.206</td>
-              <td class="num">R$ 5.950</td>
+              <td colspan="5"><b>Total (266 escolas)</b></td>
+              <td></td><td></td><td class="num">12,891</td>
+              <td class="num">R$&nbsp;2.455.270</td>
+              <td class="num">R$&nbsp;29,400</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
-        Dados via BigQuery · 11/06/2026 · 119 escolas T1 · critério: houve_antecipacao = 'sim'
+        Dados via BigQuery · 12/06/2026 · 266 escolas T1 (5+ alunos antecipados) · T2/T3/T4 calculados via total_alunos_com_compra
       </div>
     </div>
 
@@ -1724,9 +3207,10 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
         ℹ️ Como ler esta tabela <span class="arrow">▾</span>
       </button>
       <div id="regra-info-cs" class="regra-body">
-        <b>Bônus Total</b> = T1 (R$50 × escolas) + T2 (+R$50 se &gt;30%) + T3 (+R$100 se &gt;70%) + T4 (+R$200 se 100%), todos cumulativos.<br>
-        <b>T2/T3/T4</b> = indica se o CS atingiu o threshold de carteira para cada trigger.<br>
-        <b>Pago</b> = atualizado manualmente conforme pagamento é processado.
+        <b>Esc. T2/T3/T4</b> = número de escolas do CS que atingiram o marco de % de alunos antecipados (marco da escola, não do CS).<br>
+        <b>Bônus Total</b> = soma de todos os bônus das escolas do CS: R$50 por T1, +R$50 por T2, +R$100 por T3, +R$200 por T4, cumulativos.<br>
+        <b>Pago</b> = atualizado manualmente conforme pagamento é processado.<br>
+        <b>Esc. T2/T3/T4 calculados</b> — dados de 266 escolas via BigQuery em 12/06/2026. Regra junho: T1=R$50, T2=+R$50, T3=+R$100, T4=+R$200.
       </div>
       <div class="cs-filter">
         <label>Filtrar</label>
@@ -1745,295 +3229,321 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             <tr>
               <th>CS</th>
               <th class="num">Escolas T1</th>
-              <th class="num">% Carteira</th>
-              <th style="text-align:center">T2</th>
-              <th style="text-align:center">T3</th>
-              <th style="text-align:center">T4</th>
+              <th class="num">Esc. T2<br><span style="font-weight:400;opacity:.7">&gt;30% alunos</span></th>
+              <th class="num">Esc. T3<br><span style="font-weight:400;opacity:.7">&gt;70% alunos</span></th>
+              <th class="num">Esc. T4<br><span style="font-weight:400;opacity:.7">100% alunos</span></th>
               <th class="num">Bônus Total</th>
               <th style="text-align:center">Pago</th>
             </tr>
           </thead>
           <tbody>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Mariana Santana</td>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="sim">
+              <td>Pamela Miranda</td>
               <td class="num">16</td>
-              <td class="num">25%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 800</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Talita Panassol</td>
-              <td class="num">12</td>
-              <td class="num">16%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 600</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Sarah Moura</td>
-              <td class="num">12</td>
-              <td class="num">10%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 600</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Carla Gomes</td>
+              <td class="num">14</td>
               <td class="num">9</td>
-              <td class="num">15%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 450</b></td>
+              <td class="num">4</td>
+              <td class="num"><b>R$&nbsp;3.200</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Talita Panassol</td>
+              <td class="num">24</td>
+              <td class="num">12</td>
+              <td class="num">9</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;2.700</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="sim">
               <td>Shelry Solart</td>
+              <td class="num">14</td>
               <td class="num">8</td>
-              <td class="num">13%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 400</b></td>
+              <td class="num">5</td>
+              <td class="num">3</td>
+              <td class="num"><b>R$&nbsp;2.200</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Sarah Moura</td>
+              <td class="num">23</td>
+              <td class="num">8</td>
+              <td class="num">2</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;1.750</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="sim">
+              <td>Viviancristina Souza</td>
+              <td class="num">10</td>
+              <td class="num">8</td>
+              <td class="num">4</td>
+              <td class="num">2</td>
+              <td class="num"><b>R$&nbsp;1.700</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="sim">
+              <td>Tatiana Portela</td>
+              <td class="num">10</td>
+              <td class="num">4</td>
+              <td class="num">4</td>
+              <td class="num">2</td>
+              <td class="num"><b>R$&nbsp;1.500</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Thayna Bastos</td>
+              <td class="num">12</td>
+              <td class="num">9</td>
+              <td class="num">4</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;1.450</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Mariana Santana</td>
+              <td class="num">19</td>
+              <td class="num">5</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;1.300</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Carla Gomes</td>
+              <td class="num">14</td>
+              <td class="num">7</td>
+              <td class="num">2</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;1.250</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="sim">
+              <td>Indlayse Ferreira</td>
+              <td class="num">9</td>
+              <td class="num">5</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td class="num"><b>R$&nbsp;1.100</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
               <td>Maria Elvira</td>
+              <td class="num">10</td>
+              <td class="num">5</td>
+              <td class="num">3</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;1.050</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="sim">
+              <td>Anaclara Peres</td>
+              <td class="num">8</td>
+              <td class="num">5</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td class="num"><b>R$&nbsp;1.050</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Nicole Cavalcante</td>
+              <td class="num">5</td>
+              <td class="num">4</td>
+              <td class="num">4</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;850</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="nao" data-t4="nao">
+              <td>Gabriela Ribeiro</td>
+              <td class="num">10</td>
               <td class="num">6</td>
-              <td class="num">12%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 300</b></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;800</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="sim">
+              <td>Laura Pagliuzo</td>
+              <td class="num">5</td>
+              <td class="num">4</td>
+              <td class="num">1</td>
+              <td class="num">1</td>
+              <td class="num"><b>R$&nbsp;750</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Kaian Silva</td>
+              <td class="num">7</td>
+              <td class="num">4</td>
+              <td class="num">2</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;750</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Julia Cordeiro</td>
+              <td class="num">6</td>
+              <td class="num">4</td>
+              <td class="num">2</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;700</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="nao" data-t4="nao">
+              <td>Larissa Freitas</td>
+              <td class="num">11</td>
+              <td class="num">2</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;650</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Renata Brandao</td>
+              <td class="num">8</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;600</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Andreina Ferreira</td>
+              <td class="num">6</td>
+              <td class="num">4</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;600</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Erick Andrade</td>
+              <td class="num">6</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;500</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="sim">
+              <td>Dalva Paschoalini</td>
+              <td class="num">2</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td class="num">1</td>
+              <td class="num"><b>R$&nbsp;500</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Thais Borges</td>
+              <td class="num">4</td>
+              <td class="num">3</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;450</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Mariaeduarda Carvalho</td>
-              <td class="num">6</td>
-              <td class="num">5%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 300</b></td>
+              <td class="num">7</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;350</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Larissa Freitas</td>
-              <td class="num">5</td>
-              <td class="num">7%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 250</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Gabriela Ribeiro</td>
-              <td class="num">5</td>
-              <td class="num">9%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 250</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Andreina Ferreira</td>
-              <td class="num">4</td>
-              <td class="num">6%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 200</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Renata Brandao</td>
-              <td class="num">4</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 200</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Julia Cordeiro</td>
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Carla Santosdasilva</td>
               <td class="num">3</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 150</b></td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;350</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Thayna Bastos</td>
-              <td class="num">3</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 150</b></td>
+            <tr data-pago="nao" data-t2="sim" data-t3="nao" data-t4="nao">
+              <td>Stefany Figueredo</td>
+              <td class="num">5</td>
+              <td class="num">2</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;350</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
+            <tr data-pago="nao" data-t2="sim" data-t3="sim" data-t4="nao">
+              <td>Jennifer Anjos</td>
+              <td class="num">1</td>
+              <td class="num">1</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;200</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Junior Gomes</td>
               <td class="num">3</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 150</b></td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;200</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Tatiana Portela</td>
-              <td class="num">3</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 150</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Indlayse Ferreira</td>
-              <td class="num">3</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 150</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Laura Pagliuzo</td>
-              <td class="num">3</td>
-              <td class="num">6%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 150</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Viviane Luz</td>
+            <tr data-pago="nao" data-t2="sim" data-t3="nao" data-t4="nao">
+              <td>Mayane Costa</td>
               <td class="num">2</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 100</b></td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;150</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="nao" data-t4="nao">
+              <td>Sem CS</td>
+              <td class="num">1</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;100</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Giovanna Munhoz</td>
               <td class="num">2</td>
-              <td class="num">4%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 100</b></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;100</b></td>
+              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
+            </tr>
+            <tr data-pago="nao" data-t2="sim" data-t3="nao" data-t4="nao">
+              <td>Lara Farnesi</td>
+              <td class="num">1</td>
+              <td class="num">1</td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;100</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Anaclara Peres</td>
+              <td>Viviane Luz</td>
               <td class="num">2</td>
-              <td class="num">3%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 100</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Erick Andrade</td>
-              <td class="num">2</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 100</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Kaian Silva</td>
-              <td class="num">1</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Thais Borges</td>
-              <td class="num">1</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Pamela Miranda</td>
-              <td class="num">1</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Viviancristina Souza</td>
-              <td class="num">1</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Mayane Costa</td>
-              <td class="num">1</td>
-              <td class="num">3%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
-            </tr>
-            <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
-              <td>Stefany Figueredo</td>
-              <td class="num">1</td>
-              <td class="num">2%</td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não</span></td>
-              <td class="num"><b>R$ 50</b></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><span style="color:#aaa;">—</span></td>
+              <td class="num"><b>R$&nbsp;100</b></td>
               <td style="text-align:center"><span style="color:#aaa;font-size:11px;">Não pago</span></td>
             </tr>
             <tr class="total-row" id="cs-total">
-              <td><b>Total</b></td><td class="num"><b>119</b></td>
-              <td></td><td></td><td></td><td></td>
-              <td class="num"><b>R$ 5.950</b></td><td></td>
+              <td><b>Total</b></td><td class="num"><b>266</b></td>
+              <td></td><td></td><td></td>
+              <td class="num"><b>R$&nbsp;29.400</b></td><td></td>
             </tr>
           </tbody>
         </table>
       </div>
       <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
-        Dados via BigQuery · 11/06/2026 · confirmar com JP lógica de split quando CS muda durante o período
+        Dados via BigQuery · 12/06/2026 · T1/T2/T3/T4 calculados via site-dados.gold.etl_jornada_escolas_aplicacao · bônus usando regra junho 2026
       </div>
     </div>
 
@@ -2252,7 +3762,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
 
   
 
-  <div class="footer">Dados BigQuery em tempo real &nbsp;&middot;&nbsp; Regras de bônus validadas &nbsp;&middot;&nbsp; Pagamentos pendentes de integração</div>
+  <div class="footer">Dados BigQuery · 12/06/2026 &nbsp;&middot;&nbsp; Regras de bônus validadas &nbsp;&middot;&nbsp; Pagamentos pendentes de integração</div>
 
 </div><!-- /container -->
 
@@ -2260,7 +3770,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
 function exportarEscolas() {
   var cs = document.getElementById('select-cs').value;
   var rows = document.querySelectorAll('#tabela-escola tbody tr[data-cs]');
-  var lines = [['Escola','CS T1','CS T2','CS T3','CS T4','Data 5º Pedido','Data FC','Alunos Antec.','R$ Antecipado','Bônus T1']];
+  var lines = [['Escola','CS','T2 (>30% alunos)','T3 (>70% alunos)','T4 (100% alunos)','Data 5º Pedido','Data FC','Alunos Antec.','R$ Antecipado','Bônus']];
   rows.forEach(function(tr) {
     if (cs !== 'todos' && tr.getAttribute('data-cs') !== cs) return;
     var tds = tr.querySelectorAll('td');
