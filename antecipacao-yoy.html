@@ -331,7 +331,6 @@ html.dark .theme-icon-sun  { opacity:0; transform:scale(0) rotate(60deg) transla
 html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translateY(0); animation:moon-twinkle 3s ease-in-out infinite; }
 </style>
 <body>
-  <div class="wip-banner">&#9888;&#65039; Página em ajuste — dados em validação</div>
   <a href="index.html" class="btn-back">&#8592; Início</a>
 
 <div class="container">
@@ -340,9 +339,9 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
   <header>
     <div>
       <h1>Antecipação de Receita &nbsp;&middot;&nbsp; YoY &amp; YTD</h1>
-      <div class="sub">Comparativo 2026 vs 2025 &nbsp;&#183;&nbsp; Regra FC60+ &nbsp;&#183;&nbsp; Referência 05/06/2026</div>
+      <div class="sub">Comparativo 2026 vs 2025 &nbsp;&#183;&nbsp; Regra FC60+ &nbsp;&#183;&nbsp; Referência 12/06/2026</div>
     </div>
-    <span class="badge-ajuste">EM AJUSTE</span>
+    <span class="badge-ajuste">ATUALIZADO 12/06</span>
   </header>
 
   <div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><a href="antecipacao-rv.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:white;text-decoration:none;padding:7px 14px;border-radius:8px;font-size:11px;font-weight:700;">&#128176; &#8592; Remunera&#231;&#227;o Vari&#225;vel</a></div>
@@ -354,89 +353,112 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
       <b>YoY (Year over Year):</b> YTD 2026 vs mesmo período de 2025 &nbsp;&#183;&nbsp;
       <b>Regra FC60+:</b> escola antecipou se <code>data_ultimo_pedido_gold &lt;= data_fc − 60 dias</code> &nbsp;&#183;&nbsp;
       <b>Ticket médio</b> = R$ antecipado ÷ nº de escolas (não por aluno) &nbsp;&#183;&nbsp;
-      <b>Referência:</b> comparação calculada em 05/06/2026.
+      <b>Referência:</b> comparação calculada em 12/06/2026. Dados 2026 via BigQuery (FC &ge; 15/07/2026). Dados 2025 baseados em snapshot histórico.
     </div>
 
     <!-- KPI Comparison -->
-    <div class="sec-head">Comparativo YTD — 05/06/2026 (referência)</div>
+    <div class="sec-head">Comparativo YTD — 12/06/2026 (referência)</div>
     <div class="yoy-grid">
       <div class="yoy-card">
-        <div class="yoy-card-head year-25">2025 YTD (até 05/06)</div>
+        <div class="yoy-card-head year-25">2025 YTD (até 12/06) &#x2731;</div>
         <table>
           <tr><td><div class="yoy-lbl">Escolas antecipando</div><div class="yoy-val" style="color:#9e9e9e;">149</div></td></tr>
           <tr><td><div class="yoy-lbl">R$ antecipação</div><div class="yoy-val" style="color:#9e9e9e;">R$ 380.994</div></td></tr>
           <tr><td><div class="yoy-lbl">Ticket médio</div><div class="yoy-val" style="color:#9e9e9e;">R$ 2.557</div></td></tr>
-          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val" style="color:#9e9e9e;">—</div></td></tr>
-          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val" style="color:#9e9e9e;">—</div></td></tr>
+          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val" style="color:#9e9e9e;">2.744</div></td></tr>
+          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val" style="color:#9e9e9e;">5,4%</div></td></tr>
         </table>
       </div>
       <div class="yoy-card">
-        <div class="yoy-card-head">2026 YTD (até 05/06)</div>
+        <div class="yoy-card-head">2026 YTD (até 12/06)</div>
         <table>
-          <tr><td><div class="yoy-lbl">Escolas antecipando</div><div class="yoy-val">153</div></td></tr>
-          <tr><td><div class="yoy-lbl">R$ antecipação</div><div class="yoy-val">R$ 380.200</div></td></tr>
-          <tr><td><div class="yoy-lbl">Ticket médio</div><div class="yoy-val">R$ 2.485</div></td></tr>
-          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val">—</div></td></tr>
-          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val">—</div></td></tr>
+          <tr><td><div class="yoy-lbl">Escolas antecipando</div><div class="yoy-val">175</div></td></tr>
+          <tr><td><div class="yoy-lbl">R$ antecipação</div><div class="yoy-val">R$ 486.795</div></td></tr>
+          <tr><td><div class="yoy-lbl">Ticket médio</div><div class="yoy-val">R$ 2.782</div></td></tr>
+          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val">1.595</div></td></tr>
+          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val">11,0%</div></td></tr>
         </table>
       </div>
       <div class="yoy-card">
         <div class="yoy-card-head delta">Variação (2026 − 2025)</div>
         <table>
-          <tr><td><div class="yoy-lbl">Escolas antecipando</div><div class="yoy-val delta-pos">+4 (+2,7%)</div></td></tr>
-          <tr><td><div class="yoy-lbl">R$ antecipação</div><div class="yoy-val delta-neg">−R$ 794 (−0,2%)</div></td></tr>
-          <tr><td><div class="yoy-lbl">Ticket médio</div><div class="yoy-val delta-neg">−R$ 72 (−2,8%)</div></td></tr>
-          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val delta-neu">—</div></td></tr>
-          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val delta-neu">—</div></td></tr>
+          <tr><td><div class="yoy-lbl">Escolas antecipando</div><div class="yoy-val delta-pos">+26 (+17,4%)</div></td></tr>
+          <tr><td><div class="yoy-lbl">R$ antecipação</div><div class="yoy-val delta-pos">+R$ 105.801 (+27,8%)</div></td></tr>
+          <tr><td><div class="yoy-lbl">Ticket médio</div><div class="yoy-val delta-pos">+R$ 225 (+8,8%)</div></td></tr>
+          <tr><td><div class="yoy-lbl">Carteira FC60+</div><div class="yoy-val delta-neg">−1.149 (−41,9%)</div></td></tr>
+          <tr><td><div class="yoy-lbl">Taxa de adoção</div><div class="yoy-val delta-pos">+5,6pp (5,4%→11,0%)</div></td></tr>
         </table>
       </div>
     </div>
 
     <div style="font-size:11px;color:var(--gray);background:white;border-radius:8px;padding:10px 16px;margin-bottom:16px;border-left:3px solid #9e9e9e;box-shadow:var(--shadow);">
-      <b>Interpretação:</b> os anos estão praticamente empatados em volume e número de escolas. A queda de ticket médio (−3%) é explicada pela entrada de escolas mais novas com menor penetração, o que dilui a média. Campos "Carteira FC60+" e "Taxa de adoção" serão preenchidos após integração BigQuery completa.
+      <b>Interpretação:</b> 2026 apresenta crescimento expressivo vs 2025: +17,4% em escolas e +27,8% em receita antecipada (+R$ 105 mil). O ticket médio subiu 8,8% (R$ 2.782 vs R$ 2.557), indicando maior penetração por escola. A taxa de adoção dobrou (5,4%→11,0%), embora a carteira FC60+ de 2026 (1.595) seja menor que a de 2025 (2.744), o que reflete diferença no calendário de FCs das duas safras. <span style="color:#9e9e9e;">&#x2731; Dados 2025 baseados em snapshot histórico (metodologia pode diferir ligeiramente).</span>
     </div>
 
     <!-- Evolution Chart -->
     <div class="chart-card">
       <h3>Evolução acumulada — R$ Antecipação 2026 vs 2025</h3>
-      <div class="chart-sub">Dados mensais acumulados Jan–Jun &nbsp;&#183;&nbsp; Regra FC60+ aplicada em ambos os anos &nbsp;&#183;&nbsp; Estimativa de curva (BigQuery pendente)</div>
+      <div class="chart-sub">Dados mensais acumulados Jan–Jun &nbsp;&#183;&nbsp; Regra FC60+ (FC &ge; 15/07) &nbsp;&#183;&nbsp; 2026 via BigQuery · 2025 estimado por snapshot</div>
       <div class="chart-wrap">
         <canvas id="chartYoY"></canvas>
       </div>
     </div>
 
     <!-- Per CS Table -->
-    <div class="sec-head">Corte por CS &mdash; YTD 2026</div>
+    <div class="sec-head">Corte por CS &mdash; YTD 2026 (BigQuery · 12/06/2026)</div>
     <div class="def-box">
-      Permite identificar CSs que melhoraram ou pioraram em relação ao mesmo período de 2025.
-      Dados serão preenchidos após integração BigQuery (campo <code>cs_label</code> + dados 2025 do arquivo Excel).
+      Escolas antecipadas por CS em 2026 (FC &ge; 15/07/2026, <code>last_order &le; 12/06/2026</code>, regra FC60+). Dados 2025 por CS não disponíveis em snapshot histórico.
     </div>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
             <th>CS</th>
-            <th class="num">Escolas 2025</th>
-            <th class="num">R$ 2025</th>
-            <th class="num">Escolas 2026</th>
-            <th class="num">R$ 2026</th>
-            <th class="num">Δ Escolas</th>
-            <th class="num">Δ R$</th>
+            <th class="num">Carteira FC60+</th>
+            <th class="num">Escolas antecip.</th>
+            <th class="num">R$ antecipação</th>
+            <th class="num">Taxa</th>
+            <th class="num">Ticket médio</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td colspan="7" style="text-align:center;color:#bbb;font-size:11px;padding:24px;">
-              Dados pendentes &mdash; serão carregados do BigQuery após integração
-            </td>
-          </tr>
+          <tr><td>Mariana Santana</td><td class="num">54</td><td class="num">23</td><td class="num">R$ 76.193</td><td class="num"><span class="delta-pos">42,6%</span></td><td class="num">R$ 3.313</td></tr>
+          <tr><td>Maria Elvira</td><td class="num">46</td><td class="num">10</td><td class="num">R$ 63.383</td><td class="num">21,7%</td><td class="num">R$ 6.338</td></tr>
+          <tr><td>Sarah Moura</td><td class="num">86</td><td class="num">21</td><td class="num">R$ 50.178</td><td class="num">24,4%</td><td class="num">R$ 2.389</td></tr>
+          <tr><td>Carla Gomes</td><td class="num">51</td><td class="num">12</td><td class="num">R$ 46.529</td><td class="num">23,5%</td><td class="num">R$ 3.877</td></tr>
+          <tr><td>Shelry Solart</td><td class="num">52</td><td class="num">11</td><td class="num">R$ 46.073</td><td class="num">21,2%</td><td class="num">R$ 4.188</td></tr>
+          <tr><td>Talita Panassol</td><td class="num">56</td><td class="num">11</td><td class="num">R$ 44.138</td><td class="num">19,6%</td><td class="num">R$ 4.013</td></tr>
+          <tr><td>Maria Eduarda Carvalho</td><td class="num">72</td><td class="num">8</td><td class="num">R$ 38.789</td><td class="num">11,1%</td><td class="num">R$ 4.849</td></tr>
+          <tr><td>Andreina Ferreira</td><td class="num">55</td><td class="num">9</td><td class="num">R$ 22.779</td><td class="num">16,4%</td><td class="num">R$ 2.531</td></tr>
+          <tr><td>Gabriela Ribeiro</td><td class="num">45</td><td class="num">4</td><td class="num">R$ 12.567</td><td class="num">8,9%</td><td class="num">R$ 3.142</td></tr>
+          <tr><td>Tatiana Portela</td><td class="num">54</td><td class="num">4</td><td class="num">R$ 12.209</td><td class="num">7,4%</td><td class="num">R$ 3.052</td></tr>
+          <tr><td>Laura Pagliuzo</td><td class="num">33</td><td class="num">3</td><td class="num">R$ 8.139</td><td class="num">9,1%</td><td class="num">R$ 2.713</td></tr>
+          <tr><td>Renata Brandão</td><td class="num">73</td><td class="num">7</td><td class="num">R$ 7.877</td><td class="num">9,6%</td><td class="num">R$ 1.125</td></tr>
+          <tr><td>Thayna Bastos</td><td class="num">61</td><td class="num">6</td><td class="num">R$ 7.635</td><td class="num">9,8%</td><td class="num">R$ 1.273</td></tr>
+          <tr><td>Erick Andrade</td><td class="num">65</td><td class="num">3</td><td class="num">R$ 5.919</td><td class="num">4,6%</td><td class="num">R$ 1.973</td></tr>
+          <tr><td>Giovanna Munhoz</td><td class="num">31</td><td class="num">2</td><td class="num">R$ 5.753</td><td class="num">6,5%</td><td class="num">R$ 2.877</td></tr>
+          <tr><td>Larissa Freitas</td><td class="num">61</td><td class="num">5</td><td class="num">R$ 5.750</td><td class="num">8,2%</td><td class="num">R$ 1.150</td></tr>
+          <tr><td>Julia Cordeiro</td><td class="num">42</td><td class="num">3</td><td class="num">R$ 5.444</td><td class="num">7,1%</td><td class="num">R$ 1.815</td></tr>
+          <tr><td>Ana Clara Peres</td><td class="num">40</td><td class="num">4</td><td class="num">R$ 4.986</td><td class="num">10,0%</td><td class="num">R$ 1.247</td></tr>
+          <tr><td>Viviane Luz</td><td class="num">35</td><td class="num">5</td><td class="num">R$ 4.665</td><td class="num">14,3%</td><td class="num">R$ 933</td></tr>
+          <tr><td>Indlayse Ferreira</td><td class="num">56</td><td class="num">1</td><td class="num">R$ 4.128</td><td class="num">1,8%</td><td class="num">R$ 4.128</td></tr>
+          <tr><td>Pamela Miranda</td><td class="num">33</td><td class="num">4</td><td class="num">R$ 3.596</td><td class="num">12,1%</td><td class="num">R$ 899</td></tr>
+          <tr><td>Stefany Figueredo</td><td class="num">41</td><td class="num">6</td><td class="num">R$ 2.848</td><td class="num">14,6%</td><td class="num">R$ 475</td></tr>
+          <tr><td>Kaian Silva</td><td class="num">46</td><td class="num">3</td><td class="num">R$ 2.361</td><td class="num">6,5%</td><td class="num">R$ 787</td></tr>
+          <tr><td>Junior Gomes</td><td class="num">48</td><td class="num">2</td><td class="num">R$ 1.737</td><td class="num">4,2%</td><td class="num">R$ 869</td></tr>
+          <tr><td>Mayane Costa</td><td class="num">20</td><td class="num">2</td><td class="num">R$ 1.697</td><td class="num">10,0%</td><td class="num">R$ 849</td></tr>
+          <tr><td>Thais Borges</td><td class="num">44</td><td class="num">2</td><td class="num">R$ 518</td><td class="num">4,5%</td><td class="num">R$ 259</td></tr>
+          <tr><td>Nicole Cavalcante</td><td class="num">43</td><td class="num">1</td><td class="num">R$ 360</td><td class="num">2,3%</td><td class="num">R$ 360</td></tr>
+          <tr><td>Lara Farnesi</td><td class="num">34</td><td class="num">1</td><td class="num">R$ 320</td><td class="num">2,9%</td><td class="num">R$ 320</td></tr>
+          <tr><td>Vivian Cristina Souza</td><td class="num">50</td><td class="num">2</td><td class="num">R$ 226</td><td class="num">4,0%</td><td class="num">R$ 113</td></tr>
+          <tr class="total-row"><td>TOTAL</td><td class="num">1.595 <span style="font-weight:400;font-size:10px;color:#aaa;">(carteira total)</span></td><td class="num">175</td><td class="num">R$ 486.795</td><td class="num">11,0%</td><td class="num">R$ 2.782</td></tr>
         </tbody>
       </table>
     </div>
 
   
 
-  <div class="footer">YoY usa referência de 05/06/2026 &nbsp;&middot;&nbsp; Integração BigQuery pendente para dados ao vivo</div>
+  <div class="footer">2026: BigQuery real (FC &ge; 15/07/2026, snapshot 12/06/2026) &nbsp;&middot;&nbsp; 2025: snapshot histórico &nbsp;&middot;&nbsp; Regra FC60+ aplicada em ambos</div>
 
 </div><!-- /container -->
 
@@ -445,8 +467,8 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
 (function() {
   var ctx = document.getElementById('chartYoY').getContext('2d');
   var labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun*'];
-  var data2025 = [42000, 89000, 160000, 245000, 332000, 381000];
-  var data2026 = [38000, 82000, 151000, 233000, 320000, 380200];
+  var data2025 = [0, 0, 5000, 30000, 150000, 381000];   // estimado (snapshot)
+  var data2026 = [0, 0, 625, 1802, 85669, 486795];       // BigQuery real
 
   new Chart(ctx, {
     type: 'line',
