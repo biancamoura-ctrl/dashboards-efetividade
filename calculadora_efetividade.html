@@ -470,9 +470,11 @@ function render() {
 
   var periodo_labels = {semana:'essa semana', semana_passada:'semana passada', mes:'este mês', mes_passado:'mês passado'};
 
-  // Ritmo de novas efetivações por dia — acompanha o período selecionado
+  // Ritmo de novas efetivações por dia — soma dos sliders de cargo
   var rp = getRitmoPeriodo();
-  var delta_periodo = rp.total;
+  var b1_ana = +document.getElementById('sl-ana').value;
+  var b1_est = +document.getElementById('sl-est').value;
+  var delta_periodo = Math.round((b1_ana * C.n_analistas + b1_est * C.n_estagiarios) * 10) / 10;
   var dc = delta_periodo >= 5 ? 'kc-val v-blue' : delta_periodo < 0 ? 'kc-val v-red' : 'kc-val';
   document.getElementById('kpi-delta').className   = dc;
   document.getElementById('kpi-delta').textContent = delta_periodo.toFixed(1) + '/dia';
