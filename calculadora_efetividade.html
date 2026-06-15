@@ -291,7 +291,6 @@ html.dark .ev-lbl{color:#71717a}
       <div class="kc-lbl">Novas ef./dia</div>
       <div class="kc-val" style="font-size:24px" id="kpi-delta">&#8212;</div>
       <div class="kc-sub" id="kpi-delta-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
-      <div class="kc-sub" style="color:#b07d00;margin-top:2px" id="ref-novas-semana">ref. sem. ant.: 135/dia</div>
     </div>
     <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0" id="rl-card-wrap">
       <div class="kc-icon" style="font-size:16px">&#9889;</div>
@@ -304,7 +303,6 @@ html.dark .ev-lbl{color:#71717a}
       <div class="kc-lbl">Vencem/dia</div>
       <div class="kc-val v-red" style="font-size:24px" id="kpi-vencem">&#8212;</div>
       <div class="kc-sub">m&#233;dia do per&#237;odo</div>
-      <div class="kc-sub" style="color:#b07d00;margin-top:2px" id="ref-vencem-semana">ref. sem. ant.: 111/dia</div>
     </div>
     <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
       <div class="kc-icon" style="font-size:16px">&#128197;</div>
@@ -439,11 +437,10 @@ function projetarDias(efetivas, nec_meta, ritmo, media_exp) {
   if (ritmo_liq <= 0) return Infinity;
   return Math.ceil(faltam / ritmo_liq);
 }
-function renderCargo(prefix, hist, n_cargo, n_du) {
+function renderCargo(prefix, delta, n_cargo, n_du) {
   var b1_alvo = +document.getElementById('sl-' + prefix).value;
   document.getElementById(prefix + '-b1val').textContent = b1_alvo.toFixed(1) + '/B1';
 
-  var delta   = calcDelta(hist, n_du);
   var b1_hist = n_cargo > 0 ? delta / n_cargo : 0;
 
   var dc = delta >= 5 ? 'ck-val v-blue' : delta < 0 ? 'ck-val v-red' : 'ck-val';
@@ -537,8 +534,8 @@ function render() {
 
   // Breakdown por cargo — sliders informativos, não usados na projeção
   var n_du_p = rp.n || 1;
-  renderCargo('ana', C.novas_hist_analista,   C.n_analistas,   n_du_p);
-  renderCargo('est', C.novas_hist_estagiario, C.n_estagiarios, n_du_p);
+  renderCargo('ana', rp.analista,   C.n_analistas,   n_du_p);
+  renderCargo('est', rp.estagiario, C.n_estagiarios, n_du_p);
 
   var projDias  = document.getElementById('proj-dias');
   var projData  = document.getElementById('proj-data');
@@ -641,11 +638,8 @@ function render() {
 
 function setarSlidersHistorico() {
   var rp = getRitmoPeriodo();
-  var n_du = rp.n || 1;
-  var delta_ana = calcDelta(C.novas_hist_analista,   n_du);
-  var delta_est = calcDelta(C.novas_hist_estagiario, n_du);
-  var b1_ana = C.n_analistas   > 0 ? Math.max(0.5, Math.round(delta_ana / C.n_analistas   * 2) / 2) : 0.5;
-  var b1_est = C.n_estagiarios > 0 ? Math.max(0.5, Math.round(delta_est / C.n_estagiarios * 2) / 2) : 0.5;
+  var b1_ana = C.n_analistas   > 0 ? Math.max(0.5, Math.round(rp.analista   / C.n_analistas   * 2) / 2) : 0.5;
+  var b1_est = C.n_estagiarios > 0 ? Math.max(0.5, Math.round(rp.estagiario / C.n_estagiarios * 2) / 2) : 0.5;
   document.getElementById('sl-ana').value = b1_ana;
   document.getElementById('sl-est').value = b1_est;
 }
