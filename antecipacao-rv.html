@@ -3050,6 +3050,59 @@ function exportarEscolas() {
   a.click();
 }
 
+(function calcPorCS() {
+  var thead = document.querySelector('#tabela-cs thead tr');
+  // Insere coluna "Bônus Total" entre T4 e A pagar
+  var bonusTh = document.createElement('th');
+  bonusTh.className = 'num';
+  bonusTh.textContent = 'Bônus Total';
+  thead.insertBefore(bonusTh, thead.cells[5]);
+
+  var totalBonus = 0, totalPago = 0;
+
+  document.querySelectorAll('#tabela-cs tbody tr[data-pago]').forEach(function(r) {
+    var t1 = parseInt(r.cells[1].textContent) || 0;
+    var t2 = parseInt(r.cells[2].textContent) || 0;
+    var t3 = parseInt(r.cells[3].textContent) || 0;
+    var t4 = parseInt(r.cells[4].textContent) || 0;
+    var bonus = t1*50 + t2*50 + t3*100 + t4*200;
+    totalBonus += bonus;
+
+    // Insere célula Bônus Total
+    var bonusTd = document.createElement('td');
+    bonusTd.className = 'num';
+    bonusTd.innerHTML = '<b>R$ ' + bonus.toLocaleString('pt-BR') + '</b>';
+    r.insertBefore(bonusTd, r.cells[5]);
+
+    // Agora: 0=CS, 1=T1, 2=T2, 3=T3, 4=T4, 5=Bônus(novo), 6=A pagar(antigo), 7=Pago
+    var pagoText = (r.cells[7].textContent || '').replace(/[^0-9]/g, '');
+    var pago = parseInt(pagoText) || 0;
+    totalPago += pago;
+    var aPagar = bonus - pago;
+
+    var cell = r.cells[6];
+    if (aPagar > 0) {
+      cell.innerHTML = '<b style="color:var(--red)">R$ ' + aPagar.toLocaleString('pt-BR') + '</b>';
+    } else if (aPagar === 0) {
+      cell.innerHTML = '<span style="color:var(--green);font-weight:700;">&#10003; Quitado</span>';
+    } else {
+      cell.innerHTML = '<span style="color:#aaa;font-size:11px;">—</span>';
+    }
+  });
+
+  // Linha de total
+  var tbody = document.querySelector('#tabela-cs tbody');
+  var tr = document.createElement('tr');
+  tr.className = 'total-row';
+  tr.id = 'cs-total';
+  var totalAPagar = totalBonus - totalPago;
+  tr.innerHTML = '<td><b>TOTAL</b></td><td></td><td></td><td></td><td></td>'
+    + '<td class="num"><b>R$ ' + totalBonus.toLocaleString('pt-BR') + '</b></td>'
+    + '<td class="num"><b style="color:var(--red)">R$ ' + totalAPagar.toLocaleString('pt-BR') + '</b></td>'
+    + '<td style="text-align:center"><b style="color:var(--green)">R$ ' + totalPago.toLocaleString('pt-BR') + '</b></td>';
+  tbody.appendChild(tr);
+})();
+
 function filtrarPorCS(f) {
   document.querySelectorAll('#tabela-cs tbody tr[data-pago]').forEach(function(r) {
     var show = false;
