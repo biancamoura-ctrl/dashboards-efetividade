@@ -535,7 +535,6 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
     <div class="sub-tabs">
       <button class="sub-tab active" onclick="switchSub('cs')">Por CS</button>
       <button class="sub-tab" onclick="switchSub('escola')">Por Escola</button>
-      <button class="sub-tab" onclick="switchSub('roi')">ROI</button>
     </div>
 
     <!-- ── SUB-TAB: Por Escola ── -->
@@ -2535,7 +2534,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
         </table>
       </div>
       <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
-        Dados via BigQuery · 12/06/2026 · 281 escolas T1+ · antecipado = total_faturamento (FC-ultimo≥60d)</div>
+        Dados via BigQuery · 12/06/2026 · 281 escolas T1+ · antecipado = total_faturamento (FC-ultimo≥60d) · Ef. via BigQuery 16/06/2026</div>
     </div>
 
     <!-- ── SUB-TAB: Por CS ── -->
@@ -2564,6 +2563,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
           <thead>
             <tr>
               <th>CS</th>
+              <th class="num">Ef. Atual<br><span style="font-weight:400;opacity:.7">hoje</span></th>
               <th class="num">Escolas T1</th>
               <th class="num">Esc. T2<br><span style="font-weight:400;opacity:.7">&gt;30% alunos</span></th>
               <th class="num">Esc. T3<br><span style="font-weight:400;opacity:.7">&gt;70% alunos</span></th>
@@ -2575,6 +2575,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
           <tbody>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Mariana Santana</td>
+              <td class="num"><span style="color:var(--green);font-weight:700;">90.3%</span></td>
               <td class="num">23</td><td class="num">3</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2582,6 +2583,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Sarah Moura</td>
+              <td class="num"><span style="color:var(--green);font-weight:700;">82.6%</span></td>
               <td class="num">21</td><td class="num">1</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2589,6 +2591,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Shelry Solart</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">55.9%</span></td>
               <td class="num">13</td><td class="num">2</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2596,6 +2599,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Carla Gomes</td>
+              <td class="num"><span style="color:var(--green);font-weight:700;">94.8%</span></td>
               <td class="num">12</td><td class="num">2</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2603,6 +2607,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="sim" data-t4="sim">
               <td>Tatiana Portela</td>
+              <td class="num"><span style="color:var(--blue);font-weight:700;">73.8%</span></td>
               <td class="num">4</td><td class="num">2</td>
               <td class="num">2</td><td class="num">1</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2610,6 +2615,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="sim" data-t4="nao">
               <td>Andreina Ferreira</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">65.0%</span></td>
               <td class="num">9</td><td class="num">2</td>
               <td class="num">1</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2617,6 +2623,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Talita Panassol</td>
+              <td class="num"><span style="color:var(--green);font-weight:700;">93.2%</span></td>
               <td class="num">11</td><td class="num">1</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2624,6 +2631,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Maria Elvira</td>
+              <td class="num"><span style="color:var(--green);font-weight:700;">98.0%</span></td>
               <td class="num">10</td><td class="num">1</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2631,6 +2639,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Mariaeduarda Carvalho</td>
+              <td class="num"><span style="color:var(--blue);font-weight:700;">78.7%</span></td>
               <td class="num">8</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2638,6 +2647,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Gabriela Ribeiro</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">59.6%</span></td>
               <td class="num">5</td><td class="num">1</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2645,6 +2655,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Renata Brandao</td>
+              <td class="num"><span style="color:var(--green);font-weight:700;">80.5%</span></td>
               <td class="num">6</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2652,6 +2663,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Thayna Bastos</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">60.5%</span></td>
               <td class="num">6</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2659,6 +2671,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Stefany Figueredo</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">59.3%</span></td>
               <td class="num">6</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2666,6 +2679,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Laura Pagliuzo</td>
+              <td class="num"><span style="color:var(--green);font-weight:700;">87.5%</span></td>
               <td class="num">3</td><td class="num">2</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2673,6 +2687,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Anaclara Peres</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">54.2%</span></td>
               <td class="num">4</td><td class="num">1</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b>R$ 100</b></td>
@@ -2680,6 +2695,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Larissa Freitas</td>
+              <td class="num"><span style="color:var(--green);font-weight:700;">97.2%</span></td>
               <td class="num">5</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2687,6 +2703,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="nao" data-t2="sim" data-t3="nao" data-t4="nao">
               <td>Pamela Miranda</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">50.8%</span></td>
               <td class="num">4</td><td class="num">1</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2694,6 +2711,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Julia Cordeiro</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">60.0%</span></td>
               <td class="num">3</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2701,6 +2719,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Erick Andrade</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">68.1%</span></td>
               <td class="num">3</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2708,6 +2727,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Viviane Luz</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">27.9%</span></td>
               <td class="num">3</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2715,6 +2735,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Kaian Silva</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">67.8%</span></td>
               <td class="num">3</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2722,6 +2743,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Giovanna Munhoz</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">67.2%</span></td>
               <td class="num">2</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2729,6 +2751,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Mayane Costa</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">8.1%</span></td>
               <td class="num">2</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2736,6 +2759,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Junior Gomes</td>
+              <td class="num"><span style="color:#aaa;font-size:11px;">—</span></td>
               <td class="num">2</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2743,6 +2767,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Thais Borges</td>
+              <td class="num"><span style="color:var(--blue);font-weight:700;">76.7%</span></td>
               <td class="num">2</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2750,6 +2775,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Viviancristina Souza</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">61.7%</span></td>
               <td class="num">2</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2757,6 +2783,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="sim" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Indlayse Ferreira</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">67.6%</span></td>
               <td class="num">1</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2764,6 +2791,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Nicole Cavalcante</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">63.2%</span></td>
               <td class="num">1</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2771,6 +2799,7 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
             </tr>
             <tr data-pago="nao" data-t2="nao" data-t3="nao" data-t4="nao">
               <td>Lara Farnesi</td>
+              <td class="num"><span style="color:var(--red);font-weight:700;">50.0%</span></td>
               <td class="num">1</td><td class="num">0</td>
               <td class="num">0</td><td class="num">0</td>
               <td class="num"><b><span style="color:#aaa;font-size:11px;">—</span></b></td>
@@ -2780,227 +2809,10 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
         </table>
       </div>
       <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
-        Dados via BigQuery · 12/06/2026 · 281 escolas T1+ · antecipado = total_faturamento (FC-ultimo≥60d)</div>
+        Dados via BigQuery · 12/06/2026 · 281 escolas T1+ · antecipado = total_faturamento (FC-ultimo≥60d) · Ef. via BigQuery 16/06/2026</div>
     </div>
 
-    <!-- ── SUB-TAB: ROI ── -->
-    <div id="sub-roi" class="sub-panel">
-      <button class="regra-chip" onclick="toggleRegra('info-roi')" style="margin-bottom:12px;">
-        ℹ️ Como interpretar o ROI <span class="arrow">▾</span>
-      </button>
-      <div id="regra-info-roi" class="regra-body">
-        <b>ROI</b> = (R$ antecipado ÷ R$ bônus) × 100. Ex: 8.000% = cada R$ 1 de bônus mobilizou R$ 80 em antecipação.<br>
-        <b>Atenção:</b> ainda não está claro se a antecipação gera receita incremental ou apenas antecipa receita que viria de qualquer forma — análise futura com JP vai definir a interpretação.
-      </div>
 
-      <div class="roi-cards">
-        <div class="roi-card">
-          <div class="r-lbl">R$ Total Antecipado</div>
-          <div class="r-val">R$ 486.795</div>
-          <div class="r-sub">175 escolas · Jun 2026</div>
-        </div>
-        <div class="roi-card blue">
-          <div class="r-lbl">Total Bônus a Pagar</div>
-          <div class="r-val">R$ 10.200</div>
-          <div class="r-sub">Jun 2026 · T1+T2+T3+T4</div>
-        </div>
-        <div class="roi-card green">
-          <div class="r-lbl">ROI do Programa</div>
-          <div class="r-val">4.773%</div>
-          <div class="r-sub">R$ 48 antecipados por R$ 1 em bônus</div>
-        </div>
-      </div>
-
-      <div class="sec-head">Detalhamento por CS</div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>CS</th>
-              <th class="num">R$ Antecipado</th>
-              <th class="num">R$ Bônus</th>
-              <th class="num">Relação</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mariana Santana</td>
-              <td class="num">R$ 76.193</td>
-              <td class="num">R$ 1.300</td>
-              <td class="num"><b>5.861%</b></td>
-            </tr>
-            <tr>
-              <td>Maria Elvira</td>
-              <td class="num">R$ 63.383</td>
-              <td class="num">R$ 550</td>
-              <td class="num"><b>11.524%</b></td>
-            </tr>
-            <tr>
-              <td>Sarah Moura</td>
-              <td class="num">R$ 50.178</td>
-              <td class="num">R$ 1.100</td>
-              <td class="num"><b>4.562%</b></td>
-            </tr>
-            <tr>
-              <td>Carla Gomes</td>
-              <td class="num">R$ 46.529</td>
-              <td class="num">R$ 700</td>
-              <td class="num"><b>6.647%</b></td>
-            </tr>
-            <tr>
-              <td>Shelry Solart</td>
-              <td class="num">R$ 46.073</td>
-              <td class="num">R$ 650</td>
-              <td class="num"><b>7.088%</b></td>
-            </tr>
-            <tr>
-              <td>Talita Panassol</td>
-              <td class="num">R$ 44.138</td>
-              <td class="num">R$ 600</td>
-              <td class="num"><b>7.356%</b></td>
-            </tr>
-            <tr>
-              <td>Mariaeduarda Carvalho</td>
-              <td class="num">R$ 38.789</td>
-              <td class="num">R$ 400</td>
-              <td class="num"><b>9.697%</b></td>
-            </tr>
-            <tr>
-              <td>Andreina Ferreira</td>
-              <td class="num">R$ 22.778</td>
-              <td class="num">R$ 650</td>
-              <td class="num"><b>3.504%</b></td>
-            </tr>
-            <tr>
-              <td>Gabriela Ribeiro</td>
-              <td class="num">R$ 12.567</td>
-              <td class="num">R$ 250</td>
-              <td class="num"><b>5.027%</b></td>
-            </tr>
-            <tr>
-              <td>Tatiana Portela</td>
-              <td class="num">R$ 12.209</td>
-              <td class="num">R$ 700</td>
-              <td class="num"><b>1.744%</b></td>
-            </tr>
-            <tr>
-              <td>Laura Pagliuzo</td>
-              <td class="num">R$ 8.139</td>
-              <td class="num">R$ 250</td>
-              <td class="num"><b>3.256%</b></td>
-            </tr>
-            <tr>
-              <td>Renata Brandao</td>
-              <td class="num">R$ 7.877</td>
-              <td class="num">R$ 350</td>
-              <td class="num"><b>2.251%</b></td>
-            </tr>
-            <tr>
-              <td>Thayna Bastos</td>
-              <td class="num">R$ 7.635</td>
-              <td class="num">R$ 300</td>
-              <td class="num"><b>2.545%</b></td>
-            </tr>
-            <tr>
-              <td>Erick Andrade</td>
-              <td class="num">R$ 5.919</td>
-              <td class="num">R$ 150</td>
-              <td class="num"><b>3.946%</b></td>
-            </tr>
-            <tr>
-              <td>Giovanna Munhoz</td>
-              <td class="num">R$ 5.753</td>
-              <td class="num">R$ 100</td>
-              <td class="num"><b>5.753%</b></td>
-            </tr>
-            <tr>
-              <td>Larissa Freitas</td>
-              <td class="num">R$ 5.750</td>
-              <td class="num">R$ 250</td>
-              <td class="num"><b>2.300%</b></td>
-            </tr>
-            <tr>
-              <td>Julia Cordeiro</td>
-              <td class="num">R$ 5.444</td>
-              <td class="num">R$ 150</td>
-              <td class="num"><b>3.630%</b></td>
-            </tr>
-            <tr>
-              <td>Anaclara Peres</td>
-              <td class="num">R$ 4.986</td>
-              <td class="num">R$ 250</td>
-              <td class="num"><b>1.994%</b></td>
-            </tr>
-            <tr>
-              <td>Viviane Luz</td>
-              <td class="num">R$ 4.665</td>
-              <td class="num">R$ 250</td>
-              <td class="num"><b>1.866%</b></td>
-            </tr>
-            <tr>
-              <td>Indlayse Ferreira</td>
-              <td class="num">R$ 4.128</td>
-              <td class="num">R$ 50</td>
-              <td class="num"><b>8.256%</b></td>
-            </tr>
-            <tr>
-              <td>Pamela Miranda</td>
-              <td class="num">R$ 3.596</td>
-              <td class="num">R$ 250</td>
-              <td class="num"><b>1.438%</b></td>
-            </tr>
-            <tr>
-              <td>Stefany Figueredo</td>
-              <td class="num">R$ 2.848</td>
-              <td class="num">R$ 300</td>
-              <td class="num"><b>949%</b></td>
-            </tr>
-            <tr>
-              <td>Kaian Silva</td>
-              <td class="num">R$ 2.361</td>
-              <td class="num">R$ 150</td>
-              <td class="num"><b>1.574%</b></td>
-            </tr>
-            <tr>
-              <td>Junior Gomes</td>
-              <td class="num">R$ 1.737</td>
-              <td class="num">R$ 100</td>
-              <td class="num"><b>1.737%</b></td>
-            </tr>
-            <tr>
-              <td>Mayane Costa</td>
-              <td class="num">R$ 1.697</td>
-              <td class="num">R$ 100</td>
-              <td class="num"><b>1.697%</b></td>
-            </tr>
-            <tr>
-              <td>Thais Borges</td>
-              <td class="num">R$ 518</td>
-              <td class="num">R$ 100</td>
-              <td class="num"><b>518%</b></td>
-            </tr>
-            <tr>
-              <td>Nicole Cavalcante</td>
-              <td class="num">R$ 360</td>
-              <td class="num">R$ 50</td>
-              <td class="num"><b>720%</b></td>
-            </tr>
-            <tr>
-              <td>Lara Farnesi</td>
-              <td class="num">R$ 320</td>
-              <td class="num">R$ 50</td>
-              <td class="num"><b>640%</b></td>
-            </tr>
-            <tr>
-              <td>Viviancristina Souza</td>
-              <td class="num">R$ 226</td>
-              <td class="num">R$ 100</td>
-              <td class="num"><b>226%</b></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
 
   
 
@@ -3033,15 +2845,15 @@ function exportarEscolas() {
   var bonusTh = document.createElement('th');
   bonusTh.className = 'num';
   bonusTh.textContent = 'Bônus Total';
-  thead.insertBefore(bonusTh, thead.cells[5]);
+  thead.insertBefore(bonusTh, thead.cells[6]);
 
   var totalBonus = 0, totalPago = 0;
 
   document.querySelectorAll('#tabela-cs tbody tr[data-pago]').forEach(function(r) {
-    var t1 = parseInt(r.cells[1].textContent) || 0;
-    var t2 = parseInt(r.cells[2].textContent) || 0;
-    var t3 = parseInt(r.cells[3].textContent) || 0;
-    var t4 = parseInt(r.cells[4].textContent) || 0;
+    var t1 = parseInt(r.cells[2].textContent) || 0;
+    var t2 = parseInt(r.cells[3].textContent) || 0;
+    var t3 = parseInt(r.cells[4].textContent) || 0;
+    var t4 = parseInt(r.cells[5].textContent) || 0;
     var bonus = t1*50 + t2*50 + t3*100 + t4*200;
     totalBonus += bonus;
 
@@ -3049,15 +2861,15 @@ function exportarEscolas() {
     var bonusTd = document.createElement('td');
     bonusTd.className = 'num';
     bonusTd.innerHTML = '<b>R$ ' + bonus.toLocaleString('pt-BR') + '</b>';
-    r.insertBefore(bonusTd, r.cells[5]);
+    r.insertBefore(bonusTd, r.cells[6]);
 
-    // Agora: 0=CS, 1=T1, 2=T2, 3=T3, 4=T4, 5=Bônus(novo), 6=A pagar(antigo), 7=Pago
-    var pagoText = (r.cells[7].textContent || '').replace(/[^0-9]/g, '');
+    // Agora: 0=CS, 1=Ef.Atual, 2=T1, 3=T2, 4=T3, 5=T4, 6=Bônus(novo), 7=A pagar, 8=Pago
+    var pagoText = (r.cells[8].textContent || '').replace(/[^0-9]/g, '');
     var pago = parseInt(pagoText) || 0;
     totalPago += pago;
     var aPagar = bonus - pago;
 
-    var cell = r.cells[6];
+    var cell = r.cells[7];
     if (aPagar > 0) {
       cell.innerHTML = '<b style="color:var(--red)">R$ ' + aPagar.toLocaleString('pt-BR') + '</b>';
     } else if (aPagar === 0) {
@@ -3073,7 +2885,7 @@ function exportarEscolas() {
   tr.className = 'total-row';
   tr.id = 'cs-total';
   var totalAPagar = totalBonus - totalPago;
-  tr.innerHTML = '<td><b>TOTAL</b></td><td></td><td></td><td></td><td></td>'
+  tr.innerHTML = '<td><b>TOTAL</b></td><td></td><td></td><td></td><td></td><td></td>'
     + '<td class="num"><b>R$ ' + totalBonus.toLocaleString('pt-BR') + '</b></td>'
     + '<td class="num"><b style="color:var(--red)">R$ ' + totalAPagar.toLocaleString('pt-BR') + '</b></td>'
     + '<td style="text-align:center"><b style="color:var(--green)">R$ ' + totalPago.toLocaleString('pt-BR') + '</b></td>';
