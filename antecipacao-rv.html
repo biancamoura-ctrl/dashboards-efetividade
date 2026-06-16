@@ -33,19 +33,6 @@ body {
   line-height: 1.5;
 }
 
-/* ── WIP Banner ── */
-.wip-banner {
-  background: #fff3cd;
-  border-bottom: 2px solid var(--yellow-dark);
-  color: #7a5800;
-  font-size: 11px;
-  font-weight: 700;
-  text-align: center;
-  padding: 7px 16px;
-  letter-spacing: 0.3px;
-  position: sticky; top: 0; z-index: 100;
-}
-
 /* ── Back button ── */
 .btn-back {
   position: fixed; top: 48px; left: 14px;
@@ -71,13 +58,6 @@ header {
 }
 header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
 header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; }
-.badge-ajuste {
-  background: var(--yellow); color: #2B2200;
-  padding: 5px 13px; border-radius: 6px;
-  font-size: 10px; font-weight: 700; letter-spacing: 1px;
-  white-space: nowrap;
-}
-
 /* ── Main Tabs ── */
 .tabs-bar {
   display: flex; gap: 4px; margin-bottom: 16px;
@@ -301,7 +281,6 @@ html.dark .tier-stat .s-val { color: inherit; }
 /* ── Dark mode ── */
 html.dark { --purple-bg:#2a2440; --border:#2d2d33; --gray-light:#18181b; --shadow:0 2px 8px rgba(0,0,0,.35); }
 html.dark body { background:#18181b; color:#d4d4d0; }
-html.dark .wip-banner { background:#2a2200; border-color:#7a5800; color:#ffd166; }
 html.dark .container { color:#d4d4d0; }
 html.dark .tabs-bar,
 html.dark .sub-tabs { background:#1e1e22; }
@@ -369,7 +348,6 @@ html.dark .cs-filter-btn:hover { border-color:#7668AC; color:#c4b5fd; }
 html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:#7668AC; }
 </style>
 <body>
-  <div class="wip-banner">&#9888;&#65039; Página em ajuste — dados em validação</div>
   <a href="index.html" class="btn-back">&#8592; Início</a>
 
 <div class="container">
@@ -380,7 +358,6 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
       <h1>Antecipação de Receita &nbsp;&middot;&nbsp; Remuneração Variável</h1>
       <div class="sub">Bônus por escola antecipada &nbsp;&#183;&nbsp; Regra FC60+ &nbsp;&#183;&nbsp; 2026</div>
     </div>
-    <span class="badge-ajuste">EM AJUSTE</span>
   </header>
 
 
