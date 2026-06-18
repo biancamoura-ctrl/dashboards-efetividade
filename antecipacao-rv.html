@@ -485,7 +485,6 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
     <div class="sub-tabs">
       <button class="sub-tab active" onclick="switchSub('cs')">Por CS</button>
       <button class="sub-tab" onclick="switchSub('escola')">Por Escola</button>
-      <button class="sub-tab" onclick="switchSub('roi')">ROI</button>
     </div>
 
     <!-- ── SUB-TAB: Por Escola ── -->
@@ -2255,8 +2254,8 @@ html.dark .cs-filter-btn.active { background:#7668AC; color:white; border-color:
         Dados via BigQuery · 18/06/2026 · 129 escolas T1+ · antecipado = total_faturamento (FC-ultimo≥60d)</div>
     </div>
 
-    <!-- ── SUB-TAB: ROI ── -->
-    <div id="sub-roi" class="sub-panel">
+    <!-- ROI removido -->
+    <div id="sub-roi" class="sub-panel" style="display:none!important">
       <button class="regra-chip" onclick="toggleRegra('info-roi')" style="margin-bottom:12px;">
         ℹ️ Como interpretar o ROI <span class="arrow">▾</span>
       </button>
