@@ -333,6 +333,41 @@
     </div>
   </div>
 
+  <!-- SLIDE 3C: TAREFAS DE FOCO -->
+  <div class="slide bg-default" id="s3c">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Tarefas de foco</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-blue">Bloco 2 · A semana (seg → qua)</div>
+      <div class="slide-title">Tarefas de foco: o time toca as escolas certas?</div>
+      <div class="slide-subtitle">Foco = fila priorizada que o sistema gera todo dia · prioridade 0–3 é a mais urgente</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Dia</th>
+            <th>Foco geradas</th>
+            <th>Foco concluídas</th>
+            <th>% conclusão</th>
+            <th>Aderência*</th>
+            <th>Foco trabalhada**</th>
+            <th>Urgentes (≤3) feitas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Seg&nbsp;&nbsp;15/06</td><td>1.031</td><td>342</td><td>33,2%</td><td>51,0%</td><td>28,1%</td><td>21,9%</td></tr>
+          <tr><td>Ter&nbsp;&nbsp;16/06</td><td>924</td><td>294</td><td>31,8%</td><td>44,7%</td><td>26,0%</td><td>22,4%</td></tr>
+          <tr><td>Qua&nbsp;&nbsp;17/06</td><td>775</td><td class="hl-green">263</td><td class="hl-green">33,9%</td><td>44,5%</td><td>27,9%</td><td class="hl-green">27,0%</td></tr>
+          <tr class="total-row"><td>Qui&nbsp;18/06</td><td colspan="6" style="text-align:left">748 geradas — dia em andamento, conclusões entram ao longo do dia</td></tr>
+        </tbody>
+      </table>
+      <div class="insight-box"><b>Dois sinais de fila desalinhada.</b> 1) <b>Aderência ~45–51%:</b> mais da metade dos contatos do time vão para escolas que <b>não</b> estavam na lista de foco do dia — o time decide manualmente quem tocar em vez de seguir a fila. 2) <b>Prioridade invertida:</b> as tarefas urgentes (prioridade ≤3) são concluídas <b>menos</b> (~22–27%) do que as de baixa prioridade (≥8: ~37%). O time está pegando o que é fácil, não o que é urgente. Só <b>~27% das escolas com foco recebem contato</b> no mesmo dia — há fila priorizada de sobra parada. <span style="font-size:0.8em">*% das escolas tocadas que tinham tarefa de foco no dia · **% das tarefas de foco que receberam contato.</span></div>
+    </div>
+  </div>
+
   <!-- SLIDE 4: ONDE ESTÁ A OPORTUNIDADE (SEGMENTO) -->
   <div class="slide bg-alt" id="s4">
     <div class="slide-header">
@@ -400,13 +435,13 @@
   <button class="nav-btn" id="btnPrev" onclick="go(-1)" disabled>← Anterior</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
     <div class="nav-dots" id="dots"></div>
-    <div class="nav-counter" id="counter">1 / 6</div>
+    <div class="nav-counter" id="counter">1 / 7</div>
   </div>
   <button class="nav-btn" id="btnNext" onclick="go(1)">Próximo →</button>
 </div>
 
 <script>
-  const TOTAL = 6;
+  const TOTAL = 7;
   let cur = 0;
   const slides = document.querySelectorAll('.slide');
   const dotsEl = document.getElementById('dots');
