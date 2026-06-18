@@ -186,6 +186,39 @@
   .bg-default { background: #1a1a2e; }
   .bg-alt { background: #1e1a35; }
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  /* Bloco de risco de retração */
+  .risk-block {
+    background: var(--red-bg);
+    border: 1.5px solid var(--red);
+    border-radius: 12px;
+    padding: 16px 20px 18px;
+    margin-top: 12px;
+    color: #333;
+  }
+  .risk-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .risk-title { font-size: 22px; font-weight: 800; color: var(--red); line-height: 1.1; }
+  .risk-sub { font-size: 12px; font-weight: 600; color: var(--gray); }
+  .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .risk-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .risk-card-title {
+    background: var(--purple); color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    padding: 8px 12px; text-align: center;
+  }
+  .risk-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .risk-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); color: #333; }
+  .risk-table tr:last-child td { border-bottom: none; }
+  .risk-table td:last-child { text-align: right; font-weight: 800; color: var(--purple-dark); }
+  .risk-table .lead td { background: rgba(118,104,172,0.06); }
+  .risk-table .lead td:first-child { font-weight: 700; }
+  .risk-badge {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--red); color: #fff;
+    border-radius: 10px; padding: 12px 18px; margin-top: 14px;
+    font-size: 13.5px; font-weight: 700;
+  }
+  .risk-badge .ico { font-size: 18px; flex-shrink: 0; }
+  .risk-badge .sub { font-weight: 600; opacity: 0.9; }
   .btn-back { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.28); color: #fff; text-decoration: none; padding: 5px 13px; border-radius: 8px; font-family: inherit; font-size: 11px; font-weight: 700; transition: background 0.15s; }
   .btn-back:hover { background: rgba(255,255,255,0.24); }
 
@@ -448,7 +481,49 @@
           <div class="insight-box" style="margin-top:0"><b>O time NÃO está largando as muito vencidas:</b> 78,7% das 381 escolas vencidas há 8+ dias receberam ao menos uma tentativa de contato nos últimos 7 dias. O gargalo é de <b>conversão</b>, não de esforço — essas escolas estão sendo procuradas mas não voltam a efetivar.</div>
         </div>
       </div>
-      <div class="insight-box" style="margin-top:10px"><b>Risco de retração — 172 escolas críticas.</b> Das 185 vencidas há 15+ dias úteis, <b>172 o time tenta contatar (atividade nos últimos 14 dias) mas não consegue efetivar (nenhuma efetiva nas últimas 2 semanas)</b> — não é abandono, é resistência persistente da escola. Etapa: <b>Em Aplicação</b> 93 · <b>Onboarding & Boas vindas</b> 78 · <b>Ciclo de Eventos</b> 1. Segmentação: <b>High touch</b> 105 · <b>Medium touch</b> 62 · <b>Premium touch</b> 5. Cohort (baldinho): <b>Renovação</b> 97 · <b>Anos Anteriores</b> 29 · <b>Retração Anos Anteriores</b> 15 · <b>Concorrência</b> 15. <b>22 já têm baldinho de Retração / Retração Anos Anteriores</b> — sinal de saúde negativo no deal: resgatar agora ou elas saem da base.</div>
+      <div class="risk-block">
+        <div class="risk-head">
+          <div class="risk-title">172 escolas em risco de retração</div>
+          <div class="risk-sub">tentam contato mas não efetivam há 15+ dias úteis · das 185 vencidas no período</div>
+        </div>
+        <div class="risk-grid">
+          <div class="risk-card">
+            <div class="risk-card-title">Etapa</div>
+            <table class="risk-table">
+              <tbody>
+                <tr><td>Em Aplicação</td><td>93</td></tr>
+                <tr><td>Onboarding &amp; Boas vindas</td><td>78</td></tr>
+                <tr><td>Ciclo de Eventos</td><td>1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-card">
+            <div class="risk-card-title">Segmentação</div>
+            <table class="risk-table">
+              <tbody>
+                <tr><td>High touch</td><td>105</td></tr>
+                <tr><td>Medium touch</td><td>62</td></tr>
+                <tr><td>Premium touch</td><td>5</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-card">
+            <div class="risk-card-title">Cohort (baldinho)</div>
+            <table class="risk-table">
+              <tbody>
+                <tr><td>Renovação</td><td>97</td></tr>
+                <tr><td>Anos Anteriores</td><td>29</td></tr>
+                <tr><td>Retração Anos Anteriores</td><td>15</td></tr>
+                <tr><td>Concorrência</td><td>15</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="risk-badge">
+          <span class="ico">⚠️</span>
+          <span><b>22 com baldinho de Retração</b> <span class="sub">— resgatar agora ou elas saem da base</span></span>
+        </div>
+      </div>
     </div>
   </div>
 
