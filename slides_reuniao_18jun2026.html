@@ -598,82 +598,6 @@
   </div>
 
   <!-- SLIDE 11: ANÁLISE DO DIA — POR QUE A QUARTA FOI FRACA -->
-  <div class="slide bg-alt" id="s11">
-    <div class="slide-header">
-      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
-      <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Análise do dia · Quarta 17/06</div>
-      <div class="slide-date">18/06/2026</div>
-    </div>
-    <div class="slide-body">
-      <div class="section-tag tag-yellow">Análise do dia · 3 de 4</div>
-      <div class="slide-title">Por que a quarta (17/06) puxou o número para baixo</div>
-      <div class="slide-subtitle">Comparação dia a dia: terça (16/06) → quarta (17/06)</div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th style="text-align:left">Métrica</th>
-            <th>16/06</th>
-            <th>17/06</th>
-            <th>Variação</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Atividades</td><td>869</td><td>856</td><td class="hl-red">−1,5%</td></tr>
-<tr><td>Novas efetivas</td><td>76</td><td>88</td><td>+16%</td></tr>
-<tr><td>Conversão</td><td>31,5%</td><td>26,9%</td><td class="hl-red">−4,6 pp</td></tr>
-
-        </tbody>
-      </table>
-      <div class="insight-box">
-        <b>Causa é conversão, não esforço:</b> o volume de atividades ficou estável (<b>−1,5%</b>) e as
-        novas efetivas até subiram, mas a <b>conversão caiu −4,6 pp</b> (31,5%→26,9%). As escolas que sobraram
-        estão respondendo pior — o estoque de "fáceis" de reativar está se esgotando e cada efetivação exige mais toques.
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 12: ANÁLISE DO DIA — TAREFAS ÓRFÃS P7/P8 -->
-  <div class="slide bg-default" id="s12">
-    <div class="slide-header">
-      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
-      <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Análise do dia · Tarefas órfãs</div>
-      <div class="slide-date">18/06/2026</div>
-    </div>
-    <div class="slide-body">
-      <div class="section-tag tag-red">Análise do dia · 4 de 4</div>
-      <div class="slide-title">Tarefas de intervenção P7/P8 órfãs</div>
-      <div class="slide-subtitle">🚑INTERVENÇÃO parou de ser gerada após 08/06 — provável bug no gerador</div>
-      <div class="cards-row cards-4">
-        <div class="card red">
-          <div class="card-value red">259</div>
-          <div class="card-label">Escolas sem<br>tarefa hoje</div>
-        </div>
-        <div class="card">
-          <div class="card-value white">48</div>
-          <div class="card-label">P7<br>(1º semestre)</div>
-        </div>
-        <div class="card">
-          <div class="card-value white">211</div>
-          <div class="card-label">P8<br>(2º sem / vazio)</div>
-        </div>
-        <div class="card red">
-          <div class="card-value red">105</div>
-          <div class="card-label">High Touch sem<br>tarefa e sem contato</div>
-        </div>
-      </div>
-      <div class="info-box">
-        <b>256 são Novas</b> · 3 Renovação.
-        Histórico de cherry-picking (02–08/06): <b>87,5% das P7/P8 eram descartadas</b>;
-        em 11 consultor-dias o consultor descartou a P7/P8 e fez tarefa mais fácil no mesmo dia.
-      </div>
-      <div class="insight-box">
-        <b>Ação recomendada:</b> ressuscitar o gerador P7/P8 ou exportar a lista das ~105
-        High Touch sem contato para os supervisores (Julia Loubach · Mahane/Julia Alves · Larissa Garcia).
-      </div>
-    </div>
-  </div>
 
 </div><!-- /deck -->
 
@@ -683,13 +607,13 @@
   <button class="nav-btn" id="btnPrev" onclick="go(-1)" disabled>← Anterior</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
     <div class="nav-dots" id="dots"></div>
-    <div class="nav-counter" id="counter">1 / 11</div>
+    <div class="nav-counter" id="counter">1 / 9</div>
   </div>
   <button class="nav-btn" id="btnNext" onclick="go(1)">Próximo →</button>
 </div>
 
 <script>
-  const TOTAL = 11;
+  const TOTAL = 9;
   let cur = 0;
   const slides = document.querySelectorAll('.slide');
   const dotsEl = document.getElementById('dots');
