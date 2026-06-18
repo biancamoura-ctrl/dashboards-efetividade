@@ -400,36 +400,6 @@
   </div>
 
   <!-- SLIDE 5: EFETIVIDADE HISTÓRICA -->
-  <div class="slide bg-alt" id="s5">
-    <div class="slide-header">
-      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
-      <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Efetividade histórica</div>
-      <div class="slide-date">18/06/2026</div>
-    </div>
-    <div class="slide-body">
-      <div class="slide-title">Evolução da efetividade — semana atual</div>
-      <div class="slide-subtitle">Efetividade dia a dia na semana</div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th style="text-align:left">Data</th>
-            <th>Efetivas</th>
-            <th>Elegíveis</th>
-            <th>% Efetividade</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>15/06 (Seg)</td><td>1.263</td><td>1.963</td><td>64,3%</td></tr>
-<tr><td>16/06 (Ter)</td><td>1.339</td><td>1.958</td><td>68,4%</td></tr>
-<tr><td>17/06 (Qua)</td><td>1.374</td><td>1.953</td><td class="hl-green">70,4%</td></tr>
-
-        </tbody>
-      </table>
-      <div class="insight-box">A efetividade subiu <b>+6,1%</b> ao longo da semana (64,3% → 64,4%), com o denominador caindo (-10 elegíveis). O esforço do time está sustentando a recuperação, mas o ritmo é lento porque o <b>estoque de 699 vencidas é grande</b> — e elas continuam puxando o denominador sem serem recuperadas.</div>
-    </div>
-  </div>
-
   <!-- SLIDE 8B: ANÁLISE DAS ESCOLAS VENCIDAS -->
   <div class="slide bg-alt" id="s8b">
     <div class="slide-header">
@@ -607,13 +577,13 @@
   <button class="nav-btn" id="btnPrev" onclick="go(-1)" disabled>← Anterior</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
     <div class="nav-dots" id="dots"></div>
-    <div class="nav-counter" id="counter">1 / 9</div>
+    <div class="nav-counter" id="counter">1 / 8</div>
   </div>
   <button class="nav-btn" id="btnNext" onclick="go(1)">Próximo →</button>
 </div>
 
 <script>
-  const TOTAL = 9;
+  const TOTAL = 8;
   let cur = 0;
   const slides = document.querySelectorAll('.slide');
   const dotsEl = document.getElementById('dots');
