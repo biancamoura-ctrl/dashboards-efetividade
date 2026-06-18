@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Efetividade · Reunião CS Ops · 18/06/2026</title>
+<title>Análise de Efetividade · Reunião CS Ops · 18/06/2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -102,7 +102,6 @@
   .card-value.yellow { color: var(--yellow); }
   .card-value.white  { color: #fff; }
   .card-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.8px; line-height: 1.3; }
-  .card-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 6px; }
   .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -114,7 +113,7 @@
   .data-table th { background: var(--purple); color: #fff; font-weight: 700; padding: 10px 12px; text-align: center; font-size: 11px; letter-spacing: 0.3px; }
   .data-table td { padding: 9px 12px; text-align: center; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.07); }
   .data-table tr:nth-child(even) td { background: rgba(255,255,255,0.04); }
-  .data-table tr.total-row td { background: rgba(118,104,172,0.25); font-weight: 700; }
+  .data-table tr:last-child td { background: rgba(118,104,172,0.25); font-weight: 700; }
   .data-table td:first-child { text-align: left; font-weight: 600; }
   .data-table .hl { color: var(--yellow); font-weight: 700; }
   .data-table .hl-red { color: #FF6B75; font-weight: 700; }
@@ -140,14 +139,20 @@
     margin-bottom: 10px;
   }
   .info-box b { color: #fff; }
-  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .bullet-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,0.88); }
-  .bullet-list li .dot { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; margin-top: 1px; }
-  .bullet-list li b { color: #fff; }
+  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .bullet-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.85); }
+  .bullet-list li .dot { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; margin-top: 1px; }
   .dot-red    { background: var(--red);     color: #fff; }
   .dot-yellow { background: var(--yellow);  color: #333; }
-  .dot-green  { background: var(--green-mid); color: #fff; }
   .dot-blue   { background: var(--blue);    color: #fff; }
+  .diag-row { display: grid; grid-template-columns: 2fr 3fr 1fr; gap: 0; border-radius: 8px; overflow: hidden; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.1); }
+  .diag-cell { padding: 12px 14px; font-size: 13px; line-height: 1.45; }
+  .diag-cell:first-child { font-weight: 700; background: rgba(255,255,255,0.07); }
+  .diag-cell:nth-child(2) { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.03); font-size: 12px; }
+  .diag-cell:last-child { text-align: center; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  .peso-parcial    { background: rgba(249,220,69,0.15); color: var(--yellow); }
+  .peso-principal  { background: rgba(233,75,86,0.18); color: #FF6B75; }
+  .peso-estrutural { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
   .progress-bar { height: 3px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
   .progress-fill { height: 100%; background: var(--yellow); transition: width 0.3s ease; }
   .nav { background: rgba(90,78,142,0.95); padding: 10px 36px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
@@ -183,13 +188,7 @@
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .btn-back { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.28); color: #fff; text-decoration: none; padding: 5px 13px; border-radius: 8px; font-family: inherit; font-size: 11px; font-weight: 700; transition: background 0.15s; }
   .btn-back:hover { background: rgba(255,255,255,0.24); }
-  .seg-bar-wrap { display: flex; flex-direction: column; gap: 13px; margin-bottom: 14px; }
-  .seg-bar-row { display: grid; grid-template-columns: 150px 1fr 88px; align-items: center; gap: 14px; }
-  .seg-bar-name { font-size: 13px; font-weight: 700; }
-  .seg-bar-track { background: rgba(255,255,255,0.08); border-radius: 8px; height: 26px; position: relative; overflow: hidden; }
-  .seg-bar-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; }
-  .seg-bar-meta { position: absolute; left: 80%; top: 0; bottom: 0; width: 2px; background: var(--yellow); opacity: 0.8; }
-  .seg-bar-val { font-size: 14px; font-weight: 800; text-align: right; }
+
 </style>
 </head>
 <body>
@@ -205,18 +204,23 @@
       <div class="slide-date">18 de junho de 2026</div>
     </div>
     <div class="cover-body">
-      <div class="cover-badge">Reunião · Quinta, 18 de junho de 2026</div>
+      <div class="cover-badge">Análise Semanal · 08–15 junho 2026</div>
       <div class="cover-title">Efetividade do Time<br><span>de Relacionamento</span></div>
-      <div class="cover-sub">Como o time foi na semana · onde estamos hoje · o que fazer agora</div>
+      <div class="cover-sub">O que aconteceu essa semana · causas · próximos passos<br><span style="font-size:12px;opacity:0.7">Dados até 15/06 (último dia completo)</span></div>
       <div class="cover-stats">
         <div class="cover-stat-item">
-          <div class="cover-stat-val red">64,4%</div>
-          <div class="cover-stat-label">Efetividade hoje</div>
+          <div class="cover-stat-val red">68,4%</div>
+          <div class="cover-stat-label">Efetividade (15/06)</div>
         </div>
         <div class="cover-sep"></div>
         <div class="cover-stat-item">
-          <div class="cover-stat-val white">1.962</div>
+          <div class="cover-stat-val white">1.958</div>
           <div class="cover-stat-label">Escolas elegíveis</div>
+        </div>
+        <div class="cover-sep"></div>
+        <div class="cover-stat-item">
+          <div class="cover-stat-val red">2.014</div>
+          <div class="cover-stat-label">Já vencidas</div>
         </div>
         <div class="cover-sep"></div>
         <div class="cover-stat-item">
@@ -227,109 +231,72 @@
     </div>
   </div>
 
-  <!-- SLIDE 2: EFETIVIDADE DE HOJE -->
+  <!-- SLIDE 2: SITUAÇÃO ATUAL -->
   <div class="slide bg-default" id="s2">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
       <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Onde estamos hoje</div>
+      <div class="slide-label">Situação atual</div>
       <div class="slide-date">18/06/2026</div>
     </div>
     <div class="slide-body">
-      <div class="section-tag tag-purple">Bloco 1 · Hoje</div>
-      <div class="slide-title">Efetividade hoje: 64,4%</div>
-      <div class="slide-subtitle">1.263 de 1.962 escolas elegíveis dentro do prazo · meta 80% · leitura da manhã</div>
+      <div class="section-tag tag-gray">Ponto de partida</div>
+      <div class="slide-title">Como chegamos na seg-feira</div>
+      <div class="slide-subtitle">Snapshot do time ao final da semana</div>
       <div class="cards-row cards-4">
-        <div class="card purple">
-          <div class="card-value white">64,4%</div>
-          <div class="card-label">Efetividade<br>hoje</div>
-          <div class="card-sub">faltam 15,6 pp p/ meta</div>
+        <div class="card red">
+          <div class="card-value red">68,4%</div>
+          <div class="card-label">Efetividade<br>atual</div>
         </div>
-        <div class="card green">
-          <div class="card-value green">1.263</div>
-          <div class="card-label">Escolas<br>dentro do prazo</div>
-          <div class="card-sub">efetivas hoje</div>
+        <div class="card">
+          <div class="card-value white">1.958</div>
+          <div class="card-label">Escolas<br>elegíveis</div>
         </div>
         <div class="card red">
-          <div class="card-value red">699</div>
-          <div class="card-label">Escolas<br>fora do prazo</div>
-          <div class="card-sub">tamanho da oportunidade</div>
+          <div class="card-value red">2.014</div>
+          <div class="card-label">Já<br>vencidas</div>
         </div>
-        <div class="card yellow">
-          <div class="card-value yellow">140</div>
-          <div class="card-label">Vencem<br>hoje</div>
-          <div class="card-sub">+142 vencem amanhã</div>
+        <div class="card green">
+          <div class="card-value green">80%</div>
+          <div class="card-label">Meta<br>do time</div>
         </div>
       </div>
-      <div class="insight-box"><b>Recuo de manhã não é o time trabalhando menos.</b> Ontem fechamos perto de 67% e a leitura de hoje cedo marca 64,4% porque <b>~60 escolas cruzaram o prazo durante a noite</b> (vencimento natural — escolas efetivadas há 7 dias úteis saindo do prazo em bloco, padrão típico de quinta). O estoque de fora do prazo subiu de 639 (fechamento de quarta) para 699. À medida que o time reativar ao longo do dia, parte volta — mas há <b>140 vencendo hoje + 142 amanhã</b> pressionando.</div>
+      <div class="insight-box">Estamos <b>11,6% abaixo da meta de 80%</b>. O motor do 68,4% são as <b>2.014 escolas já vencidas</b> que puxam o denominador para baixo. Só recuperar esse estoque move o número de volta.</div>
     </div>
   </div>
 
-  <!-- SLIDE 3: A SEMANA — EFETIVIDADE POR DIA -->
+  <!-- SLIDE 3: ESFORÇO DO TIME -->
   <div class="slide bg-alt" id="s3">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
       <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Como foi a semana</div>
+      <div class="slide-label">Esforço do time</div>
       <div class="slide-date">18/06/2026</div>
     </div>
     <div class="slide-body">
-      <div class="section-tag tag-green">Bloco 2 · A semana (seg → qui)</div>
-      <div class="slide-title">A curva da semana: subiu até quarta, recuou na quinta</div>
-      <div class="slide-subtitle">Efetividade medida na mesma janela (manhã) a cada dia · meta 80%</div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th style="text-align:left">Dia</th>
-            <th>Efetividade</th>
-            <th>Δ vs dia anterior</th>
-            <th>Escolas fora do prazo</th>
-            <th>Leitura</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Seg&nbsp;&nbsp;15/06</td><td>64,3%</td><td>—</td><td>2.113</td><td>ponto de partida</td></tr>
-          <tr><td>Ter&nbsp;&nbsp;16/06</td><td class="hl-green">68,4%</td><td class="hl-green">+4,1 pp</td><td>2.014</td><td>começa a reativar</td></tr>
-          <tr><td>Qua&nbsp;&nbsp;17/06</td><td class="hl-green">~70,4%</td><td class="hl-green">+2,0 pp</td><td class="hl-green">639</td><td>pico — reativação em massa</td></tr>
-          <tr><td>Qui&nbsp;&nbsp;18/06</td><td class="hl-red">64,4%</td><td class="hl-red">−6,0 pp</td><td>699</td><td>vencimento natural overnight</td></tr>
-        </tbody>
-      </table>
-      <div class="insight-box"><b>A semana subiu +6 pp em três dias (64,3% → 70,4%) e depois devolveu parte na quinta.</b> O motor da alta foi o <b>colapso do estoque de escolas fora do prazo</b>: caiu de 2.113 (seg) para 639 (qua) — o time reativou mais de 1.300 escolas vencidas ao longo de terça e quarta. O recuo de quinta (−6 pp) é <b>estrutural, não esforço</b>: escolas efetivadas há 7 dias úteis começam a vencer em bloco. O fechado de hoje deve recuperar parte conforme o time reativa.</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 3B: ESFORÇO DA SEMANA -->
-  <div class="slide bg-default" id="s3b">
-    <div class="slide-header">
-      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
-      <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Esforço da semana</div>
-      <div class="slide-date">18/06/2026</div>
-    </div>
-    <div class="slide-body">
-      <div class="section-tag tag-blue">Bloco 2 · A semana (seg → qui)</div>
-      <div class="slide-title">Esforço: volume estável, terça foi o melhor dia</div>
-      <div class="slide-subtitle">Dias completos (seg–qua) · quinta ainda em andamento</div>
+      <div class="section-tag tag-green">Insight 1 de 3</div>
+      <div class="slide-title">Novas efetivas ao longo da semana</div>
+      <div class="slide-subtitle">Esforço vs. conversão dia a dia</div>
       <table class="data-table">
         <thead>
           <tr>
             <th style="text-align:left">Dia</th>
             <th>Atividades</th>
-            <th>Chamadas</th>
-            <th>WhatsApp</th>
-            <th>Ativ. efetivas</th>
-            <th>Conversão</th>
             <th>Novas efetivas</th>
+            <th>Vencimentos no dia</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Seg&nbsp;&nbsp;15/06</td><td>842</td><td>389</td><td>426</td><td>217</td><td>26,3%</td><td>112</td></tr>
-          <tr><td>Ter&nbsp;&nbsp;16/06</td><td class="hl-green">869</td><td>391</td><td>446</td><td class="hl-green">267</td><td class="hl-green">31,5%</td><td>76</td></tr>
-          <tr><td>Qua&nbsp;&nbsp;17/06</td><td>856</td><td>375</td><td>447</td><td>222</td><td>26,9%</td><td>88</td></tr>
-          <tr class="total-row"><td>Quinta&nbsp;18/06</td><td colspan="6" style="text-align:left">em andamento — reuniões de manhã, time entra em ritmo ao longo do dia</td></tr>
+          <tr><td>Seg&nbsp;&nbsp;08/06</td><td>~950</td><td class="hl-green">170</td><td>—</td></tr>
+<tr><td>Ter&nbsp;&nbsp;09/06</td><td>~990</td><td>153</td><td>120</td></tr>
+<tr><td>Qua&nbsp;&nbsp;10/06</td><td>~930</td><td>136</td><td class="hl-red">123</td></tr>
+<tr><td>Qui&nbsp;&nbsp;11/06</td><td>~880</td><td>125</td><td>112</td></tr>
+<tr><td>Sex&nbsp;&nbsp;12/06</td><td>~760</td><td class="hl-red">96</td><td>90</td></tr>
+<tr><td>Seg&nbsp;&nbsp;15/06</td><td class="hl">~840</td><td>112</td><td>3</td></tr>
+
         </tbody>
       </table>
-      <div class="insight-box"><b>O time não parou de trabalhar — o esforço ficou estável em ~850 atividades/dia.</b> Terça foi o melhor dia: mesmo volume rendeu <b>conversão de 31,5%</b> (vs ~26% nos demais), motor da reativação em massa. Atenção: <b>novas efetivações vêm caindo</b> (112 seg → 76 ter → 88 qua), abaixo das ~160/dia que vencem — sinal de que o estoque de escolas "fáceis" de reativar está se esgotando. Daqui pra frente o ganho exige trabalhar a fila mais difícil.</div>
+      <div class="insight-box">As atividades caíram <b>~12%</b> (esforço levemente menor), mas as novas efetivas caíram <b>~34%</b> — muito mais do que o esforço explica. São dois fatores combinados: <b>esforço levemente menor</b> + <b>conversão pior</b> (escolas mais difíceis de reativar conforme a semana avança).</div>
     </div>
   </div>
 
@@ -342,7 +309,7 @@
       <div class="slide-date">18/06/2026</div>
     </div>
     <div class="slide-body">
-      <div class="section-tag tag-blue">Bloco 2 · A semana (seg → qua)</div>
+      <div class="section-tag tag-blue">Bloco 2 · A semana</div>
       <div class="slide-title">Tarefas de foco: o time toca as escolas certas?</div>
       <div class="slide-subtitle">Foco = fila priorizada que o sistema gera todo dia · prioridade 0–3 é a mais urgente</div>
       <table class="data-table">
@@ -350,80 +317,404 @@
           <tr>
             <th style="text-align:left">Dia</th>
             <th>Foco geradas</th>
-            <th>Foco concluídas</th>
+            <th>Concluídas</th>
             <th>% conclusão</th>
-            <th>Aderência*</th>
-            <th>Foco trabalhada**</th>
-            <th>Urgentes (≤3) feitas</th>
+            <th>Aderência</th>
+            <th>Foco trabalhada</th>
+            <th>Urgentes (≤3)</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Seg&nbsp;&nbsp;15/06</td><td>1.031</td><td>342</td><td>33,2%</td><td>51,0%</td><td>28,1%</td><td>21,9%</td></tr>
-          <tr><td>Ter&nbsp;&nbsp;16/06</td><td>924</td><td>294</td><td>31,8%</td><td>44,7%</td><td>26,0%</td><td>22,4%</td></tr>
-          <tr><td>Qua&nbsp;&nbsp;17/06</td><td>775</td><td class="hl-green">263</td><td class="hl-green">33,9%</td><td>44,5%</td><td>27,9%</td><td class="hl-green">27,0%</td></tr>
-          <tr class="total-row"><td>Qui&nbsp;18/06</td><td colspan="6" style="text-align:left">748 geradas — dia em andamento, conclusões entram ao longo do dia</td></tr>
+<tr><td>Sex&nbsp;&nbsp;12/06</td><td>939</td><td>259</td><td>27,6%</td><td>52,4%</td><td>25,5%</td><td>11,7%</td></tr>
+<tr><td>Seg&nbsp;&nbsp;15/06</td><td>890</td><td class="hl-green">325</td><td>36,5%</td><td>51,0%</td><td>28,1%</td><td>21,6%</td></tr>
         </tbody>
       </table>
-      <div class="insight-box"><b>Dois sinais de fila desalinhada.</b> 1) <b>Aderência ~45–51%:</b> mais da metade dos contatos do time vão para escolas que <b>não</b> estavam na lista de foco do dia — o time decide manualmente quem tocar em vez de seguir a fila. 2) <b>Prioridade invertida:</b> as tarefas urgentes (prioridade ≤3) são concluídas <b>menos</b> (~22–27%) do que as de baixa prioridade (≥8: ~37%). O time está pegando o que é fácil, não o que é urgente. Só <b>~27% das escolas com foco recebem contato</b> no mesmo dia — há fila priorizada de sobra parada. <span style="font-size:0.8em">*% das escolas tocadas que tinham tarefa de foco no dia · **% das tarefas de foco que receberam contato.</span></div>
+      <div class="insight-box"><b>Como o time usa a fila de foco.</b> <b>Aderência 51,0%:</b> mais da metade dos contatos do time vai para escolas que <b>não</b> estavam na lista de foco do dia — o time decide manualmente quem tocar em vez de seguir a fila. <b>Prioridade invertida:</b> as urgentes (prioridade ≤3) são concluídas <b>menos</b> (21,6%) do que as de baixa prioridade (≥8: 42,2%) — o time pega o que é fácil, não o que é urgente. Só <b>28,1% das escolas com foco</b> recebem contato no mesmo dia — há fila priorizada parada. <span style="font-size:0.8em">Aderência = das escolas tocadas, quantas tinham tarefa de foco · Foco trabalhada = das tarefas de foco, quantas receberam contato · Urgentes (≤3) = % concluídas das tarefas de prioridade mais alta.</span></div>
     </div>
   </div>
 
-  <!-- SLIDE 4: ONDE ESTÁ A OPORTUNIDADE (SEGMENTO) -->
-  <div class="slide bg-alt" id="s4">
+  <!-- SLIDE 4: SELEÇÃO ADVERSA -->
+  <div class="slide bg-default" id="s4">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
       <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Onde está a oportunidade</div>
+      <div class="slide-label">Seleção adversa</div>
       <div class="slide-date">18/06/2026</div>
     </div>
     <div class="slide-body">
-      <div class="section-tag tag-yellow">Bloco 2 · A semana</div>
-      <div class="slide-title">Efetividade por segmento hoje</div>
-      <div class="slide-subtitle">Medium touch é o âncora que segura o time abaixo de 80% · linha amarela = meta</div>
-      <div class="seg-bar-wrap">
-        <div class="seg-bar-row">
-          <div class="seg-bar-name">Premium 40+</div>
-          <div class="seg-bar-track"><div class="seg-bar-fill" style="width:90.2%;background:var(--green-mid)"></div><div class="seg-bar-meta"></div></div>
-          <div class="seg-bar-val" style="color:#66BB6A">90,2%</div>
+      <div class="section-tag tag-yellow">Insight 2 de 3</div>
+      <div class="slide-title">O time consome as escolas fáceis primeiro</div>
+      <div class="slide-subtitle">Quanto tempo cada escola estava vencida quando foi reativada</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Dia</th>
+            <th>Novas ef.</th>
+            <th>Média dias vencida</th>
+            <th>Recém-vencidas (0–3 dias)</th>
+            <th>Médias (4–10 dias)</th>
+            <th>Velhas (+10 dias)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Seg 08/06</td><td>170</td><td>12.5 dias</td><td class="hl-green">106</td><td>55</td><td>9</td></tr>
+<tr><td>Ter 09/06</td><td>153</td><td>12.5 dias</td><td>89</td><td>47</td><td>17</td></tr>
+<tr><td>Qua 10/06</td><td>136</td><td>13.7 dias</td><td>65</td><td>53</td><td>18</td></tr>
+<tr><td>Qui 11/06</td><td>125</td><td>13.6 dias</td><td class="hl">60</td><td>45</td><td>20</td></tr>
+<tr><td>Sex 12/06</td><td>96</td><td>15.1 dias</td><td class="hl-red">48</td><td>16</td><td>32</td></tr>
+<tr><td>Seg 15/06</td><td>112</td><td>15.1 dias</td><td>55</td><td>37</td><td>20</td></tr>
+
+        </tbody>
+      </table>
+      <div class="insight-box">Na seg, <b>106 das 170 escolas reativadas tinham vencido há apenas 0–3 dias</b> — escolas recém-saídas do prazo, mais fáceis de contatar. Na seg, esse número caiu para <b>55</b>. O estoque de escolas "fáceis" foi consumido ao longo da semana; o que sobrou exige mais toques para converter.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: EFETIVIDADE HISTÓRICA -->
+  <div class="slide bg-alt" id="s5">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Efetividade histórica</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-blue">Insight 3 de 3</div>
+      <div class="slide-title">Evolução da efetividade — semana atual</div>
+      <div class="slide-subtitle">Efetividade dia a dia na semana</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Data</th>
+            <th>Efetivas</th>
+            <th>Elegíveis</th>
+            <th>% Efetividade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>09/06 (Ter)</td><td>1.179</td><td>1.923</td><td>61,3%</td></tr>
+<tr><td>10/06 (Qua)</td><td>1.186</td><td>1.923</td><td>61,7%</td></tr>
+<tr><td>11/06 (Qui)</td><td>1.190</td><td>1.928</td><td>61,7%</td></tr>
+<tr><td>12/06 (Sex)</td><td>1.229</td><td>1.949</td><td>63,1%</td></tr>
+<tr><td>15/06 (Seg)</td><td>1.263</td><td>1.963</td><td class="hl-green">64,3%</td></tr>
+
+        </tbody>
+      </table>
+      <div class="insight-box">A efetividade subiu <b>+3,0%</b> ao longo da semana (61,3% → 68,4%), com o denominador também crescendo (+40 elegíveis). O esforço do time está sustentando a recuperação, mas o ritmo é lento porque o <b>estoque de 2.014 vencidas é grande</b> — e elas continuam puxando o denominador sem serem recuperadas.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: DIAGNÓSTICO FINAL -->
+  <div class="slide bg-default" id="s6">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Diagnóstico consolidado</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-purple">Diagnóstico</div>
+      <div class="slide-title">Por que estamos em 68,4%?</div>
+      <div class="slide-subtitle">Causas combinadas, com pesos diferentes</div>
+
+      <div class="diag-row">
+        <div class="diag-cell">Esforço ao longo<br>da semana</div>
+        <div class="diag-cell">Atividades caíram ~12% (de ~953 Seg para ~842 Seg). Não explica sozinho a variação nas novas efetivas.</div>
+        <div class="diag-cell peso-parcial">Parcial</div>
+      </div>
+
+      <div class="diag-row">
+        <div class="diag-cell">Conversão<br>(qualidade do contato)</div>
+        <div class="diag-cell">Taxa de conversão caiu 5.7 pp (32.0%→26.3%). Escolas respondendo pior ao longo da semana.</div>
+        <div class="diag-cell peso-principal">Principal</div>
+      </div>
+
+      <div class="diag-row">
+        <div class="diag-cell">Estoque acumulado<br>de 2.014 vencidas</div>
+        <div class="diag-cell">Motor do 68,4% — não é erro do time, é o denominador. Recuperar esse estoque é o que move a efetividade de volta para 80%.</div>
+        <div class="diag-cell peso-estrutural">Estrutural</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: RECOMENDAÇÕES -->
+  <div class="slide bg-alt" id="s7">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Recomendações</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">O que fazer agora</div>
+      <div class="slide-title">3 ações para a próxima semana</div>
+      <div class="slide-subtitle">Priorizadas por impacto na efetividade</div>
+      <ul class="bullet-list">
+        <li>
+          <div class="dot dot-red">1</div>
+          <div>
+            <b style="color:#fff">Mutirão de recuperação das 2.014 vencidas</b><br>
+            <span style="color:rgba(255,255,255,0.65);font-size:13px">Evitar novos vencimentos mantém em 68,4%. Só atacar o estoque vencido move o número. Priorizar as recém-vencidas (0–3 dias) — maior taxa de conversão.</span>
+          </div>
+        </li>
+        <li>
+          <div class="dot dot-yellow">2</div>
+          <div>
+            <b style="color:#fff">Investigar a queda de esforço</b><br>
+            <span style="color:rgba(255,255,255,0.65);font-size:13px">Atividades caíram ~12% de seg para seg. Checar com supervisores se houve motivo pontual (reuniões, ausências) ou tendência comportamental.</span>
+          </div>
+        </li>
+        <li>
+          <div class="dot dot-blue">3</div>
+          <div>
+            <b style="color:#fff">Antecipar a pressão de segunda</b><br>
+            <span style="color:rgba(255,255,255,0.65);font-size:13px">No fim de semana novas escolas vencem e o pool de "recém-vencidas" se reabastece. Entrar segunda priorizando as que venceram sáb/dom — maior chance de conversão.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: PRÓXIMOS PASSOS -->
+  <div class="slide bg-default" id="s8">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Próximos passos</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-purple">O que vem pela frente</div>
+      <div class="slide-title">Foco para a semana que começa</div>
+      <div class="slide-subtitle">A segunda-feira vai redefinir o ritmo</div>
+      <div class="two-col" style="margin-top:8px">
+        <div>
+          <div class="info-box">
+            <b>Segunda-feira (22/06)</b><br>
+            Pool de recém-vencidas se reabastece no fim de semana. Esperar pico de novas efetivas como nos melhores dias da semana. Priorizar quem venceu sáb/dom.
+          </div>
+          <div class="info-box">
+            <b>Mutirão de vencidas</b><br>
+            2.014 escolas aguardam. Consultor por consultor, identificar quais vencidas estão na carteira e atacar as mais recentes primeiro.
+          </div>
         </div>
-        <div class="seg-bar-row">
-          <div class="seg-bar-name">Premium touch</div>
-          <div class="seg-bar-track"><div class="seg-bar-fill" style="width:79.5%;background:var(--green-mid)"></div><div class="seg-bar-meta"></div></div>
-          <div class="seg-bar-val" style="color:#66BB6A">79,5%</div>
-        </div>
-        <div class="seg-bar-row">
-          <div class="seg-bar-name">High touch</div>
-          <div class="seg-bar-track"><div class="seg-bar-fill" style="width:66.9%;background:var(--blue)"></div><div class="seg-bar-meta"></div></div>
-          <div class="seg-bar-val" style="color:#4FC3F7">66,9%</div>
-        </div>
-        <div class="seg-bar-row">
-          <div class="seg-bar-name">Medium touch</div>
-          <div class="seg-bar-track"><div class="seg-bar-fill" style="width:52.1%;background:var(--red)"></div><div class="seg-bar-meta"></div></div>
-          <div class="seg-bar-val" style="color:#FF6B75">52,1%</div>
+        <div>
+          <div class="info-box">
+            <b>Alvo da semana</b><br>
+            Para chegar em 70%: precisamos recuperar ~32 escolas vencidas além do ritmo normal. Para 80%: +227 além do normal. Esforço concentrado é o caminho.
+          </div>
+          <div class="insight-box" style="margin-top:0">
+            <b>Lembrete:</b> acompanharemos o padrão de seleção adversa semana a semana — se a média de dias vencida na segunda começar alta, o estoque fácil não se reabasteceu e o ritmo de recuperação será mais lento.
+          </div>
         </div>
       </div>
-      <div class="insight-box">Premium puxa a média para cima (40+ a 90,2%, touch quase na meta com 79,5%). <b>High touch (66,9%, 999 escolas)</b> é o maior bloco — 331 fora do prazo, está no caminho. <b>Medium touch (52,1%, 641 escolas)</b> é o âncora — <b>307 escolas fora do prazo</b> só nesse segmento. Quem mais segura: <b>Ana Clara Peres (30,5%) · Mayane Costa (22,2%, entrou 11/06 — carteira em montagem, não é alerta)</b>. Liderança a acionar: <b>Larissa Garcia (Medium Renovação)</b>.</div>
     </div>
   </div>
 
-  <!-- SLIDE 5: O QUE FAZER -->
-  <div class="slide bg-default" id="s5">
+  <!-- SLIDE 8B: ANÁLISE DAS ESCOLAS VENCIDAS -->
+  <div class="slide bg-alt" id="s8b">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
       <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">O que fazer agora</div>
+      <div class="slide-label">Escolas vencidas</div>
       <div class="slide-date">18/06/2026</div>
     </div>
     <div class="slide-body">
-      <div class="section-tag tag-red">Bloco 3 · O que fazer</div>
-      <div class="slide-title">Próximos passos — práticos</div>
-      <div class="slide-subtitle">Ações para reverter o recuo de quinta e fechar os 15,6 pp até a meta</div>
-      <ul class="bullet-list">
-        <li><span class="dot dot-red">1</span><div><b>Antecipar os 142 que vencem amanhã (sexta) ainda hoje.</b> Sábado e domingo não geram dias úteis, mas escolas no limite viram estoque vencido na virada de semana. Atacar hoje evita repetir o recuo de quinta na segunda.</div></li>
-        <li><span class="dot dot-yellow">2</span><div><b>Reativar as 699 fora do prazo — começar pelos 1–5 dias úteis.</b> A cauda crônica (~460 escolas vencidas há 6+ dias úteis) é o teto que segura o time abaixo de 80%. As ~217 recuperáveis (1–5 du) dão ganho rápido: cada ~20 reativadas vale ~1 pp.</div></li>
-        <li><span class="dot dot-blue">3</span><div><b>Mutirão de Medium touch com a Larissa Garcia.</b> Único bloco grande abaixo de 60% (307 fora do prazo, 52,1%). É onde está a maior oportunidade de pontos.</div></li>
-        <li><span class="dot dot-green">4</span><div><b>Replicar o padrão da terça.</b> Mesmo esforço rendeu 31,5% de conversão (vs 26% nos outros dias) — o ganho vem da fila certa e da reativação, não de volume bruto. O estoque fácil está se esgotando (novas efetivas 112 → 88), então disciplina de fila importa mais a cada dia.</div></li>
-      </ul>
+      <div class="section-tag tag-red">Estoque vencido · risco de retração</div>
+      <div class="slide-title">Onde estão as 735 escolas vencidas</div>
+      <div class="slide-subtitle">Quanto tempo fora do prazo · o time ainda tenta contato? · quais correm risco de retração</div>
+      <div class="two-col" style="margin-top:4px">
+        <div>
+          <table class="data-table" style="margin-bottom:8px">
+            <thead>
+              <tr>
+                <th style="text-align:left">Tempo vencida</th>
+                <th>Escolas</th>
+                <th>%</th>
+                <th style="text-align:left">Distribuição</th>
+              </tr>
+            </thead>
+            <tbody>
+<tr><td>1–3 dias</td><td class="hl-green">170</td><td>23,1%</td><td style="width:40%"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:18px;overflow:hidden"><div style="height:100%;width:88%;background:var(--green);border-radius:6px"></div></div></td></tr>
+<tr><td>4–7 dias</td><td class="hl-green">193</td><td>26,3%</td><td style="width:40%"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:18px;overflow:hidden"><div style="height:100%;width:100%;background:var(--green);border-radius:6px"></div></div></td></tr>
+<tr><td>8–14 dias</td><td class="hl">187</td><td>25,4%</td><td style="width:40%"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:18px;overflow:hidden"><div style="height:100%;width:97%;background:var(--yellow);border-radius:6px"></div></div></td></tr>
+<tr><td>15–30 dias</td><td class="hl-red">122</td><td>16,6%</td><td style="width:40%"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:18px;overflow:hidden"><div style="height:100%;width:63%;background:var(--red);border-radius:6px"></div></div></td></tr>
+<tr><td>30+ dias</td><td class="hl-red">63</td><td>8,6%</td><td style="width:40%"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:18px;overflow:hidden"><div style="height:100%;width:33%;background:var(--red);border-radius:6px"></div></div></td></tr>
+            </tbody>
+          </table>
+          <div class="info-box" style="margin-bottom:0">
+            <b>Tentativas de contato (8+ dias vencidas):</b><br>
+            316/372 (84,9%) tiveram contato nos últimos 7 dias ·
+            <b>56 sem contato</b>.
+          </div>
+        </div>
+        <div>
+          <div class="cards-row cards-2" style="margin-bottom:14px">
+            <div class="card red">
+              <div class="card-value red">185</div>
+              <div class="card-label">Vencidas<br>15+ dias</div>
+            </div>
+            <div class="card red">
+              <div class="card-value red">26</div>
+              <div class="card-label">15+ dias e<br>sem contato</div>
+            </div>
+          </div>
+          <div class="insight-box" style="margin-top:0"><b>O time NÃO está largando as muito vencidas:</b> 84,9% das 372 escolas vencidas há 8+ dias receberam ao menos uma tentativa de contato nos últimos 7 dias. O gargalo é de <b>conversão</b>, não de esforço — essas escolas estão sendo procuradas mas não voltam a efetivar.</div>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:10px"><b>Risco de retração — 26 escolas críticas.</b> Das 185 vencidas há 15+ dias, <b>26 não recebem contato há mais de 7 dias</b>. Etapa: <b>Em Aplicação</b> 13 · <b>Onboarding & Boas vindas</b> 13. Segmentação: <b>High touch</b> 22 · <b>Medium touch</b> 3 · <b>Premium touch</b> 1. Cohort (baldinho): <b>Anos Anteriores</b> 11 · <b>Renovação</b> 7 · <b>Concorrência</b> 3 · <b>Retração</b> 3. <b>5 já têm baldinho de Retração</b> — sinal de saúde negativo no deal: resgatar agora ou elas saem da base.</div>
+    </div>
+  </div>
+
+
+  <!-- SLIDE 9: ANÁLISE DO DIA — EFETIVIDADE DE HOJE -->
+  <div class="slide bg-alt" id="s9">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Análise do dia · Efetividade</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-green">Análise do dia · 1 de 4</div>
+      <div class="slide-title">Efetividade de hoje: 68,4%</div>
+      <div class="slide-subtitle">Recuperação confirmada — subiu ontem e na comparação semanal</div>
+      <div class="cards-row cards-4">
+        <div class="card red">
+          <div class="card-value red">68,4%</div>
+          <div class="card-label">Efetividade<br>hoje (1339/1958)</div>
+        </div>
+        <div class="card green">
+          <div class="card-value green">+4,1%</div>
+          <div class="card-label">vs ontem<br>(64,3%)</div>
+        </div>
+        <div class="card green">
+          <div class="card-value green">+1,8%</div>
+          <div class="card-label">vs semana<br>passada (66,6%)</div>
+        </div>
+        <div class="card">
+          <div class="card-value white">−99</div>
+          <div class="card-label">Estoque vencidas<br>2.113→2.014</div>
+        </div>
+      </div>
+      <div class="insight-box">
+        Primeira <b>redução do estoque de vencidas</b> registrada: 2.113 (seg) → 2.014 (ter).
+        <b>164 escolas vencem amanhã</b> — número corrigido para bater com a base de efetividade
+        (a query anterior usava uma base mais ampla).
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: ANÁLISE DO DIA — PROJEÇÕES 17/06 -->
+  <div class="slide bg-default" id="s10">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Análise do dia · Projeção 17/06</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-blue">Análise do dia · 2 de 4</div>
+      <div class="slide-title">Projeção de efetividade para amanhã</div>
+      <div class="slide-subtitle">Baseline sem trabalho amanhã: 1.175/1.958 = 60,0%</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Cenário</th>
+            <th>Novas efetivas</th>
+            <th>Efetividade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Repetir ontem (101 efetivas)</td><td>101</td><td>65,2%</td></tr>
+<tr><td>Queda seg→ter da semana passada (−10,5%)</td><td>90</td><td>64,6%</td></tr>
+<tr><td>Média da semana passada</td><td>127</td><td>66,5%</td></tr>
+
+        </tbody>
+      </table>
+      <div class="insight-box">
+        Para <b>segurar os 68,4%</b> de hoje seriam necessárias <b>164 novas efetivas amanhã</b> —
+        patamar <b>não atingido em nenhum dia desde 09/06</b>. O cenário realista é a efetividade
+        recuar para a faixa de 64–66% amanhã, mesmo com o time trabalhando bem.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: ANÁLISE DO DIA — POR QUE SEGUNDA FOI FRACA -->
+  <div class="slide bg-alt" id="s11">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Análise do dia · Segunda 15/06</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-yellow">Análise do dia · 3 de 4</div>
+      <div class="slide-title">Por que a segunda (15/06) foi mais fraca</div>
+      <div class="slide-subtitle">Comparação com a segunda da semana passada (09/06)</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Métrica</th>
+            <th>09/06</th>
+            <th>15/06</th>
+            <th>Variação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Atividades</td><td>990</td><td>851</td><td class="hl-red">−14%</td></tr>
+<tr><td>Novas efetivas</td><td>152</td><td>101</td><td class="hl-red">−34%</td></tr>
+<tr><td>Conversão</td><td>28,1%</td><td>24,0%</td><td class="hl-red">−4,1 pp</td></tr>
+
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>Dupla causa:</b> menos esforço (<b>−14% de atividades</b>) somado a menor conversão
+        (<b>−4,1 pp</b>). O estoque de escolas "fáceis" de reativar está se esgotando —
+        cada nova efetivação exige mais toques.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: ANÁLISE DO DIA — TAREFAS ÓRFÃS P7/P8 -->
+  <div class="slide bg-default" id="s12">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Análise do dia · Tarefas órfãs</div>
+      <div class="slide-date">18/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">Análise do dia · 4 de 4</div>
+      <div class="slide-title">Tarefas de intervenção P7/P8 órfãs</div>
+      <div class="slide-subtitle">🚑INTERVENÇÃO parou de ser gerada após 08/06 — provável bug no gerador</div>
+      <div class="cards-row cards-4">
+        <div class="card red">
+          <div class="card-value red">259</div>
+          <div class="card-label">Escolas sem<br>tarefa hoje</div>
+        </div>
+        <div class="card">
+          <div class="card-value white">48</div>
+          <div class="card-label">P7<br>(1º semestre)</div>
+        </div>
+        <div class="card">
+          <div class="card-value white">211</div>
+          <div class="card-label">P8<br>(2º sem / vazio)</div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">105</div>
+          <div class="card-label">High Touch sem<br>tarefa e sem contato</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <b>256 são Novas</b> · 3 Renovação.
+        Histórico de cherry-picking (02–08/06): <b>87,5% das P7/P8 eram descartadas</b>;
+        em 11 consultor-dias o consultor descartou a P7/P8 e fez tarefa mais fácil no mesmo dia.
+      </div>
+      <div class="insight-box">
+        <b>Ação recomendada:</b> ressuscitar o gerador P7/P8 ou exportar a lista das ~105
+        High Touch sem contato para os supervisores (Julia Loubach · Mahane/Julia Alves · Larissa Garcia).
+      </div>
     </div>
   </div>
 
@@ -435,13 +726,13 @@
   <button class="nav-btn" id="btnPrev" onclick="go(-1)" disabled>← Anterior</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
     <div class="nav-dots" id="dots"></div>
-    <div class="nav-counter" id="counter">1 / 7</div>
+    <div class="nav-counter" id="counter">1 / 14</div>
   </div>
   <button class="nav-btn" id="btnNext" onclick="go(1)">Próximo →</button>
 </div>
 
 <script>
-  const TOTAL = 7;
+  const TOTAL = 14;
   let cur = 0;
   const slides = document.querySelectorAll('.slide');
   const dotsEl = document.getElementById('dots');
