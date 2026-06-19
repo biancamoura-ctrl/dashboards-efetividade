@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análise de Efetividade · Reunião CS Ops · 19/06/2026</title>
+<style>
+  :root {
+    --purple:      #7668AC;
+    --purple-dark: #5A4E8E;
+    --yellow:      #F9DC45;
+    --yellow-dark: #C9AC00;
+    --red:         #E94B56;
+    --red-bg:      rgba(233,75,86,0.13);
+    --green:       #43A047;
+    --green-mid:   #66BB6A;
+    --blue:        #008ECF;
+    --blue-bg:     rgba(0,142,207,0.12);
+    --border:      rgba(255,255,255,0.1);
+    --muted:       rgba(255,255,255,0.5);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #1a1a2e;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .deck { flex: 1; position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0;
+    display: none; flex-direction: column;
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .slide.active { display: flex; opacity: 1; }
+
+  /* ── Header ── */
+  .slide-header {
+    background: var(--purple-dark);
+    padding: 12px 36px;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--yellow);
+    flex-shrink: 0;
+  }
+  .logo-text { font-size: 14px; font-weight: 800; letter-spacing: 0.5px; }
+  .logo-text span { color: var(--yellow); }
+  .slide-label { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .slide-date  { font-size: 11px; font-weight: 600; color: var(--muted); }
+  .btn-back { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.25); color: #fff; text-decoration: none; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+
+  /* ── Body ── */
+  .slide-body {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 22px 48px;
+    overflow: hidden;
+  }
+  .section-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+  }
+  .tag-yellow { background: var(--yellow); color: #333; }
+  .tag-red    { background: var(--red);    color: #fff; }
+  .tag-green  { background: var(--green);  color: #fff; }
+  .tag-blue   { background: var(--blue);   color: #fff; }
+  .tag-gray   { background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.8); }
+  .slide-title    { font-size: 26px; font-weight: 800; line-height: 1.2; margin-bottom: 5px; }
+  .slide-subtitle { font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 20px; }
+
+  /* ── Cards ── */
+  .cards-row { display: grid; gap: 14px; margin-bottom: 18px; }
+  .cards-4 { grid-template-columns: repeat(4, 1fr); }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .card {
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.11);
+    border-radius: 14px; padding: 18px 14px;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .card.red    { border-color: var(--red);    background: var(--red-bg); }
+  .card.green  { border-color: var(--green);  background: rgba(67,160,71,0.12); }
+  .card.yellow { border-color: var(--yellow-dark); background: rgba(249,220,69,0.10); }
+  .card.blue   { border-color: var(--blue);   background: var(--blue-bg); }
+  .card-value { font-size: 38px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+  .card-value.red    { color: var(--red); }
+  .card-value.green  { color: var(--green-mid); }
+  .card-value.yellow { color: var(--yellow); }
+  .card-label { font-size: 10.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; line-height: 1.35; }
+
+  /* ── Table ── */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+  .data-table th { background: var(--purple); color: #fff; font-weight: 700; padding: 9px 12px; text-align: center; font-size: 11px; letter-spacing: 0.3px; }
+  .data-table td { padding: 8px 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .data-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  .data-table tr:last-child td { background: rgba(118,104,172,0.22); font-weight: 700; }
+  .data-table td:first-child { text-align: left; font-weight: 600; }
+  .hl        { color: var(--yellow);   font-weight: 700; }
+  .hl-red    { color: #FF6B75;         font-weight: 700; }
+  .hl-green  { color: var(--green-mid); font-weight: 700; }
+
+  /* ── Insight / Info boxes ── */
+  .insight-box {
+    background: rgba(249,220,69,0.09);
+    border: 1.5px solid var(--yellow-dark);
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 12.5px; line-height: 1.6; color: rgba(255,255,255,0.88);
+    margin-top: 10px;
+  }
+  .insight-box b { color: var(--yellow); }
+  .info-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.11);
+    border-radius: 10px; padding: 13px 16px;
+    font-size: 13px; line-height: 1.6;
+    color: rgba(255,255,255,0.8); margin-bottom: 10px;
+  }
+  .info-box b { color: #fff; }
+
+  /* ── Bullet list ── */
+  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .bullet-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.85); }
+  .dot { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin-top: 1px; }
+  .dot-red    { background: var(--red);    color: #fff; }
+  .dot-yellow { background: var(--yellow); color: #333; }
+  .dot-green  { background: var(--green);  color: #fff; }
+  .dot-blue   { background: var(--blue);   color: #fff; }
+
+  /* ── Progress bar ── */
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.09); flex-shrink: 0; }
+  .progress-fill { height: 100%; background: var(--yellow); transition: width 0.3s ease; }
+
+  /* ── Nav ── */
+  .nav { background: rgba(90,78,142,0.95); padding: 9px 36px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .nav-btn { background: rgba(255,255,255,0.09); border: 1.5px solid rgba(255,255,255,0.18); color: #fff; padding: 6px 18px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .nav-btn:hover { background: rgba(255,255,255,0.18); }
+  .nav-btn:disabled { opacity: 0.25; cursor: default; }
+  .nav-dots { display: flex; gap: 6px; }
+  .nav-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; }
+  .nav-dot.active { background: var(--yellow); }
+  .nav-counter { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+  /* ── Cover layout ── */
+  .cover-body {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 32px 60px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d2060 60%, #3a1a5e 100%);
+  }
+  .cover-badge { background: var(--yellow); color: #333; font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 28px; }
+  .cover-title { font-size: 36px; font-weight: 800; line-height: 1.2; margin-bottom: 10px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .cover-title span { color: var(--yellow); }
+  .cover-sub { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
+
+  /* ── Arc visual (risco estético) ── */
+  .arc-wrap {
+    display: flex; align-items: center; justify-content: center;
+    gap: 48px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 22px 40px;
+  }
+  .arc-ring {
+    position: relative; width: 160px; height: 160px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--yellow) 0% 62.5%,
+      var(--red) 62.5% 80%,
+      rgba(255,255,255,0.08) 80% 100%
+    );
+    flex-shrink: 0;
+  }
+  .arc-inner {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 108px; height: 108px;
+    background: #2d2060;
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .arc-val { font-size: 28px; font-weight: 800; color: var(--yellow); line-height: 1; }
+  .arc-lbl { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+  .arc-legend { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+  .arc-leg-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .arc-leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .arc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .arc-stat { text-align: center; }
+  .arc-stat-val { font-size: 22px; font-weight: 800; }
+  .arc-stat-lbl { font-size: 9.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .bg-default { background: #1a1a2e; }
+  .bg-alt     { background: #1e1a35; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- ── S1: CAPA ── -->
+  <div class="slide active" id="s1">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">CS Ops · Reunião diária</div>
+      <div class="slide-date">19 de junho de 2026</div>
+    </div>
+    <div class="cover-body">
+      <div class="cover-badge">Sexta-feira · Fechamento de semana · 15–19 junho 2026</div>
+      <div class="cover-title">Efetividade do Time<br><span>de Relacionamento</span></div>
+      <div class="cover-sub">Como a semana fechou · onde estamos · o que fazer hoje</div>
+
+      <div class="arc-wrap">
+        <div class="arc-ring">
+          <div class="arc-inner">
+            <div class="arc-val">62,5%</div>
+            <div class="arc-lbl">hoje</div>
+          </div>
+        </div>
+        <div class="arc-legend">
+          <div class="arc-leg-item">
+            <div class="arc-leg-dot" style="background:var(--yellow)"></div>
+            <span>Escolas efetivas — <b>62,5%</b> (1.226)</span>
+          </div>
+          <div class="arc-leg-item">
+            <div class="arc-leg-dot" style="background:var(--red)"></div>
+            <span>Gap até a meta — <b>17,5 pp</b></span>
+          </div>
+          <div class="arc-leg-item">
+            <div class="arc-leg-dot" style="background:rgba(255,255,255,0.2)"></div>
+            <span>Além da meta — 20%+</span>
+          </div>
+          <div style="width:100%;height:1px;background:rgba(255,255,255,0.1);margin:4px 0"></div>
+          <div class="arc-stats">
+            <div class="arc-stat">
+              <div class="arc-stat-val" style="color:var(--red)">735</div>
+              <div class="arc-stat-lbl">Já vencidas</div>
+            </div>
+            <div class="arc-stat">
+              <div class="arc-stat-val" style="color:var(--yellow)">80%</div>
+              <div class="arc-stat-lbl">Meta do time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S2: SNAPSHOT DE HOJE ── -->
+  <div class="slide bg-default" id="s2">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Situação atual</div>
+      <div class="slide-date">19/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">Snapshot · sexta 19/06</div>
+      <div class="slide-title">Como chegamos no último dia da semana</div>
+      <div class="slide-subtitle">Efetividade recuou 1,9 pp vs ontem — estoque vencido segue crescendo</div>
+      <div class="cards-row cards-4">
+        <div class="card red">
+          <div class="card-value red">62,5%</div>
+          <div class="card-label">Efetividade<br>hoje</div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">−1,9 pp</div>
+          <div class="card-label">vs ontem<br>(64,4%)</div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">735</div>
+          <div class="card-label">Já vencidas<br>(eram 699)</div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">157</div>
+          <div class="card-label">Vencem na<br>seg 22/06</div>
+        </div>
+      </div>
+      <div class="insight-box">
+        <b>Estoque vencido cresceu +36 em 24h</b> (699→735): vencimentos naturais saem mais rápido do que o time recupera.
+        <b>157 escolas vencem na segunda</b> — o time ainda pode salvá-las com contato efetivo hoje. Cada escola coberta hoje é uma que abre a semana efetivada.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S3: A SEMANA ── -->
+  <div class="slide bg-alt" id="s3">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Esforço da semana</div>
+      <div class="slide-date">19/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-green">Seg → Qui completos</div>
+      <div class="slide-title">Como foi a semana dia a dia</div>
+      <div class="slide-subtitle">Sexta ainda em andamento — dados até qui 18/06 (dias completos)</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Dia</th>
+            <th>Atividades</th>
+            <th>Escolas tocadas</th>
+            <th>Novas efetivações</th>
+            <th>Conversão</th>
+            <th>Venceram no dia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Seg&nbsp; 15/06</td>
+            <td>834</td>
+            <td>469</td>
+            <td class="hl-green">112</td>
+            <td class="hl-green">23,9%</td>
+            <td class="hl-green">3</td>
+          </tr>
+          <tr>
+            <td>Ter&nbsp;&nbsp; 16/06</td>
+            <td>851</td>
+            <td>483</td>
+            <td class="hl-red">77</td>
+            <td class="hl-red">15,9%</td>
+            <td>104</td>
+          </tr>
+          <tr>
+            <td>Qua&nbsp; 17/06</td>
+            <td class="hl">866</td>
+            <td>478</td>
+            <td>92</td>
+            <td>19,2%</td>
+            <td>102</td>
+          </tr>
+          <tr>
+            <td>Qui&nbsp;&nbsp; 18/06</td>
+            <td class="hl-red">798</td>
+            <td class="hl-red">449</td>
+            <td>96</td>
+            <td>21,4%</td>
+            <td class="hl-red">140</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>Segunda foi o melhor dia em conversão (23,9%)</b>: apenas 3 escolas venceram e o time converteu 112 — saldo quase totalmente positivo.
+        <b>Terça piorou a conversão (15,9%)</b> apesar de mais escolas tocadas: 104 vencimentos absorveram grande parte do esforço.
+        <b>Qui:</b> menor esforço da semana (798 ativ) + 140 vencimentos = combinação que puxa o número para baixo hoje.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S4: TAREFAS DE FOCO ── -->
+  <div class="slide bg-default" id="s4foco">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Tarefas de foco</div>
+      <div class="slide-date">19/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-blue">Fila de foco · seg → sex</div>
+      <div class="slide-title">Tarefas de foco: o time toca as escolas certas?</div>
+      <div class="slide-subtitle">Foco = fila priorizada que o sistema gera todo dia · prioridade 0–3 é a mais urgente</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Dia</th>
+            <th>Foco geradas</th>
+            <th>Concluídas</th>
+            <th>% conclusão</th>
+            <th>% na fila de foco</th>
+            <th>Foco trabalhada</th>
+            <th>Urgentes (≤3)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Seg&nbsp; 15/06</td>
+            <td>890</td>
+            <td>327</td>
+            <td class="hl-green">36,7%</td>
+            <td class="hl-green">51,2%</td>
+            <td>28,1%</td>
+            <td>21,6%</td>
+          </tr>
+          <tr>
+            <td>Ter&nbsp;&nbsp; 16/06</td>
+            <td>801</td>
+            <td>287</td>
+            <td>35,8%</td>
+            <td>44,9%</td>
+            <td>25,8%</td>
+            <td>22,7%</td>
+          </tr>
+          <tr>
+            <td>Qua&nbsp; 17/06</td>
+            <td>755</td>
+            <td>262</td>
+            <td>34,7%</td>
+            <td>44,2%</td>
+            <td>27,9%</td>
+            <td class="hl-green">27,5%</td>
+          </tr>
+          <tr>
+            <td>Qui&nbsp;&nbsp; 18/06</td>
+            <td>746</td>
+            <td class="hl-red">205</td>
+            <td class="hl-red">27,5%</td>
+            <td class="hl-red">43,2%</td>
+            <td>26,0%</td>
+            <td class="hl-red">18,5%</td>
+          </tr>
+          <tr>
+            <td>Sex&nbsp;&nbsp; 19/06</td>
+            <td>764</td>
+            <td colspan="5" style="text-align:center;color:var(--muted);font-style:italic;font-weight:400">em andamento</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>% na fila de foco</b> = das escolas tocadas pelo time no dia, quantas tinham uma tarefa de foco gerada — ou seja, estavam na lista de prioridade do sistema.
+        <b>Qui caiu em todos os indicadores:</b> menor conclusão (27,5%), menor % na fila (43,2%) e urgentes no piso da semana (18,5%).
+        <b>Foco trabalhada (~27%)</b>: das tarefas de foco geradas, só 1 em cada 4 escolas recebe contato no mesmo dia — há fila priorizada parada.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S5: PROJEÇÃO SEGUNDA ── -->
+  <div class="slide bg-default" id="s5proj">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Análise do dia · Projeção segunda</div>
+      <div class="slide-date">19/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-blue">O que esperar na segunda</div>
+      <div class="slide-title">Projeção de efetividade para segunda-feira</div>
+      <div class="slide-subtitle">Baseline de segunda (as 138 de hoje já venceram): (1.226 − 157) ÷ 1.961 = <b style="color:var(--red)">54,5%</b></div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Cenário (o que o time faz hoje)</th>
+            <th>Escolas cobertas hoje</th>
+            <th>Abre segunda</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sem cobrir nenhuma de segunda (piso)</td>
+            <td>0 das 157</td>
+            <td class="hl-red">54,5%</td>
+          </tr>
+          <tr>
+            <td>Ritmo recente · qui (96 novas efetivas)</td>
+            <td>96</td>
+            <td class="hl-red">59,4%</td>
+          </tr>
+          <tr>
+            <td>Melhor dia da semana · seg (112 novas)</td>
+            <td>112</td>
+            <td class="hl-red">60,2%</td>
+          </tr>
+          <tr>
+            <td>Cobrir todas as de segunda (segurar hoje)</td>
+            <td class="hl">157 de segunda</td>
+            <td class="hl">62,5%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>O número que importa é 157</b> — escolas que vencem segunda e o time ainda pode salvar com um contato efetivo hoje.
+        Cobrindo todas elas, segunda abre em <b>62,5%</b> (igual a hoje). No ritmo recente de qui (96 novas), abre em <b>59,4%</b>.
+        A boa notícia: <b>157 está ao alcance</b> — o melhor dia da semana foi 112, e contatos nas escolas prestes a vencer têm conversão mais alta por serem alvo direto da fila de foco.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S6: SELEÇÃO ADVERSA ── -->
+  <div class="slide bg-default" id="s6sel">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Seleção adversa</div>
+      <div class="slide-date">19/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-yellow">Qual escola o time escolhe tocar</div>
+      <div class="slide-title">O time consome as escolas fáceis primeiro</div>
+      <div class="slide-subtitle">Das recuperações do dia — quanto tempo em dias úteis a escola estava vencida quando o time a tocou</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Dia</th>
+            <th>Recup.</th>
+            <th>Média DU vencida</th>
+            <th>Recentes (1–7 DU)</th>
+            <th>Médias (8–14 DU)</th>
+            <th>Antigas (15+ DU)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Seg&nbsp; 15/06</td>
+            <td>100</td>
+            <td class="hl-green">4,0</td>
+            <td class="hl-green">67 (67%)</td>
+            <td>18 (18%)</td>
+            <td>0 (0%)</td>
+          </tr>
+          <tr>
+            <td>Ter&nbsp;&nbsp; 16/06</td>
+            <td>62</td>
+            <td class="hl-red">6,7</td>
+            <td class="hl-red">29 (47%)</td>
+            <td>26 (42%)</td>
+            <td>1 (2%)</td>
+          </tr>
+          <tr>
+            <td>Qua&nbsp; 17/06</td>
+            <td>75</td>
+            <td>5,9</td>
+            <td>49 (65%)</td>
+            <td>22 (29%)</td>
+            <td>4 (5%)</td>
+          </tr>
+          <tr>
+            <td>Qui&nbsp;&nbsp; 18/06</td>
+            <td>82</td>
+            <td class="hl-green">5,0</td>
+            <td class="hl-green">57 (70%)</td>
+            <td>24 (29%)</td>
+            <td>1 (1%)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>O time concentra 65–70% das recuperações em escolas com até 7 DU vencidas</b> — as mais frescas, onde um contato normalmente basta para converter. Segunda foi o dia mais saudável (média 4,0 DU): estoque fresco do fim da semana passada disponível.
+        <b>Terça foi o único dia abaixo de 50% de recentes</b>: 42% das recuperações foram médias (8–14 DU), levando a conversão para 15,9% — o ponto mais baixo da semana.
+        <b>O estoque de 15+ DU praticamente não é tocado</b>: semana toda, apenas 6 recuperações de escolas antigas — e hoje há 143 delas paradas. São exatamente as que aparecem no próximo slide.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S7: DISTRIBUIÇÃO POR TEMPO VENCIDA ── -->
+  <div class="slide bg-alt" id="s5">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Escolas vencidas</div>
+      <div class="slide-date">19/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">735 escolas fora do prazo</div>
+      <div class="slide-title">Quanto tempo cada vencida está parada</div>
+      <div class="slide-subtitle">Quanto mais tempo fora do prazo, mais difícil de recuperar</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Tempo vencida (dias úteis)</th>
+            <th>Escolas</th>
+            <th>% do total</th>
+            <th style="text-align:left;width:38%">Distribuição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1–3 dias</td>
+            <td class="hl-green">293</td>
+            <td>39,9%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:100%;background:var(--green-mid);border-radius:6px"></div></div></td>
+          </tr>
+          <tr>
+            <td>4–7 dias</td>
+            <td>114</td>
+            <td>15,5%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:39%;background:var(--green-mid);border-radius:6px"></div></div></td>
+          </tr>
+          <tr>
+            <td>8–14 dias</td>
+            <td class="hl">185</td>
+            <td>25,2%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:63%;background:var(--yellow);border-radius:6px"></div></div></td>
+          </tr>
+          <tr>
+            <td>15–30 dias</td>
+            <td class="hl-red">90</td>
+            <td>12,2%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:31%;background:var(--red);border-radius:6px"></div></div></td>
+          </tr>
+          <tr>
+            <td>30+ dias</td>
+            <td class="hl-red">53</td>
+            <td>7,2%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:18%;background:var(--red);border-radius:6px"></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>293 escolas venceram nos últimos 3 dias úteis (39,9%)</b> — são as mais fáceis de recuperar, ainda "quentes".
+        <b>143 estão vencidas há 15+ dias</b> (19,5% do total): esse grupo precisa de atenção especial — veja o próximo slide para entender o perfil.
+        As <b>8–14 dias (185 escolas)</b> são o meio-termo: possível recuperar, mas exigem mais toques.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S6: DEEP DIVE 15+ DIAS POR SEGMENTO ── -->
+  <div class="slide bg-default" id="s6">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Vencidas · 15+ dias</div>
+      <div class="slide-date">19/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">143 escolas · vencidas há 15+ dias úteis</div>
+      <div class="slide-title">Qual segmento concentra as vencidas críticas</div>
+      <div class="slide-subtitle">Segmentação das escolas que estão fora do prazo há mais tempo</div>
+
+      <!-- Barras horizontais por segmento -->
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:18px">
+
+        <div style="display:grid;grid-template-columns:180px 1fr 52px 44px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">Medium touch</div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:100%;background:var(--blue);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">62 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:800;color:var(--blue);text-align:right">43,4%</div>
+          <div style="font-size:10px;color:var(--muted);text-align:right">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr 52px 44px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">HT Renovação</div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:64%;background:var(--purple);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">40 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:800;color:var(--purple);text-align:right">28,0%</div>
+          <div style="font-size:10px;color:var(--muted);text-align:right">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr 52px 44px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">HT Novas</div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:50%;background:#9C8FCC;border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">31 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:800;color:#9C8FCC;text-align:right">21,7%</div>
+          <div style="font-size:10px;color:var(--muted);text-align:right">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr 52px 44px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">Premium touch</div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:9.7%;background:var(--yellow-dark);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:800;color:var(--yellow);text-align:right">4,2%</div>
+          <div style="font-size:10px;color:var(--muted);text-align:right">6 escolas</div>
+        </div>
+
+      </div>
+
+      <div class="insight-box">
+        <b>Medium touch lidera com 43,4%</b> (62 escolas) das vencidas críticas — mesmo prazo do HT (7 DU), esse volume indica escolas que ficaram sem contato efetivo por mais de 3 semanas.
+        <b>High touch soma 49,7%</b> (71 escolas = 40 renovação + 31 novas): HT tem o impacto maior no ticket e na retenção — cada escola aqui é risco direto de retração.
+        <b>Premium touch tem apenas 6 escolas (4,2%)</b> — sinal de atenção personalizada funcionando para o segmento de maior valor.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S9: FUNIL DAS 204 VENCIDAS CRÍTICAS ── -->
+  <div class="slide bg-alt" id="s7">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Vencidas críticas · Funil</div>
+      <div class="slide-date">19/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">143 escolas · 15+ dias úteis vencidas</div>
+      <div class="slide-title">Onde estão no funil as escolas mais críticas</div>
+      <div class="slide-subtitle">Posição no funil normalizado (gold.etl_jornada_escolas_aplicacao) das 143 escolas vencidas há 15+ DU</div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
+
+        <div style="display:grid;grid-template-columns:260px 1fr 56px 52px;align-items:center;gap:10px">
+          <div>
+            <div style="font-size:13px;font-weight:700">03.1 Com cronograma</div>
+            <div style="font-size:11px;color:var(--muted)">sem material · no prazo do evento</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:100%;background:var(--red);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">76 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--red);text-align:right">53%</div>
+          <div style="font-size:10px;color:var(--muted)">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:260px 1fr 56px 52px;align-items:center;gap:10px">
+          <div>
+            <div style="font-size:13px;font-weight:700">02. Definição de Datas</div>
+            <div style="font-size:11px;color:var(--muted)">evento ainda sem cronograma fechado</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:42%;background:var(--yellow);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#1a1a2e">32 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--yellow);text-align:right">22%</div>
+          <div style="font-size:10px;color:var(--muted)">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:260px 1fr 56px 52px;align-items:center;gap:10px">
+          <div>
+            <div style="font-size:13px;font-weight:700">01. Onboarding & Boas-Vindas</div>
+            <div style="font-size:11px;color:var(--muted)">início da jornada de aplicação</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:28%;background:var(--purple);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">21 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--purple);text-align:right">15%</div>
+          <div style="font-size:10px;color:var(--muted)">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:260px 1fr 56px 52px;align-items:center;gap:10px">
+          <div>
+            <div style="font-size:13px;font-weight:700">04+ Com material / compras</div>
+            <div style="font-size:11px;color:var(--muted)">04, 05, 06, 07.1 somados</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:18%;background:var(--green);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">14 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--green);text-align:right">10%</div>
+          <div style="font-size:10px;color:var(--muted)">do grupo</div>
+        </div>
+
+      </div>
+
+      <div class="insight-box">
+        <b>53% já têm cronograma mas o CS parou</b> (76 escolas em "03.1"): evento marcado, prazo no prazo, mas sem contato efetivo há 15+ DU — risco direto de cancelamento ou compra sem acompanhamento.
+        <b>37% ainda não fecharam datas</b> (32 em "02" + 21 em "01"): estão no início da jornada e o contato parou antes de avançarem no funil — essas escolas podem desistir sem perceber.
+        <b>Apenas 14 (10%) já têm material ou compras</b>: o grosso do grupo crítico ainda está antes da conversão.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+<div class="nav">
+  <button class="nav-btn" id="btnPrev" onclick="go(-1)" disabled>← Anterior</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+    <div class="nav-dots" id="dots"></div>
+    <div class="nav-counter" id="counter">1 / 9</div>
+  </div>
+  <button class="nav-btn" id="btnNext" onclick="go(1)">Próximo →</button>
+</div>
+
+<script>
+  const TOTAL = 9;
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl  = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const prog    = document.getElementById('prog');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goto(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goto(n) {
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(TOTAL - 1, n));
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('active');
+    counter.textContent = (cur + 1) + ' / ' + TOTAL;
+    prog.style.width = ((cur + 1) / TOTAL * 100) + '%';
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === TOTAL - 1;
+  }
+  function go(dir) { goto(cur + dir); }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  });
+  prog.style.width = (1 / TOTAL * 100) + '%';
+</script>
+</body>
+</html>
