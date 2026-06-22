@@ -394,14 +394,14 @@ html.dark .ev-lbl{color:#71717a}
   </div>
 
   <div class="card">
-    <div class="card-head"><span class="card-title">Evolu&#231;&#227;o &mdash; novas ef./dia</span></div>
+    <div class="card-head"><span class="card-title" id="chart-title">Evolu&#231;&#227;o &mdash; novas ef./dia</span></div>
     <div style="padding:0 18px 18px">
       <div id="chart-bars" class="ev-chart-wrap"></div>
     </div>
   </div>
 
 </div>
-<script>const C = {"efetivas": 1206, "elegiveis": 1963, "pef_atual": 61.4, "novas_dia": 117.3, "novas_analista": 51.1, "novas_estagiario": 64.9, "novas_historico": [124, 142, 135, 134, 104, 97, 106, 118, 110, 71, 140, 170, 153, 136, 122, 96, 114, 78, 92, 104], "novas_datas": ["21/05", "22/05", "25/05", "26/05", "27/05", "28/05", "29/05", "01/06", "02/06", "03/06", "05/06", "08/06", "09/06", "10/06", "11/06", "12/06", "15/06", "16/06", "17/06", "18/06", "19/06"], "semana_novas": [], "semana_datas": [], "semana_dias": [], "ritmos_periodos": {"semana": {"total": 0, "analista": 0, "estagiario": 0, "n": 0}, "semana_passada": {"total": 94.6, "analista": 35.8, "estagiario": 57.0, "n": 5}, "mes": {"total": 113.5, "analista": 48.1, "estagiario": 64.0, "n": 14}, "mes_passado": {"total": 120.3, "analista": 53.0, "estagiario": 65.9, "n": 7}}, "novas_hist_analista": [41, 68, 69, 49, 52, 43, 49, 54, 49, 30, 50, 93, 49, 69, 60, 41, 61, 24, 31, 40], "novas_hist_estagiario": [83, 73, 63, 83, 50, 52, 57, 64, 60, 40, 90, 76, 101, 66, 59, 55, 52, 53, 59, 62], "delta_ef_obs": 257.6, "delta_ef_analista": 137.9, "delta_ef_estagiario": 119.2, "ef_historico": [293, 283, 271, 286, 277, 238, 246, 254, 265, 220, 227, 314, 286, 285, 254, 182, 228, 250, 238, 255, 209], "ef_hist_analista": [150, 146, 151, 139, 151, 123, 128, 140, 147, 120, 105, 182, 132, 172, 144, 91, 140, 138, 124, 135, 92], "ef_hist_estagiario": [143, 137, 120, 146, 125, 115, 118, 113, 117, 100, 122, 131, 153, 113, 109, 91, 88, 111, 113, 119, 115], "n_consultores": 35, "n_analistas": 18, "n_estagiarios": 26, "data_ref": "2026-06-22", "expiracoes": [106, 121, 95, 178, 156, 202, 221, 12, 14, 16, 4, 13, 21, 11, 7, 2, 2, 4, 1, 2, 1, 1, 3, 3, 1, 1, 0, 2, 3, 3], "a_vencer_7du": 1079, "semana_label": "21/05–19/06", "delta_faltam_global": -20.0, "novas_ef_hoje": 0, "ref_novas_semana_passada": 94.6, "ref_vencem_semana_passada": 124.0, "ref_semana_passada_label": "15/06–19/06"};
+<script>const C = {"efetivas": 1206, "elegiveis": 1963, "pef_atual": 61.4, "novas_dia": 117.3, "novas_analista": 51.1, "novas_estagiario": 64.9, "novas_historico": [124, 142, 135, 134, 104, 97, 106, 118, 110, 71, 140, 170, 153, 136, 122, 96, 114, 78, 92, 104], "novas_datas": ["21/05", "22/05", "25/05", "26/05", "27/05", "28/05", "29/05", "01/06", "02/06", "03/06", "05/06", "08/06", "09/06", "10/06", "11/06", "12/06", "15/06", "16/06", "17/06", "18/06", "19/06"], "semana_novas": [], "semana_datas": [], "semana_dias": [], "semana_passada_novas": [114, 78, 92, 104, 85], "semana_passada_datas": ["15/06", "16/06", "17/06", "18/06", "19/06"], "semana_passada_dias": ["Seg", "Ter", "Qua", "Qui", "Sex"], "ritmos_periodos": {"semana": {"total": 0, "analista": 0, "estagiario": 0, "n": 0}, "semana_passada": {"total": 94.6, "analista": 35.8, "estagiario": 57.0, "n": 5}, "mes": {"total": 113.5, "analista": 48.1, "estagiario": 64.0, "n": 14}, "mes_passado": {"total": 120.3, "analista": 53.0, "estagiario": 65.9, "n": 7}}, "novas_hist_analista": [41, 68, 69, 49, 52, 43, 49, 54, 49, 30, 50, 93, 49, 69, 60, 41, 61, 24, 31, 40], "novas_hist_estagiario": [83, 73, 63, 83, 50, 52, 57, 64, 60, 40, 90, 76, 101, 66, 59, 55, 52, 53, 59, 62], "delta_ef_obs": 257.6, "delta_ef_analista": 137.9, "delta_ef_estagiario": 119.2, "ef_historico": [293, 283, 271, 286, 277, 238, 246, 254, 265, 220, 227, 314, 286, 285, 254, 182, 228, 250, 238, 255, 209], "ef_hist_analista": [150, 146, 151, 139, 151, 123, 128, 140, 147, 120, 105, 182, 132, 172, 144, 91, 140, 138, 124, 135, 92], "ef_hist_estagiario": [143, 137, 120, 146, 125, 115, 118, 113, 117, 100, 122, 131, 153, 113, 109, 91, 88, 111, 113, 119, 115], "n_consultores": 35, "n_analistas": 18, "n_estagiarios": 26, "data_ref": "2026-06-22", "expiracoes": [106, 121, 95, 178, 156, 202, 221, 12, 14, 16, 4, 13, 21, 11, 7, 2, 2, 4, 1, 2, 1, 1, 3, 3, 1, 1, 0, 2, 3, 3], "a_vencer_7du": 1079, "semana_label": "21/05–19/06", "delta_faltam_global": -20.0, "novas_ef_hoje": 0, "ref_novas_semana_passada": 94.6, "ref_vencem_semana_passada": 124.0, "ref_semana_passada_label": "15/06–19/06"};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -469,6 +469,14 @@ function render() {
   document.getElementById('du-val').textContent   = '';
 
   var periodo_labels = {semana:'essa semana', semana_passada:'semana passada', mes:'este mês', mes_passado:'mês passado'};
+
+  // Título do gráfico reflete o período selecionado
+  var chartTitleEl = document.getElementById('chart-title');
+  if (chartTitleEl) {
+    chartTitleEl.innerHTML = periodo === 'semana_passada'
+      ? 'Novas ef./dia &mdash; semana passada (' + (C.ref_semana_passada_label || '') + ')'
+      : 'Evolu&#231;&#227;o &mdash; novas ef./dia';
+  }
 
   // Ritmo de novas efetivações por dia — soma dos sliders de cargo
   var rp = getRitmoPeriodo();
@@ -598,40 +606,49 @@ function render() {
     }
   }
 
-  // Gráfico de barras — novas ef./dia desta semana
+  // Gráfico de barras — novas ef./dia (troca conforme janela selecionada)
   var wrap = document.getElementById('chart-bars');
-  if (wrap && C.semana_novas && C.semana_novas.length) {
-    var vals  = C.semana_novas;
-    var datas = C.semana_datas || [];
-    var dias  = C.semana_dias  || [];
-    var maxV  = Math.max.apply(null, vals) || 1;
-    var n     = vals.length;
+  var chartVals, chartDatas, chartDias, isLastWeek;
+  if (periodo === 'semana_passada' && C.semana_passada_novas && C.semana_passada_novas.length) {
+    chartVals  = C.semana_passada_novas;
+    chartDatas = C.semana_passada_datas || [];
+    chartDias  = C.semana_passada_dias  || [];
+    isLastWeek = true;
+  } else {
+    chartVals  = C.semana_novas  || [];
+    chartDatas = C.semana_datas  || [];
+    chartDias  = C.semana_dias   || [];
+    isLastWeek = false;
+  }
+  if (wrap && chartVals.length) {
+    var maxV  = Math.max.apply(null, chartVals) || 1;
+    var n     = chartVals.length;
     var media = delta_periodo.toFixed(0);
     wrap.innerHTML = '';
     wrap.style.cssText = 'display:flex;align-items:flex-end;gap:12px;height:160px;padding:0 8px 0';
 
-    vals.forEach(function(v, i) {
+    chartVals.forEach(function(v, i) {
       var pct    = Math.round(v / maxV * 88) + 12;
-      var isHoje = (i === n - 1);
+      // Para semana passada: sem destaque de "hoje" (semana já encerrou)
+      var isHoje = !isLastWeek && (i === n - 1);
       var col    = document.createElement('div');
       col.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:100%';
       col.innerHTML =
         '<span style="font-size:11px;font-weight:800;color:' + (isHoje ? '#7668AC' : '#555') + ';margin-bottom:4px">' + v + '</span>'
         + '<div style="width:100%;background:' + (isHoje ? '#7668AC' : 'rgba(118,104,172,.30)') + ';'
         + 'border-radius:6px 6px 0 0;height:' + pct + '%;transition:height .3s"></div>'
-        + '<div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:5px">' + (dias[i] || '') + '</div>'
-        + '<div style="font-size:9px;color:var(--muted)">' + (datas[i] || '') + '</div>';
+        + '<div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:5px">' + (chartDias[i] || '') + '</div>'
+        + '<div style="font-size:9px;color:var(--muted)">' + (chartDatas[i] || '') + '</div>';
       wrap.appendChild(col);
     });
 
-    // linha de média
-    var med = document.createElement('div');
-    med.style.cssText = 'position:absolute;right:0;font-size:10px;font-weight:700;color:#7668AC;padding:4px 8px;'
-      + 'background:rgba(118,104,172,.08);border-radius:6px;white-space:nowrap';
-    med.textContent = 'méd. semana: ' + media + '/dia';
     var wrapOuter = wrap.parentElement;
     wrapOuter.style.position = 'relative';
+    // Remove legenda anterior para não acumular ao trocar período
+    var oldMed = wrapOuter.querySelector('.chart-media-lbl');
+    if (oldMed) oldMed.remove();
     var medWrap = document.createElement('div');
+    medWrap.className = 'chart-media-lbl';
     medWrap.style.cssText = 'text-align:right;padding:8px 8px 0;font-size:10px;font-weight:700;color:#7668AC';
     medWrap.textContent = 'méd. ' + (periodo_labels[periodo] || periodo) + ': ' + media + '/dia';
     wrapOuter.appendChild(medWrap);
