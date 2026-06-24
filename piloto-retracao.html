@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piloto Célula Retração · Estante Mágica</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:      #A89DD8;
+    --purple-dark: #7668AC;
+    --purple-bg:   #201C33;
+    --yellow:      #F9DC45;
+    --blue:        #3BBCF0;
+    --blue-bg:     #091C2B;
+    --red:         #F07080;
+    --red-bg:      #2A0D14;
+    --green:       #5CC75F;
+    --green-bg:    #0C200E;
+    --orange:      #FB923C;
+    --orange-bg:   #201008;
+    --teal:        #2DD4BF;
+    --teal-bg:     #051A17;
+    --gray:        #C4BDE0;
+    --gray-light:  #0F0D1A;
+    --border:      #2C2745;
+    --shadow:      0 2px 12px rgba(0,0,0,0.45);
+    --card-bg:     #181528;
+    --input-bg:    #201C33;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Montserrat', -apple-system, 'Segoe UI', sans-serif; background: var(--gray-light); color: var(--gray); line-height: 1.5; }
+  /* dark extras */
+  .filter-bar select option { background: #201C33; color: var(--gray); }
+  .pill:hover { border-color: var(--purple); color: var(--purple); }
+  .pill.active { background: var(--purple-dark); color: white; }
+  td { border-bottom-color: #221F38; }
+  .cs-avatar { background: var(--purple-bg); }
+  .cs-avatar.blue { background: var(--blue-bg); }
+  .section-title { color: var(--purple); }
+  .footer-note { color: #3D3660; }
+  /* modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65); z-index: 100;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: #1A1728; border: 1px solid var(--border);
+    border-radius: 14px; padding: 28px 32px; max-width: 520px; width: 90%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+  .modal-title { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; color: var(--purple); text-transform: uppercase; margin-bottom: 16px; }
+  .modal-body { font-size: 12px; color: #9B94C0; line-height: 1.9; }
+  .modal-body b { color: var(--gray); font-weight: 700; }
+  .modal-close {
+    margin-top: 20px; padding: 8px 20px; border-radius: 8px;
+    background: var(--purple-bg); border: 1.5px solid var(--border);
+    color: var(--purple); font-family: inherit; font-size: 11px; font-weight: 700;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .modal-close:hover { background: var(--purple-dark); color: white; border-color: var(--purple-dark); }
+  .btn-info {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--purple-bg); border: 1.5px solid var(--border);
+    color: var(--purple); padding: 4px 12px; border-radius: 8px;
+    font-size: 10px; font-weight: 700; font-family: inherit; cursor: pointer;
+    transition: background 0.15s; letter-spacing: 0.5px;
+  }
+  .btn-info:hover { background: var(--purple-dark); color: white; border-color: var(--purple-dark); }
+  .container { max-width: 1440px; margin: 0 auto; padding: 20px 16px; }
+  header {
+    background: var(--purple); color: white;
+    padding: 20px 28px; border-radius: 12px; margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    box-shadow: var(--shadow);
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-center { flex: 1; text-align: center; }
+  .header-center h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+  .header-center .sub { font-size: 11px; opacity: 0.75; margin-top: 3px; font-weight: 400; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.35);
+    color: white; text-decoration: none; padding: 6px 14px; border-radius: 8px;
+    font-size: 11px; font-weight: 700; font-family: inherit; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-back:hover { background: rgba(255,255,255,0.28); }
+  .stamp {
+    background: var(--yellow); color: #2B2200;
+    padding: 5px 13px; border-radius: 6px; font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  }
+  .em-logo {
+    background: var(--purple-bg); color: var(--purple); font-size: 15px; font-weight: 800;
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; letter-spacing: -1px; flex-shrink: 0;
+  }
+  /* Funil */
+  .funnel-section { background: var(--card-bg); border-radius: 12px; padding: 20px 24px 16px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .section-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--purple); text-transform: uppercase; margin-bottom: 16px; padding-left: 4px; }
+  .funnel-outer { display: flex; align-items: center; overflow-x: auto; gap: 0; }
+  .f-arrow { color: #C8C2E0; font-size: 20px; padding: 0 4px; flex-shrink: 0; margin-bottom: 28px; }
+  .f-stage {
+    flex: 1; min-width: 110px; display: flex; flex-direction: column; align-items: center;
+    padding: 14px 8px 10px; position: relative;
+  }
+  .f-ico { font-size: 20px; margin-bottom: 6px; }
+  .f-num { font-size: 36px; font-weight: 800; color: var(--purple); line-height: 1; }
+  .f-sub { margin-top: 4px; display: flex; align-items: center; gap: 6px; justify-content: center; flex-wrap: wrap; }
+  .f-naolow { font-size: 11px; font-weight: 800; color: var(--red); background: var(--red-bg); padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+  .f-num.blue   { color: var(--blue); }
+  .f-num.orange { color: var(--orange); }
+  .f-num.green  { color: var(--green); }
+  .f-num.teal   { color: var(--teal); }
+  .f-num.red    { color: var(--red); }
+  .f-lbl { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.8px; text-align: center; margin-top: 4px; }
+  .f-pct { font-size: 11px; color: #ccc; font-weight: 600; text-align: center; margin-top: 1px; }
+  .f-divider { width: 1px; align-self: stretch; background: var(--border); margin: 10px 0; flex-shrink: 0; }
+  .f-perdida {
+    border-top: 2px dashed var(--red-bg); border-radius: 8px;
+    padding: 8px 14px; background: var(--red-bg); display: flex; align-items: center; gap: 10px;
+    margin-top: 10px;
+  }
+  .f-perdida-n { font-size: 20px; font-weight: 800; color: var(--red); }
+  .f-perdida-l { font-size: 9px; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 0.8px; }
+  /* Cards por CS */
+  .cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin-bottom: 16px; }
+  .cs-card { background: var(--card-bg); border-radius: 12px; padding: 18px 20px; box-shadow: var(--shadow); border-top: 4px solid var(--purple); }
+  .cs-card.blue { border-top-color: var(--blue); }
+  .cs-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .cs-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--purple-bg); color: var(--purple); font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cs-avatar.blue { background: var(--blue-bg); color: var(--blue); }
+  .cs-name { font-size: 14px; font-weight: 800; color: var(--purple); }
+  .cs-name.blue { color: var(--blue); }
+  .cs-tag { font-size: 9px; font-weight: 700; color: #aaa; letter-spacing: 1px; text-transform: uppercase; margin-top: 1px; }
+  .cs-funnel { display: flex; align-items: center; overflow-x: auto; gap: 0; }
+  .cs-step { display: flex; flex-direction: column; align-items: center; padding: 6px 8px; flex: 1; min-width: 60px; }
+  .cs-n { font-size: 24px; font-weight: 800; color: var(--purple); line-height: 1; }
+  .cs-n.blue   { color: var(--blue); }
+  .cs-n.orange { color: var(--orange); }
+  .cs-n.green  { color: var(--green); }
+  .cs-n.teal   { color: var(--teal); }
+  .cs-n.red    { color: var(--red); }
+  .cs-l { font-size: 8px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.6px; text-align: center; margin-top: 2px; }
+  .cs-p { font-size: 9px; color: #ccc; font-weight: 600; }
+  .cs-arrow { color: #D0CBE8; font-size: 14px; margin-bottom: 12px; flex-shrink: 0; padding: 0 2px; }
+  .cs-divider { height: 1px; background: var(--border); margin: 10px 0; }
+  .tags-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 9px; font-weight: 700; padding: 3px 9px; border-radius: 10px; }
+  .tag.ht { background: var(--purple-bg); color: var(--purple-dark); }
+  .tag.mt { background: var(--blue-bg); color: var(--blue); }
+  .tag.lt { background: #1E1A2E; color: #6B6490; }
+  .tag.pt { background: var(--orange-bg); color: var(--orange); }
+  .tag.perd { background: var(--red-bg); color: var(--red); }
+  .tag.fila { background: #1E1A2E; color: #6B6490; }
+  /* Filtros e tabela */
+  .pills-wrap { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .pill {
+    padding: 5px 13px; border-radius: 20px; font-size: 10px; font-weight: 700;
+    cursor: pointer; border: 2px solid var(--border); background: var(--card-bg); color: var(--gray);
+    transition: all 0.15s; font-family: inherit;
+  }
+  .pill:hover { border-color: var(--purple); color: var(--purple); }
+  .pill.active { background: var(--purple); color: white; border-color: var(--purple); }
+  .pill.active.blue { background: var(--blue); border-color: var(--blue); }
+  .pill.active.orange { background: var(--orange); border-color: var(--orange); }
+  .pill.active.green { background: var(--green); border-color: var(--green); }
+  .pill.active.teal { background: var(--teal); border-color: var(--teal); }
+  .pill.active.red { background: var(--red); border-color: var(--red); }
+  .filter-bar { background: var(--card-bg); border-radius: 10px; padding: 10px 16px; margin-bottom: 10px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .filter-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--purple); text-transform: uppercase; white-space: nowrap; }
+  .filter-bar select, .filter-bar input {
+    font-family: 'Montserrat', sans-serif; font-size: 13px; padding: 6px 11px;
+    border: 2px solid var(--border); border-radius: 8px; background: var(--input-bg); color: var(--gray); font-weight: 600; cursor: pointer;
+  }
+  .filter-bar input { flex: 1; min-width: 200px; font-weight: 400; }
+  .filter-bar select:focus, .filter-bar input:focus { outline: 3px solid var(--purple); border-color: var(--purple); }
+  .counter { font-size: 10px; color: #bbb; font-style: italic; margin-left: auto; white-space: nowrap; }
+  .table-wrap { background: var(--card-bg); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead { background: var(--purple); color: white; position: sticky; top: 0; z-index: 1; }
+  th { padding: 10px 11px; text-align: left; font-weight: 700; font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase; white-space: nowrap; }
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable::after { content: " ⇅"; opacity: 0.4; font-size: 8px; }
+  th.sorted-asc::after { content: " ▲"; opacity: 1; color: var(--yellow); }
+  th.sorted-desc::after { content: " ▼"; opacity: 1; color: var(--yellow); }
+  th:hover { background: var(--purple-dark); }
+  th.num, td.num { text-align: right; }
+  td { padding: 8px 11px; border-bottom: 1px solid var(--purple-bg); }
+  tr:hover td { background: #1E1A30; }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 9px; font-weight: 700; letter-spacing: 0.4px; white-space: nowrap; }
+  .badge.convertida  { background: var(--green-bg);  color: var(--green); }
+  .badge.efetiva     { background: var(--blue-bg);   color: var(--blue); }
+  .badge.abordada    { background: var(--orange-bg); color: var(--orange); }
+  .badge.monitoramento { background: var(--teal-bg); color: var(--teal); }
+  .badge.perdida     { background: var(--red-bg);    color: var(--red); }
+  .badge.na_fila     { background: #1E1A2E;           color: #6B6490; }
+  .badge.ht { background: var(--purple-bg); color: var(--purple-dark); }
+  .badge.mt { background: var(--blue-bg); color: var(--blue); }
+  .badge.lt { background: #1E1A2E; color: #6B6490; font-style: italic; }
+  .badge.pt { background: var(--orange-bg); color: var(--orange); }
+  .badge.trilhaA { background: #201A08; color: #C8971A; }
+  .badge.trilhaB { background: var(--purple-bg); color: var(--purple-dark); }
+  .ax-link { display: inline-flex; align-items: center; margin-left: 5px; color: #ccc; text-decoration: none; transition: color 0.15s; vertical-align: middle; }
+  .ax-link:hover { color: var(--purple); }
+  .empty { padding: 60px 20px; text-align: center; color: #bbb; font-style: italic; }
+  .footer-note { font-size: 10px; color: #ccc; text-align: center; padding-bottom: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-left">
+      <div class="em-logo">EM</div>
+    </div>
+    <div class="header-center">
+      <h1>Piloto Célula Retração</h1>
+      <div class="sub">Julia Bravo &amp; Mariana Mazzero · Acompanhamento do piloto</div>
+    </div>
+    <div class="header-right">
+      <span class="stamp">18/06/2026</span>
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/" target="_blank">← Voltar</a>
+    </div>
+  </header>
+
+  <!-- Modal como foram calculados -->
+  <div class="modal-overlay" id="modal-calc" onclick="if(event.target===this)closeModal()">
+    <div class="modal-box">
+      <div class="modal-title">Como foram calculados</div>
+      <div class="modal-body">
+        <b>Trabalhadas</b> — tentativa de contato registrada (D0–D5), classificação D7 preenchida, ou receita salva.<br><br>
+        <b>Contato efetivo</b> — pelo menos 1 tentativa registrada como "OK", independente de classificação posterior.<br><br>
+        <b>Desfecho positivo</b> — classificação "Monitoramento longo" ou receita salva.<br><br>
+        <b>Recuperadas</b> — campo "Receita salva (R$)" preenchido.<br><br>
+        <b>Perdidas</b> — classificação D7 = "Perdida".
+      </div>
+      <button class="modal-close" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Funil global -->
+  <div class="funnel-section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div class="section-title" style="margin-bottom:0;">Funil do piloto</div>
+      <button class="btn-info" onclick="document.getElementById('modal-calc').classList.add('open')">ℹ Como calculamos</button>
+    </div>
+    <div class="funnel-outer">
+      <div class="f-stage">
+        <div class="f-ico">📋</div>
+        <div class="f-num">166</div>
+        <div class="f-sub">&nbsp;</div>
+        <div class="f-lbl">Base total</div>
+        <div class="f-pct">excl. low touch e sem seg.</div>
+      </div>
+      <div class="f-arrow">›</div>
+      <div class="f-stage">
+        <div class="f-ico">📞</div>
+        <div class="f-num blue">21</div>
+        <div class="f-sub">&nbsp;</div>
+        <div class="f-lbl">Trabalhadas</div>
+        <div class="f-pct">12.7% da base</div>
+      </div>
+      <div class="f-arrow">›</div>
+      <div class="f-stage">
+        <div class="f-ico">✅</div>
+        <div class="f-num orange">7</div>
+        <div class="f-sub">&nbsp;</div>
+        <div class="f-lbl">Contato efetivo</div>
+        <div class="f-pct">33.3% das trabalhadas</div>
+      </div>
+      <div class="f-arrow">›</div>
+      <div class="f-stage">
+        <div class="f-ico">🔄</div>
+        <div class="f-num teal">2</div>
+        <div class="f-sub">&nbsp;</div>
+        <div class="f-lbl">Desfecho positivo</div>
+        <div class="f-pct">monitoramento + recup.</div>
+      </div>
+      <div class="f-arrow">›</div>
+      <div class="f-stage">
+        <div class="f-ico">🎯</div>
+        <div class="f-num green">1</div>
+        <div class="f-sub">&nbsp;</div>
+        <div class="f-lbl">Recuperadas</div>
+        <div class="f-pct">0.6% da base</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; border-top:1px solid var(--border); padding-top:10px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <div class="f-perdida">
+        <div>
+          <div class="f-perdida-n">13</div>
+          <div class="f-perdida-l">Perdidas (D7)</div>
+        </div>
+        <div style="font-size:10px;color:#bbb;line-height:1.4;">classificadas como<br>perdidas no prazo D7</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards por consultora -->
+  <div class="section-title">Por consultora</div>
+  <div class="cs-grid">
+    <div class="cs-card">
+      <div class="cs-header">
+        <div class="cs-avatar">JB</div>
+        <div>
+          <div class="cs-name">Julia Bravo</div>
+          <div class="cs-tag">CS-A · 77 escolas · Trilha A (12) e B (65)</div>
+        </div>
+      </div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n">77</div><div class="cs-l">Base</div><div class="cs-p">100%</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n blue">4</div><div class="cs-l">Trabalhadas</div><div class="cs-p">5.2%</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n orange">0</div><div class="cs-l">C. efetivo</div><div class="cs-p">—</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n teal">0</div><div class="cs-l">Positivas</div><div class="cs-p">—</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">0</div><div class="cs-l">Recup.</div><div class="cs-p">—</div></div>
+      </div>
+      <div class="cs-divider"></div>
+      <div class="tags-row">
+        <span class="tag perd">7 perdidas</span>
+        <span class="tag fila">66 na fila</span>
+      </div>
+    </div>
+    <div class="cs-card blue">
+      <div class="cs-header">
+        <div class="cs-avatar blue">MM</div>
+        <div>
+          <div class="cs-name blue">Mariana Mazzero</div>
+          <div class="cs-tag">CS-B · 89 escolas · Trilha B (89)</div>
+        </div>
+      </div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n blue">89</div><div class="cs-l">Base</div><div class="cs-p">100%</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n blue">17</div><div class="cs-l">Trabalhadas</div><div class="cs-p">19.1%</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n orange">7</div><div class="cs-l">C. efetivo</div><div class="cs-p">41.2%*</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n teal">2</div><div class="cs-l">Positivas</div><div class="cs-p">2.2%</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Recup.</div><div class="cs-p">1.1%</div></div>
+      </div>
+      <div class="cs-divider"></div>
+      <div class="tags-row">
+        <span class="tag perd">6 perdidas</span>
+        <span class="tag fila">69 na fila</span>
+      </div>
+      <div style="font-size:9px;color:#bbb;margin-top:6px;">* % das trabalhadas</div>
+    </div>
+  </div>
+
+  <!-- Tabela -->
+  <div class="section-title">Escolas do piloto</div>
+  <div class="pills-wrap" id="status-pills">
+    <button class="pill active" data-status="todos" onclick="setPill(this)">Todos (166)</button>
+    <button class="pill orange" data-status="abordada" onclick="setPill(this)">Abordadas</button>
+    <button class="pill blue" data-status="efetiva" onclick="setPill(this)">Efetivas</button>
+    <button class="pill teal" data-status="monitoramento" onclick="setPill(this)">Monitoramento</button>
+    <button class="pill green" data-status="convertida" onclick="setPill(this)">Recuperadas</button>
+    <button class="pill red" data-status="perdida" onclick="setPill(this)">Perdidas</button>
+    <button class="pill" data-status="na_fila" onclick="setPill(this)">Na fila</button>
+  </div>
+  <div class="filter-bar">
+    <span class="filter-label">Filtros</span>
+    <select id="f-cs" onchange="renderTable()">
+      <option value="">Todas consultoras</option>
+      <option value="Julia Bravo">Julia Bravo</option>
+      <option value="Mariana Mazzero">Mariana Mazzero</option>
+    </select>
+    <select id="f-trilha" onchange="renderTable()">
+      <option value="">Todas trilhas</option>
+      <option value="A">A — Revenda Quente</option>
+      <option value="B">B — Retração Recuperável</option>
+    </select>
+    <select id="f-seg" onchange="renderTable()">
+      <option value="">Todas segmentações</option>
+      <option value="High touch">High touch</option>
+      <option value="Medium touch">Medium touch</option>
+      <option value="Premium touch">Premium touch</option>
+      <option value="Premium touch 40+">Premium touch 40+</option>
+    </select>
+    <input type="text" id="f-busca" placeholder="Buscar escola..." oninput="renderTable()">
+    <span class="counter" id="counter">166 escolas</span>
+    <button class="btn-info" onclick="exportCSV()" style="margin-left:auto;">↓ Exportar CSV</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortTable('nome')">Escola</th>
+          <th>ID AX</th>
+          <th class="sortable" onclick="sortTable('cs')">Consultora</th>
+          <th class="sortable" onclick="sortTable('segmentacao')">Segmentação</th>
+          <th class="sortable" onclick="sortTable('trilha')">Trilha</th>
+          <th class="sortable" onclick="sortTable('estado')">UF</th>
+          <th class="sortable" onclick="sortTable('origem')">Origem</th>
+          <th class="sortable" onclick="sortTable('receita_ant')">Rec. Ant.</th>
+          <th class="sortable num" onclick="sortTable('tentativas')">Tent.</th>
+          <th class="sortable" onclick="sortTable('status')">Status</th>
+          <th>Obs.</th>
+        </tr>
+      </thead>
+      <tbody id="tbl-body"></tbody>
+    </table>
+  </div>
+  <p class="footer-note">Dados de 18/06/2026 · Piloto Célula Retração · Segmentação via BigQuery · Estante Mágica</p>
+</div>
+
+<script>
+const ESCOLAS = [{"nome":"CENTRO EDUCACIONAL SESC LER ARARIPINA","id_ax":"https://axcrm.ai/deals/37886","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"CENTRO ESCOLAR EDUCARE","id_ax":"https://axcrm.ai/deals/63499","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"MA","origem":"Renovação","receita_ant":"R$ 29.409","canal":"Ligação","segmentacao":"High touch","status":"abordada","contato_ok":false,"tentativas":3,"classif_d7":"","receita_salva":"","obs":"16/06 - Tentativa"},{"nome":"COLEGIO INSTITUTO SABER","id_ax":"https://axcrm.ai/deals/14308","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Centro Educacional Conde Modesto Leal","id_ax":"https://axcrm.ai/deals/146173","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"tentativa"},{"nome":"EDUCANDARIO CRISTO REI","id_ax":"https://axcrm.ai/deals/1883","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"INST N SRA DO CARMO","id_ax":"https://axcrm.ai/deals/146146","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"CENTRO EDUCACIONAL DESENVOLVER","id_ax":"https://axcrm.ai/deals/41091","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"PB","origem":"Retração Anos Anteriores","receita_ant":"R$ 22.145","canal":"WhatsApp","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Gestora atendeu, se mostrou interessada pelo método de aplicação confortável, à partir do segundo dia não consegui mais contato."},{"nome":"ETL DE LINS","id_ax":"https://axcrm.ai/deals/292986","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"SÃO PAULO - SP","origem":"Retração Anos Anteriores","receita_ant":"R$ 22.072","canal":"Ligação","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Em contato, s/ contato com a gestora."},{"nome":"COLÉGIO RIO DA PRATA","id_ax":"https://axcrm.ai/deals/70853","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"RJ","origem":"Anos Anteriores","receita_ant":"R$ 21.948","canal":"WhatsApp","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"CRIARTE COLEGIO","id_ax":"https://axcrm.ai/deals/31661","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"ESCOLA PEQUENOS GENIOS","id_ax":"https://axcrm.ai/deals/146279","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"GO","origem":"Retração Anos Anteriores","receita_ant":"R$ 19.364","canal":"WhatsApp","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"EDUCANDÁRIO JAIME DIAS DE FIGUEIREDO","id_ax":"https://axcrm.ai/deals/431979","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"PIAUÍ - PI","origem":"Retração","receita_ant":"R$ 19.096","canal":"Ligação","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"EDUCANDARIO CECILIA MEIRELES","id_ax":"https://axcrm.ai/deals/49383","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLEGIO SAO JORGE","id_ax":"https://axcrm.ai/deals/40148","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"ALAGOAS - AL","origem":"Anos Anteriores","receita_ant":"R$ 18.104","canal":"Ligação","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"Colégio Adventista de Itapagipe","id_ax":"https://axcrm.ai/deals/444611","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"BA","origem":"Retração Anos Anteriores","receita_ant":"R$ 17.236","canal":"WhatsApp","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"ESCOLA LOW TOUCH"},{"nome":"AQUARELA E EI EF","id_ax":"https://axcrm.ai/deals/35330","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"EDUCANDARIO SANTA LUCIA","id_ax":"https://axcrm.ai/deals/432190","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"PARAÍBA - PB","origem":"Anos Anteriores","receita_ant":"R$ 15.367","canal":"WhatsApp","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"COLEGIO PIO XII","id_ax":"https://axcrm.ai/deals/37827","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"MG","origem":"Novas - Outbound","receita_ant":"R$ 14.732","canal":"Ligação","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"Centro Educacional Chego Lá","id_ax":"https://axcrm.ai/deals/32483","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"BA","origem":"Anos Anteriores","receita_ant":"R$ 12.446","canal":"WhatsApp","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"ESCOLA TIA RITA","id_ax":"https://axcrm.ai/deals/56101","cs":"Julia Bravo","trilha":"A - Revenda Quente","estado":"BA","origem":"Anos Anteriores","receita_ant":"R$ 12.446","canal":"Ligação","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"ESCOLA LIDERANCA","id_ax":"https://axcrm.ai/deals/57873","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Em contato com a gestora - BV AGENDADA"},{"nome":"EDUCANDARIO BEM QUERER","id_ax":"https://axcrm.ai/deals/281095","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"MAMAE CORUJA ESCOLA E HOTELZINHO","id_ax":"https://axcrm.ai/deals/23350","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"Educandário Disneylândia","id_ax":"https://axcrm.ai/deals/36248","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"DOCE GERACAO ESCOLA EIEF","id_ax":"https://axcrm.ai/deals/144590","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"COLEGIO APRENDENDO COM AMOR","id_ax":"https://axcrm.ai/deals/32487","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"ESCOLA MUNDO ENCANTADO DA CRIANCA","id_ax":"https://axcrm.ai/deals/51154","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"ESCOLA DE EDUCAÇÃO BÁSICA SANTA CLARA DE ASSIS","id_ax":"https://axcrm.ai/deals/68788","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"Instituto Pedagógico Cristo Rei","id_ax":"https://axcrm.ai/deals/144992","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Em contato com a escola. S/contato com a gestão."},{"nome":"MLF CENTRO EDUCACIONAL LTDA ME","id_ax":"https://axcrm.ai/deals/55580","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"CENTRO EDUCACIONAL NOVO IDEAL","id_ax":"https://axcrm.ai/deals/292038","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"Premium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"Colégio Verità","id_ax":"https://axcrm.ai/deals/63868","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"ESCOLA BATISTA TIA SIDALVA","id_ax":"https://axcrm.ai/deals/70835","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"Colégio Mundial","id_ax":"https://axcrm.ai/deals/146371","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"COLEGIO WALFREDO SIQUEIRA LUNA","id_ax":"https://axcrm.ai/deals/68127","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"ESCOLA SESI PADRE FRANCISCO LUPPINO","id_ax":"https://axcrm.ai/deals/146373","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06 Responsável respondeu o disparo na Blip 19/06 - Após a resposta ao disparo não obtive mais resposta. Tentei utilizando hj a abordagem do cupom"},{"nome":"CESC-CENTRO EDUC SONHO DE CRIANÇA","id_ax":"https://axcrm.ai/deals/146010","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"Responsável respondeu o disparo na Blip, já marcamos a Bv, ela participou, optou por não prosseguir com a EM"},{"nome":"EDUCANDARIO CARROSSEL DO SABER","id_ax":"https://axcrm.ai/deals/60768","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"pe","origem":"Novas - Outbound","receita_ant":"R$ 23.072","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa 19/06 - Tentativa"},{"nome":"ESC DE ENSINO FUNDAMENTAL E RECREACAO INFANTIL BABY HAPPY","id_ax":"https://axcrm.ai/deals/15016","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"São Paulo - SP","origem":"Novas - Outbound","receita_ant":"R$ 20.956","canal":"","segmentacao":"High touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"Descarte. Gestora informou que ficou muito atropelado para aplicar a EM neste ano. Falei sobre o método confortável como alternativa. Mesmo assim, disse que preferia para o ano que vem."},{"nome":"CENTRO EDUCACIONAL JOSE LUIZ FULY ESCOLA CRIANCA FELIZ","id_ax":"https://axcrm.ai/deals/39714","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"rj","origem":"Novas - Outbound","receita_ant":"R$ 19.220","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"CE CRER E SER","id_ax":"https://axcrm.ai/deals/63188","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"es","origem":"Novas - Outbound","receita_ant":"R$ 16.740","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"CENTRO EDUCACIONAL PONTO DE PARTIDA LTDA","id_ax":"https://axcrm.ai/deals/19729","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"mg","origem":"Anos Anteriores","receita_ant":"R$ 15.240","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"COLÉGIO PASSO A PASSO","id_ax":"https://axcrm.ai/deals/30375","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Anos Anteriores","receita_ant":"R$ 14.097","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"NOSSA SENHORA DA DIVINA PROVIDENCIA COLEGIO","id_ax":"https://axcrm.ai/deals/46728","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Anos Anteriores","receita_ant":"R$ 13.081","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06- Foi solicitado para revenda. Marcar BV ou reu?"},{"nome":"COLEGIO JOSE BENJAMIN DE SOUZA LEAO","id_ax":"https://axcrm.ai/deals/65627","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"pe","origem":"Anos Anteriores","receita_ant":"R$ 12.192","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06 - Tentativa"},{"nome":"Colégio CENEB Kids Águas Claras","id_ax":"https://axcrm.ai/deals/57521","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"df","origem":"Novas - Outbound","receita_ant":"R$ 11.811","canal":"","segmentacao":"High touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"16/06 - Gestora pediu para nos avisar que não vai aplicar. Não consegui contato efetivo com ela."},{"nome":"Colégio Irmã Josepha","id_ax":"https://axcrm.ai/deals/146433","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"pa","origem":"Novas - Outbound","receita_ant":"R$ 11.303","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06 - Tentativa"},{"nome":"COLÉGIO GIRASSOL","id_ax":"https://axcrm.ai/deals/63866","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 11.217","canal":"","segmentacao":"High touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"18/06 Descarte. Gestora enviou mensagem dizendo que optou por não aplicar."},{"nome":"ESCOLA BOA SEMENTE","id_ax":"https://axcrm.ai/deals/41597","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"ba","origem":"Concorrência","receita_ant":"R$ 11.049","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06 - Tentativa"},{"nome":"EMEB PROF. EDNA FÁVERO CHOQUETA","id_ax":"https://axcrm.ai/deals/292387","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 10.733","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06- Tentativa"},{"nome":"COLEGIO SAO JOSE","id_ax":"https://axcrm.ai/deals/67643","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"pe","origem":"Renovação","receita_ant":"R$ 10.523","canal":"","segmentacao":"High touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"16/06 - Descarte. Gestora decidiu por não aplicar esse ano por questões de tempo e financeiras."},{"nome":"ODYSSEUS COLEGIO","id_ax":"https://axcrm.ai/deals/15442","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Concorrência","receita_ant":"R$ 9.271","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06 - Tentativa"},{"nome":"ESCOLA CRISTA MANANCIAL","id_ax":"https://axcrm.ai/deals/60669","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"mg","origem":"Novas - Outbound","receita_ant":"R$ 9.144","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06 - tentativa"},{"nome":"ESCOLA DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL SABERES","id_ax":"https://axcrm.ai/deals/68713","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"es","origem":"Renovação","receita_ant":"R$ 9.088","canal":"","segmentacao":"High touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"18/06 - Descarte. A escola vai encerrar as atividades."},{"nome":"Colégio Batista do Icaivera","id_ax":"https://axcrm.ai/deals/70245","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"mg","origem":"Renovação","receita_ant":"R$ 8.938","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Tentativa"},{"nome":"COLÉGIO INTEGRADO DE TATUÍ","id_ax":"https://axcrm.ai/deals/62717","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Anos Anteriores","receita_ant":"R$ 8.763","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Tentativa"},{"nome":"ARCO - IRIS","id_ax":"https://axcrm.ai/deals/25824","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"mt","origem":"Retração Anos Anteriores","receita_ant":"R$ 8.509","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"A escola está aplicando com o Super Autor"},{"nome":"ESCOLA ADVENTISTA DO IAPI","id_ax":"https://axcrm.ai/deals/55557","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"ba","origem":"Retração Anos Anteriores","receita_ant":"R$ 8.255","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06- Tentativa"},{"nome":"LEGACY SCHOOL","id_ax":"https://axcrm.ai/deals/70961","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"rj","origem":"Renovação","receita_ant":"R$ 7.880","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Tentativa"},{"nome":"EEI COM AMOR","id_ax":"https://axcrm.ai/deals/146391","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"rs","origem":"Renovação","receita_ant":"R$ 7.772","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Tentativa"},{"nome":"COLEGIO CCM","id_ax":"https://axcrm.ai/deals/68150","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"rj","origem":"Renovação","receita_ant":"R$ 7.489","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Tentativa"},{"nome":"Centro Educacional Miguel Cervantes","id_ax":"https://axcrm.ai/deals/146381","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"rj","origem":"Novas - Outbound","receita_ant":"R$ 7.239","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06- Tentativa"},{"nome":"COLEGIO VILLAGE GARAVELO - UNIDADE I","id_ax":"https://axcrm.ai/deals/113936","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"go","origem":"Renovação","receita_ant":"R$ 7.169","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Contato com a escola, sem contato com a gestora"},{"nome":"ESCOLA GETSEMANE","id_ax":"https://axcrm.ai/deals/146359","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"al","origem":"Renovação","receita_ant":"R$ 6.908","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Tentativa"},{"nome":"CENTRO EDUCACIONAL ROSA DE SOUZA PEREIRA","id_ax":"https://axcrm.ai/deals/64828","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"es","origem":"Renovação","receita_ant":"R$ 6.741","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Tentativa"},{"nome":"EEI SITIO DO PICA-PAU AMARELO","id_ax":"https://axcrm.ai/deals/24465","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"rs","origem":"Novas - Outbound","receita_ant":"R$ 6.477","canal":"","segmentacao":"High touch","status":"abordada","contato_ok":false,"tentativas":1,"classif_d7":"","receita_salva":"","obs":"17/06 - Tentativa"},{"nome":"Centro Educacional Abigail","id_ax":"https://axcrm.ai/deals/146009","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"pa","origem":"Renovação","receita_ant":"R$ 6.007","canal":"","segmentacao":"Medium touch","status":"abordada","contato_ok":false,"tentativas":1,"classif_d7":"","receita_salva":"","obs":"17/06- Tentativa"},{"nome":"Colégio Atena","id_ax":"https://axcrm.ai/deals/63488","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"go","origem":"Renovação","receita_ant":"R$ 5.571","canal":"","segmentacao":"Medium touch","status":"abordada","contato_ok":false,"tentativas":1,"classif_d7":"","receita_salva":"","obs":"17/06- Tentativa"},{"nome":"ESC EVANGELICA RECANTO DO CEU","id_ax":"https://axcrm.ai/deals/70283","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"df","origem":"Renovação","receita_ant":"R$ 5.026","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Tentativa"},{"nome":"ANNA TAVARES COLEGIO EIEPG","id_ax":"https://axcrm.ai/deals/4711","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 3.912","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"Bebê & Cia e Polo Estrella de ensino","id_ax":"https://axcrm.ai/deals/146418","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"rj","origem":"Renovação","receita_ant":"R$ 944","canal":"","segmentacao":"Medium touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"18/06 - Escola não funciona mais."},{"nome":"EEF Francisco de Paula Seara","id_ax":"https://axcrm.ai/deals/63619","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sc","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"Escola Municipal do Campo Ney Braga","id_ax":"https://axcrm.ai/deals/70635","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"pr","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"Colégio Adventista de Feira de Santana","id_ax":"https://axcrm.ai/deals/68743","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"ba","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Tentativa"},{"nome":"EMEF DAGMAR DE LIMA MUCILLO","id_ax":"https://axcrm.ai/deals/146162","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"rs","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Tentativa"},{"nome":"MEU COLEGIO","id_ax":"https://axcrm.ai/deals/69112","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06- Secretária não muito aberta para repassar a lig. Estão trabalho com a ciranda."},{"nome":"NELSON ANTONIO ROMAO PADRE CENTRO EDUCACAO INFANTIL","id_ax":"https://axcrm.ai/deals/63681","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Tentativa"},{"nome":"Escola Municipal do Campo Alcides Visoni","id_ax":"https://axcrm.ai/deals/68669","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"mt","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Tentativa - Utilizando Cupom"},{"nome":"ESCOLA AMERICANA DE BELO HORIZONTE","id_ax":"https://axcrm.ai/deals/15061","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"mg","origem":"Concorrência","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Tentativa - Utilizando Cupom"},{"nome":"ESCOLA DE EDUCACAO INFANTIL PRIMEIRO PASSO","id_ax":"https://axcrm.ai/deals/28137","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Concorrência","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"ESCOLA MUNICIPAL GOVERNADOR MIGUEL ARRAES DE ALENCAR","id_ax":"https://axcrm.ai/deals/292209","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"","origem":"Concorrência","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"CARD S/ INFORMAÇÕES"},{"nome":"Colégio Aprovado BG","id_ax":"https://axcrm.ai/deals/292849","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"ba","origem":"Novas - Outbound","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"16/06 - Tentativa de contato"},{"nome":"CENTRO EDUCACIONAL NOTA 10","id_ax":"https://axcrm.ai/deals/66497","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"mg","origem":"Anos Anteriores","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"ESC PART PLANETA COLORIDO","id_ax":"https://axcrm.ai/deals/56582","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"São Paulo - SP","origem":"Novas - Outbound","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"COLEGIO SAGRADA FAMILIA LTDA","id_ax":"https://axcrm.ai/deals/431285","cs":"Julia Bravo","trilha":"B - Retração Recuperável","estado":"sp","origem":"Concorrência","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"COLEGIO BATISTA MINEIRO- UNIDADE OURO BRANCO","id_ax":"https://axcrm.ai/deals/64814","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"MG","origem":"Renovação","receita_ant":"R$ 52.654","canal":"WhatsApp","segmentacao":"Premium touch 40+","status":"perdida","contato_ok":true,"tentativas":5,"classif_d7":"Perdida","receita_salva":"","obs":"Glaucio sugeriu que façamos uma aproximação com a Rede Batista (BH), pois as decisões hoje são centralizadas pela rede e essa pode ser a melhor forma de voltar a atuar nas unidades."},{"nome":"COLEGIO IMACULADA CONCEICAO","id_ax":"https://axcrm.ai/deals/70911","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"AL","origem":"Renovação","receita_ant":"R$ 51.111","canal":"Ligação","segmentacao":"Premium touch 40+","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Escola Amarelinha Yellow","id_ax":"https://axcrm.ai/deals/291975","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"MS","origem":"Renovação","receita_ant":"R$ 48.061","canal":"WhatsApp","segmentacao":"Premium touch","status":"perdida","contato_ok":false,"tentativas":2,"classif_d7":"Perdida","receita_salva":"","obs":"09/06/2026 e 10/06/2026: Realizadas tentativas de retomada de contato para entender o cenário atual da Escola Amarelinha Yellow e reabrir a conversa sobre a aplicação de 2026. 15/06/2026: Walquiria informou que a escola não realizará a Estante Mágica neste ano. Foi iniciada investigação da objeção para compreender os motivos da decisão e identificar possíveis formas de apoio ou alternativas para a escola. Até o momento, não houve retorno detalhando o motivo da não aplicação."},{"nome":"COLEGIO NOSSA SENHORA DA GLORIA","id_ax":"https://axcrm.ai/deals/70529","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"PR","origem":"Renovação","receita_ant":"R$ 39.240","canal":"Ligação","segmentacao":"Premium touch","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLEGIO AUTENTICO","id_ax":"https://axcrm.ai/deals/58995","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"AL","origem":"Anos Anteriores","receita_ant":"R$ 33.990","canal":"WhatsApp","segmentacao":"High touch","status":"efetiva","contato_ok":true,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"09/06/2026: Clecimaria informou que a escola não aplicaria o projeto em 2026 devido à falta de tempo. Foi apresentado o Modelo de Aplicação Otimizada, com aplicação simplificada e integrada à rotina escolar. Demonstrou interesse e autorizou o envio de mais informações. 10/06/2026: Enviados vídeos e explicações sobre o modelo. Responsável informou que avaliaria o material e retornaria. 11/06/2026 a 15/06/2026: Realizados follow-ups para obter retorno sobre a proposta, porém sem devolutiva até o momento"},{"nome":"ESCOLA DE EDUCACAO BASICA SANTA MADALENA","id_ax":"https://axcrm.ai/deals/434526","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"AL","origem":"Retração","receita_ant":"R$ 31.827","canal":"Ligação","segmentacao":"High touch","status":"efetiva","contato_ok":true,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"Patrícia relatou baixa adesão das famílias após um plantão de apresentação do projeto. Trabalhamos estratégias de engajamento, possibilidade de tema voltado à família e alinhamos uma possível aplicação no 2º semestre. Ela se mostrou aberta às sugestões. Combinado envio de proposta de ação para famílias e avaliação do envio de um patinho para apresentação no plantão do dia 19/06."},{"nome":"Escola Edimônica","id_ax":"https://axcrm.ai/deals/293485","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"BA","origem":"Anos Anteriores","receita_ant":"R$ 28.634","canal":"WhatsApp","segmentacao":"High touch","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"INSTITUTO DANTAS MONTEIRO","id_ax":"https://axcrm.ai/deals/50943","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"RIO GRANDE DO NORTE - RN","origem":"Anos Anteriores","receita_ant":"R$ 28.119","canal":"Ligação","segmentacao":"High touch","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Colégio Everest Internacional - Ud. Asa Norte","id_ax":"https://axcrm.ai/deals/68903","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"DF","origem":"Renovação","receita_ant":"R$ 24.070","canal":"WhatsApp","segmentacao":"Premium touch","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLEGIO RAUL SANS DE MATOS","id_ax":"https://axcrm.ai/deals/70471","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"MS","origem":"Renovação","receita_ant":"R$ 19.511","canal":"Ligação","segmentacao":"High touch","status":"efetiva","contato_ok":true,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"Rita informou que a escola não aplicará em 2026 devido ao custo para as famílias. Apresentada condição com até 15% de desconto sobre a tabela. Demonstrou interesse e solicitou informações sobre o percentual destinado ao colégio para alinhamento com a diretora. Caso em negociação."},{"nome":"ESCOLA EVANGÉLICA DA COMUNIDADE DE CASTROLANDA EDUCAÇÃO INFANTIL E FUNDAMENTAL","id_ax":"https://axcrm.ai/deals/20833","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"PR","origem":"Anos Anteriores","receita_ant":"R$ 17.980","canal":"WhatsApp","segmentacao":"High touch","status":"monitoramento","contato_ok":true,"tentativas":3,"classif_d7":"Monitoramento longo","receita_salva":"","obs":"Kamila informou que a escola está passando por reformas e diversas mudanças internas, o que tem gerado instabilidade na rotina e impossibilitado a inclusão de novas demandas para os professores neste ano. Apesar disso, mostrou-se receptiva ao projeto e demonstrou interesse em retomarmos a conversa futuramente."},{"nome":"CENTRO EDUCACIONAL PEZINHO PRA FRENTE","id_ax":"https://axcrm.ai/deals/56279","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"RJ","origem":"Anos Anteriores","receita_ant":"R$ 17.732","canal":"Ligação","segmentacao":"High touch","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"CENTRO INTEGRADO DE EDUCAÇÃO E TECNOLOGIA CIETEC","id_ax":"https://axcrm.ai/deals/26236","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"MA","origem":"Anos Anteriores","receita_ant":"R$ 16.864","canal":"WhatsApp","segmentacao":"High touch","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"Agnaldo informou que o CIETEC não realizará a aplicação da Estante Mágica em 2026. Busquei aprofundar a objeção para entender se a decisão estava relacionada a planejamento, tempo ou outro fator, porém não houve detalhamento do motivo, apenas o envio de um emoji de cumprimento (🤝)"},{"nome":"CENTRO INFANTIL PEDACINHO DO CEU","id_ax":"https://axcrm.ai/deals/30931","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"MG","origem":"Retração Anos Anteriores","receita_ant":"R$ 16.120","canal":"Ligação","segmentacao":"High touch","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"CENTRO EDUCACIONAL SARAH KALLEY","id_ax":"https://axcrm.ai/deals/67589","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"PA","origem":"Renovação","receita_ant":"R$ 15.725","canal":"WhatsApp","segmentacao":"High touch","status":"abordada","contato_ok":false,"tentativas":2,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"CENTRO EDUCACIONAL MONTOVANI SABATINE LTDA","id_ax":"https://axcrm.ai/deals/279616","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"RJ","origem":"Anos Anteriores","receita_ant":"R$ 15.240","canal":"Ligação","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Escola informou que não aplicará a Estante Mágica em 2026 devido aos compromissos já assumidos no planejamento escolar e à falta de tempo. Busquei aprofundar a objeção para entender se o impeditivo está relacionado à carga dos professores ou ao cronograma da escola e apresentei a possibilidade do Modelo de Aplicação Otimizada. Após a abordagem, não houve novos retornos da responsável."},{"nome":"Centro Educacional Fonte Do Saber","id_ax":"https://axcrm.ai/deals/55459","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"RN","origem":"Anos Anteriores","receita_ant":"R$ 14.351","canal":"WhatsApp","segmentacao":"High touch","status":"perdida","contato_ok":true,"tentativas":5,"classif_d7":"Perdida","receita_salva":"","obs":"Escola optou por aplicar o projeto em apenas uma das unidades, pois considera repetitiva uma nova aplicação na unidade que já participou anteriormente. Foram apresentadas alternativas de formato, turmas e temática, mas a decisão já está alinhada internamente e não haverá alterações no planejamento deste ano."},{"nome":"ESCOLA FUTURO LIMA","id_ax":"https://axcrm.ai/deals/39459","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"RJ","origem":"Retração","receita_ant":"R$ 14.097","canal":"Ligação","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"INST STO ALEIXO","id_ax":"https://axcrm.ai/deals/64659","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"RJ","origem":"Retração","receita_ant":"R$ 13.208","canal":"WhatsApp","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Colégio Paroquial Senhor Menino Deus","id_ax":"https://axcrm.ai/deals/50040","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"CE","origem":"Anos Anteriores","receita_ant":"R$ 13.081","canal":"Ligação","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"CENTRO EDUCACIONAL SANTA MONICA LTDA","id_ax":"https://axcrm.ai/deals/29898","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"ANHEMBI MORUMBI COLEGIO","id_ax":"https://axcrm.ai/deals/55254","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"perdida","contato_ok":true,"tentativas":1,"classif_d7":"Perdida","receita_salva":"","obs":"Escola fechou"},{"nome":"Escola Abelhinha","id_ax":"https://axcrm.ai/deals/444454","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"ESCOLA OCEANO DO SABER","id_ax":"https://axcrm.ai/deals/444433","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLEGIO FENIX","id_ax":"https://axcrm.ai/deals/444463","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Escola Integral Elshamah","id_ax":"https://axcrm.ai/deals/292861","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Colégio CECAMP","id_ax":"https://axcrm.ai/deals/56598","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"JARDIM DE INFANCIA PINGO DE GENTE","id_ax":"https://axcrm.ai/deals/42608","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Centro Educacional Moura Azevedo","id_ax":"https://axcrm.ai/deals/145006","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Escola de Sucesso","id_ax":"https://axcrm.ai/deals/146027","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLÉGIO PIÁ OBJETIVO","id_ax":"https://axcrm.ai/deals/67814","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLÉGIO BITTENCOURT","id_ax":"https://axcrm.ai/deals/24497","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLEGIO VITORINO","id_ax":"https://axcrm.ai/deals/28529","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"Escola Padre José de Anchieta","id_ax":"https://axcrm.ai/deals/48588","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"ESCOLA URSINHO PANDA","id_ax":"https://axcrm.ai/deals/12354","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"ESC MAT E J INF CASA DA CRIANCA","id_ax":"https://axcrm.ai/deals/43027","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"ESCOLA ARAUJO","id_ax":"https://axcrm.ai/deals/23252","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLÉGIO UNIQUE","id_ax":"https://axcrm.ai/deals/63434","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"ESCOLA RECANTO DO SABER","id_ax":"https://axcrm.ai/deals/61843","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"INSTITUTO DE EDUCACAO PAULO FREIRE LTDA-ME","id_ax":"https://axcrm.ai/deals/13787","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"COLEGIO MONTEIRO LOBATO","id_ax":"https://axcrm.ai/deals/428614","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"pe","origem":"Retração","receita_ant":"R$ 47.483","canal":"","segmentacao":"High touch","status":"convertida","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"R$ 0","obs":"17/06 - escola está em aplicação"},{"nome":"COLEGIO SANTA EMILIA DE RODAT","id_ax":"https://axcrm.ai/deals/146390","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"pe","origem":"Anos Anteriores","receita_ant":"R$ 21.733","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"SESI 210 CENTRO EDUCACIONAL","id_ax":"https://axcrm.ai/deals/61265","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"São Paulo - SP","origem":"Novas - Outbound","receita_ant":"R$ 19.964","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"sem efetividade"},{"nome":"colégio Augusto Laranja","id_ax":"https://axcrm.ai/deals/292885","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"sp","origem":"Novas - Outbound","receita_ant":"R$ 17.484","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"tentativa"},{"nome":"PAULO AVELAR COLEGIO","id_ax":"https://axcrm.ai/deals/41945","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"sp","origem":"Novas - Outbound","receita_ant":"R$ 16.120","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"COLEGIO FABIA","id_ax":"https://axcrm.ai/deals/27404","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"mg","origem":"Novas - Outbound","receita_ant":"R$ 14.605","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Tentativa"},{"nome":"CENTRO DE ENSINO CASTELO ENCANTADO","id_ax":"https://axcrm.ai/deals/292813","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"df","origem":"Concorrência","receita_ant":"R$ 13.208","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"tentativa"},{"nome":"ESCOLA BATISTA BETANIA DE GRAVATA","id_ax":"https://axcrm.ai/deals/55166","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"pe","origem":"Concorrência","receita_ant":"R$ 12.446","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"tentativa"},{"nome":"Instituto de Ensino Joana d'Arc","id_ax":"https://axcrm.ai/deals/70357","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"Bahia - BA","origem":"Renovação","receita_ant":"R$ 12.003","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - tentativa"},{"nome":"COLÉGIO ARCON","id_ax":"https://axcrm.ai/deals/70630","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 11.434","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"tentativa"},{"nome":"ESCOLA PARAISO DA CRIANCA","id_ax":"https://axcrm.ai/deals/15056","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"Paraíba - PB","origem":"Anos Anteriores","receita_ant":"R$ 11.303","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/01 - tentativa"},{"nome":"Maple Bear Barreiras","id_ax":"https://axcrm.ai/deals/280285","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"ba","origem":"Renovação","receita_ant":"R$ 11.069","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Escola informou que optou por não realizar a Estante Mágica em 2026. Foi realizada tentativa de aprofundar a objeção para entender se a decisão está relacionada ao planejamento escolar, tempo da equipe ou outro fator, além de verificar possíveis alternativas. Até o momento, não houve retorno da escola."},{"nome":"JARDIM ESCOLA SARAH DAWSEY LTDA - UNIDADE BARRA DA TIJUCA","id_ax":"https://axcrm.ai/deals/143877","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"rj","origem":"Renovação","receita_ant":"R$ 10.767","canal":"","segmentacao":"High touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"19/06 - Responsável informou que a decisão de não aplicar em 2026 já estava definida há algum tempo. Durante a ligação, relatou ocorrências de anos anteriores relacionadas à qualidade dos livros (linha no miolo, colagem e erro de nome), todas tratadas pela Estante Mágica. Busquei alternativas para retomada, porém a direção optou por não seguir devido à baixa adesão das famílias e ao momento de mudanças estruturais da escola. Preferem reavaliar a possibilidade apenas no final do ano para 2027."},{"nome":"C EDUC INOVAR","id_ax":"https://axcrm.ai/deals/292884","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"mg","origem":"Retração","receita_ant":"R$ 10.541","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - Escola informou que deixará a aplicação da Estante Mágica para 2027 devido à saída de uma professora, fazendo com que a responsável esteja acumulando funções de coordenação e sala de aula. Foi apresentada a possibilidade de um modelo de aplicação mais enxuto, pensado para escolas com limitação de tempo e equipe, porém ainda sem retorno sobre a proposta"},{"nome":"COLEGIO SOMAR VICENTE JOVINO","id_ax":"https://axcrm.ai/deals/145051","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"ce","origem":"Novas - Outbound","receita_ant":"R$ 9.652","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - tentativa"},{"nome":"CENTRO EDUCACIONAL ESPACO GREEN","id_ax":"https://axcrm.ai/deals/22002","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"rj","origem":"Retração Anos Anteriores","receita_ant":"R$ 9.144","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"17/06 - tentativa"},{"nome":"PRA GENTE PEQUENA ESCOLA E JULIA PERRONI ESCOLA","id_ax":"https://axcrm.ai/deals/18617","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 9.124","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"Colégio Objetivo Ceilândia","id_ax":"https://axcrm.ai/deals/444602","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"df","origem":"Renovação","receita_ant":"R$ 9.033","canal":"","segmentacao":"High touch","status":"perdida","contato_ok":false,"tentativas":0,"classif_d7":"Perdida","receita_salva":"","obs":"escola fechada"},{"nome":"BERCARIO ESCOLA OBJETIVO DA VIDA","id_ax":"https://axcrm.ai/deals/14022","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"go","origem":"Concorrência","receita_ant":"R$ 8.890","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"JD DE INF ESTRELINHA FELIZ","id_ax":"https://axcrm.ai/deals/17611","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"rj","origem":"Anos Anteriores","receita_ant":"R$ 8.636","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Escola informou que já havia decidido no início do ano deixar a aplicação da Estante Mágica para 2027. Realizada tentativa de aprofundar a objeção para entender o que motivou a decisão e verificar possíveis alternativas para a realidade da escola. Aguardando retorno da responsável."},{"nome":"EDUCACAO INFANTIL CASTELINHO ENCANTADO","id_ax":"https://axcrm.ai/deals/70546","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"rj","origem":"Renovação","receita_ant":"R$ 8.386","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"COLÉGIO SOUZA DUARTE","id_ax":"https://axcrm.ai/deals/146394","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"rj","origem":"Renovação","receita_ant":"R$ 8.197","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"Escola Antônio Jovino da Silva","id_ax":"https://axcrm.ai/deals/146365","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"al","origem":"Renovação","receita_ant":"R$ 7.866","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Escola informou de forma direta que não realizará a aplicação da Estante Mágica em 2026. Foi realizada tentativa de aprofundar a objeção para entender se a decisão estava relacionada ao planejamento escolar, falta de tempo ou outro fator e verificar possíveis alternativas, porém até o momento não houve retorno da responsável. Caso segue aguardando devolutiva."},{"nome":"EM BARAO DO RIO BRANCO","id_ax":"https://axcrm.ai/deals/70873","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"mg","origem":"Renovação","receita_ant":"R$ 7.708","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - Escola informou que não participará da Estante Mágica em 2026. Foi realizada tentativa de aprofundar a objeção para entender se a decisão estava relacionada ao planejamento, tempo disponível ou outro fator específico e verificar possíveis alternativas para a realidade da escola. Até o momento, não houve retorno da responsável. Caso segue aguardando devolutiva."},{"nome":"escola aprendendo a crescer","id_ax":"https://axcrm.ai/deals/48581","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"rs","origem":"Concorrência","receita_ant":"R$ 7.366","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"COLEGIO BATISTA DE ITABUNA","id_ax":"https://axcrm.ai/deals/26707","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"ba","origem":"Anos Anteriores","receita_ant":"R$ 7.239","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"BOM JESUS CENTRO EDUCACIONAL","id_ax":"https://axcrm.ai/deals/146004","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"ce","origem":"Renovação","receita_ant":"R$ 7.132","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"ESCOLA EVANGÉLICA LÍRIOS DO CAMPO","id_ax":"https://axcrm.ai/deals/36439","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"Goiás - GO","origem":"Anos Anteriores","receita_ant":"R$ 6.858","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"Polo Educacional Ornelas LTDA - Escola Arco-Íris","id_ax":"https://axcrm.ai/deals/68772","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"mg","origem":"Renovação","receita_ant":"R$ 6.735","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"COLEGIO MUNDO MAGICO","id_ax":"https://axcrm.ai/deals/145969","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"mg","origem":"Renovação","receita_ant":"R$ 6.211","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"Colegio Winner","id_ax":"https://axcrm.ai/deals/146393","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 5.826","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":""},{"nome":"COLEGIO EVANGELICO MISSAO AGAPE LTDA","id_ax":"https://axcrm.ai/deals/146448","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"sp","origem":"Renovação","receita_ant":"R$ 5.414","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"ESCOLA E HOTELZINHO MUNDO DA ALEGRIA","id_ax":"https://axcrm.ai/deals/280365","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"ms","origem":"Renovação","receita_ant":"R$ 4.940","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"Escola Municipal em Tempo Integral Santa Rita de Cássia","id_ax":"https://axcrm.ai/deals/281094","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"ba","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"Heavenly International School 2025.2","id_ax":"https://axcrm.ai/deals/64576","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"df","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Premium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"ESCOLA ESPECIALIZADA SÃO JOSÉ","id_ax":"https://axcrm.ai/deals/67924","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"al","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"EMEF D.PEDRO II","id_ax":"https://axcrm.ai/deals/65764","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"rs","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"Biblioteca Municipal Francisco Meirelles","id_ax":"https://axcrm.ai/deals/63635","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"ro","origem":"Renovação","receita_ant":"R$ 0","canal":"","segmentacao":"Medium touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"EMEF PROFESSOR AMADEU MENDES","id_ax":"https://axcrm.ai/deals/69325","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"sp","origem":"Novas - Outbound","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"ETICA EDUCACIONAL TIA CECÍLIA","id_ax":"https://axcrm.ai/deals/292272","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"","origem":"Concorrência","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"18/06 - tentativa"},{"nome":"COLEGIO DA SAGRADA FAMILIA - 2º jornada","id_ax":"https://axcrm.ai/deals/66970","cs":"Mariana Mazzero","trilha":"B - Retração Recuperável","estado":"Pernambuco - PE","origem":"Novas - Outbound","receita_ant":"","canal":"","segmentacao":"High touch","status":"na_fila","contato_ok":false,"tentativas":0,"classif_d7":"","receita_salva":"","obs":"Card S/ Informações"}];
+
+function closeModal() { document.getElementById('modal-calc').classList.remove('open'); }
+
+function exportCSV() {
+  const cs = document.getElementById('f-cs').value;
+  const trilha = document.getElementById('f-trilha').value;
+  const seg = document.getElementById('f-seg').value;
+  const busca = document.getElementById('f-busca').value.toLowerCase();
+
+  const data = ESCOLAS.filter(e => {
+    if (statusFiltro !== 'todos' && e.status !== statusFiltro) return false;
+    if (cs && e.cs !== cs) return false;
+    if (trilha && !e.trilha.startsWith(trilha + ' -')) return false;
+    if (seg && e.segmentacao !== seg) return false;
+    if (busca && !e.nome.toLowerCase().includes(busca) && !e.estado.toLowerCase().includes(busca) && !e.obs.toLowerCase().includes(busca)) return false;
+    return true;
+  });
+
+  const cols = ['nome','id_ax','cs','segmentacao','trilha','estado','origem','receita_ant','tentativas','status','contato_ok','classif_d7','receita_salva','obs'];
+  const headers = ['Escola','ID AX','Consultora','Segmentação','Trilha','UF','Origem','Rec. Ant.','Tentativas','Status','Contato OK','Classif. D7','Receita Salva','Observação'];
+
+  const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const rows = [headers.map(esc).join(','), ...data.map(e => cols.map(c => esc(e[c])).join(','))];
+  const blob = new Blob(['﻿' + rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `retracao_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+let sortCol = 'cs', sortDir = 1;
+let statusFiltro = 'todos';
+
+function setPill(btn) {
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  statusFiltro = btn.dataset.status;
+  renderTable();
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  document.querySelectorAll('th').forEach(th => { th.classList.remove('sorted-asc','sorted-desc'); });
+  event.currentTarget.classList.add(sortDir === 1 ? 'sorted-asc' : 'sorted-desc');
+  renderTable();
+}
+
+function statusLabel(s) {
+  return {convertida:'Recuperada', efetiva:'Efetiva', abordada:'Abordada', monitoramento:'Monitoramento', perdida:'Perdida', na_fila:'Na fila'}[s] || s;
+}
+
+function segClass(s) {
+  if (!s) return 'lt';
+  const low = s.toLowerCase();
+  if (low === 'high touch') return 'ht';
+  if (low === 'medium touch') return 'mt';
+  if (low === 'low touch') return 'lt';
+  return 'pt';
+}
+
+function renderTable() {
+  const cs = document.getElementById('f-cs').value;
+  const trilha = document.getElementById('f-trilha').value;
+  const seg = document.getElementById('f-seg').value;
+  const busca = document.getElementById('f-busca').value.toLowerCase();
+
+  let data = ESCOLAS.filter(e => {
+    if (statusFiltro !== 'todos' && e.status !== statusFiltro) return false;
+    if (cs && e.cs !== cs) return false;
+    if (trilha && !e.trilha.startsWith(trilha + ' -')) return false;
+    if (seg && e.segmentacao !== seg) return false;
+    if (busca && !e.nome.toLowerCase().includes(busca) && !e.estado.toLowerCase().includes(busca) && !e.obs.toLowerCase().includes(busca)) return false;
+    return true;
+  });
+
+  data.sort((a, b) => {
+    let va = a[sortCol] ?? '', vb = b[sortCol] ?? '';
+    if (typeof va === 'number') return (va - vb) * sortDir;
+    return String(va).localeCompare(String(vb), 'pt-BR') * sortDir;
+  });
+
+  document.getElementById('counter').textContent = data.length + ' escola' + (data.length !== 1 ? 's' : '');
+
+  const tbody = document.getElementById('tbl-body');
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="11" class="empty">Nenhuma escola encontrada</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = data.map(e => {
+    const trilhaClass = e.trilha.startsWith('A') ? 'trilhaA' : 'trilhaB';
+    const trilhaShort = e.trilha.startsWith('A') ? 'A · Revenda' : 'B · Recuperável';
+    const axId = e.id_ax ? e.id_ax.replace(/.*\//, '') : '';
+    const ax = e.id_ax ? `<a class="ax-link" href="${e.id_ax}" target="_blank" title="Abrir no AXCRM"><svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor"><path d="M10 10H2V2h4V0H2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V6h-2v4zM7 0v2h2.59L3.29 8.29l1.42 1.42L11 3.41V6h2V0H7z"/></svg></a>` : '';
+    const obs = e.obs ? `<span title="${e.obs.replace(/"/g,"'")}">📝</span>` : '';
+    const segBadge = e.segmentacao ? `<span class="badge ${segClass(e.segmentacao)}">${e.segmentacao}</span>` : '<span style="color:#ddd;font-size:10px;">—</span>';
+    const csStyle = e.cs === 'Mariana Mazzero' ? 'color:var(--blue);font-weight:600;' : '';
+    return `<tr>
+      <td><span style="font-weight:600;color:var(--gray);">${e.nome}</span>${ax}</td>
+      <td style="font-size:11px;color:#9B94C0;font-weight:600;">${axId ? `<a href="${e.id_ax}" target="_blank" style="color:#9B94C0;text-decoration:none;" onmouseover="this.style.color='var(--purple)'" onmouseout="this.style.color='#9B94C0'">${axId}</a>` : '—'}</td>
+      <td style="white-space:nowrap;font-size:11px;${csStyle}">${e.cs}</td>
+      <td>${segBadge}</td>
+      <td><span class="badge ${trilhaClass}">${trilhaShort}</span></td>
+      <td>${e.estado}</td>
+      <td style="font-size:11px;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e.origem}</td>
+      <td class="num" style="font-size:11px;white-space:nowrap;">${e.receita_ant || '—'}</td>
+      <td class="num">${e.tentativas || '—'}</td>
+      <td><span class="badge ${e.status}">${statusLabel(e.status)}</span></td>
+      <td>${obs}</td>
+    </tr>`;
+  }).join('');
+}
+
+// Contagem para pills
+const counts = {};
+ESCOLAS.forEach(e => { counts[e.status] = (counts[e.status]||0)+1; });
+document.querySelector('[data-status="abordada"]').textContent = `Abordadas (${counts.abordada||0})`;
+document.querySelector('[data-status="efetiva"]').textContent = `Efetivas (${counts.efetiva||0})`;
+document.querySelector('[data-status="monitoramento"]').textContent = `Monitoramento (${counts.monitoramento||0})`;
+document.querySelector('[data-status="convertida"]').textContent = `Recuperadas (${counts.convertida||0})`;
+document.querySelector('[data-status="perdida"]').textContent = `Perdidas (${counts.perdida||0})`;
+document.querySelector('[data-status="na_fila"]').textContent = `Na fila (${counts.na_fila||0})`;
+
+renderTable();
+</script>
+</body>
+</html>
