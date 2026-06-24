@@ -63,6 +63,14 @@ td.right{text-align:right}
 .faixa-n{font-size:28px;font-weight:800;color:var(--red)}
 .faixa-lbl{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
 .faixa-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.funil-chart{display:flex;flex-direction:column;gap:10px}
+.funil-row{display:grid;grid-template-columns:260px 1fr 130px;align-items:center;gap:12px}
+.funil-lbl{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.funil-track{height:22px;background:#e8e8e4;border-radius:5px;overflow:hidden;position:relative}
+html.dark .funil-track{background:var(--border)}
+.funil-fill{height:100%;border-radius:5px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.funil-meta{font-size:11px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:700px){.funil-row{grid-template-columns:140px 1fr 90px}}
 select,input[type=text]{font-family:'Montserrat',sans-serif;font-size:12px;padding:6px 10px;
        border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);
        cursor:pointer;outline:none}
@@ -125,22 +133,22 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
 <div class="kpi-row">
   <div class="kpi">
     <div class="kpi-lbl">Total elegíveis</div>
-    <div class="kpi-val blue" style="color:var(--blue)">1969</div>
+    <div class="kpi-val blue" style="color:var(--blue)">1970</div>
     <div class="kpi-sub">escolas com TC definido</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Não efetivas</div>
-    <div class="kpi-val" style="color:var(--red)">728</div>
+    <div class="kpi-val" style="color:var(--red)">687</div>
     <div class="kpi-sub">acima do prazo</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">% não efetiva</div>
-    <div class="kpi-val" style="color:var(--red)">37.0%</div>
+    <div class="kpi-val" style="color:var(--red)">34.9%</div>
     <div class="kpi-sub">da carteira elegível</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Média dias além</div>
-    <div class="kpi-val" style="color:var(--amber)">9.5</div>
+    <div class="kpi-val" style="color:var(--amber)">9.3</div>
     <div class="kpi-sub">dias úteis acima do TC</div>
   </div>
 </div>
@@ -150,7 +158,7 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
   <div class="card-head"><span class="card-title">⏱ Faixa de Tempo Além do Prazo</span></div>
   <div class="card-body">
     <div class="faixa-grid">
-      <div class="faixa-card"><div class="faixa-n" style="color:#7668AC">235</div><div class="faixa-lbl">1–3 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#E94B56">185</div><div class="faixa-lbl">4–7 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#E94B56">164</div><div class="faixa-lbl">8–14 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#cc3c46">79</div><div class="faixa-lbl">15–21 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#aa2d38">65</div><div class="faixa-lbl">22+ dias</div><div class="faixa-sub">além do prazo</div></div>
+      <div class="faixa-card"><div class="faixa-n" style="color:#7668AC">221</div><div class="faixa-lbl">1–3 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#E94B56">177</div><div class="faixa-lbl">4–7 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#E94B56">154</div><div class="faixa-lbl">8–14 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#cc3c46">78</div><div class="faixa-lbl">15–21 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#aa2d38">57</div><div class="faixa-lbl">22+ dias</div><div class="faixa-sub">além do prazo</div></div>
     </div>
   </div>
 </div>
@@ -167,7 +175,7 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
           <th style="text-align:right">Não ef.</th>
           <th style="min-width:120px">% não ef.</th>
         </tr></thead>
-        <tbody><tr><td>High touch</td><td class="num">1012</td><td class="num" style="color:var(--red);font-weight:700">371</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:36.7%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">37%</span></div></td></tr><tr><td>Medium touch</td><td class="num">703</td><td class="num" style="color:var(--red);font-weight:700">314</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:44.7%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">45%</span></div></td></tr><tr><td>Premium touch</td><td class="num">213</td><td class="num" style="color:var(--red);font-weight:700">42</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:19.7%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">20%</span></div></td></tr><tr><td>Premium touch 40+</td><td class="num">41</td><td class="num" style="color:var(--red);font-weight:700">1</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:2.4%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">2%</span></div></td></tr></tbody>
+        <tbody><tr><td>High touch</td><td class="num">1012</td><td class="num" style="color:var(--red);font-weight:700">351</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:34.7%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">35%</span></div></td></tr><tr><td>Medium touch</td><td class="num">704</td><td class="num" style="color:var(--red);font-weight:700">299</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:42.5%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">42%</span></div></td></tr><tr><td>Premium touch</td><td class="num">213</td><td class="num" style="color:var(--red);font-weight:700">36</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:16.9%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">17%</span></div></td></tr><tr><td>Premium touch 40+</td><td class="num">41</td><td class="num" style="color:var(--red);font-weight:700">1</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:2.4%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">2%</span></div></td></tr></tbody>
       </table>
     </div>
   </div>
@@ -182,8 +190,26 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
           <th style="text-align:right">Não ef.</th>
           <th style="min-width:120px">% não ef.</th>
         </tr></thead>
-        <tbody><tr><td>Em Aplicação</td><td class="num">1513</td><td class="num" style="color:var(--red);font-weight:700">535</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:35.4%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">35%</span></div></td></tr><tr><td>Onboarding & Boas vindas</td><td class="num">411</td><td class="num" style="color:var(--red);font-weight:700">180</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:43.8%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">44%</span></div></td></tr><tr><td>Ciclo de Vendas</td><td class="num">21</td><td class="num" style="color:var(--red);font-weight:700">6</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:28.6%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">29%</span></div></td></tr><tr><td>Ciclo de Eventos</td><td class="num">16</td><td class="num" style="color:var(--red);font-weight:700">5</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:31.2%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">31%</span></div></td></tr><tr><td>Enviou Lista de Alunos</td><td class="num">8</td><td class="num" style="color:var(--red);font-weight:700">2</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:25.0%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">25%</span></div></td></tr></tbody>
+        <tbody><tr><td>Em Aplicação</td><td class="num">1515</td><td class="num" style="color:var(--red);font-weight:700">505</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:33.3%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">33%</span></div></td></tr><tr><td>Onboarding & Boas vindas</td><td class="num">409</td><td class="num" style="color:var(--red);font-weight:700">168</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:41.1%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">41%</span></div></td></tr><tr><td>Ciclo de Vendas</td><td class="num">21</td><td class="num" style="color:var(--red);font-weight:700">6</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:28.6%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">29%</span></div></td></tr><tr><td>Ciclo de Eventos</td><td class="num">16</td><td class="num" style="color:var(--red);font-weight:700">5</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:31.2%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">31%</span></div></td></tr><tr><td>Enviou Lista de Alunos</td><td class="num">9</td><td class="num" style="color:var(--red);font-weight:700">3</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:33.3%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">33%</span></div></td></tr></tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- Funil Normalizado -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">📊 Por Funil Normalizado</span>
+    <span style="font-size:11px;color:var(--muted)">% não efetiva por etapa da jornada &nbsp;·&nbsp; barra = share dentro de cada etapa</span>
+  </div>
+  <div class="card-body">
+    <div style="margin-bottom:10px;display:flex;gap:16px;font-size:11px;color:var(--muted)">
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:var(--amber);margin-right:4px;vertical-align:middle"></span>&lt;30% não ef.</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:var(--red);margin-right:4px;vertical-align:middle"></span>30–49%</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:#aa2d38;margin-right:4px;vertical-align:middle"></span>≥50%</span>
+    </div>
+    <div class="funil-chart">
+      <div class="funil-row"><div class="funil-lbl" title="01. Onboarding & Boas-Vindas">01. Onboarding & Boas-Vindas</div><div class="funil-track"><div class="funil-fill" style="width:46.6%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">27</span><span style="color:var(--muted)">/58</span>&nbsp;<span style="color:var(--red);font-weight:700">47%</span></div></div><div class="funil-row"><div class="funil-lbl" title="02. Definição de Datas">02. Definição de Datas</div><div class="funil-track"><div class="funil-fill" style="width:47.8%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">88</span><span style="color:var(--muted)">/184</span>&nbsp;<span style="color:var(--red);font-weight:700">48%</span></div></div><div class="funil-row"><div class="funil-lbl" title="03.1 Com cronograma e sem material (no prazo)">03.1 Com cronograma e sem material (no prazo)</div><div class="funil-track"><div class="funil-fill" style="width:39.4%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">408</span><span style="color:var(--muted)">/1035</span>&nbsp;<span style="color:var(--red);font-weight:700">39%</span></div></div><div class="funil-row"><div class="funil-lbl" title="03.3 Com cronograma e sem material (passou do  prazo)">03.3 Com cronograma e sem material (passou do  prazo)</div><div class="funil-track"><div class="funil-fill" style="width:50.0%;background:#aa2d38"></div></div><div class="funil-meta"><span style="font-weight:700;color:#aa2d38">2</span><span style="color:var(--muted)">/4</span>&nbsp;<span style="color:#aa2d38;font-weight:700">50%</span></div></div><div class="funil-row"><div class="funil-lbl" title="04. Com 5% material e sem compras">04. Com 5% material e sem compras</div><div class="funil-track"><div class="funil-fill" style="width:29.3%;background:var(--amber)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--amber)">56</span><span style="color:var(--muted)">/191</span>&nbsp;<span style="color:var(--amber);font-weight:700">29%</span></div></div><div class="funil-row"><div class="funil-lbl" title="05. Com responsáveis">05. Com responsáveis</div><div class="funil-track"><div class="funil-fill" style="width:24.1%;background:var(--amber)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--amber)">20</span><span style="color:var(--muted)">/83</span>&nbsp;<span style="color:var(--amber);font-weight:700">24%</span></div></div><div class="funil-row"><div class="funil-lbl" title="06. Com compras">06. Com compras</div><div class="funil-track"><div class="funil-fill" style="width:19.9%;background:var(--amber)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--amber)">68</span><span style="color:var(--muted)">/341</span>&nbsp;<span style="color:var(--amber);font-weight:700">20%</span></div></div><div class="funil-row"><div class="funil-lbl" title="07.1 Concluídas com compras">07.1 Concluídas com compras</div><div class="funil-track"><div class="funil-fill" style="width:21.7%;background:var(--amber)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--amber)">15</span><span style="color:var(--muted)">/69</span>&nbsp;<span style="color:var(--amber);font-weight:700">22%</span></div></div><div class="funil-row"><div class="funil-lbl" title="07.2 Concluídas sem compras">07.2 Concluídas sem compras</div><div class="funil-track"><div class="funil-fill" style="width:0.0%;background:var(--amber)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--amber)">0</span><span style="color:var(--muted)">/1</span>&nbsp;<span style="color:var(--amber);font-weight:700">0%</span></div></div><div class="funil-row"><div class="funil-lbl" title="08. Retração">08. Retração</div><div class="funil-track"><div class="funil-fill" style="width:75.0%;background:#aa2d38"></div></div><div class="funil-meta"><span style="font-weight:700;color:#aa2d38">3</span><span style="color:var(--muted)">/4</span>&nbsp;<span style="color:#aa2d38;font-weight:700">75%</span></div></div>
     </div>
   </div>
 </div>
@@ -200,7 +226,7 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
       </select>
       <select id="filterLid" onchange="render()">
         <option value="">Todas as lideranças</option>
-        <option value="Carine Leite">Carine Leite</option><option value="Larissa Garcia">Larissa Garcia</option><option value="Moreno Loss">Moreno Loss</option><option value="Sara Penteado">Sara Penteado</option>
+        <option value="Carine Leite">Carine Leite</option><option value="Isabelle Vale">Isabelle Vale</option><option value="Larissa Garcia">Larissa Garcia</option><option value="Moreno Loss">Moreno Loss</option><option value="Sara Penteado">Sara Penteado</option>
       </select>
       <button onclick="exportCSV()" style="font-size:12px;padding:5px 12px;border-radius:6px;
               background:var(--amber);color:#fff;border:none;cursor:pointer;font-family:inherit;font-weight:600">
@@ -234,18 +260,14 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
 <script>
 const RAW = [
 ["144651","ESCOLA DESPERTANDO PARA O SABER","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,106,99,"https://axcrm.ai/deals/144651"],
-["146370","Cultura Inglesa Natal","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",20,118,98,"https://axcrm.ai/deals/146370"],
 ["21575","Col\u00e9gio Ordem e Progresso","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,76,69,"https://axcrm.ai/deals/21575"],
 ["69234","ESCOLA DO SESI APARECIDA DO TABOADO","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,76,69,"https://axcrm.ai/deals/69234"],
-["63571","TOCA DO LEAO ESCOLA DE EDUCACAO INFANTIL","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,68,61,"https://axcrm.ai/deals/63571"],
 ["70900","UNIVERSIDADE INFANTIL GAMA - UIG","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,68,61,"https://axcrm.ai/deals/70900"],
 ["62307","COLEGIO ALEGRIA E SABER","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,67,60,"https://axcrm.ai/deals/62307"],
-["67449","SOCIEDADE ESTUDANTIL PEQUENA ESTRELA","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,66,59,"https://axcrm.ai/deals/67449"],
 ["431305","CENTRO EDUCACIONAL AQUARELA","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",20,78,58,"https://axcrm.ai/deals/431305"],
 ["280804","Col\u00e9gio Cidade de Piracicaba","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,62,55,"https://axcrm.ai/deals/280804"],
 ["71126","CENTRO INTERESCOLAR JOAO TEIXEIRA SARAIVA [2 semestre]","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,59,52,"https://axcrm.ai/deals/71126"],
 ["67726","COOPERATIVA DE ENSINO SANTA RITA DO PASSA QUATRO","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,59,52,"https://axcrm.ai/deals/67726"],
-["145972","ESCOLA CEI","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,56,49,"https://axcrm.ai/deals/145972"],
 ["42782","CENTRO EDUCACIONAL ANJINHOS DO CEU","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,55,48,"https://axcrm.ai/deals/42782"],
 ["54655","COL DIVINO CORACAO DE JESUS","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,55,48,"https://axcrm.ai/deals/54655"],
 ["63672","Cmei professora Maria Aparecida da Silva","dandara.mariano@estantemagica.com.br","Sara Penteado","High touch","Onboarding & Boas vindas",7,54,47,"https://axcrm.ai/deals/63672"],
@@ -255,8 +277,9 @@ const RAW = [
 ["70279","ESCOLA JO\u00c3O XXIII","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,50,43,"https://axcrm.ai/deals/70279"],
 ["66675","DOM BOSCO PREMIUM","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,45,38,"https://axcrm.ai/deals/66675"],
 ["70676","CNA - UNIDADE MOSSORO","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,44,37,"https://axcrm.ai/deals/70676"],
+["70835","ESCOLA BATISTA TIA SIDALVA","mariana.mazzero@estantemagica.com.br","Isabelle Vale","High touch","Enviou Lista de Alunos",7,43,36,"https://axcrm.ai/deals/70835"],
 ["27140","ESCOLA DE ENSINO FUNDAMENTAL IDADE KIDS LTDA","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,43,36,"https://axcrm.ai/deals/27140"],
-["66182","ALBATIZA TAVARES DE OLIVEIRA GUERRA EEF - Iracema/CE","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,43,36,"https://axcrm.ai/deals/66182"],
+["66182","ALBATIZA TAVARES DE OLIVEIRA GUERRA EEF - Iracema/CE","","","Medium touch","Onboarding & Boas vindas",7,43,36,"https://axcrm.ai/deals/66182"],
 ["63813","Recanto de Educa\u00e7\u00e3o Infantil Gato Xadrez","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,42,35,"https://axcrm.ai/deals/63813"],
 ["42235","Carlos Drummond de Andrade - Unidade Penha","sarah.moura@estantemagica.com.br","Carine Leite","High touch","Onboarding & Boas vindas",7,41,34,"https://axcrm.ai/deals/42235"],
 ["69080","ESC ADVENTISTA DO GAMA","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,41,34,"https://axcrm.ai/deals/69080"],
@@ -264,20 +287,17 @@ const RAW = [
 ["70935","EXITO PRIMEIROS PASSOS C EI EF M","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,41,34,"https://axcrm.ai/deals/70935"],
 ["70934","RANIERI COLEGIO","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,40,33,"https://axcrm.ai/deals/70934"],
 ["444621","COLEGIO RESOLVE EIRELI","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,39,32,"https://axcrm.ai/deals/444621"],
-["62184","JARDIM ESCOLA CHAPEUZINHO VERMELHO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,37,30,"https://axcrm.ai/deals/62184"],
 ["69747","Carlos Drummond de Andrade - Unidade Ponte Rasa","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,37,30,"https://axcrm.ai/deals/69747"],
 ["431351","COLEGIO MILENIO","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,36,29,"https://axcrm.ai/deals/431351"],
 ["48004","Cultura Inglesa - Duque de Caxias","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,36,29,"https://axcrm.ai/deals/48004"],
 ["69191","COLEGIO FRANCISCANO SANT ANNA","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,35,28,"https://axcrm.ai/deals/69191"],
 ["70847","CENTRO EDUCACIONAL S\u00c3O MATHEUS","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,35,28,"https://axcrm.ai/deals/70847"],
 ["145820","Col\u00e9gio Santa Clara","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,35,28,"https://axcrm.ai/deals/145820"],
-["68903","Col\u00e9gio Everest Internacional - Ud. Asa Norte","mariana.santana@estantemagica.com.br","Carine Leite","Premium touch","Onboarding & Boas vindas",7,35,28,"https://axcrm.ai/deals/68903"],
 ["15858","COLEGIO CURSO RAIZ","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,34,27,"https://axcrm.ai/deals/15858"],
 ["292659","ESCOLA MUNICIPAL MARIA TERESA MACIEL DA SILVEIRA MELO","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,34,27,"https://axcrm.ai/deals/292659"],
 ["64682","ESCOLA PEQUENO PRINCIPE","viviane.luz@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,34,27,"https://axcrm.ai/deals/64682"],
 ["292671","GRUPO ESCOLAR MUNICIPAL PADRE ALBERTO LEOPOLDO BOSING","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,34,27,"https://axcrm.ai/deals/292671"],
 ["13583","VIDAL COLEGIO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,34,27,"https://axcrm.ai/deals/13583"],
-["146367","CENTRO EDUCACIONAL EVANDRO AYRES DE MOURA","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,34,27,"https://axcrm.ai/deals/146367"],
 ["64676","CENTRO EDUCACIONAL MORIAH","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,34,27,"https://axcrm.ai/deals/64676"],
 ["70662","ESC FRANKLIN ROOSEVELT","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,34,27,"https://axcrm.ai/deals/70662"],
 ["43769","CENTRO EDUCACIONAL INFANTIL PIUI PIUI","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,32,25,"https://axcrm.ai/deals/43769"],
@@ -293,9 +313,7 @@ const RAW = [
 ["70661","COL\u00c9GIO CONSTRUINDO O SABER ED. INFANTIL, ENSINO FUNDAMENTAL E M\u00c9DIO","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,30,23,"https://axcrm.ai/deals/70661"],
 ["69309","Centro Educacional Alpha Ideal","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,30,23,"https://axcrm.ai/deals/69309"],
 ["145844","Col\u00e9gio M2 Pampulha","sarah.moura@estantemagica.com.br","Carine Leite","Premium touch","Onboarding & Boas vindas",7,30,23,"https://axcrm.ai/deals/145844"],
-["146411","COL\u00c9GIO VILA FIGUEIRA","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,29,22,"https://axcrm.ai/deals/146411"],
 ["71205","Centro De Ensino Shalom","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,29,22,"https://axcrm.ai/deals/71205"],
-["68236","Col\u00e9gio COC S\u00e3o Jo\u00e3o","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,29,22,"https://axcrm.ai/deals/68236"],
 ["71024","Col\u00e9gio Futuro Feliz","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,29,22,"https://axcrm.ai/deals/71024"],
 ["69983","NUCLEO EDUCACIONAL ESTRELA DO SABER","indlayse.ferreira@estantemagica.com.br","Moreno Loss","Medium touch","Onboarding & Boas vindas",7,29,22,"https://axcrm.ai/deals/69983"],
 ["37138","ESCOLA GENTE INOCENTE","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,28,21,"https://axcrm.ai/deals/37138"],
@@ -319,7 +337,6 @@ const RAW = [
 ["280696","Unidade Integrada Educand\u00e1rio da Paz","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,26,19,"https://axcrm.ai/deals/280696"],
 ["29055","ARCO IRIS ESCOLA INFANTIL E DE ENSINO FUNDAMENTAL","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,25,18,"https://axcrm.ai/deals/29055"],
 ["12623","CENTRO EDUCACIONAL EXPANSAO","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,25,18,"https://axcrm.ai/deals/12623"],
-["48903","CENTRO EDUCACIONAL PEQUENO PENSADOR","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,25,18,"https://axcrm.ai/deals/48903"],
 ["14047","Col\u00e9gio Construir","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,25,18,"https://axcrm.ai/deals/14047"],
 ["42387","EDUCANDARIO ARTE DO SABER LTDA - ME","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,25,18,"https://axcrm.ai/deals/42387"],
 ["35247","ESCOLA DE EDUCACAO BASICA LAPIS DE COR","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,25,18,"https://axcrm.ai/deals/35247"],
@@ -404,7 +421,6 @@ const RAW = [
 ["19137","Col\u00e9gio Crist\u00e3o Kair\u00f3s","sarah.moura@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,21,14,"https://axcrm.ai/deals/19137"],
 ["431284","CENTRO DE ENSINO MARANATA","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,20,13,"https://axcrm.ai/deals/431284"],
 ["69779","Campos dos Goytacazes","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,20,13,"https://axcrm.ai/deals/69779"],
-["144867","Col\u00e9gio Adventista Piraju\u00e7ara","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,20,13,"https://axcrm.ai/deals/144867"],
 ["48791","ESCOLA MARIA AUXILIADORA","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,20,13,"https://axcrm.ai/deals/48791"],
 ["280084","JOAQUIM PEREIRA MENDES - E M PROF","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,20,13,"https://axcrm.ai/deals/280084"],
 ["70429","PARADIGMA COLEGIO E CURSO","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,20,13,"https://axcrm.ai/deals/70429"],
@@ -422,6 +438,7 @@ const RAW = [
 ["444750","Col\u00e9gio Vis\u00e3o - Unidade Formosa","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,19,12,"https://axcrm.ai/deals/444750"],
 ["68687","ESCOLA CARROSSEL ENCANTADO","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,19,12,"https://axcrm.ai/deals/68687"],
 ["48136","ESCOLA CULTURAL","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,19,12,"https://axcrm.ai/deals/48136"],
+["146405","ESCOLA PRIMEIRA INFANCIA","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,19,12,"https://axcrm.ai/deals/146405"],
 ["146405","ESCOLA PRIMEIRA INFANCIA","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,19,12,"https://axcrm.ai/deals/146405"],
 ["146360","CELO - Centro Educacional Lopes de Oliveira","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,19,12,"https://axcrm.ai/deals/146360"],
 ["70301","Col\u00e9gio Darwin","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,19,12,"https://axcrm.ai/deals/70301"],
@@ -449,7 +466,6 @@ const RAW = [
 ["67664","COLEGIO EMPREENDER","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/67664"],
 ["54642","COLEGIO FLAMBOYANT","kaua.coelho@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o",15,26,11,"https://axcrm.ai/deals/54642"],
 ["30107","COL\u00c9GIO SUZANO","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/30107"],
-["293445","COOPERATIVA EDUC JOAO BATISTA ROTTA","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,18,11,"https://axcrm.ai/deals/293445"],
 ["292361","Centro Educacional Deus \u00e9 Fiel","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/292361"],
 ["67832","Col\u00e9gio Vale do Curtume","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/67832"],
 ["143899","DAVILOHN KIDS - CE","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/143899"],
@@ -457,11 +473,9 @@ const RAW = [
 ["64786","ESCOLA MUNICIPAL ALOYSIO SHORT","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/64786"],
 ["444557","ESCOLA SANTA INES","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/444557"],
 ["63590","Educand\u00e1rio Jo\u00e3o Henrique Mendon\u00e7a","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/63590"],
-["60393","Educa\u00e7\u00e3o Infantil e Ensino Fundamental Aquarela","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/60393"],
 ["68163","INSTITUTO EDUCACIONAL COLORIR","shelry.solart@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/68163"],
 ["69277","LICEU CAPIVARI \u00b7 ANGLO SISTEMA DE ENSINO","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,18,11,"https://axcrm.ai/deals/69277"],
 ["67529","MAPLE BEAR CANADIAN SCHOOL UNIDADE SUMARE","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",20,31,11,"https://axcrm.ai/deals/67529"],
-["70639","COLEGIO ADVENTISTA DE LUIS EDUARDO MAGALHAES","maria.elvira@estantemagica.com.br","Carine Leite","Premium touch","Onboarding & Boas vindas",10,21,11,"https://axcrm.ai/deals/70639"],
 ["145874","ESCOLA MAPLE BEAR SANTO ANDRE","carla.gomes@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",20,31,11,"https://axcrm.ai/deals/145874"],
 ["145875","Maple Bear S\u00e3o Caetano do Sul","carla.gomes@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",20,31,11,"https://axcrm.ai/deals/145875"],
 ["428619","","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,17,10,"https://axcrm.ai/deals/428619"],
@@ -469,8 +483,6 @@ const RAW = [
 ["69380","COLEGIO INTERGENIUS","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/69380"],
 ["292077","COLEGIO MENINO JESUS - UNID JARDIM AM\u00c9RICA","pamela.miranda@estantemagica.com.br","Sara Penteado","High touch","Onboarding & Boas vindas",7,17,10,"https://axcrm.ai/deals/292077"],
 ["70609","Col\u00e9gio FETIMA","larissa.freitas@estantemagica.com.br","Moreno Loss","High touch","Ciclo de Vendas",7,17,10,"https://axcrm.ai/deals/70609"],
-["51397","ESCOLA CHAVE DO SABER","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/51397"],
-["146065","ESCOLA PINGO DE GENTE-Itap\u00e9/BA","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/146065"],
 ["146358","ESCOLA SESI DR FRANCISCO GARCIA","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/146358"],
 ["146454","ESCOLA SIENA","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/146454"],
 ["71067","Escola Aquarela - Colorindo um Mundo Melhor","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,17,10,"https://axcrm.ai/deals/71067"],
@@ -482,7 +494,6 @@ const RAW = [
 ["280469","CENTRO EDUCACIONAL NOSSA SENHORA AUXILIADORA","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,17,10,"https://axcrm.ai/deals/280469"],
 ["67717","COLEGIO MOTIVACAO","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/67717"],
 ["67828","COLEGIO TIRADENTES PMMG - UNIDADE S\u00c3O JO\u00c3O DEL REI","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/67828"],
-["63703","COOPERATIVA DE ENSINO MONTE CARMELO","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/63703"],
 ["293377","Col\u00e9gio Anglo Blumenau","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Onboarding & Boas vindas",7,17,10,"https://axcrm.ai/deals/293377"],
 ["292362","Col\u00e9gio Nossa Senhora do Carmo","indlayse.ferreira@estantemagica.com.br","Moreno Loss","Medium touch","Onboarding & Boas vindas",7,17,10,"https://axcrm.ai/deals/292362"],
 ["292731","E.E.I.F. Raimundo Machado","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/292731"],
@@ -491,7 +502,6 @@ const RAW = [
 ["69307","INSTITUTO ALICE MACIEL","thais.borges@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/69307"],
 ["64689","SISTEMA RIBRANE DE ENSINO","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/64689"],
 ["63578","Winner School Ponta de Pedras","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,17,10,"https://axcrm.ai/deals/63578"],
-["48631","CENTRO EDUCACIONAL KARYNE","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,16,9,"https://axcrm.ai/deals/48631"],
 ["50103","CENTRO EDUCACIONAL VISAO","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,16,9,"https://axcrm.ai/deals/50103"],
 ["39782","Col\u00e9gio Sonho de Crian\u00e7a","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,16,9,"https://axcrm.ai/deals/39782"],
 ["143847","EEF MONT' ALVERNE","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,16,9,"https://axcrm.ai/deals/143847"],
@@ -502,13 +512,11 @@ const RAW = [
 ["431283","MAGNOS COLIBRI E EI EF","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/431283"],
 ["280406","Maple Bear Jaragu\u00e1 do Sul","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/280406"],
 ["56125","Santa Cecilia Eus\u00e9bio","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/56125"],
-["19915","Sociedade Educacional Rocha (Unidade I)","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/19915"],
 ["144786","CENTRO EDUC LABOR DE CORDEIRO - CELC","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/144786"],
 ["280698","COLEGIO ALPHA","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/280698"],
 ["32685","COLEGIO DE NOSSA SENHORA DO BOM CONSELHO","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/32685"],
 ["70804","COL\u00c9GIO IPUC","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/70804"],
 ["70480","Col\u00e9gio S\u00e3o Jo\u00e3o Paulo II","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,16,9,"https://axcrm.ai/deals/70480"],
-["68754","Col\u00e9gio \u00caxito do Cariri","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/68754"],
 ["280721","Cultura inglesa - Ponta Verde","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,16,9,"https://axcrm.ai/deals/280721"],
 ["280810","EEB APARICIO JULIO FARRAPO","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/280810"],
 ["64896","EMEB PREF HENRIQUE LIEBL","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,16,9,"https://axcrm.ai/deals/64896"],
@@ -528,7 +536,6 @@ const RAW = [
 ["32973","Escola Adventista de Castanhal","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,15,8,"https://axcrm.ai/deals/32973"],
 ["63929","FREIRE CASTRO COLEGIO EDUCACAO INFANTIL TIC TAC","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,15,8,"https://axcrm.ai/deals/63929"],
 ["50482","INSTITUTO EDUCACIONAL DRUMMOND DE ANDRADE","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,15,8,"https://axcrm.ai/deals/50482"],
-["14164","Instituto Educacional Crescer","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,15,8,"https://axcrm.ai/deals/14164"],
 ["143852","EDUCAND\u00c1RIO CONSTRUINDO O SABER","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,15,8,"https://axcrm.ai/deals/143852"],
 ["145966","ESCOLA DE EDUCACAO BASICA RUI BARBOSA","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,15,8,"https://axcrm.ai/deals/145966"],
 ["431298","ESCOLA DIN\u00c2MICA","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,15,8,"https://axcrm.ai/deals/431298"],
@@ -553,7 +560,6 @@ const RAW = [
 ["146144","COLEGIO OBJETIVO PACO","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/146144"],
 ["145982","COL\u00c9GIO ANT\u00d4NIO ARARIPE","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,13,6,"https://axcrm.ai/deals/145982"],
 ["69103","COL\u00c9GIO ANT\u00d4NIO ARARIPE - Ed Infantil","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/69103"],
-["70742","COL\u00c9GIO INTERAGIR","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/70742"],
 ["146199","Colegio Professor Jeronimo Pinheiro","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,13,6,"https://axcrm.ai/deals/146199"],
 ["280252","Col\u00e9gio Batista Atitude","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/280252"],
 ["292418","E.M. PROF\u00aa IRACEMA MARIA VICENTE","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,13,6,"https://axcrm.ai/deals/292418"],
@@ -562,7 +568,6 @@ const RAW = [
 ["45179","EDUCANDARIO SONHOS DE ICARO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/45179"],
 ["145971","EMEIEF DOUTOR CLEO BERNARDO","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/145971"],
 ["279617","ESCOLA ARCO IRIS","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/279617"],
-["40281","ESCOLA LAR MONTESSORIANO","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/40281"],
 ["71021","ESCOLA MUNICIPAL ALICE LINS DE AQUINO","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/71021"],
 ["431615","ESCOLA OCEANO DO SABER","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/431615"],
 ["63785","Escola Batista Erilasio Nogueira","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/63785"],
@@ -570,7 +575,6 @@ const RAW = [
 ["15420","Escola Sonho Meu","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/15420"],
 ["102444","Maple Bear Ilha do Governador","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,13,6,"https://axcrm.ai/deals/102444"],
 ["67851","CARPE DIEM VILAS","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,13,6,"https://axcrm.ai/deals/67851"],
-["280846","CENTRO EDUCACIONAL BETEL","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/280846"],
 ["70659","COLEGIO ICARO","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/70659"],
 ["70439","COLEGIO PRINCE","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/70439"],
 ["68081","COLEGIO SAN PETRUS","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,13,6,"https://axcrm.ai/deals/68081"],
@@ -607,7 +611,6 @@ const RAW = [
 ["70241","COLEGIO DA FACULDADE ADVENTISTA DA AMAZONIA","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/70241"],
 ["70689","COLEGIO FRANCISCO JOSE FERREIRA NETO","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,12,5,"https://axcrm.ai/deals/70689"],
 ["293294","COLEGIO MONS ADELMAR DA MOTA VALENCA","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/293294"],
-["293326","COL\u00c9GIO DIN\u00c2MICO","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/293326"],
 ["432146","COL\u00c9GIO GISLAINE ROSATI INSTITUTO DE ENSINO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",10,15,5,"https://axcrm.ai/deals/432146"],
 ["69156","COL\u00c9GIO IPUENSE","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/69156"],
 ["16543","COL\u00c9GIO PR\u00cdNCIPE DA PAZ","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/16543"],
@@ -645,7 +648,6 @@ const RAW = [
 ["70841","COLEGIO SCALABRINIANO SAO JOSE","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/70841"],
 ["292372","COL\u00c9GIO ALUMNUS","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/292372"],
 ["68720","COL\u00c9GIO JELM","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/68720"],
-["67532","Col\u00e9gio Conex\u00e3o","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/67532"],
 ["52488","Col\u00e9gio Legacy Scholl Maca\u00e9","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,12,5,"https://axcrm.ai/deals/52488"],
 ["70441","Col\u00e9gio Silvio Gonzalez","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,12,5,"https://axcrm.ai/deals/70441"],
 ["292327","E M E F JOSE PEREIRA GOMES","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/292327"],
@@ -655,7 +657,6 @@ const RAW = [
 ["68002","ESCOLA MUNICIPAL JOS\u00c9 TAVARES FERREIRA","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/68002"],
 ["145968","ESCOLA PARTICULAR PROFESSORA CESARINA SIQUEIRA DA SILVA","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,12,5,"https://axcrm.ai/deals/145968"],
 ["63871","Escola G\u00eanesis","shelry.solart@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/63871"],
-["70555","Escola Municipal De Ensino Infantil E Fundamental 16 De Junho","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/70555"],
 ["146272","Escola Municipal Militarizada Comendador Jo\u00e3o Marchesi","thais.borges@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/146272"],
 ["146372","Instituto Educacional Adonai","carla.santosdasilva@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/146372"],
 ["280354","MAPLE BEAR GRANJA VIANA","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,12,5,"https://axcrm.ai/deals/280354"],
@@ -687,7 +688,6 @@ const RAW = [
 ["67951","Centro Educacional Valentina Fernandes","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,11,4,"https://axcrm.ai/deals/67951"],
 ["67948","Col\u00e9gio Adventista de Duque de Caxias","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/67948"],
 ["67701","EDUCAND\u00c1RIO TIA SINHARINHA","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/67701"],
-["67520","EM JOAO ANICIO DE BRITO","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/67520"],
 ["66123","ESCOLA DE EDUCACAO PRIMEIRO MUNDO","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/66123"],
 ["280344","ESCOLA LUMINOVA UNIDADE BOM RETIRO","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,11,4,"https://axcrm.ai/deals/280344"],
 ["41371","ESCOLA PEIXINHO DOURADO","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/41371"],
@@ -705,7 +705,6 @@ const RAW = [
 ["63522","Batista Independente De Ribeirao Preto","thayna.bastos@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/63522"],
 ["55907","CANTINHO DA CRIANCA ESCOLA DE EDUCACAO INFANTIL E ENSINO FUNDAMENTAL","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/55907"],
 ["63829","CAT ARLETHE ZORZANELLI BUAIZ","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Ciclo de Vendas",7,11,4,"https://axcrm.ai/deals/63829"],
-["70670","CENTRO DE ENSINO REINO DO SABER","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/70670"],
 ["280432","COLEGIO ATUAL","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,11,4,"https://axcrm.ai/deals/280432"],
 ["64589","COLEGIO DOM FELIPE","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/64589"],
 ["63685","COLEGIO NOEME CAMPOS","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,11,4,"https://axcrm.ai/deals/63685"],
@@ -734,7 +733,6 @@ const RAW = [
 ["39171","CENTRO EDUCACIONAL INFANTIL ARCA DE NOE","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Ciclo de Vendas",7,10,3,"https://axcrm.ai/deals/39171"],
 ["143900","CENTRO EDUCACIONAL MARIA SANTISSIMA LTDA","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/143900"],
 ["53448","CENTRO EDUCACIONAL VIRGEM PODEROSA","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/53448"],
-["43782","COLEGIO ARACA","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/43782"],
 ["69056","COLEGIO COPACABANA","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/69056"],
 ["145976","COLEGIO FELIX VALENTIN LTDA","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/145976"],
 ["48983","COLEGIO MOVIMENTO CRIATIVO","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/48983"],
@@ -765,7 +763,6 @@ const RAW = [
 ["431306","RISQUE E RABISQUE ESCOLA DE EDUCACAO INFANTIL","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/431306"],
 ["22788","COLEGIO CARVALHO ASSUNCAO","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/22788"],
 ["71105","COLEGIO INDEPENDENCIA","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/71105"],
-["68764","CRECHE VOV\u00d3 NAN\u00c1","tatiana.portela@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/68764"],
 ["292640","Centro Educacional Alves Rocha","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/292640"],
 ["63803","Centro Educacional Bil\u00edngue Corujinha","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/63803"],
 ["292894","Centro Educacional IDETE","renata.brandao@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/292894"],
@@ -778,14 +775,12 @@ const RAW = [
 ["64885","ESCOLA MUNICIPAL PROF THEREZA MAZZOLLI HREISEMNOU","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/64885"],
 ["434879","ESCOLA PRIMEIROS PASSOS","tatiana.portela@estantemagica.com.br","Moreno Loss","Medium touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/434879"],
 ["64616","Emefei Arm\u00eanio Mac\u00e1rio Ribeiro","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/64616"],
-["281070","Escola Adventista da Cidade Oper\u00e1ria","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/281070"],
 ["292113","Escola Municipal Melvin Jones Uni\u00e3o da Vit\u00f3ria","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Ciclo de Eventos",7,10,3,"https://axcrm.ai/deals/292113"],
 ["66539","FOR KIDS CRECHE E ESCOLA - Unidade Baby","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/66539"],
 ["66600","FOR KIDS CRECHE E ESCOLA - Unidade Ilha Pura","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/66600"],
 ["431300","GENTE INOCENTE KIDS E BERCARIO","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/431300"],
 ["280478","IDETE CENTRO EDUCACIONAL","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/280478"],
 ["63793","PUERI PAX COLEGIO","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/63793"],
-["70263","COLEGIO GENOMA I","sarah.moura@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/70263"],
 ["2334","COL\u00c9GIO LOSANGO DE CAMPO BELO","talita.panassol@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,10,3,"https://axcrm.ai/deals/2334"],
 ["65977","COL\u00c9GIO MARIA MONTESSORI","carla.gomes@estantemagica.com.br","Carine Leite","Premium touch","Onboarding & Boas vindas",7,10,3,"https://axcrm.ai/deals/65977"],
 ["68167","Col\u00e9gio Privil\u00e9gio","carla.gomes@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",15,18,3,"https://axcrm.ai/deals/68167"],
@@ -808,7 +803,6 @@ const RAW = [
 ["31837","COL\u00c9GIO ATUALIDADE","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/31837"],
 ["67432","COL\u00c9GIO CRIST\u00c3O KAIR\u00d3S - UNIDADE ALPHAVILLE","sarah.moura@estantemagica.com.br","Carine Leite","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/67432"],
 ["69090","COL\u00c9GIO TERESA VERZERI","sarah.moura@estantemagica.com.br","Carine Leite","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/69090"],
-["146314","COL\u00c9GIO TESLA","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/146314"],
 ["70654","COL\u00c9GIO VILLA REAL","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/70654"],
 ["55030","COOPERATIVA EDUCACIONAL DE CACOAL","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/55030"],
 ["69655","CURSO DE ESPECIALIZACAO EQUACAO LTDA","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/69655"],
@@ -819,7 +813,6 @@ const RAW = [
 ["280230","Col\u00e9gio Frei Zacarias","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/280230"],
 ["444822","Col\u00e9gio Gente Inocente","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/444822"],
 ["33063","EDUCAR C EDUC PEDAGOGICO","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,9,2,"https://axcrm.ai/deals/33063"],
-["143939","EDUCARE E EI EF","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/143939"],
 ["86996","ESC STO ANTONIO DE EDUC INF ENS FUND MED","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/86996"],
 ["63684","ESCOLA CASA DAS LETRAS","carla.gomes@estantemagica.com.br","Carine Leite","High touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/63684"],
 ["20833","ESCOLA EVANG\u00c9LICA DA COMUNIDADE DE CASTROLANDA EDUCA\u00c7\u00c3O INFANTIL E FUNDAMENTAL","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Enviou Lista de Alunos",7,9,2,"https://axcrm.ai/deals/20833"],
@@ -844,7 +837,6 @@ const RAW = [
 ["64612","Col\u00e9gio Eduardo Gomes","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",15,17,2,"https://axcrm.ai/deals/64612"],
 ["25347","Col\u00e9gio Presbiteriano","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/25347"],
 ["70561","Col\u00e9gio Santo Antonio de Jesus","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/70561"],
-["145914","EDUCANDARIO NOS PASSOS DE JESUS","andreina.ferreira@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/145914"],
 ["66114","EM GUILHERME HALLAIS FRANCA","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas",7,9,2,"https://axcrm.ai/deals/66114"],
 ["292564","EM PROF\u00aa CARMELITA CIPRIANO GUIMARAES","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/292564"],
 ["146453","ESCOLA BOCH\u00ca","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/146453"],
@@ -858,7 +850,6 @@ const RAW = [
 ["70703","PINOCCHIO CENTRO EDUCACIONAL LTDA","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/70703"],
 ["145803","Red Kindergarten Creche Escola","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/145803"],
 ["292437","VETOR SISTEMA DE ENSINO","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/292437"],
-["63698","VOVO NESTOR CASA DA CRIANCA","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/63698"],
 ["118621","WATER OKANO C M E I PROF","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/118621"],
 ["42752","CENTRO EDUCACIONAL SEMEAR","talita.panassol@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/42752"],
 ["68080","ESPACO ESCOLA LUDENS LTDA - EPP","mariana.santana@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,9,2,"https://axcrm.ai/deals/68080"],
@@ -867,13 +858,12 @@ const RAW = [
 ["53","SESI 109 CENTRO EDUCACIONAL","carla.gomes@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",10,12,2,"https://axcrm.ai/deals/53"],
 ["69361","ADVENTISTA DA ALVORADA ESCOLA","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/69361"],
 ["41919","ADVENTISTA DE LORENA COLEGIO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/41919"],
-["47903","ARMANDO ZOLLNER ESCOLA UNIAO DE SISTEMA DE ENSINO FAZER","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/47903"],
+["47903","ARMANDO ZOLLNER ESCOLA UNIAO DE SISTEMA DE ENSINO FAZER","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/47903"],
 ["146444","BMQ","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/146444"],
 ["31412","CENTRO DE EDUCACAO E FORMACAO ESPACO CRIANCA","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/31412"],
 ["45263","CENTRO EDUCACIONAL JORGE ASSUNCAO","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/45263"],
 ["64734","CENTRO EDUCACIONAL PADRE ANCHIETA - CEPAN","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/64734"],
 ["144843","CENTRO EDUCACIONAL PAULA FRASSINETTI - BURITI -MA","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/144843"],
-["67545","CENTRO EDUCACIONAL ROSELY GALLO FERREIRA","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/67545"],
 ["52273","COLEGIO FUZIYAMA","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/52273"],
 ["145991","COLEGIO HIPOCRATES ZONA SUL","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/145991"],
 ["70682","COLEGIO KOELER","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/70682"],
@@ -882,7 +872,6 @@ const RAW = [
 ["438389","COLEGIO SAO JOSE","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/438389"],
 ["432030","COLEGIO UP OBJETIVO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",10,11,1,"https://axcrm.ai/deals/432030"],
 ["293051","COL\u00c9GIO EINSTEIN ANGLO [2023]","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/293051"],
-["63825","COL\u00c9GIO EQUIPE SEC LTDA","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/63825"],
 ["68342","COL\u00c9GIO FRANCISCANO REGINA PACIS","viviane.luz@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/68342"],
 ["39197","COL\u00c9GIO OBJETIVO J\u00daNIOR","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",15,16,1,"https://axcrm.ai/deals/39197"],
 ["66580","COL\u00c9GIO SALESIANO DOM BOSCO DE TR\u00caS LAGOAS","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/66580"],
@@ -904,7 +893,6 @@ const RAW = [
 ["63085","ESCOLA APRENDER A CRESCER","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/63085"],
 ["281041","ESCOLA COOPERATIVA CAMPOS DE HOLAMBRA","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/281041"],
 ["433594","ESCOLA CORDEIRINHO DE JESUS","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/433594"],
-["280259","ESCOLA MORANGUINHO","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/280259"],
 ["292563","ESCOLA MUNICIPAL PROFESSORA CLEUSA GUINDANI HUNTTMANN","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/292563"],
 ["66573","ESCOLA PEQUENO APRENDIZ","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Ciclo de Eventos",7,8,1,"https://axcrm.ai/deals/66573"],
 ["21677","ESCOLA PRESBITERIANA DE BOM CONSELHO","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/21677"],
@@ -957,10 +945,7 @@ const RAW = [
 ["56813","COL\u00c9GIO PIAGET","talita.panassol@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/56813"],
 ["63856","CRECHE ESCOLA FURA BOLO BARRA EIRELLI EPP","talita.panassol@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/63856"],
 ["70960","Col\u00e9gio Alicerce","mariana.santana@estantemagica.com.br","Carine Leite","Premium touch","Onboarding & Boas vindas",7,8,1,"https://axcrm.ai/deals/70960"],
-["63814","Col\u00e9gio Hex\u00e1gono","talita.panassol@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/63814"],
-["67614","ESCOLA LITERAL","talita.panassol@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/67614"],
-["63678","ESCOLA MUNICIPAL GERALDO DE ASSIS","carla.gomes@estantemagica.com.br","Carine Leite","Premium touch","Ciclo de Vendas",10,11,1,"https://axcrm.ai/deals/63678"],
-["68166","Escola Educativa Osasco","talita.panassol@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o",7,8,1,"https://axcrm.ai/deals/68166"]
+["63678","ESCOLA MUNICIPAL GERALDO DE ASSIS","carla.gomes@estantemagica.com.br","Carine Leite","Premium touch","Ciclo de Vendas",10,11,1,"https://axcrm.ai/deals/63678"]
 ];
 // cols: 0=id_ax,1=nome,2=consultor,3=lideranca,4=segmento,5=etapa,6=tc,7=du_ult,8=dias_alem,9=link_ax
 
