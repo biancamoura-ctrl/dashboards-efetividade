@@ -370,6 +370,7 @@
             <th>Atividades</th>
             <th>Escolas tocadas</th>
             <th>Escolas com efetiva</th>
+            <th>Novas efetivas</th>
             <th>Vencimentos</th>
           </tr>
         </thead>
@@ -379,6 +380,7 @@
             <td>812</td>
             <td>469</td>
             <td>240</td>
+            <td>106</td>
             <td class="hl-red">140</td>
           </tr>
           <tr>
@@ -386,6 +388,7 @@
             <td class="hl-red">753</td>
             <td class="hl-red">413</td>
             <td>203</td>
+            <td>88</td>
             <td>124</td>
           </tr>
           <tr>
@@ -393,6 +396,7 @@
             <td class="hl-green">968</td>
             <td class="hl-green">560</td>
             <td class="hl-green">259</td>
+            <td class="hl-green">145</td>
             <td>106</td>
           </tr>
           <tr>
@@ -400,6 +404,7 @@
             <td class="hl">897</td>
             <td>485</td>
             <td>202</td>
+            <td>101</td>
             <td>109</td>
           </tr>
         </tbody>
@@ -412,80 +417,152 @@
     </div>
   </div>
 
-  <!-- ── S5: TAREFAS DE FOCO ── -->
-  <div class="slide bg-alt" id="s5foco">
+  <!-- ── S9b: IMPACTO DA PLANILHA DE PRIORIZAÇÃO ── -->
+  <div class="slide bg-default" id="s9bplan">
     <div class="slide-header">
       <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
       <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Tarefas de foco</div>
+      <div class="slide-label">Planilha de priorização</div>
       <div class="slide-date">24/06/2026</div>
     </div>
     <div class="slide-body">
-      <div class="section-tag tag-blue">Fila de foco · início do dia</div>
-      <div class="slide-title">A fila de foco de hoje</div>
-      <div class="slide-subtitle">Foco = fila priorizada que o sistema gera todo dia · fotografia tirada no começo da manhã</div>
-      <div class="cards-row cards-3">
+      <div class="section-tag tag-blue">Planilha de vencidas antigas · desde seg 22/06</div>
+      <div class="slide-title">Impacto da planilha de priorização</div>
+      <div class="slide-subtitle">Grupo 15+ DU vencidas · esta semana (seg 22–qua 24) vs semana passada (seg 15–qua 17), mesmos dias decorridos</div>
+      <div class="cards-row cards-4">
         <div class="card blue">
-          <div class="card-value" style="color:var(--blue)">536</div>
-          <div class="card-label">Tarefas de foco<br>geradas hoje</div>
+          <div class="card-value" style="color:var(--blue)">+164%</div>
+          <div class="card-label">Toques no grupo<br>antigo (453 → 1.195)</div>
+        </div>
+        <div class="card blue">
+          <div class="card-value" style="color:var(--blue)">4,4 → 11,8</div>
+          <div class="card-label">Intensidade<br>toques / escola</div>
         </div>
         <div class="card red">
-          <div class="card-value red">~0%</div>
-          <div class="card-label">Concluídas até<br>o momento</div>
+          <div class="card-value red">33 → 20</div>
+          <div class="card-label">Efetivações<br>do grupo antigo</div>
         </div>
-        <div class="card yellow">
-          <div class="card-value yellow">739</div>
-          <div class="card-label">Vencidas para<br>recuperar</div>
+        <div class="card red">
+          <div class="card-value red">144 → 190</div>
+          <div class="card-label">Tamanho do grupo<br>15+ DU (cresceu)</div>
         </div>
       </div>
-      <div class="insight-box">
-        <b>O dia ainda não começou de fato</b>: a fila de foco de hoje tem 536 escolas priorizadas pelo sistema e a conclusão está praticamente em zero — esta reunião é o momento de definir como atacá-la.
-        <b>Histórico da semana passada:</b> a conclusão da fila trava em ~33–35% por dia, e o pior dia foi a quinta (27,7%), justamente quando os vencimentos picaram.
-        <b>Recado para hoje:</b> fechar a fila de foco cedo é o que evita que escolas prestes a vencer escapem — ataquem a fila antes do meio do dia.
-      </div>
-    </div>
-  </div>
-
-  <!-- ── S6: SELEÇÃO ADVERSA ── -->
-  <div class="slide bg-default" id="s6sel">
-    <div class="slide-header">
-      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
-      <div class="logo-text">estante <span>mágica</span></div>
-      <div class="slide-label">Seleção adversa</div>
-      <div class="slide-date">24/06/2026</div>
-    </div>
-    <div class="slide-body">
-      <div class="section-tag tag-yellow">Qual escola o time escolhe tocar</div>
-      <div class="slide-title">O time recupera as escolas mais frescas primeiro</div>
-      <div class="slide-subtitle">Das recuperações do dia — há quantos dias úteis a escola estava vencida quando o time a tocou</div>
       <table class="data-table">
         <thead>
           <tr>
-            <th style="text-align:left">Dia</th>
-            <th>Recuperações</th>
-            <th>Média de DU vencida</th>
-            <th>Leitura</th>
+            <th style="text-align:left">Indicador · grupo 15+ DU vencidas</th>
+            <th>Semana passada<br>(seg 15–qua 17)</th>
+            <th>Esta semana<br>(seg 22–qua 24)</th>
+            <th>Variação</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Seg&nbsp; 22/06</td>
-            <td class="hl-green">103</td>
-            <td class="hl-green">3,7 DU</td>
-            <td>Estoque fresco do fim de semana</td>
+            <td>Toques no grupo antigo</td>
+            <td>453</td>
+            <td>1.195</td>
+            <td class="hl">+164%</td>
           </tr>
           <tr>
-            <td>Ter&nbsp;&nbsp; 23/06</td>
-            <td>67</td>
-            <td class="hl-red">5,1 DU</td>
-            <td>Menos recuperações, escolas mais antigas</td>
+            <td>Intensidade (toques / escola tocada)</td>
+            <td>4,4</td>
+            <td>11,8</td>
+            <td class="hl">+168%</td>
+          </tr>
+          <tr>
+            <td>Efetivações do grupo antigo</td>
+            <td>33</td>
+            <td>20</td>
+            <td class="hl-red">−13</td>
+          </tr>
+          <tr>
+            <td>Tamanho do grupo 15+ DU (qua a qua)</td>
+            <td>144</td>
+            <td>190</td>
+            <td class="hl-red">+46</td>
           </tr>
         </tbody>
       </table>
-      <div class="insight-box">
-        <b>Segunda foi o dia mais saudável</b>: 103 escolas vencidas voltaram a ser efetivadas, com média de apenas 3,7 DU fora do prazo — o time pegou o estoque fresco represado do fim de semana.
-        <b>Terça já mostra o padrão de seleção adversa</b>: as recuperações caíram para 67 e a média subiu para 5,1 DU — o estoque fácil foi consumido, e o time começou a esbarrar nas escolas que estão paradas há mais tempo.
-        <b>O que sobra é o difícil:</b> as 145 escolas vencidas há 15+ DU quase não são tocadas. Elas precisam de uma ação dirigida — é o tema dos próximos slides.
+      <div class="info-box">
+        Desde segunda 22/06 o time usa a planilha para priorizar as escolas vencidas há mais tempo. O <b>esforço sobre o grupo antigo (15+ DU) mais que dobrou</b>: de 453 para 1.195 toques (+164%), com a intensidade subindo de 4,4 para 11,8 toques por escola. No mesmo período, as <b>efetivações desse grupo caíram de 33 para 20</b> e o <b>tamanho do grupo 15+ DU cresceu de 144 para 190</b> (comparação quarta a quarta).
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S5b: ANÁLISE PROFUNDA DA PLANILHA ── -->
+  <div class="slide bg-default" id="s5bplan2">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Planilha de priorização</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">A planilha mudou o comportamento — mas não o resultado</div>
+      <div class="slide-title">O que a planilha de fato gerou</div>
+      <div class="slide-subtitle">Coorte 15+ DU vencidas · seg 22–qua 24 vs seg 15–qua 17, mesmos dias decorridos</div>
+      <div class="cards-row cards-4">
+        <div class="card red">
+          <div class="card-value red" style="font-size:28px">4,4 → 11,8</div>
+          <div class="card-label">Toques por escola<br><span style="color:rgba(255,255,255,0.5);font-size:9.5px">o time insistiu mais nas mesmas</span></div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">35,8%</div>
+          <div class="card-label">Alcance esta semana<br><span style="color:rgba(255,255,255,0.5);font-size:9.5px">era 41,6% na semana anterior</span></div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">0%</div>
+          <div class="card-label">Taxa de conversão<br><span style="color:rgba(255,255,255,0.5);font-size:9.5px">nas duas semanas</span></div>
+        </div>
+        <div class="card">
+          <div class="card-value red">0</div>
+          <div class="card-label">Escolas inéditas<br><span style="color:rgba(255,255,255,0.5);font-size:9.5px">100% retrabalho de já conhecidas</span></div>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Indicador · grupo 15+ DU vencidas</th>
+            <th>Sem. passada<br>(seg 15–qua 17)</th>
+            <th>Esta semana<br>(seg 22–qua 24)</th>
+            <th>Variação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Toques totais no grupo</td>
+            <td>453</td>
+            <td class="hl">1.195</td>
+            <td class="hl">+164%</td>
+          </tr>
+          <tr>
+            <td>Escolas distintas tocadas</td>
+            <td>230 (41,6%)</td>
+            <td class="hl-red">198 (35,8%)</td>
+            <td class="hl-red">−32</td>
+          </tr>
+          <tr>
+            <td>Toques por escola tocada</td>
+            <td>4,4</td>
+            <td class="hl-red">11,8</td>
+            <td class="hl-red">+168%</td>
+          </tr>
+          <tr>
+            <td>Efetivações do grupo</td>
+            <td>33</td>
+            <td class="hl-red">20</td>
+            <td class="hl-red">−13</td>
+          </tr>
+          <tr>
+            <td>Sentimento negativo</td>
+            <td class="hl-red">17</td>
+            <td class="hl-green">4</td>
+            <td class="hl-green">−13</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="info-box">
+        <b>O esforço geral cresceu</b> (time tocou 560 escolas na segunda — slide 4) mas no grupo 15+ DU o time chegou em <b>menos escolas distintas</b> (230 → 198) e bateu muito mais vezes nas mesmas (4,4 → 11,8 toques/escola). Resultado: zero efetivações, grupo crescendo.
       </div>
     </div>
   </div>
@@ -563,48 +640,67 @@
     <div class="slide-body">
       <div class="section-tag tag-red">145 escolas · vencidas há 15+ dias úteis</div>
       <div class="slide-title">Qual segmento concentra as vencidas críticas</div>
-      <div class="slide-subtitle">Segmentação das escolas que estão fora do prazo há mais tempo</div>
+      <div class="slide-subtitle">Escolas fora do prazo há mais tempo, por segmento e tipo</div>
 
-      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:18px">
+      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:14px">
 
-        <div style="display:grid;grid-template-columns:200px 1fr 52px 44px;align-items:center;gap:12px">
+        <div style="display:grid;grid-template-columns:170px 1fr 96px;align-items:center;gap:12px">
           <div style="font-size:13px;font-weight:700">Medium touch</div>
-          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+          <div style="position:relative;background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
             <div style="height:100%;width:100%;background:var(--blue);border-radius:8px;display:flex;align-items:center;padding-left:10px">
               <span style="font-size:12px;font-weight:700;color:#fff">64 escolas</span>
             </div>
+            <div style="position:absolute;top:0;left:50%;width:2px;height:100%;background:#fff;opacity:0.85"></div>
           </div>
-          <div style="font-size:22px;font-weight:800;color:var(--blue);text-align:right">44,1%</div>
-          <div style="font-size:10px;color:var(--muted);text-align:right">do grupo</div>
+          <div style="text-align:right">
+            <div style="font-size:13px;font-weight:800;color:var(--blue)">32 → 64</div>
+            <div style="font-size:10px;color:#FF6B75;font-weight:700">+32 (×2,0)</div>
+          </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:200px 1fr 52px 44px;align-items:center;gap:12px">
-          <div style="font-size:13px;font-weight:700">High touch</div>
-          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
-            <div style="height:100%;width:115%;background:var(--purple);border-radius:8px;display:flex;align-items:center;padding-left:10px">
-              <span style="font-size:12px;font-weight:700;color:#fff">74 escolas</span>
+        <div style="display:grid;grid-template-columns:170px 1fr 96px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">High touch Novas</div>
+          <div style="position:relative;background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:65%;background:var(--purple);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">42 escolas</span>
             </div>
           </div>
-          <div style="font-size:22px;font-weight:800;color:var(--purple);text-align:right">51,0%</div>
-          <div style="font-size:10px;color:var(--muted);text-align:right">do grupo</div>
+          <div style="text-align:right">
+            <div style="font-size:13px;font-weight:800;color:var(--purple)">42</div>
+          </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:200px 1fr 52px 44px;align-items:center;gap:12px">
+        <div style="display:grid;grid-template-columns:170px 1fr 96px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">High touch Renov.</div>
+          <div style="position:relative;background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:57%;background:var(--purple-dark);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">37 escolas</span>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:13px;font-weight:800;color:var(--purple)">37</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:170px 1fr 96px;align-items:center;gap:12px">
           <div style="font-size:13px;font-weight:700">Premium touch / 40+</div>
-          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+          <div style="position:relative;background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
             <div style="height:100%;width:11%;background:var(--yellow-dark);border-radius:8px;display:flex;align-items:center;padding-left:10px">
             </div>
+            <div style="position:absolute;top:0;left:4.7%;width:2px;height:100%;background:#fff;opacity:0.85"></div>
           </div>
-          <div style="font-size:22px;font-weight:800;color:var(--yellow);text-align:right">4,8%</div>
-          <div style="font-size:10px;color:var(--muted);text-align:right">7 escolas</div>
+          <div style="text-align:right">
+            <div style="font-size:13px;font-weight:800;color:var(--yellow)">3 → 7</div>
+            <div style="font-size:10px;color:#FF6B75;font-weight:700">+4 (×2,3)</div>
+          </div>
         </div>
 
       </div>
 
       <div class="insight-box">
-        <b>High touch concentra 51% das vencidas críticas</b> (74 escolas, metade delas Renovação): é o segmento de maior impacto no ticket e na retenção — cada escola aqui é risco direto de retração.
-        <b>Medium touch vem logo atrás com 44,1%</b> (64 escolas, com forte peso de Renovação): mesmo prazo do HT (7 DU), o volume indica escolas sem contato efetivo há mais de 3 semanas.
-        <b>Premium touch tem só 7 escolas (4,8%)</b> — a atenção personalizada do segmento de maior valor segue funcionando.
+        <b>High touch concentra 51% das vencidas críticas</b> (79 escolas): dividido entre 42 Novas e 37 Renovação — as de Renovação são risco direto de retração (escola que já comprou e pode não renovar).
+        <b>Medium touch logo atrás</b> (64 escolas): mesmo prazo de 7 DU, sem contato efetivo há 3+ semanas.
+        <b>Premium segue contido</b> (7 escolas): atenção personalizada ainda segura esse grupo.
       </div>
     </div>
   </div>
@@ -618,46 +714,87 @@
       <div class="slide-date">24/06/2026</div>
     </div>
     <div class="slide-body">
-      <div class="section-tag tag-red">145 escolas · 15+ dias úteis vencidas</div>
+      <div class="section-tag tag-red">145 escolas · 15+ dias úteis vencidas · +96% vs 17/06 (74)</div>
       <div class="slide-title">Onde estão no funil as escolas mais críticas</div>
-      <div class="slide-subtitle">Etapa da jornada das 145 escolas vencidas há 15+ DU</div>
+      <div class="slide-subtitle">Etapa da jornada das vencidas há 15+ DU · barra = hoje (24/06) · marca clara = quarta passada (17/06)</div>
 
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:14px">
 
-        <div style="display:grid;grid-template-columns:280px 1fr 56px 52px;align-items:center;gap:10px">
+        <div style="display:grid;grid-template-columns:250px 1fr 104px;align-items:center;gap:10px">
           <div>
             <div style="font-size:13px;font-weight:700">Em Aplicação</div>
             <div style="font-size:11px;color:var(--muted)">evento marcado · em andamento</div>
           </div>
-          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+          <div style="position:relative;background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
             <div style="height:100%;width:100%;background:var(--red);border-radius:8px;display:flex;align-items:center;padding-left:10px">
-              <span style="font-size:12px;font-weight:700;color:#fff">101 escolas</span>
+              <span style="font-size:12px;font-weight:700;color:#fff">101 escolas · 70%</span>
             </div>
+            <div style="position:absolute;top:0;left:45.5%;width:2px;height:100%;background:#fff;opacity:0.85"></div>
           </div>
-          <div style="font-size:20px;font-weight:800;color:var(--red);text-align:right">70%</div>
-          <div style="font-size:10px;color:var(--muted)">do grupo</div>
+          <div style="text-align:right">
+            <div style="font-size:14px;font-weight:800;color:var(--red)">46 → 101</div>
+            <div style="font-size:10px;color:#FF6B75;font-weight:700">+55 (×2,2)</div>
+          </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:280px 1fr 56px 52px;align-items:center;gap:10px">
+        <div style="display:grid;grid-template-columns:250px 1fr 104px;align-items:center;gap:10px">
           <div>
             <div style="font-size:13px;font-weight:700">Onboarding & Boas-Vindas</div>
             <div style="font-size:11px;color:var(--muted)">início da jornada de aplicação</div>
           </div>
-          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+          <div style="position:relative;background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
             <div style="height:100%;width:44%;background:var(--purple);border-radius:8px;display:flex;align-items:center;padding-left:10px">
-              <span style="font-size:12px;font-weight:700;color:#fff">44 escolas</span>
+              <span style="font-size:12px;font-weight:700;color:#fff">44 escolas · 30%</span>
             </div>
+            <div style="position:absolute;top:0;left:28%;width:2px;height:100%;background:#fff;opacity:0.85"></div>
           </div>
-          <div style="font-size:20px;font-weight:800;color:var(--purple);text-align:right">30%</div>
-          <div style="font-size:10px;color:var(--muted)">do grupo</div>
+          <div style="text-align:right">
+            <div style="font-size:14px;font-weight:800;color:var(--purple)">28 → 44</div>
+            <div style="font-size:10px;color:#FF6B75;font-weight:700">+16 (×1,6)</div>
+          </div>
         </div>
 
       </div>
 
       <div class="insight-box">
-        <b>70% já estão Em Aplicação</b> (101 escolas): evento marcado e jornada em andamento, mas sem contato efetivo há 15+ DU — risco direto de aplicação sem acompanhamento do CS, ou de cancelamento.
-        <b>30% ainda estão em Onboarding & Boas-Vindas</b> (44 escolas): pararam no início da jornada e o contato cessou antes de avançarem no funil — podem desistir sem aviso.
-        <b>Ação:</b> essas 145 escolas precisam de uma força-tarefa dedicada — não saem na fila de foco do dia a dia porque o time consome o estoque fresco primeiro (slide de seleção adversa).
+        <b>O grupo crítico dobrou e a piora é puxada por "Em Aplicação"</b> (46 → 101, +55, ×2,2): essas têm evento marcado e jornada em andamento mas sem contato efetivo há 15+ DU — risco direto de aplicação sem acompanhamento do CS ou de cancelamento. Hoje são 70% do grupo (eram 62% em 17/06).
+        <b>Onboarding & Boas-Vindas cresceu menos</b> (28 → 44, +16): pararam no início da jornada e o contato cessou — podem desistir sem aviso.
+        <b>Ação:</b> essas 145 precisam de força-tarefa dedicada — não saem na fila de foco do dia a dia porque o time consome o estoque fresco primeiro (seleção adversa).
+        <div style="font-size:10.5px;color:var(--muted);margin-top:8px">Marca branca na barra = posição de 17/06 (proxy: inatividade efetiva atual recuada em 5 DU).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S5: TAREFAS DE FOCO ── -->
+  <div class="slide bg-alt" id="s5foco">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Tarefas de foco</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-blue">Fila de foco · início do dia</div>
+      <div class="slide-title">A fila de foco de hoje</div>
+      <div class="slide-subtitle">Foco = fila priorizada que o sistema gera todo dia · fotografia tirada no começo da manhã</div>
+      <div class="cards-row cards-3">
+        <div class="card blue">
+          <div class="card-value" style="color:var(--blue)">467</div>
+          <div class="card-label">Tarefas de foco<br>geradas hoje</div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">~0%</div>
+          <div class="card-label">Concluídas até<br>o momento</div>
+        </div>
+        <div class="card yellow">
+          <div class="card-value yellow">739</div>
+          <div class="card-label">Vencidas para<br>recuperar</div>
+        </div>
+      </div>
+      <div class="insight-box">
+        <b>O dia ainda não começou de fato</b>: a fila de foco de hoje tem 467 escolas priorizadas pelo sistema e a conclusão está praticamente em zero — esta reunião é o momento de definir como atacá-la.
+        <b>Histórico da semana passada:</b> a conclusão da fila trava em ~33–35% por dia, e o pior dia foi a quinta (27,7%), justamente quando os vencimentos picaram.
+        <b>Recado para hoje:</b> fechar a fila de foco cedo é o que evita que escolas prestes a vencer escapem — ataquem a fila antes do meio do dia.
       </div>
     </div>
   </div>
@@ -723,13 +860,13 @@
   <button class="nav-btn" id="btnPrev" onclick="go(-1)" disabled>← Anterior</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
     <div class="nav-dots" id="dots"></div>
-    <div class="nav-counter" id="counter">1 / 10</div>
+    <div class="nav-counter" id="counter">1 / 11</div>
   </div>
   <button class="nav-btn" id="btnNext" onclick="go(1)">Próximo →</button>
 </div>
 
 <script>
-  const TOTAL = 10;
+  const TOTAL = 11;
   let cur = 0;
   const slides = document.querySelectorAll('.slide');
   const dotsEl  = document.getElementById('dots');
