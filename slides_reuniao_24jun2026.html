@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análise de Efetividade · Reunião CS Ops · 24/06/2026</title>
+<style>
+  :root {
+    --purple:      #7668AC;
+    --purple-dark: #5A4E8E;
+    --yellow:      #F9DC45;
+    --yellow-dark: #C9AC00;
+    --red:         #E94B56;
+    --red-bg:      rgba(233,75,86,0.13);
+    --green:       #43A047;
+    --green-mid:   #66BB6A;
+    --blue:        #008ECF;
+    --blue-bg:     rgba(0,142,207,0.12);
+    --border:      rgba(255,255,255,0.1);
+    --muted:       rgba(255,255,255,0.5);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #1a1a2e;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .deck { flex: 1; position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0;
+    display: none; flex-direction: column;
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .slide.active { display: flex; opacity: 1; }
+
+  /* ── Header ── */
+  .slide-header {
+    background: var(--purple-dark);
+    padding: 12px 36px;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--yellow);
+    flex-shrink: 0;
+  }
+  .logo-text { font-size: 14px; font-weight: 800; letter-spacing: 0.5px; }
+  .logo-text span { color: var(--yellow); }
+  .slide-label { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .slide-date  { font-size: 11px; font-weight: 600; color: var(--muted); }
+  .btn-back { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.25); color: #fff; text-decoration: none; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+
+  /* ── Body ── */
+  .slide-body {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 22px 48px;
+    overflow: hidden;
+  }
+  .section-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+  }
+  .tag-yellow { background: var(--yellow); color: #333; }
+  .tag-red    { background: var(--red);    color: #fff; }
+  .tag-green  { background: var(--green);  color: #fff; }
+  .tag-blue   { background: var(--blue);   color: #fff; }
+  .tag-gray   { background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.8); }
+  .slide-title    { font-size: 26px; font-weight: 800; line-height: 1.2; margin-bottom: 5px; }
+  .slide-subtitle { font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 20px; }
+
+  /* ── Cards ── */
+  .cards-row { display: grid; gap: 14px; margin-bottom: 18px; }
+  .cards-4 { grid-template-columns: repeat(4, 1fr); }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .card {
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.11);
+    border-radius: 14px; padding: 18px 14px;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .card.red    { border-color: var(--red);    background: var(--red-bg); }
+  .card.green  { border-color: var(--green);  background: rgba(67,160,71,0.12); }
+  .card.yellow { border-color: var(--yellow-dark); background: rgba(249,220,69,0.10); }
+  .card.blue   { border-color: var(--blue);   background: var(--blue-bg); }
+  .card-value { font-size: 38px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+  .card-value.red    { color: var(--red); }
+  .card-value.green  { color: var(--green-mid); }
+  .card-value.yellow { color: var(--yellow); }
+  .card-label { font-size: 10.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; line-height: 1.35; }
+
+  /* ── Table ── */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+  .data-table th { background: var(--purple); color: #fff; font-weight: 700; padding: 9px 12px; text-align: center; font-size: 11px; letter-spacing: 0.3px; }
+  .data-table td { padding: 8px 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .data-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  .data-table tr:last-child td { background: rgba(118,104,172,0.22); font-weight: 700; }
+  .data-table td:first-child { text-align: left; font-weight: 600; }
+  .hl        { color: var(--yellow);   font-weight: 700; }
+  .hl-red    { color: #FF6B75;         font-weight: 700; }
+  .hl-green  { color: var(--green-mid); font-weight: 700; }
+
+  /* ── Insight / Info boxes ── */
+  .insight-box {
+    background: rgba(249,220,69,0.09);
+    border: 1.5px solid var(--yellow-dark);
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 12.5px; line-height: 1.6; color: rgba(255,255,255,0.88);
+    margin-top: 10px;
+  }
+  .insight-box b { color: var(--yellow); }
+  .info-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.11);
+    border-radius: 10px; padding: 13px 16px;
+    font-size: 13px; line-height: 1.6;
+    color: rgba(255,255,255,0.8); margin-bottom: 10px;
+  }
+  .info-box b { color: #fff; }
+
+  /* ── Bullet list ── */
+  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .bullet-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.85); }
+  .dot { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin-top: 1px; }
+  .dot-red    { background: var(--red);    color: #fff; }
+  .dot-yellow { background: var(--yellow); color: #333; }
+  .dot-green  { background: var(--green);  color: #fff; }
+  .dot-blue   { background: var(--blue);   color: #fff; }
+
+  /* ── Progress bar ── */
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.09); flex-shrink: 0; }
+  .progress-fill { height: 100%; background: var(--yellow); transition: width 0.3s ease; }
+
+  /* ── Nav ── */
+  .nav { background: rgba(90,78,142,0.95); padding: 9px 36px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .nav-btn { background: rgba(255,255,255,0.09); border: 1.5px solid rgba(255,255,255,0.18); color: #fff; padding: 6px 18px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .nav-btn:hover { background: rgba(255,255,255,0.18); }
+  .nav-btn:disabled { opacity: 0.25; cursor: default; }
+  .nav-dots { display: flex; gap: 6px; }
+  .nav-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; }
+  .nav-dot.active { background: var(--yellow); }
+  .nav-counter { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+  /* ── Cover layout ── */
+  .cover-body {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 32px 60px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d2060 60%, #3a1a5e 100%);
+  }
+  .cover-badge { background: var(--yellow); color: #333; font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 28px; }
+  .cover-title { font-size: 36px; font-weight: 800; line-height: 1.2; margin-bottom: 10px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .cover-title span { color: var(--yellow); }
+  .cover-sub { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
+
+  /* ── Arc visual ── */
+  .arc-wrap {
+    display: flex; align-items: center; justify-content: center;
+    gap: 48px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 22px 40px;
+  }
+  .arc-ring {
+    position: relative; width: 160px; height: 160px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--yellow) 0% 62.4%,
+      var(--red) 62.4% 80%,
+      rgba(255,255,255,0.08) 80% 100%
+    );
+    flex-shrink: 0;
+  }
+  .arc-inner {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 108px; height: 108px;
+    background: #2d2060;
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .arc-val { font-size: 28px; font-weight: 800; color: var(--yellow); line-height: 1; }
+  .arc-lbl { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+  .arc-legend { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+  .arc-leg-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .arc-leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .arc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .arc-stat { text-align: center; }
+  .arc-stat-val { font-size: 22px; font-weight: 800; }
+  .arc-stat-lbl { font-size: 9.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .bg-default { background: #1a1a2e; }
+  .bg-alt     { background: #1e1a35; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- ── S1: CAPA ── -->
+  <div class="slide active" id="s1">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">CS Ops · Reunião diária</div>
+      <div class="slide-date">24 de junho de 2026</div>
+    </div>
+    <div class="cover-body">
+      <div class="cover-badge">Quarta-feira · Meio de semana · 24 junho 2026</div>
+      <div class="cover-title">Efetividade do Time<br><span>de Relacionamento</span></div>
+      <div class="cover-sub">Como a semana abriu · onde estamos agora · o que fazer hoje</div>
+
+      <div class="arc-wrap">
+        <div class="arc-ring">
+          <div class="arc-inner">
+            <div class="arc-val">62,4%</div>
+            <div class="arc-lbl">hoje</div>
+          </div>
+        </div>
+        <div class="arc-legend">
+          <div class="arc-leg-item">
+            <div class="arc-leg-dot" style="background:var(--yellow)"></div>
+            <span>Escolas efetivas — <b>62,4%</b> (1.228 de 1.967)</span>
+          </div>
+          <div class="arc-leg-item">
+            <div class="arc-leg-dot" style="background:var(--red)"></div>
+            <span>Gap até a meta — <b>17,6 pp</b></span>
+          </div>
+          <div class="arc-leg-item">
+            <div class="arc-leg-dot" style="background:rgba(255,255,255,0.2)"></div>
+            <span>Além da meta — 20%+</span>
+          </div>
+          <div style="width:100%;height:1px;background:rgba(255,255,255,0.1);margin:4px 0"></div>
+          <div class="arc-stats">
+            <div class="arc-stat">
+              <div class="arc-stat-val" style="color:var(--red)">739</div>
+              <div class="arc-stat-lbl">Já vencidas</div>
+            </div>
+            <div class="arc-stat">
+              <div class="arc-stat-val" style="color:var(--yellow)">80%</div>
+              <div class="arc-stat-lbl">Meta do time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S2: SNAPSHOT DA SEMANA ── -->
+  <div class="slide bg-default" id="s2">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Abertura da semana</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-yellow">Snapshot · semana 22–24/06</div>
+      <div class="slide-title">Como a semana vem se comportando</div>
+      <div class="slide-subtitle">Semana estável e em leve recuperação — efetividade ainda longe da meta, mas o estoque de vencidas parou de crescer</div>
+      <div class="cards-row cards-4">
+        <div class="card yellow">
+          <div class="card-value yellow">62,4%</div>
+          <div class="card-label">Efetividade<br>hoje (qua)</div>
+        </div>
+        <div class="card green">
+          <div class="card-value green">+1,0 pp</div>
+          <div class="card-label">vs ontem<br>(61,4%)</div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">739</div>
+          <div class="card-label">Estoque<br>vencidas hoje</div>
+        </div>
+        <div class="card yellow">
+          <div class="card-value yellow">80%</div>
+          <div class="card-label">Meta<br>do time</div>
+        </div>
+      </div>
+      <div class="insight-box">
+        <b>A semana abriu praticamente onde a anterior fechou</b> (62,5% na sexta → 61,4% seg e ter) e <b>hoje sobe para 62,4%</b> — primeiro avanço da semana.
+        <b>A boa notícia é o estoque de vencidas:</b> estabilizou em ~739, parou de crescer depois das semanas de pressão.
+        O gap até a meta segue alto (17,6 pp), mas o time vem aplicando o maior volume de esforço das últimas semanas — a base para virar a curva está montada.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S3: CURVA DE EFETIVIDADE ── -->
+  <div class="slide bg-alt" id="s3ef">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Curva de efetividade</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-yellow">Snapshots diários · sex → qua</div>
+      <div class="slide-title">A curva de efetividade</div>
+      <div class="slide-subtitle">Caiu na virada de semana e voltou a subir hoje · 19/06 → 24/06</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Dia</th>
+            <th>Efetivas</th>
+            <th>Elegíveis</th>
+            <th>% efetividade</th>
+            <th>Variação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sex&nbsp;&nbsp; 19/06</td>
+            <td>1.226</td>
+            <td>1.961</td>
+            <td>62,5%</td>
+            <td class="hl">— (fechamento)</td>
+          </tr>
+          <tr>
+            <td>Seg&nbsp; 22/06</td>
+            <td>1.206</td>
+            <td>1.963</td>
+            <td class="hl-red">61,4%</td>
+            <td class="hl-red">−1,1 pp</td>
+          </tr>
+          <tr>
+            <td>Ter&nbsp;&nbsp; 23/06</td>
+            <td>1.210</td>
+            <td>1.970</td>
+            <td>61,4%</td>
+            <td>0,0 pp</td>
+          </tr>
+          <tr>
+            <td>Qua&nbsp; 24/06 (hoje)</td>
+            <td>1.228</td>
+            <td>1.967</td>
+            <td class="hl-green">62,4%</td>
+            <td class="hl-green">+1,0 pp</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>A virada de semana custou 1,1 pp</b> (sex 62,5% → seg 61,4%): herança natural do fim da semana passada, com vencimentos saindo do prazo no fim de semana.
+        <b>Terça segurou (61,4%, flat)</b> — o time repôs exatamente o que vencia, sem ganhar nem perder terreno.
+        <b>Hoje a curva volta a subir (+1,0 pp)</b>: a carteira elegível está estável (~1.967), então o avanço veio de <b>novas efetivações líquidas</b>, não de carteira saindo.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S4: ESFORÇO DA SEMANA ── -->
+  <div class="slide bg-default" id="s4esf">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Esforço da semana</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-green">Seg → Ter · 22–23/06</div>
+      <div class="slide-title">Esforço dia a dia desta semana</div>
+      <div class="slide-subtitle">Atividades, escolas tocadas e novas efetivações · comparado ao fim da semana passada</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Dia</th>
+            <th>Atividades</th>
+            <th>Escolas tocadas</th>
+            <th>Escolas com efetiva</th>
+            <th>Vencimentos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Qui&nbsp;&nbsp; 18/06</td>
+            <td>812</td>
+            <td>469</td>
+            <td>240</td>
+            <td class="hl-red">140</td>
+          </tr>
+          <tr>
+            <td>Sex&nbsp;&nbsp; 19/06</td>
+            <td class="hl-red">753</td>
+            <td class="hl-red">413</td>
+            <td>203</td>
+            <td>124</td>
+          </tr>
+          <tr>
+            <td>Seg&nbsp; 22/06</td>
+            <td class="hl-green">968</td>
+            <td class="hl-green">560</td>
+            <td class="hl-green">259</td>
+            <td>106</td>
+          </tr>
+          <tr>
+            <td>Ter&nbsp;&nbsp; 23/06</td>
+            <td class="hl">897</td>
+            <td>485</td>
+            <td>202</td>
+            <td>109</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>Segunda foi o maior esforço recente</b>: 968 atividades e 560 escolas tocadas — quase 150 escolas a mais que a sexta anterior (413), o estoque represado do fim de semana entrou na fila e foi trabalhado.
+        <b>Terça manteve volume alto (897 ativ)</b> mas tocou menos escolas (485) e teve menos efetivas (202) — sinal de mais toques por escola, retrabalho em quem não converteu na segunda.
+        <b>Os vencimentos recuaram</b> (106 e 109) frente ao pico da quinta passada (140): menos pressão saindo do prazo, o que ajuda o time a ganhar terreno líquido.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S5: TAREFAS DE FOCO ── -->
+  <div class="slide bg-alt" id="s5foco">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Tarefas de foco</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-blue">Fila de foco · início do dia</div>
+      <div class="slide-title">A fila de foco de hoje</div>
+      <div class="slide-subtitle">Foco = fila priorizada que o sistema gera todo dia · fotografia tirada no começo da manhã</div>
+      <div class="cards-row cards-3">
+        <div class="card blue">
+          <div class="card-value" style="color:var(--blue)">536</div>
+          <div class="card-label">Tarefas de foco<br>geradas hoje</div>
+        </div>
+        <div class="card red">
+          <div class="card-value red">~0%</div>
+          <div class="card-label">Concluídas até<br>o momento</div>
+        </div>
+        <div class="card yellow">
+          <div class="card-value yellow">739</div>
+          <div class="card-label">Vencidas para<br>recuperar</div>
+        </div>
+      </div>
+      <div class="insight-box">
+        <b>O dia ainda não começou de fato</b>: a fila de foco de hoje tem 536 escolas priorizadas pelo sistema e a conclusão está praticamente em zero — esta reunião é o momento de definir como atacá-la.
+        <b>Histórico da semana passada:</b> a conclusão da fila trava em ~33–35% por dia, e o pior dia foi a quinta (27,7%), justamente quando os vencimentos picaram.
+        <b>Recado para hoje:</b> fechar a fila de foco cedo é o que evita que escolas prestes a vencer escapem — ataquem a fila antes do meio do dia.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S6: SELEÇÃO ADVERSA ── -->
+  <div class="slide bg-default" id="s6sel">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Seleção adversa</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-yellow">Qual escola o time escolhe tocar</div>
+      <div class="slide-title">O time recupera as escolas mais frescas primeiro</div>
+      <div class="slide-subtitle">Das recuperações do dia — há quantos dias úteis a escola estava vencida quando o time a tocou</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Dia</th>
+            <th>Recuperações</th>
+            <th>Média de DU vencida</th>
+            <th>Leitura</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Seg&nbsp; 22/06</td>
+            <td class="hl-green">103</td>
+            <td class="hl-green">3,7 DU</td>
+            <td>Estoque fresco do fim de semana</td>
+          </tr>
+          <tr>
+            <td>Ter&nbsp;&nbsp; 23/06</td>
+            <td>67</td>
+            <td class="hl-red">5,1 DU</td>
+            <td>Menos recuperações, escolas mais antigas</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>Segunda foi o dia mais saudável</b>: 103 escolas vencidas voltaram a ser efetivadas, com média de apenas 3,7 DU fora do prazo — o time pegou o estoque fresco represado do fim de semana.
+        <b>Terça já mostra o padrão de seleção adversa</b>: as recuperações caíram para 67 e a média subiu para 5,1 DU — o estoque fácil foi consumido, e o time começou a esbarrar nas escolas que estão paradas há mais tempo.
+        <b>O que sobra é o difícil:</b> as 145 escolas vencidas há 15+ DU quase não são tocadas. Elas precisam de uma ação dirigida — é o tema dos próximos slides.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S7: DISTRIBUIÇÃO POR TEMPO VENCIDA ── -->
+  <div class="slide bg-alt" id="s7dist">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Escolas vencidas</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">739 escolas fora do prazo</div>
+      <div class="slide-title">Quanto tempo cada vencida está parada</div>
+      <div class="slide-subtitle">Quanto mais tempo fora do prazo, mais difícil de recuperar</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Tempo vencida (dias úteis)</th>
+            <th>Escolas</th>
+            <th>% do total</th>
+            <th style="text-align:left;width:38%">Distribuição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1–3 dias</td>
+            <td class="hl-green">239</td>
+            <td>32,3%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:100%;background:var(--green-mid);border-radius:6px"></div></div></td>
+          </tr>
+          <tr>
+            <td>4–7 dias</td>
+            <td class="hl-green">188</td>
+            <td>25,4%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:79%;background:var(--green-mid);border-radius:6px"></div></div></td>
+          </tr>
+          <tr>
+            <td>8–14 dias</td>
+            <td class="hl">167</td>
+            <td>22,6%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:70%;background:var(--yellow);border-radius:6px"></div></div></td>
+          </tr>
+          <tr>
+            <td>15–30 dias</td>
+            <td class="hl-red">113</td>
+            <td>15,3%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:47%;background:var(--red);border-radius:6px"></div></div></td>
+          </tr>
+          <tr>
+            <td>30+ dias</td>
+            <td class="hl-red">32</td>
+            <td>4,3%</td>
+            <td style="padding:6px 12px"><div style="background:rgba(255,255,255,0.08);border-radius:6px;height:16px;overflow:hidden"><div style="height:100%;width:13%;background:var(--red);border-radius:6px"></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box">
+        <b>427 escolas venceram nos últimos 7 dias úteis (57,7%)</b> — mais da metade do estoque ainda está "quente" e barata de recuperar: um contato bem feito normalmente reverte.
+        <b>145 estão vencidas há 15+ dias</b> (19,6% do total): grupo crítico que não cede com um toque comum — veja os próximos slides para entender o perfil.
+        As <b>167 de 8–14 dias</b> são o meio-termo: recuperáveis, mas exigem mais de um toque.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S8: VENCIDAS 15+ POR SEGMENTO ── -->
+  <div class="slide bg-default" id="s8seg">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Vencidas · 15+ dias</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">145 escolas · vencidas há 15+ dias úteis</div>
+      <div class="slide-title">Qual segmento concentra as vencidas críticas</div>
+      <div class="slide-subtitle">Segmentação das escolas que estão fora do prazo há mais tempo</div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:18px">
+
+        <div style="display:grid;grid-template-columns:200px 1fr 52px 44px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">Medium touch</div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:100%;background:var(--blue);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">64 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:800;color:var(--blue);text-align:right">44,1%</div>
+          <div style="font-size:10px;color:var(--muted);text-align:right">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:200px 1fr 52px 44px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">High touch</div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:115%;background:var(--purple);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">74 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:800;color:var(--purple);text-align:right">51,0%</div>
+          <div style="font-size:10px;color:var(--muted);text-align:right">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:200px 1fr 52px 44px;align-items:center;gap:12px">
+          <div style="font-size:13px;font-weight:700">Premium touch / 40+</div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:11%;background:var(--yellow-dark);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+            </div>
+          </div>
+          <div style="font-size:22px;font-weight:800;color:var(--yellow);text-align:right">4,8%</div>
+          <div style="font-size:10px;color:var(--muted);text-align:right">7 escolas</div>
+        </div>
+
+      </div>
+
+      <div class="insight-box">
+        <b>High touch concentra 51% das vencidas críticas</b> (74 escolas, metade delas Renovação): é o segmento de maior impacto no ticket e na retenção — cada escola aqui é risco direto de retração.
+        <b>Medium touch vem logo atrás com 44,1%</b> (64 escolas, com forte peso de Renovação): mesmo prazo do HT (7 DU), o volume indica escolas sem contato efetivo há mais de 3 semanas.
+        <b>Premium touch tem só 7 escolas (4,8%)</b> — a atenção personalizada do segmento de maior valor segue funcionando.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S9: FUNIL DAS VENCIDAS CRÍTICAS ── -->
+  <div class="slide bg-alt" id="s9funil">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Vencidas críticas · Funil</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-red">145 escolas · 15+ dias úteis vencidas</div>
+      <div class="slide-title">Onde estão no funil as escolas mais críticas</div>
+      <div class="slide-subtitle">Etapa da jornada das 145 escolas vencidas há 15+ DU</div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
+
+        <div style="display:grid;grid-template-columns:280px 1fr 56px 52px;align-items:center;gap:10px">
+          <div>
+            <div style="font-size:13px;font-weight:700">Em Aplicação</div>
+            <div style="font-size:11px;color:var(--muted)">evento marcado · em andamento</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:100%;background:var(--red);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">101 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--red);text-align:right">70%</div>
+          <div style="font-size:10px;color:var(--muted)">do grupo</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:280px 1fr 56px 52px;align-items:center;gap:10px">
+          <div>
+            <div style="font-size:13px;font-weight:700">Onboarding & Boas-Vindas</div>
+            <div style="font-size:11px;color:var(--muted)">início da jornada de aplicação</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:28px;overflow:hidden">
+            <div style="height:100%;width:44%;background:var(--purple);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+              <span style="font-size:12px;font-weight:700;color:#fff">44 escolas</span>
+            </div>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--purple);text-align:right">30%</div>
+          <div style="font-size:10px;color:var(--muted)">do grupo</div>
+        </div>
+
+      </div>
+
+      <div class="insight-box">
+        <b>70% já estão Em Aplicação</b> (101 escolas): evento marcado e jornada em andamento, mas sem contato efetivo há 15+ DU — risco direto de aplicação sem acompanhamento do CS, ou de cancelamento.
+        <b>30% ainda estão em Onboarding & Boas-Vindas</b> (44 escolas): pararam no início da jornada e o contato cessou antes de avançarem no funil — podem desistir sem aviso.
+        <b>Ação:</b> essas 145 escolas precisam de uma força-tarefa dedicada — não saem na fila de foco do dia a dia porque o time consome o estoque fresco primeiro (slide de seleção adversa).
+      </div>
+    </div>
+  </div>
+
+  <!-- ── S10: PLANO DO DIA ── -->
+  <div class="slide bg-default" id="s10plano">
+    <div class="slide-header">
+      <a class="btn-back" href="https://biancamoura-ctrl.github.io/dashboards-efetividade/">← Site</a>
+      <div class="logo-text">estante <span>mágica</span></div>
+      <div class="slide-label">Plano do dia</div>
+      <div class="slide-date">24/06/2026</div>
+    </div>
+    <div class="slide-body">
+      <div class="section-tag tag-blue">O que fazer hoje</div>
+      <div class="slide-title">Estamos em 62,4% — como subir a curva</div>
+      <div class="slide-subtitle">Baseline de hoje: 1.228 efetivas de 1.967 elegíveis · 739 já vencidas · gap de 17,6 pp até a meta</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Cenário (esforço de hoje)</th>
+            <th>Novas efetivas líquidas</th>
+            <th>Efetividade resultante</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sem repor nenhuma (piso)</td>
+            <td>0</td>
+            <td class="hl-red">62,4%</td>
+          </tr>
+          <tr>
+            <td>Ritmo de ontem (202 escolas com ef.)</td>
+            <td>~+90 líq.*</td>
+            <td>~67%*</td>
+          </tr>
+          <tr>
+            <td>Ritmo da segunda (259 escolas com ef.)</td>
+            <td>~+150 líq.*</td>
+            <td class="hl-green">~70%*</td>
+          </tr>
+          <tr>
+            <td>Para bater a meta</td>
+            <td class="hl">+346 efetivas líquidas</td>
+            <td class="hl">80,0%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="info-box" style="font-size:11.5px;margin-top:4px;margin-bottom:10px">
+        * Cenários ilustrativos: parte das efetivações do dia é consumida por escolas que vencem ao longo do dia. O ganho líquido depende de quantas efetivações são reativações de vencidas vs renovação de prazo de quem já estava efetiva.
+      </div>
+      <div class="insight-box">
+        <b>Prioridade 1 — fechar a fila de foco cedo (536 escolas):</b> a fila está em ~0% no início do dia; concluí-la antes do meio-dia evita o gargalo que derrubou a quinta passada.
+        <b>Prioridade 2 — atacar as 427 vencidas recentes (1–7 DU):</b> são as mais baratas de reverter e onde o time já converte bem.
+        <b>Prioridade 3 — força-tarefa nas 145 vencidas há 15+ DU</b> (70% Em Aplicação, 51% High touch): essas não saem sozinhas na fila e são as de maior risco de retração. Repetir o ritmo da segunda (259 escolas com efetiva) recoloca o time em torno de 70%.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+<div class="nav">
+  <button class="nav-btn" id="btnPrev" onclick="go(-1)" disabled>← Anterior</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+    <div class="nav-dots" id="dots"></div>
+    <div class="nav-counter" id="counter">1 / 10</div>
+  </div>
+  <button class="nav-btn" id="btnNext" onclick="go(1)">Próximo →</button>
+</div>
+
+<script>
+  const TOTAL = 10;
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl  = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const prog    = document.getElementById('prog');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goto(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goto(n) {
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(TOTAL - 1, n));
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('active');
+    counter.textContent = (cur + 1) + ' / ' + TOTAL;
+    prog.style.width = ((cur + 1) / TOTAL * 100) + '%';
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === TOTAL - 1;
+  }
+  function go(dir) { goto(cur + dir); }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  });
+  prog.style.width = (1 / TOTAL * 100) + '%';
+</script>
+</body>
+</html>
