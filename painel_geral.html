@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Geral CS Ops — 25/06/2026</title>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;
+  --purple:#7668AC;--purple-lt:#f0eef8;
+  --red:#E94B56;--red-lt:#fef0f1;
+  --yellow:#F9DC45;
+  --green:#1A9957;--green-lt:#e6f5ee;
+  --orange:#E8843C;--orange-lt:#fef3ec;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1240px;margin:0 auto;padding:32px 20px 80px}
+
+/* Header */
+.header{margin-bottom:28px}
+.header-inner{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.header-eyebrow{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.4px}
+.header-date{font-size:12px;color:var(--muted);margin-top:4px}
+.header-receipt{text-align:right}
+.header-rev{font-size:30px;font-weight:800;color:var(--green);line-height:1;font-variant-numeric:tabular-nums}
+.header-rev-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
+.header-divider{height:2px;background:linear-gradient(90deg,var(--yellow) 0%,var(--yellow) 40%,transparent 100%);margin-top:16px;border-radius:2px}
+
+/* KPI grid */
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);
+     border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:700}
+.kpi-val{font-size:28px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border-top:3px solid var(--yellow)}
+.card-head{padding:13px 18px;border-bottom:1px solid var(--border);
+           display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.card-title{font-size:13px;font-weight:700}
+.card-body{padding:18px}
+
+/* Badge */
+.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;
+       padding:3px 9px;border-radius:20px;white-space:nowrap}
+.badge-blue{background:var(--blue-lt);color:var(--blue)}
+.badge-red{background:var(--red-lt);color:var(--red)}
+.badge-green{background:var(--green-lt);color:var(--green)}
+.badge-purple{background:var(--purple-lt);color:var(--purple)}
+.badge-yellow{background:#fffbe6;color:#7a5c00;border:1px solid #f5d000}
+
+/* Attention bar */
+.attention-bar{background:#fffbe6;border:1px solid #f5d000;border-radius:var(--radius);
+               padding:11px 16px;display:flex;gap:10px;align-items:center;
+               margin-bottom:16px;font-size:12px;font-weight:600;color:#6b4e00}
+
+/* Segmento grid */
+.seg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.seg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+          padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.seg-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.seg-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;margin-top:2px}
+.seg-n{font-size:34px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.seg-label{font-size:11px;color:var(--muted);margin-top:2px}
+.seg-density{font-size:11px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+
+/* Funil */
+.funil-list{display:flex;flex-direction:column;gap:0}
+.funil-stage{display:grid;grid-template-columns:200px 1fr 120px;align-items:center;
+             gap:16px;padding:12px 0;border-bottom:1px solid #f0f0ec}
+.funil-stage:last-child{border-bottom:none}
+.funil-lbl{text-align:right}
+.funil-name{font-size:12px;font-weight:700}
+.funil-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.funil-bar-wrap{position:relative}
+.funil-bar{height:32px;border-radius:6px;display:flex;align-items:center;padding:0 14px;
+           justify-content:space-between;color:#fff;font-size:12px;font-weight:700;
+           white-space:nowrap;min-width:100px}
+.funil-bar-n{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
+.funil-bar-rev{font-size:11px;opacity:.85}
+.funil-extras{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.funil-extra-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;
+                 background:var(--bg);border:1px solid var(--border);color:var(--muted)}
+.funil-meta{text-align:right}
+.funil-count{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.funil-rev-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Efetividade */
+.ef-overall{display:flex;align-items:center;gap:16px;margin-bottom:20px;
+            padding:16px;background:var(--bg);border-radius:8px;border:1px solid var(--border)}
+.ef-big{font-size:48px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--orange)}
+.ef-overall-info .lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+.ef-overall-info .desc{font-size:12px;color:var(--text);margin-top:3px}
+.ef-list{display:flex;flex-direction:column;gap:10px}
+.ef-row{display:grid;grid-template-columns:180px 1fr 52px;align-items:center;gap:12px}
+.ef-lbl{font-size:12px;font-weight:600}
+.ef-track{height:20px;background:#e8e8e4;border-radius:5px;overflow:hidden;position:relative}
+.ef-fill{height:100%;border-radius:5px}
+.ef-meta-line{position:absolute;top:0;bottom:0;left:80%;width:2px;background:rgba(0,0,0,.18)}
+.ef-pct{font-size:13px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.ef-legend{margin-top:10px;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.ef-legend-line{width:24px;height:2px;background:rgba(0,0,0,.2);display:inline-block}
+
+/* Alertas */
+.alert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.alert-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+            padding:14px 16px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
+.alert-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px}
+.alert-n{font-size:24px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.alert-txt{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+.alert-autografos{margin-top:12px;padding:11px 14px;background:var(--blue-lt);border-radius:8px;
+                  border:1px solid #b3ddf4;font-size:12px;font-weight:600;color:var(--blue);
+                  display:flex;gap:8px;align-items:center}
+
+/* Retração */
+.ret-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+/* Performance */
+.perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.perf-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
+             margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--yellow)}
+.perf-rows{display:flex;flex-direction:column;gap:6px}
+.perf-row{display:flex;justify-content:space-between;align-items:center;
+          padding:9px 12px;background:var(--bg);border-radius:7px;border:1px solid var(--border)}
+.perf-lbl{font-size:12px;font-weight:600}
+.perf-val{font-size:12px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* Dark mode */
+html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a}
+html.dark body{background:var(--bg);color:var(--text)}
+html.dark .card{background:var(--surface);border-color:var(--border)}
+html.dark .card-head{border-bottom-color:var(--border)}
+html.dark .kpi{background:var(--surface);border-color:var(--border)}
+html.dark .seg-card{background:var(--surface);border-color:var(--border)}
+html.dark .alert-card{background:var(--surface);border-color:var(--border)}
+html.dark .ef-track{background:var(--border)}
+html.dark .attention-bar{background:#2a2200;border-color:#5a4500;color:#f5c84a}
+html.dark .perf-row{background:#27272a;border-color:var(--border)}
+html.dark .funil-stage{border-bottom-color:var(--border)}
+html.dark .seg-density{border-top-color:var(--border)}
+html.dark .funil-extra-tag{background:#27272a;border-color:var(--border)}
+html.dark .ef-overall{background:#27272a;border-color:var(--border)}
+
+/* Theme toggle */
+.theme-btn{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;
+           border:none;cursor:pointer;background:linear-gradient(135deg,#FFD947,#FF8C00);
+           box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2);z-index:9998;
+           overflow:hidden;padding:0;display:flex;align-items:center;justify-content:center;
+           transition:background .5s,box-shadow .5s,transform .2s}
+html.dark .theme-btn{background:linear-gradient(135deg,#2d1b69,#0f0c29);
+                     box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4)}
+.theme-btn:hover{transform:scale(1.13)}
+.theme-icon-sun,.theme-icon-moon{position:absolute;font-size:22px;line-height:1;
+                                  transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s}
+.theme-icon-sun{opacity:1;transform:scale(1) rotate(0deg) translateY(0)}
+.theme-icon-moon{opacity:0;transform:scale(0) rotate(-40deg) translateY(10px)}
+html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px)}
+html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0)}
+
+/* Responsive */
+@media(max-width:960px){
+  .seg-grid{grid-template-columns:repeat(2,1fr)}
+  .alert-grid{grid-template-columns:repeat(2,1fr)}
+  .perf-grid{grid-template-columns:1fr}
+  .funil-stage{grid-template-columns:140px 1fr 100px}
+}
+@media(max-width:700px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .funil-stage{grid-template-columns:1fr;gap:8px}
+  .funil-lbl,.funil-meta{text-align:left}
+  .ef-row{grid-template-columns:120px 1fr 48px}
+  .alert-grid{grid-template-columns:1fr}
+  .ret-row{grid-template-columns:1fr}
+  .header-inner{flex-direction:column;align-items:flex-start}
+  .header-receipt{text-align:left}
+}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Início</a>
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema">
+  <span class="theme-icon-sun">&#x2600;&#xFE0F;</span>
+  <span class="theme-icon-moon">&#x1F319;</span>
+</button>
+<script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){
+  var d=document.documentElement.classList.toggle('dark');
+  localStorage.setItem('cs_ops_theme',d?'dark':'light')
+})})();</script>
+
+<div class="page">
+
+<!-- Header -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">CS Ops · Estante Mágica</div>
+      <h1>Painel Geral</h1>
+      <div class="header-date">Quarta-feira, 25 de junho de 2026</div>
+    </div>
+    <div class="header-receipt">
+      <div class="header-rev">R$ 35.8MM</div>
+      <div class="header-rev-lbl">receita esperada</div>
+    </div>
+  </div>
+  <div class="header-divider"></div>
+</div>
+
+<!-- KPIs principais -->
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-lbl">Total em relacionamento</div>
+    <div class="kpi-val" style="color:var(--blue)">3.325</div>
+    <div class="kpi-sub">escolas ativas na jornada</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">Novas ontem</div>
+    <div class="kpi-val" style="color:var(--purple)">+2</div>
+    <div class="kpi-sub">chegaram ao relacionamento</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">Efetividade geral</div>
+    <div class="kpi-val" style="color:var(--orange)">65.1%</div>
+    <div class="kpi-sub">meta: 80% &nbsp;·&nbsp; 1.270 de 1.951 elegíveis</div>
+  </div>
+</div>
+
+<!-- Atenção -->
+<div class="attention-bar">
+  <span style="font-size:16px">⚠️</span>
+  <span><strong>33 escolas</strong> sem segmentação atribuída — verificar imediatamente</span>
+</div>
+
+<!-- Distribuição da carteira -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Distribuição da Carteira</span>
+    <span class="badge badge-blue">2.094 escolas</span>
+  </div>
+  <div class="card-body">
+    <div class="seg-grid">
+      <div class="seg-card">
+        <div class="seg-accent" style="background:var(--purple)"></div>
+        <div class="seg-tag" style="color:var(--purple)">Premium Touch</div>
+        <div class="seg-n" style="color:var(--purple)">213</div>
+        <div class="seg-label">escolas</div>
+        <div class="seg-density">~80 escolas / consultor</div>
+      </div>
+      <div class="seg-card">
+        <div class="seg-accent" style="background:#5C4E8E"></div>
+        <div class="seg-tag" style="color:#5C4E8E">Premium Touch 40+</div>
+        <div class="seg-n" style="color:#5C4E8E">41</div>
+        <div class="seg-label">escolas</div>
+        <div class="seg-density">~40 escolas / consultor</div>
+      </div>
+      <div class="seg-card">
+        <div class="seg-accent" style="background:var(--blue)"></div>
+        <div class="seg-tag" style="color:var(--blue)">High Touch Novas</div>
+        <div class="seg-n" style="color:var(--blue)">613</div>
+        <div class="seg-label">escolas</div>
+        <div class="seg-density">~65 escolas / consultor</div>
+      </div>
+      <div class="seg-card">
+        <div class="seg-accent" style="background:var(--orange)"></div>
+        <div class="seg-tag" style="color:var(--orange)">High Touch Renovação</div>
+        <div class="seg-n" style="color:var(--orange)">520</div>
+        <div class="seg-label">escolas</div>
+        <div class="seg-density">~60 escolas / consultor</div>
+      </div>
+      <div class="seg-card">
+        <div class="seg-accent" style="background:var(--green)"></div>
+        <div class="seg-tag" style="color:var(--green)">Medium Touch</div>
+        <div class="seg-n" style="color:var(--green)">706</div>
+        <div class="seg-label">escolas</div>
+        <div class="seg-density">~60 escolas / consultor</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Funil -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Funil de Relacionamento</span>
+    <span class="badge badge-purple">3.325 escolas · R$ 35.8MM</span>
+  </div>
+  <div class="card-body" style="padding-top:10px;padding-bottom:10px">
+    <div class="funil-list">
+
+      <div class="funil-stage">
+        <div class="funil-lbl">
+          <div class="funil-name">Boa Vindas</div>
+          <div class="funil-sub">01. Onboarding & BV</div>
+        </div>
+        <div class="funil-bar-wrap">
+          <div class="funil-bar" style="background:var(--purple);width:clamp(120px,5%,100%)">
+            <span class="funil-bar-n">166</span>
+            <span class="funil-bar-rev">R$ 2.2MM</span>
+          </div>
+          <div class="funil-extras">
+            <span class="funil-extra-tag">Agendadas</span>
+            <span class="funil-extra-tag">No Show</span>
+            <span class="funil-extra-tag">Sumidas</span>
+          </div>
+        </div>
+        <div class="funil-meta">
+          <div class="funil-count" style="color:var(--purple)">166</div>
+          <div class="funil-rev-lbl">R$ 2.2MM</div>
+        </div>
+      </div>
+
+      <div class="funil-stage">
+        <div class="funil-lbl">
+          <div class="funil-name">Aguard. Cronograma</div>
+          <div class="funil-sub">02. Definição de Datas</div>
+        </div>
+        <div class="funil-bar-wrap">
+          <div class="funil-bar" style="background:var(--orange);width:clamp(120px,20%,100%)">
+            <span class="funil-bar-n">650</span>
+            <span class="funil-bar-rev">R$ 3.5MM</span>
+          </div>
+        </div>
+        <div class="funil-meta">
+          <div class="funil-count" style="color:var(--orange)">650</div>
+          <div class="funil-rev-lbl">R$ 3.5MM</div>
+        </div>
+      </div>
+
+      <div class="funil-stage">
+        <div class="funil-lbl">
+          <div class="funil-name">Com Cronograma</div>
+          <div class="funil-sub">03.x · não lockadas</div>
+        </div>
+        <div class="funil-bar-wrap">
+          <div class="funil-bar" style="background:#c0a800;width:clamp(120px,45%,100%)">
+            <span class="funil-bar-n">1.499</span>
+            <span class="funil-bar-rev">R$ 16.9MM</span>
+          </div>
+        </div>
+        <div class="funil-meta">
+          <div class="funil-count" style="color:#9a8400">1.499</div>
+          <div class="funil-rev-lbl">R$ 16.9MM</div>
+        </div>
+      </div>
+
+      <div class="funil-stage">
+        <div class="funil-lbl">
+          <div class="funil-name">Lockadas</div>
+          <div class="funil-sub">04. a 07. · com material</div>
+        </div>
+        <div class="funil-bar-wrap">
+          <div class="funil-bar" style="background:var(--green);width:clamp(120px,30%,100%)">
+            <span class="funil-bar-n">1.010</span>
+            <span class="funil-bar-rev">R$ 13.2MM</span>
+          </div>
+          <div class="funil-extras">
+            <span class="funil-extra-tag">327 · 5% material</span>
+            <span class="funil-extra-tag">112 · com resp.</span>
+            <span class="funil-extra-tag">376 · com compras</span>
+            <span class="funil-extra-tag">195 · concluídas</span>
+          </div>
+        </div>
+        <div class="funil-meta">
+          <div class="funil-count" style="color:var(--green)">1.010</div>
+          <div class="funil-rev-lbl">R$ 13.2MM</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Efetividade por segmento -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Efetividade por Segmento — Escolas em Aplicação</span>
+    <span class="badge badge-yellow">Meta: 80%</span>
+  </div>
+  <div class="card-body">
+    <div class="ef-overall">
+      <div class="ef-big">65.1%</div>
+      <div class="ef-overall-info">
+        <div class="lbl">Efetividade geral</div>
+        <div class="desc">14.9 pontos abaixo da meta &nbsp;·&nbsp; 1.276 de 1.960 elegíveis no prazo</div>
+      </div>
+    </div>
+    <div class="ef-list">
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:#5C4E8E">Premium Touch 40+</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:97.6%;background:#5C4E8E"></div>
+          <div class="ef-meta-line"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--green)">97.6%</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--purple)">Premium Touch</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:81.2%;background:var(--purple)"></div>
+          <div class="ef-meta-line"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--green)">81.2%</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--blue)">HT Novas</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:65%;background:var(--blue)"></div>
+          <div class="ef-meta-line"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--red)">65.0%</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--orange)">HT Renovação</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:64.8%;background:var(--orange)"></div>
+          <div class="ef-meta-line"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--red)">64.8%</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--green)">Medium Touch</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:58.6%;background:var(--green)"></div>
+          <div class="ef-meta-line"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--red)">58.6%</div>
+      </div>
+    </div>
+    <div class="ef-legend">
+      <span class="ef-legend-line"></span> linha vertical = meta 80%
+    </div>
+  </div>
+</div>
+
+<!-- Alertas operacionais -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Alertas Operacionais</span>
+    <span class="badge badge-red">71 pendências</span>
+  </div>
+  <div class="card-body">
+    <div class="alert-grid">
+      <div class="alert-card">
+        <div class="alert-dot" style="background:var(--green)"></div>
+        <div>
+          <div class="alert-n" style="color:var(--green)">0</div>
+          <div class="alert-txt">OK para produção atrasado</div>
+        </div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-dot" style="background:var(--orange)"></div>
+        <div>
+          <div class="alert-n" style="color:var(--orange)">2</div>
+          <div class="alert-txt">Em expedição &gt;2 dias</div>
+        </div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-dot" style="background:var(--red)"></div>
+        <div>
+          <div class="alert-n" style="color:var(--red)">69</div>
+          <div class="alert-txt">SLA entrega ultrapassado (sem livro entregue)</div>
+        </div>
+      </div>
+    </div>
+    <div class="alert-autografos">
+      <span>📅</span>
+      <span><strong>3 escolas com autógrafos hoje</strong> — confirmar preparação e presença</span>
+    </div>
+  </div>
+</div>
+
+<!-- Retração -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Retração</span>
+    <span class="badge badge-red">172 escolas · R$ 1.9MM</span>
+  </div>
+  <div class="card-body">
+    <div class="ret-row">
+      <div class="kpi" style="margin-bottom:0">
+        <div class="kpi-lbl">Total em retração</div>
+        <div class="kpi-val" style="color:var(--red)">172</div>
+        <div class="kpi-sub">escolas</div>
+      </div>
+      <div class="kpi" style="margin-bottom:0">
+        <div class="kpi-lbl">Entrada na semana</div>
+        <div class="kpi-val" style="color:var(--muted)">—</div>
+        <div class="kpi-sub">sem dado</div>
+      </div>
+      <div class="kpi" style="margin-bottom:0">
+        <div class="kpi-lbl">Resgatadas na semana</div>
+        <div class="kpi-val" style="color:var(--muted)">—</div>
+        <div class="kpi-sub">sem dado</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Performance de vendas -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Performance de Vendas — Escolas Concluintes</span>
+    <span class="badge badge-blue">25 escolas · autógrafos realizados</span>
+  </div>
+  <div class="card-body">
+    <div class="perf-grid">
+      <div>
+        <div class="perf-header" style="color:var(--blue)">Novas <span style="font-size:11px;font-weight:400;color:var(--muted)">1 escola</span></div>
+        <div class="perf-rows">
+          <div class="perf-row">
+            <span class="perf-lbl">% e-book (prontos)</span>
+            <span class="perf-val" style="color:var(--green)">96.0%</span>
+          </div>
+          <div class="perf-row">
+            <span class="perf-lbl">% e-book com compra</span>
+            <span class="perf-val" style="color:var(--green)">76.0%</span>
+          </div>
+          <div class="perf-row">
+            <span class="perf-lbl">Receita média</span>
+            <span class="perf-val">R$ 30.655</span>
+          </div>
+          <div class="perf-row">
+            <span class="perf-lbl">vs. receita anterior</span>
+            <span class="perf-val" style="color:var(--red)">-23%</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="perf-header" style="color:var(--orange)">Renovação <span style="font-size:11px;font-weight:400;color:var(--muted)">24 escolas</span></div>
+        <div class="perf-rows">
+          <div class="perf-row">
+            <span class="perf-lbl">% e-book (prontos)</span>
+            <span class="perf-val" style="color:var(--green)">99.9%</span>
+          </div>
+          <div class="perf-row">
+            <span class="perf-lbl">% e-book com compra</span>
+            <span class="perf-val" style="color:var(--green)">77.6%</span>
+          </div>
+          <div class="perf-row">
+            <span class="perf-lbl">Receita média</span>
+            <span class="perf-val">R$ 21.319</span>
+          </div>
+          <div class="perf-row">
+            <span class="perf-lbl">vs. receita anterior</span>
+            <span class="perf-val" style="color:var(--green)">+34%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /.page -->
+</body>
+</html>
