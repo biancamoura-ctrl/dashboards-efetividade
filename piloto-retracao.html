@@ -159,7 +159,7 @@
   .btn-export:hover { background: var(--purple-dark); color: white; border-color: var(--purple-dark); }
   .footer-note { text-align: center; font-size: 10px; margin-top: 12px; }
 </style>
-<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+</head>
 <body>
 <div class="container">
 
@@ -415,12 +415,11 @@ function renderTable() {
 
 function exportCSV() {
   const data = filteredData();
-  const cols = ['nome','id_ax','cs','trilha','estado','origem','receita_ant','tentativas','status','classif_d7','receita_salva','obs'];
-  const hdrs = ['Escola','ID AX','Consultora','Trilha','UF','Origem','Rec. Ant.','Tentativas','Status','Classif. D7','Receita Salva','Observação'];
+  const cols = ['nome','id_ax','cs','trilha','estado','origem','receita_ant','ref_ano_anterior','tentativas','status','classif_d7','receita_salva','obs'];
+  const hdrs = ['Escola','ID AX','Consultora','Trilha','UF','Origem','Rec. Ant.','Ref. Ano Ant. (CRM)','Tentativas','Status','Classif. D7','Receita Salva','Observação'];
   const esc  = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
   const rows = [hdrs.map(esc).join(','), ...data.map(e => cols.map(c => esc(e[c])).join(','))];
-  const blob = new Blob(['﻿' + rows.join('
-')], {type: 'text/csv;charset=utf-8;'});
+  const blob = new Blob(['﻿' + rows.join('\n')], {type: 'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `piloto_retracao_${new Date().toISOString().slice(0,10)}.csv`;
