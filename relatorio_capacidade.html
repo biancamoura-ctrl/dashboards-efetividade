@@ -75,9 +75,11 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;height:4px}
 .cargo-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:20px;overflow:hidden}
 .cargo-cmp-table{width:100%;border-collapse:collapse}
 .cargo-cmp-table th{padding:12px 18px;font-size:12px;font-weight:700;text-align:center;border-bottom:2px solid var(--border)}
-.cargo-cmp-table th:first-child{text-align:left;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:10px;width:36%}
+.cargo-cmp-table th:first-child{text-align:left;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:10px;width:30%}
 .cargo-cmp-table th.th-a{background:var(--blue-soft);color:var(--blue);border-bottom-color:var(--blue)}
 .cargo-cmp-table th.th-e{background:var(--purple-soft);color:var(--purple);border-bottom-color:var(--purple)}
+.cargo-cmp-table th.th-r{background:var(--yellow-soft);color:var(--t2);border-bottom-color:var(--yellow)}
+.cargo-cmp-table .cv.ratio{font-size:13px;font-weight:700;color:var(--t2)}
 .cargo-cmp-table td{padding:10px 18px;font-size:13px;text-align:center;border-top:1px solid var(--border)}
 .cargo-cmp-table td:first-child{text-align:left;color:var(--t2);font-size:12px}
 .cargo-cmp-table tr:first-child td{border-top:none}
@@ -362,15 +364,19 @@ function render(){
     <th></th>
     <th class="th-a">Analista${nA?' ('+nA+')':''}</th>
     <th class="th-e">Estagiário${nE?' ('+nE+')':''}</th>
+    <th class="th-r">Estagi&aacute;rio % Analista</th>
   </tr></thead><tbody>`;
 
   metricRows.forEach(([lbl,key,fmt],i)=>{
     const va=agg_a?fmt(agg_a[key]):'—';
     const ve=agg_e?fmt(agg_e[key]):'—';
+    const ratio=(agg_a&&agg_e&&agg_a[key])?(agg_e[key]/agg_a[key]*100):null;
+    const rv=ratio!==null?r1(ratio)+'%':'—';
     html+=`<tr class="${i===0?'act-row':''}">
       <td>${lbl}</td>
       <td><span class="cv">${va}</span></td>
       <td><span class="cv">${ve}</span></td>
+      <td><span class="cv ratio">${rv}</span></td>
     </tr>`;
   });
   html+='</tbody>';
