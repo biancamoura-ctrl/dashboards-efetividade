@@ -57,6 +57,11 @@ td.right{text-align:right}
 .badge-red{background:var(--red-lt);color:var(--red)}
 .badge-amber{background:var(--amber-lt);color:var(--amber)}
 .badge-blue{background:var(--blue-lt);color:var(--blue)}
+.badge-gray{background:#eceef1;color:#767a82}
+html.dark .badge-gray{background:#2d2d33;color:#9a9ea6}
+.card.tc-monitor{border-top-color:var(--amber)}
+.tc-swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.tc-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:2px 0 14px}
 .faixa-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:4px}
 .faixa-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
             padding:14px 12px;text-align:center;box-shadow:var(--shadow)}
@@ -129,26 +134,101 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
   <p>Escolas elegíveis que ultrapassaram o Tempo de Contato (TC) sem atividade efetiva &nbsp;·&nbsp; Brasil &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Ref: 07/07/2026</p>
 </div>
 
+
+<div class="card tc-monitor">
+  <div class="card-head">
+    <span class="card-title">🧪 Monitoramento: Tempo de Contato Dinâmico</span>
+    <span style="font-size:11px;color:var(--muted)">Rollout da matriz de Engagement Score em produção desde 07/07/2026</span>
+  </div>
+  <div class="card-body">
+    
+    <div class="kpi-row" style="margin-bottom:16px">
+      <div class="kpi">
+        <div class="kpi-lbl">Universo avaliado</div>
+        <div class="kpi-val blue" style="color:var(--blue)">1937</div>
+        <div class="kpi-sub">escolas elegíveis p/ TC</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Classificado na V2</div>
+        <div class="kpi-val" style="color:var(--blue)">83%</div>
+        <div class="kpi-sub">329 sem score/funil (17%)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Regressão (V2 &lt; V1)</div>
+        <div class="kpi-val" style="color:var(--text)">0</div>
+        <div class="kpi-sub">viola regra de nunca reduzir</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Subiu de faixa (V2 &gt; V1)</div>
+        <div class="kpi-val" style="color:var(--blue)">855</div>
+        <div class="kpi-sub">ganharam mais prazo</div>
+      </div>
+    </div>
+
+    <div class="tc-legend">
+      <span><span class="tc-swatch" style="background:#2F9E44"></span>15 dias</span>
+      <span><span class="tc-swatch" style="background:#1565C0"></span>12 dias</span>
+      <span><span class="tc-swatch" style="background:#C98A00"></span>10 dias</span>
+      <span><span class="tc-swatch" style="background:#E94B56"></span>7 dias</span>
+      <span><span class="tc-swatch" style="background:#9a9a9a"></span>não classificado</span>
+      <span><span class="tc-swatch" style="background:#5A6478"></span>outro (fora da matriz V2, ex. 20/30d)</span>
+    </div>
+
+    <div class="twoCol">
+      <div>
+        <h3 style="font-size:13px;font-weight:700;margin-bottom:8px">Antes — regra fixa (V1)</h3>
+        <div class="funil-chart"><div class="funil-row"><div class="funil-lbl">7d</div><div class="funil-track"><div class="funil-fill" style="width:100.0%;background:#E94B56"></div></div><div class="funil-meta"><span style="font-weight:700;color:#E94B56">1608</span></div></div><div class="funil-row"><div class="funil-lbl">10d</div><div class="funil-track"><div class="funil-fill" style="width:3.2%;background:#C98A00"></div></div><div class="funil-meta"><span style="font-weight:700;color:#C98A00">52</span></div></div><div class="funil-row"><div class="funil-lbl">15d</div><div class="funil-track"><div class="funil-fill" style="width:9.2%;background:#2F9E44"></div></div><div class="funil-meta"><span style="font-weight:700;color:#2F9E44">148</span></div></div><div class="funil-row"><div class="funil-lbl">20d</div><div class="funil-track"><div class="funil-fill" style="width:3.5%;background:#5A6478"></div></div><div class="funil-meta"><span style="font-weight:700;color:#5A6478">57</span></div></div><div class="funil-row"><div class="funil-lbl">30d</div><div class="funil-track"><div class="funil-fill" style="width:2.8%;background:#5A6478"></div></div><div class="funil-meta"><span style="font-weight:700;color:#5A6478">45</span></div></div><div class="funil-row"><div class="funil-lbl">(não classif.)</div><div class="funil-track"><div class="funil-fill" style="width:1.7%;background:#9a9a9a"></div></div><div class="funil-meta"><span style="font-weight:700;color:#9a9a9a">27</span></div></div></div>
+      </div>
+      <div>
+        <h3 style="font-size:13px;font-weight:700;margin-bottom:8px">Depois — matriz dinâmica (V2)</h3>
+        <div class="funil-chart"><div class="funil-row"><div class="funil-lbl">7d</div><div class="funil-track"><div class="funil-fill" style="width:100.0%;background:#E94B56"></div></div><div class="funil-meta"><span style="font-weight:700;color:#E94B56">753</span></div></div><div class="funil-row"><div class="funil-lbl">10d</div><div class="funil-track"><div class="funil-fill" style="width:47.5%;background:#C98A00"></div></div><div class="funil-meta"><span style="font-weight:700;color:#C98A00">358</span></div></div><div class="funil-row"><div class="funil-lbl">12d</div><div class="funil-track"><div class="funil-fill" style="width:35.2%;background:#1565C0"></div></div><div class="funil-meta"><span style="font-weight:700;color:#1565C0">265</span></div></div><div class="funil-row"><div class="funil-lbl">15d</div><div class="funil-track"><div class="funil-fill" style="width:30.8%;background:#2F9E44"></div></div><div class="funil-meta"><span style="font-weight:700;color:#2F9E44">232</span></div></div><div class="funil-row"><div class="funil-lbl">(não classif.)</div><div class="funil-track"><div class="funil-fill" style="width:43.7%;background:#9a9a9a"></div></div><div class="funil-meta"><span style="font-weight:700;color:#9a9a9a">329</span></div></div></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:700;margin:18px 0 8px">Migração V1 → V2</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>De (V1)</th><th>Para (V2)</th><th style="text-align:right">Escolas</th><th>Situação</th></tr></thead>
+        <tbody><tr><td>7d</td><td>7d</td><td class="num">753</td><td><span class="badge badge-gray">= Manteve</span></td></tr><tr><td>7d</td><td>10d</td><td class="num">358</td><td><span class="badge badge-blue">↑ Subiu</span></td></tr><tr><td>7d</td><td>12d</td><td class="num">265</td><td><span class="badge badge-blue">↑ Subiu</span></td></tr><tr><td>7d</td><td>15d</td><td class="num">232</td><td><span class="badge badge-blue">↑ Subiu</span></td></tr><tr><td>15d</td><td>(não classif.)</td><td class="num">148</td><td><span class="badge badge-amber">Sem V2</span></td></tr><tr><td>20d</td><td>(não classif.)</td><td class="num">57</td><td><span class="badge badge-amber">Sem V2</span></td></tr><tr><td>10d</td><td>(não classif.)</td><td class="num">52</td><td><span class="badge badge-amber">Sem V2</span></td></tr><tr><td>30d</td><td>(não classif.)</td><td class="num">45</td><td><span class="badge badge-amber">Sem V2</span></td></tr><tr><td>(não classif.)</td><td>(não classif.)</td><td class="num">27</td><td><span class="badge badge-gray">Sem dados</span></td></tr></tbody>
+      </table>
+    </div>
+    
+
+    <h3 style="font-size:13px;font-weight:700;margin:18px 0 8px">Histórico diário do rollout</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Data</th><th style="text-align:right">Universo</th>
+          <th style="min-width:120px">% classificado V2</th>
+          <th style="text-align:right">Não classif.</th>
+          <th style="text-align:right">Regressão</th>
+          <th style="text-align:right">Subiu</th></tr></thead>
+        <tbody><tr><td>07/07/2026</td><td class="num">1937</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:83.0%;background:var(--blue)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">83%</span></div></td><td class="num">329</td><td class="num" style="">0</td><td class="num">855</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
 <!-- KPIs -->
 <div class="kpi-row">
   <div class="kpi">
     <div class="kpi-lbl">Total elegíveis</div>
-    <div class="kpi-val blue" style="color:var(--blue)">1937</div>
+    <div class="kpi-val blue" style="color:var(--blue)">1938</div>
     <div class="kpi-sub">escolas com TC definido</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Não efetivas</div>
-    <div class="kpi-val" style="color:var(--red)">632</div>
+    <div class="kpi-val" style="color:var(--red)">590</div>
     <div class="kpi-sub">acima do prazo</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">% não efetiva</div>
-    <div class="kpi-val" style="color:var(--red)">32.6%</div>
+    <div class="kpi-val" style="color:var(--red)">30.4%</div>
     <div class="kpi-sub">da carteira elegível</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Média dias além</div>
-    <div class="kpi-val" style="color:var(--amber)">9.7</div>
+    <div class="kpi-val" style="color:var(--amber)">10.1</div>
     <div class="kpi-sub">dias úteis acima do TC</div>
   </div>
 </div>
@@ -158,7 +238,7 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
   <div class="card-head"><span class="card-title">⏱ Faixa de Tempo Além do Prazo</span></div>
   <div class="card-body">
     <div class="faixa-grid">
-      <div class="faixa-card"><div class="faixa-n" style="color:#7668AC">239</div><div class="faixa-lbl">1–3 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#E94B56">142</div><div class="faixa-lbl">4–7 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#E94B56">107</div><div class="faixa-lbl">8–14 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#cc3c46">68</div><div class="faixa-lbl">15–21 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#aa2d38">76</div><div class="faixa-lbl">22+ dias</div><div class="faixa-sub">além do prazo</div></div>
+      <div class="faixa-card"><div class="faixa-n" style="color:#7668AC">209</div><div class="faixa-lbl">1–3 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#E94B56">137</div><div class="faixa-lbl">4–7 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#E94B56">103</div><div class="faixa-lbl">8–14 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#cc3c46">65</div><div class="faixa-lbl">15–21 dias</div><div class="faixa-sub">além do prazo</div></div><div class="faixa-card"><div class="faixa-n" style="color:#aa2d38">76</div><div class="faixa-lbl">22+ dias</div><div class="faixa-sub">além do prazo</div></div>
     </div>
   </div>
 </div>
@@ -175,7 +255,7 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
           <th style="text-align:right">Não ef.</th>
           <th style="min-width:120px">% não ef.</th>
         </tr></thead>
-        <tbody><tr><td>High touch</td><td class="num">1006</td><td class="num" style="color:var(--red);font-weight:700">330</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:32.8%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">33%</span></div></td></tr><tr><td>Medium touch</td><td class="num">680</td><td class="num" style="color:var(--red);font-weight:700">244</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:35.9%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">36%</span></div></td></tr><tr><td>Premium touch</td><td class="num">211</td><td class="num" style="color:var(--red);font-weight:700">55</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:26.1%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">26%</span></div></td></tr><tr><td>Premium touch 40+</td><td class="num">40</td><td class="num" style="color:var(--red);font-weight:700">3</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:7.5%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">8%</span></div></td></tr></tbody>
+        <tbody><tr><td>High touch</td><td class="num">1007</td><td class="num" style="color:var(--red);font-weight:700">314</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:31.2%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">31%</span></div></td></tr><tr><td>Medium touch</td><td class="num">680</td><td class="num" style="color:var(--red);font-weight:700">235</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:34.6%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">35%</span></div></td></tr><tr><td>Premium touch</td><td class="num">211</td><td class="num" style="color:var(--red);font-weight:700">39</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:18.5%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">18%</span></div></td></tr><tr><td>Premium touch 40+</td><td class="num">40</td><td class="num" style="color:var(--red);font-weight:700">2</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:5.0%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">5%</span></div></td></tr></tbody>
       </table>
     </div>
   </div>
@@ -190,7 +270,7 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
           <th style="text-align:right">Não ef.</th>
           <th style="min-width:120px">% não ef.</th>
         </tr></thead>
-        <tbody><tr><td>Em Aplicação</td><td class="num">1545</td><td class="num" style="color:var(--red);font-weight:700">484</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:31.3%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">31%</span></div></td></tr><tr><td>Onboarding & Boas vindas</td><td class="num">345</td><td class="num" style="color:var(--red);font-weight:700">139</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:40.3%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">40%</span></div></td></tr><tr><td>Ciclo de Vendas</td><td class="num">30</td><td class="num" style="color:var(--red);font-weight:700">5</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:16.7%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">17%</span></div></td></tr><tr><td>Enviou Lista de Alunos</td><td class="num">6</td><td class="num" style="color:var(--red);font-weight:700">3</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:50.0%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">50%</span></div></td></tr><tr><td>Ciclo de Eventos</td><td class="num">11</td><td class="num" style="color:var(--red);font-weight:700">1</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:9.1%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">9%</span></div></td></tr></tbody>
+        <tbody><tr><td>Em Aplicação</td><td class="num">1546</td><td class="num" style="color:var(--red);font-weight:700">454</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:29.4%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">29%</span></div></td></tr><tr><td>Onboarding & Boas vindas</td><td class="num">345</td><td class="num" style="color:var(--red);font-weight:700">129</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:37.4%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">37%</span></div></td></tr><tr><td>Ciclo de Vendas</td><td class="num">30</td><td class="num" style="color:var(--red);font-weight:700">4</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:13.3%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">13%</span></div></td></tr><tr><td>Enviou Lista de Alunos</td><td class="num">6</td><td class="num" style="color:var(--red);font-weight:700">2</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:33.3%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">33%</span></div></td></tr><tr><td>Ciclo de Eventos</td><td class="num">11</td><td class="num" style="color:var(--red);font-weight:700">1</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:9.1%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">9%</span></div></td></tr></tbody>
       </table>
     </div>
   </div>
@@ -204,7 +284,7 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
   </div>
   <div class="card-body">
     <div class="funil-chart">
-      <div class="funil-row"><div class="funil-lbl" title="(sem funil)">(sem funil)</div><div class="funil-track"><div class="funil-fill" style="width:0.3%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">1</span></div></div><div class="funil-row"><div class="funil-lbl" title="01. Onboarding & Boas-Vindas">01. Onboarding & Boas-Vindas</div><div class="funil-track"><div class="funil-fill" style="width:1.1%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">4</span></div></div><div class="funil-row"><div class="funil-lbl" title="02. Definição de Datas">02. Definição de Datas</div><div class="funil-track"><div class="funil-fill" style="width:23.5%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">87</span></div></div><div class="funil-row"><div class="funil-lbl" title="03.1 Com cronograma e sem material (no prazo)">03.1 Com cronograma e sem material (no prazo)</div><div class="funil-track"><div class="funil-fill" style="width:100.0%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">370</span></div></div><div class="funil-row"><div class="funil-lbl" title="03.2 Com cronograma e sem material (a 5 dias do prazo)">03.2 Com cronograma e sem material (a 5 dias do prazo)</div><div class="funil-track"><div class="funil-fill" style="width:0.3%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">1</span></div></div><div class="funil-row"><div class="funil-lbl" title="03.3 Com cronograma e sem material (passou do  prazo)">03.3 Com cronograma e sem material (passou do  prazo)</div><div class="funil-track"><div class="funil-fill" style="width:0.8%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">3</span></div></div><div class="funil-row"><div class="funil-lbl" title="04. Com 5% material e sem compras">04. Com 5% material e sem compras</div><div class="funil-track"><div class="funil-fill" style="width:17.8%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">66</span></div></div><div class="funil-row"><div class="funil-lbl" title="05. Com responsáveis">05. Com responsáveis</div><div class="funil-track"><div class="funil-fill" style="width:4.9%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">18</span></div></div><div class="funil-row"><div class="funil-lbl" title="06. Com compras">06. Com compras</div><div class="funil-track"><div class="funil-fill" style="width:21.1%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">78</span></div></div><div class="funil-row"><div class="funil-lbl" title="07.1 Concluídas com compras">07.1 Concluídas com compras</div><div class="funil-track"><div class="funil-fill" style="width:0.8%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">3</span></div></div><div class="funil-row"><div class="funil-lbl" title="07.2 Concluídas sem compras">07.2 Concluídas sem compras</div><div class="funil-track"><div class="funil-fill" style="width:0.0%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">0</span></div></div><div class="funil-row"><div class="funil-lbl" title="08. Retração">08. Retração</div><div class="funil-track"><div class="funil-fill" style="width:0.3%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">1</span></div></div>
+      <div class="funil-row"><div class="funil-lbl" title="(sem funil)">(sem funil)</div><div class="funil-track"><div class="funil-fill" style="width:0.3%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">1</span></div></div><div class="funil-row"><div class="funil-lbl" title="01. Onboarding & Boas-Vindas">01. Onboarding & Boas-Vindas</div><div class="funil-track"><div class="funil-fill" style="width:0.9%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">3</span></div></div><div class="funil-row"><div class="funil-lbl" title="02. Definição de Datas">02. Definição de Datas</div><div class="funil-track"><div class="funil-fill" style="width:24.4%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">85</span></div></div><div class="funil-row"><div class="funil-lbl" title="03.1 Com cronograma e sem material (no prazo)">03.1 Com cronograma e sem material (no prazo)</div><div class="funil-track"><div class="funil-fill" style="width:100.0%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">348</span></div></div><div class="funil-row"><div class="funil-lbl" title="03.2 Com cronograma e sem material (a 5 dias do prazo)">03.2 Com cronograma e sem material (a 5 dias do prazo)</div><div class="funil-track"><div class="funil-fill" style="width:0.3%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">1</span></div></div><div class="funil-row"><div class="funil-lbl" title="03.3 Com cronograma e sem material (passou do  prazo)">03.3 Com cronograma e sem material (passou do  prazo)</div><div class="funil-track"><div class="funil-fill" style="width:0.6%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">2</span></div></div><div class="funil-row"><div class="funil-lbl" title="04. Com 5% material e sem compras">04. Com 5% material e sem compras</div><div class="funil-track"><div class="funil-fill" style="width:17.8%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">62</span></div></div><div class="funil-row"><div class="funil-lbl" title="05. Com responsáveis">05. Com responsáveis</div><div class="funil-track"><div class="funil-fill" style="width:4.9%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">17</span></div></div><div class="funil-row"><div class="funil-lbl" title="06. Com compras">06. Com compras</div><div class="funil-track"><div class="funil-fill" style="width:19.3%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">67</span></div></div><div class="funil-row"><div class="funil-lbl" title="07.1 Concluídas com compras">07.1 Concluídas com compras</div><div class="funil-track"><div class="funil-fill" style="width:0.9%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">3</span></div></div><div class="funil-row"><div class="funil-lbl" title="07.2 Concluídas sem compras">07.2 Concluídas sem compras</div><div class="funil-track"><div class="funil-fill" style="width:0.0%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">0</span></div></div><div class="funil-row"><div class="funil-lbl" title="08. Retração">08. Retração</div><div class="funil-track"><div class="funil-fill" style="width:0.3%;background:var(--red)"></div></div><div class="funil-meta"><span style="font-weight:700;color:var(--red)">1</span></div></div>
     </div>
   </div>
 </div>
@@ -342,7 +422,6 @@ const RAW = [
 ["71147","Instituto Educacional Bom Jesus dos Perd\u00f5es-Sp","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,27,20,"https://axcrm.ai/deals/71147"],
 ["144630","CEDUC SANTA LUZIA - CENTRO EDUCACIONAL SANTA LUZIA","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,27,20,"https://axcrm.ai/deals/144630"],
 ["431299","CENTRO EDUCACIONAL JEAN PIAGET","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,27,20,"https://axcrm.ai/deals/431299"],
-["54642","COLEGIO FLAMBOYANT","kaua.coelho@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",15,35,20,"https://axcrm.ai/deals/54642"],
 ["30107","COL\u00c9GIO SUZANO","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,27,20,"https://axcrm.ai/deals/30107"],
 ["143899","DAVILOHN KIDS - CE","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,27,20,"https://axcrm.ai/deals/143899"],
 ["63590","Educand\u00e1rio Jo\u00e3o Henrique Mendon\u00e7a","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Ciclo de Vendas","06. Com compras",7,27,20,"https://axcrm.ai/deals/63590"],
@@ -357,13 +436,13 @@ const RAW = [
 ["64755","BRINCANDO DE APRENDER SAO BERNARDO COLEGIO","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,26,19,"https://axcrm.ai/deals/64755"],
 ["293377","Col\u00e9gio Anglo Blumenau","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,26,19,"https://axcrm.ai/deals/293377"],
 ["292362","Col\u00e9gio Nossa Senhora do Carmo","indlayse.ferreira@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,26,19,"https://axcrm.ai/deals/292362"],
+["292731","E.E.I.F. Raimundo Machado","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,26,19,"https://axcrm.ai/deals/292731"],
 ["50103","CENTRO EDUCACIONAL VISAO","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,25,18,"https://axcrm.ai/deals/50103"],
 ["39782","Col\u00e9gio Sonho de Crian\u00e7a","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,25,18,"https://axcrm.ai/deals/39782"],
 ["7576","Instituto de educacao infantil Jo\u00e3o de barro","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,25,18,"https://axcrm.ai/deals/7576"],
 ["431283","MAGNOS COLIBRI E EI EF","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,25,18,"https://axcrm.ai/deals/431283"],
 ["280406","Maple Bear Jaragu\u00e1 do Sul","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,25,18,"https://axcrm.ai/deals/280406"],
 ["280698","COLEGIO ALPHA","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,25,18,"https://axcrm.ai/deals/280698"],
-["32685","COLEGIO DE NOSSA SENHORA DO BOM CONSELHO","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,25,18,"https://axcrm.ai/deals/32685"],
 ["66566","EMEI - JARDIM CARIOCA","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,25,18,"https://axcrm.ai/deals/66566"],
 ["431658","CENTRO EDUCACIONAL VISAN JARDIM ESCOLA TIA VIVI","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",10,27,17,"https://axcrm.ai/deals/431658"],
 ["31749","COLEGIO SANTANA DE INDEPENDENCIA","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,24,17,"https://axcrm.ai/deals/31749"],
@@ -390,16 +469,13 @@ const RAW = [
 ["431615","ESCOLA OCEANO DO SABER","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","08. Retra\u00e7\u00e3o",7,22,15,"https://axcrm.ai/deals/431615"],
 ["67851","CARPE DIEM VILAS","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,22,15,"https://axcrm.ai/deals/67851"],
 ["70439","COLEGIO PRINCE","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,22,15,"https://axcrm.ai/deals/70439"],
-["67670","COL\u00c9GIO CRIST\u00c3O BETEL","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,22,15,"https://axcrm.ai/deals/67670"],
 ["292848","Centro Educacional Dulce Trindade - Cedult","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,22,15,"https://axcrm.ai/deals/292848"],
-["146445","Centro Educacional Pequeno Aprendiz","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,22,15,"https://axcrm.ai/deals/146445"],
 ["68660","Col\u00e9gio Batista Rema","indlayse.ferreira@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o","05. Com respons\u00e1veis",7,22,15,"https://axcrm.ai/deals/68660"],
 ["146382","ESCOLA MUNICIPAL FRANCISCO OLIVEIRA","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,22,15,"https://axcrm.ai/deals/146382"],
 ["68156","INTEGRACAO MM COLEGIO UNIDADE II","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,22,15,"https://axcrm.ai/deals/68156"],
 ["68752","Maple Bear Campinas H\u00edpica","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,22,15,"https://axcrm.ai/deals/68752"],
 ["146432","Via Sapiens - Fundamental Anos Iniciais","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,22,15,"https://axcrm.ai/deals/146432"],
 ["70637","ASSOCIA\u00c7\u00c3O BENEDITINA DA PROVID\u00caNCIA - COL\u00c9GIO M\u00c3E DA DIVINA PROVID\u00caNCIA","thais.borges@estantemagica.com.br","Moreno Loss","Premium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,22,15,"https://axcrm.ai/deals/70637"],
-["74922","CENTRO DE EDUCACAO INFANTIL GOLFINHO AMIGO EIRELI","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,21,14,"https://axcrm.ai/deals/74922"],
 ["67931","COL\u00c9GIO UNEOURO","helena.cabral@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,21,14,"https://axcrm.ai/deals/67931"],
 ["71037","Centro Educacional Sonho de Crian\u00e7a","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,21,14,"https://axcrm.ai/deals/71037"],
 ["70697","Col\u00e9gio Paulo Cezar","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,21,14,"https://axcrm.ai/deals/70697"],
@@ -418,7 +494,6 @@ const RAW = [
 ["70325","Escola Raio de Sol","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,21,14,"https://axcrm.ai/deals/70325"],
 ["67888","ARNALDO LAURINDO PROFESSOR","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,20,13,"https://axcrm.ai/deals/67888"],
 ["279944","CENTRO EDUCACIONAL IMPACTO LTDA- COLEGIO EXITO","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","05. Com respons\u00e1veis",7,20,13,"https://axcrm.ai/deals/279944"],
-["32293","COL VINICIUS DE MORAES E ESCOLINHA BAL\u00c3O M\u00c1GICO","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,20,13,"https://axcrm.ai/deals/32293"],
 ["441465","COLEGIO SANTA ROSA","dalva.paschoalini@estantemagica.com.br","Sara Penteado","High touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,20,13,"https://axcrm.ai/deals/441465"],
 ["67951","Centro Educacional Valentina Fernandes","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,20,13,"https://axcrm.ai/deals/67951"],
 ["31183","ESCOLA RECANTO INFANTIL","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,20,13,"https://axcrm.ai/deals/31183"],
@@ -462,12 +537,10 @@ const RAW = [
 ["70703","PINOCCHIO CENTRO EDUCACIONAL LTDA","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,18,11,"https://axcrm.ai/deals/70703"],
 ["145803","Red Kindergarten Creche Escola","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,18,11,"https://axcrm.ai/deals/145803"],
 ["292437","VETOR SISTEMA DE ENSINO","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,18,11,"https://axcrm.ai/deals/292437"],
-["42752","CENTRO EDUCACIONAL SEMEAR","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,18,11,"https://axcrm.ai/deals/42752"],
 ["69391","PPEI Passo a Passo Educa\u00e7\u00e3o Infantil Bil\u00edngue","sarah.moura@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,18,11,"https://axcrm.ai/deals/69391"],
 ["64734","CENTRO EDUCACIONAL PADRE ANCHIETA - CEPAN","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","06. Com compras",7,17,10,"https://axcrm.ai/deals/64734"],
 ["70682","COLEGIO KOELER","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,17,10,"https://axcrm.ai/deals/70682"],
 ["432030","COLEGIO UP OBJETIVO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",10,20,10,"https://axcrm.ai/deals/432030"],
-["444550","Col\u00e9gio EIDUC","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,17,10,"https://axcrm.ai/deals/444550"],
 ["22299","Col\u00e9gio Innovare","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,17,10,"https://axcrm.ai/deals/22299"],
 ["69160","Col\u00e9gio S\u00e3o Vicente de Paulo","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,17,10,"https://axcrm.ai/deals/69160"],
 ["146260","Col\u00e9gio Tictac \u00c1gape","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,17,10,"https://axcrm.ai/deals/146260"],
@@ -516,7 +589,6 @@ const RAW = [
 ["35806","Col\u00e9gio Positivo Jaguaria\u00edva","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,14,7,"https://axcrm.ai/deals/35806"],
 ["63149","EDUCANDARIO ADOLF GUNNAR VINGREN","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,14,7,"https://axcrm.ai/deals/63149"],
 ["15925","ESC CIESB - C INTERNACIONAL EVANGELICO SUICO BRASILEIRO","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,14,7,"https://axcrm.ai/deals/15925"],
-["431730","ESCOLA PASSO DE ANJO","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,14,7,"https://axcrm.ai/deals/431730"],
 ["70432","Escola Municipal Casimiro de Abreu","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,14,7,"https://axcrm.ai/deals/70432"],
 ["432372","Refor\u00e7o Escolar Aprender Com Alegria","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",10,17,7,"https://axcrm.ai/deals/432372"],
 ["27171","escola educandario mundo feliz","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,14,7,"https://axcrm.ai/deals/27171"],
@@ -597,12 +669,10 @@ const RAW = [
 ["70860","SERTAOZINHO SABER INSTITUTO EDUCACIONAL","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,12,5,"https://axcrm.ai/deals/70860"],
 ["64592","COLIBRI BABY","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,12,5,"https://axcrm.ai/deals/64592"],
 ["145876","COL\u00c9GIO NOSSA SENHORA DA GL\u00d3RIA","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",15,20,5,"https://axcrm.ai/deals/145876"],
-["143886","Maple Bear Canadian School - Pouso Alegre","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",20,25,5,"https://axcrm.ai/deals/143886"],
 ["65657","The British School, Rio de Janeiro","maria.elvira@estantemagica.com.br","Larissa Garcia","Premium touch 40+","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",15,20,5,"https://axcrm.ai/deals/65657"],
 ["43347","CENTRO DE EDUCACAO INTEGRADA MONSENHOR HONORIO","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,11,4,"https://axcrm.ai/deals/43347"],
 ["431747","COLEGIO BETESDA","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,11,4,"https://axcrm.ai/deals/431747"],
 ["63570","COLEGIO NOSSA SENHORA DOS REMEDIOS","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","07.1 Conclu\u00eddas com compras",7,11,4,"https://axcrm.ai/deals/63570"],
-["36071","COLEGIO SAO GABRIEL","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,11,4,"https://axcrm.ai/deals/36071"],
 ["68220","COL\u00c9GIO IAPI","viviane.luz@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,11,4,"https://axcrm.ai/deals/68220"],
 ["37514","COL\u00c9GIO MENTES DO FUTURO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,11,4,"https://axcrm.ai/deals/37514"],
 ["41081","COL\u00c9GIO SOCIAL","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,11,4,"https://axcrm.ai/deals/41081"],
@@ -622,7 +692,6 @@ const RAW = [
 ["65809","NUCLEO DE DESENVOLVIMENTO INFANTIL SAR TARSILA DO AMARAL","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,11,4,"https://axcrm.ai/deals/65809"],
 ["28380","SANTA BARBARA COLEGIO","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,11,4,"https://axcrm.ai/deals/28380"],
 ["146374","SESI 400 CENTRO EDUCACIONAL","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,11,4,"https://axcrm.ai/deals/146374"],
-["68816","col\u00e9gio nossa senha do Ros\u00e1rio","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","01. Onboarding & Boas-Vindas",7,11,4,"https://axcrm.ai/deals/68816"],
 ["143843","APARECIDA MERINO ELIAS EMEB","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,11,4,"https://axcrm.ai/deals/143843"],
 ["68111","CENTRO EDUCACIONAL PREPARANDO GERA\u00c7\u00d5ES","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,11,4,"https://axcrm.ai/deals/68111"],
 ["63676","COI COLEGIO","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,11,4,"https://axcrm.ai/deals/63676"],
@@ -647,14 +716,11 @@ const RAW = [
 ["70235","Creche Escola Santa Beatriz","larissa.freitas@estantemagica.com.br","Moreno Loss","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",15,19,4,"https://axcrm.ai/deals/70235"],
 ["69091","INSTITUTO EDUCACIONAL SOMA - IES","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",15,19,4,"https://axcrm.ai/deals/69091"],
 ["70316","Interschool Brasil","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,11,4,"https://axcrm.ai/deals/70316"],
-["71040","INSTITUTO DE EDUCACAO MARIA SALOME","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch 40+","Em Aplica\u00e7\u00e3o","06. Com compras",7,11,4,"https://axcrm.ai/deals/71040"],
-["70741"," COLEGIO ARAOLISS","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/70741"],
 ["49820","ARCO IRIS BERCARIO","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/49820"],
 ["14774","Aconchego Escola Integral","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,10,3,"https://axcrm.ai/deals/14774"],
 ["61815","CENTRO DE ESTUDOS INTEGRADO EQUIPOTENCIA LTDA","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/61815"],
 ["432378","CENTRO EDUC A D S JD ESC MEU PEQ MUNDO","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/432378"],
 ["146221","COLEGIO AUXILADORA RECIFE","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/146221"],
-["431336","COLEGIO DIVINA PROVIDENCIA","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Enviou Lista de Alunos","06. Com compras",7,10,3,"https://axcrm.ai/deals/431336"],
 ["66936","COLEGIO MINAS AUSTRAL OBJETIVO - ITANHANDU - MG - CRECHE/ ED. INFANTIL/ E. FUNDAMENTAL E MEDIO","nicole.cavalcante@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/66936"],
 ["49932","COLEGIO UNIVERSO SANTA MARIA LTDA","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/49932"],
 ["69688","COL\u00c9GIO ADVENTISTA DE REGISTRO","larissa.freitas@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/69688"],
@@ -663,7 +729,7 @@ const RAW = [
 ["56489","CRECHE E PRE ESCOLA CASINHA DA NIETTA","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,10,3,"https://axcrm.ai/deals/56489"],
 ["146377","Centro Educativo Pequeno Pr\u00edncipe","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","05. Com respons\u00e1veis",7,10,3,"https://axcrm.ai/deals/146377"],
 ["27922","Col\u00e9gio Andrade","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,10,3,"https://axcrm.ai/deals/27922"],
-["144472","Col\u00e9gio Aur\u00e9lia","viviane.luz@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,10,3,"https://axcrm.ai/deals/144472"],
+["144472","Col\u00e9gio Aur\u00e9lia","viviane.luz@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/144472"],
 ["145848","Col\u00e9gio Ecolar","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/145848"],
 ["68104","Col\u00e9gio Nossa Senhora Aparecida - unidade Gama","larissa.freitas@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,10,3,"https://axcrm.ai/deals/68104"],
 ["69206","Col\u00e9gio Santa Rita","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,10,3,"https://axcrm.ai/deals/69206"],
@@ -703,7 +769,6 @@ const RAW = [
 ["63530","Universit\u00e1rio Butant\u00e3","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,10,3,"https://axcrm.ai/deals/63530"],
 ["146347","COL\u00c9GIO CRIARTE","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",15,18,3,"https://axcrm.ai/deals/146347"],
 ["431303","COL\u00c9GIO DIN\u00c2MICO","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","04. Com 5% material e sem compras",7,10,3,"https://axcrm.ai/deals/431303"],
-["68628","ESCOLA CRIATIVA DE UBERABA","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",15,18,3,"https://axcrm.ai/deals/68628"],
 ["444533","","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/444533"],
 ["31351","APOLO COLEGIO","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,9,2,"https://axcrm.ai/deals/31351"],
 ["47903","ARMANDO ZOLLNER ESCOLA UNIAO DE SISTEMA DE ENSINO FAZER","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/47903"],
@@ -711,7 +776,6 @@ const RAW = [
 ["31412","CENTRO DE EDUCACAO E FORMACAO ESPACO CRIANCA","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,9,2,"https://axcrm.ai/deals/31412"],
 ["70417","CENTRO DE EDUCACAO E LAZER","helena.cabral@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/70417"],
 ["48631","CENTRO EDUCACIONAL KARYNE","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/48631"],
-["48903","CENTRO EDUCACIONAL PEQUENO PENSADOR","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/48903"],
 ["146383","CENTRO EDUCACIONAL SOUSA E CASTRO","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/146383"],
 ["60913","CENTRO EDUCATIVO SANTANA","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/60913"],
 ["19398","CRECHE ESCOLA A CASINHA FELIZ","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/19398"],
@@ -727,7 +791,6 @@ const RAW = [
 ["51397","ESCOLA CHAVE DO SABER","andreina.ferreira@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/51397"],
 ["280259","ESCOLA MORANGUINHO","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,9,2,"https://axcrm.ai/deals/280259"],
 ["146436","ESCOLA MUNICIPAL DE EDUCA\u00c7\u00c3O INFANTIL OSVALDO ALBUQUERQUE LIMA","larissa.freitas@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/146436"],
-["146065","ESCOLA PINGO DE GENTE-Itap\u00e9/BA","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/146065"],
 ["44467","ESCOLA TIA MARINA","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/44467"],
 ["38463","ESCOLA VITORIA-REGIA","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/38463"],
 ["64765","Escola Municipal Professor Marcelino Esp\u00edndola Dutra","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,9,2,"https://axcrm.ai/deals/64765"],
@@ -735,42 +798,33 @@ const RAW = [
 ["15420","Escola Sonho Meu","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/15420"],
 ["144904","HONORATO FERREIRA DA SILVA EMEF","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/144904"],
 ["28888","INST NS AUXILIADORA","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",15,17,2,"https://axcrm.ai/deals/28888"],
-["279978","INSTITUICAO EDUCACIONAL DE PRESIDENTE EPITACIO UNIEPE","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/279978"],
 ["62184","JARDIM ESCOLA CHAPEUZINHO VERMELHO","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/62184"],
 ["70986","JD ESC MARIA FUMACA LTDA CENTRO EDUC RENASCER","thayna.bastos@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/70986"],
 ["45081","MEDICI COLEGIO","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/45081"],
 ["71091","ONDINHAZUL ENSINO FUNDAMENTAL","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/71091"],
 ["25647","RAIO DE LUZ COLEGIO","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/25647"],
-["19915","Sociedade Educacional Rocha (Unidade I)","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/19915"],
 ["32635","Associa\u00e7\u00e3o Educacional Futuro Incandescente Limitada","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/32635"],
 ["292646","CEC-COLEGIO EVANGELICO CAMPO-GRANDENSE","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,9,2,"https://axcrm.ai/deals/292646"],
 ["280846","CENTRO EDUCACIONAL BETEL","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/280846"],
 ["70640","CENTRO EDUCACIONAL LONI EMMENDOERFER","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/70640"],
 ["280469","CENTRO EDUCACIONAL NOSSA SENHORA AUXILIADORA","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,9,2,"https://axcrm.ai/deals/280469"],
 ["280883","COLEGIO JESUS CRISTO REI","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/280883"],
-["70913","COL\u00c9GIO FRANCISCANO NOSSA SENHORA DE F\u00c1TIMA","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,9,2,"https://axcrm.ai/deals/70913"],
 ["63863","COL\u00c9GIO PASSO A PASSO S/S LTDA ME","kaian.silva@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,9,2,"https://axcrm.ai/deals/63863"],
 ["293445","COOPERATIVA EDUC JOAO BATISTA ROTTA","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,9,2,"https://axcrm.ai/deals/293445"],
 ["293436","Colegio Energia BC","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/293436"],
 ["444754","Col\u00e9gio Bom Pastor","helena.cabral@estantemagica.com.br","Moreno Loss","Medium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/444754"],
 ["68700","Col\u00e9gio CIMAN Cruzeiro","maria.elvira@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",30,32,2,"https://axcrm.ai/deals/68700"],
 ["146302","Col\u00e9gio COC Campo Grande","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,9,2,"https://axcrm.ai/deals/146302"],
-["146087","Col\u00e9gio COC Pinhal","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/146087"],
 ["67695","Col\u00e9gio Evolu\u00e7\u00e3o e Crescimento","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/67695"],
 ["68754","Col\u00e9gio \u00caxito do Cariri","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/68754"],
 ["145914","EDUCANDARIO NOS PASSOS DE JESUS","andreina.ferreira@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o","05. Com respons\u00e1veis",7,9,2,"https://axcrm.ai/deals/145914"],
 ["64786","ESCOLA MUNICIPAL ALOYSIO SHORT","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/64786"],
 ["68026","ESCOLA MUNICIPAL CONSELHEIRO LAFAIETE","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,9,2,"https://axcrm.ai/deals/68026"],
-["434189","ESCOLA SONHO INFANTIL","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/434189"],
 ["60393","Educa\u00e7\u00e3o Infantil e Ensino Fundamental Aquarela","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,9,2,"https://axcrm.ai/deals/60393"],
 ["281070","Escola Adventista da Cidade Oper\u00e1ria","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/281070"],
 ["280249","INSTITUTO EDUCACIONAL PROFESSORA EUDALIA MOREIRA","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/280249"],
 ["68605","Maple Bear Araras","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,9,2,"https://axcrm.ai/deals/68605"],
-["69262","COL\u00c9GIO ADVENTISTA DO CAMPO LIMPO","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/69262"],
-["280984","COL\u00c9GIO ADVENTISTA TABO\u00c3O DA SERRA","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","06. Com compras",7,9,2,"https://axcrm.ai/deals/280984"],
-["69595","Colegio Monte Castelo","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",15,17,2,"https://axcrm.ai/deals/69595"],
 ["281119","Col\u00e9gio Adventista da Asa Sul","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,9,2,"https://axcrm.ai/deals/281119"],
-["66636","Col\u00e9gio Novo \u00c9den","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,9,2,"https://axcrm.ai/deals/66636"],
 ["68995","Col\u00e9gio Padre Anchieta","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",15,17,2,"https://axcrm.ai/deals/68995"],
 ["146375","Col\u00e9gio Rui Barbosa - Objetivo","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/146375"],
 ["70800","Col\u00e9gio Vicentino Virgem Poderosa","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",10,12,2,"https://axcrm.ai/deals/70800"],
@@ -779,8 +833,6 @@ const RAW = [
 ["67614","ESCOLA LITERAL","nicole.cavalcante@estantemagica.com.br","Moreno Loss","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/67614"],
 ["70522","ESCOLA RECANTO DE FADAS","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,9,2,"https://axcrm.ai/deals/70522"],
 ["280598","Escola  Aconchego","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",15,17,2,"https://axcrm.ai/deals/280598"],
-["144654","Escola Municipal Clarimundo Flauzino de Oliveira","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","05. Com respons\u00e1veis",7,9,2,"https://axcrm.ai/deals/144654"],
-["68215","Lua De Algod\u00e3o","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,9,2,"https://axcrm.ai/deals/68215"],
 ["42430","RENOVO CENTRO DE EDUCACAO","maria.elvira@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",15,17,2,"https://axcrm.ai/deals/42430"],
 ["444828","","sarah.moura@estantemagica.com.br","Carine Leite","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/444828"],
 ["146444","BMQ","julia.cordeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/146444"],
@@ -804,9 +856,7 @@ const RAW = [
 ["68237","Col\u00e9gio ALT","helena.cabral@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/68237"],
 ["68736","Col\u00e9gio Brasil Canad\u00e1 - Bras\u00edlia","helena.cabral@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/68736"],
 ["432416","Col\u00e9gio Crist\u00e3o Manaus","aires.muniz@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","06. Com compras",7,8,1,"https://axcrm.ai/deals/432416"],
-["70609","Col\u00e9gio FETIMA","larissa.freitas@estantemagica.com.br","Moreno Loss","High touch","Ciclo de Vendas","06. Com compras",7,8,1,"https://axcrm.ai/deals/70609"],
 ["280230","Col\u00e9gio Frei Zacarias","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/280230"],
-["292919","Col\u00e9gio Nossa Senhora Aparecida","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/292919"],
 ["70224","Col\u00e9gio Portal","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/70224"],
 ["145953","Col\u00e9gio S\u00e3o Paulo Teres\u00f3polis","gabriela.ribeiro@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/145953"],
 ["145577","Col\u00e9gio vit\u00f3ria","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/145577"],
@@ -819,12 +869,10 @@ const RAW = [
 ["444514","ESCOLA DE EDUCACAO INFANTIL ARCA DE NOE","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/444514"],
 ["143866","ESCOLA DE EDUCA\u00c7\u00c3O INFANTIL E ENSINO FUNDAMENTAL MUNDO COLORIDO","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/143866"],
 ["435497","ESCOLA TECNICA DE FORMACAO GERENCIAL - UNIFEMM","carla.santosdasilva@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,8,1,"https://axcrm.ai/deals/435497"],
-["47965","Educand\u00e1rio Porto Seguro","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/47965"],
 ["293457","Escola QI Valqueire","sarah.moura@estantemagica.com.br","Carine Leite","High touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/293457"],
 ["40718","INSTITUTO DE EDUCA\u00c7\u00c3O LUCIA LEIT\u00c3O","renata.brandao@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/40718"],
 ["12831","INSTITUTO EDUCACIONAL DIMENSAO","larissa.freitas@estantemagica.com.br","Moreno Loss","High touch","Ciclo de Vendas","06. Com compras",7,8,1,"https://axcrm.ai/deals/12831"],
 ["69078","INSTITUTO EDUCACIONAL FALC\u00c3O","viviane.luz@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/69078"],
-["25188","INSTITUTO EDUCACIONAL JOAO DE DEUS","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/25188"],
 ["70350","JARDIM ESCOLA VIVER E CRIAR","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Onboarding & Boas vindas","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/70350"],
 ["67444","Lar Escola Alvorada Nova","thais.borges@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/67444"],
 ["24747","Mar\u00edzia Maior","mariaeduarda.carvalho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/24747"],
@@ -836,7 +884,6 @@ const RAW = [
 ["22093","externato nossa senhora da conceicao - ensec","erick.andrade@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/22093"],
 ["292631","CENTRO EDUCACIONAL CONCEITO","dandara.mariano@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,8,1,"https://axcrm.ai/deals/292631"],
 ["146367","CENTRO EDUCACIONAL EVANDRO AYRES DE MOURA","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/146367"],
-["63853","CENTRO EDUCACIONAL PROFESSOR SANTANNA","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas","03.3 Com cronograma e sem material (passou do  prazo)",7,8,1,"https://axcrm.ai/deals/63853"],
 ["18164","CNA PARAOPEBA","julia.cordeiro@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/18164"],
 ["280387","COL EDUCRIARTE","shelry.solart@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/280387"],
 ["67776","COL STA TERESINHA DE ENSINO FUNDAMENTAL E MEDIO","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/67776"],
@@ -853,7 +900,6 @@ const RAW = [
 ["69281","Col\u00e9gio Crescer de Iguatama","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/69281"],
 ["145007","Col\u00e9gio Portal do Engenho","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/145007"],
 ["70584","Col\u00e9gio QI Rio 2","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas","02. Defini\u00e7\u00e3o de Datas",7,8,1,"https://axcrm.ai/deals/70584"],
-["70441","Col\u00e9gio Silvio Gonzalez","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/70441"],
 ["65153","Col\u00e9gio Status \u2013 Unidade Cultura","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/65153"],
 ["70897","Cultura Inglesa - Unidade Agua Verde","sarah.moura@estantemagica.com.br","Carine Leite","Medium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/70897"],
 ["280721","Cultura inglesa - Ponta Verde","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/280721"],
@@ -866,24 +912,16 @@ const RAW = [
 ["145968","ESCOLA PARTICULAR PROFESSORA CESARINA SIQUEIRA DA SILVA","stefany.figueredo@estantemagica.com.br","Sara Penteado","Medium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/145968"],
 ["70874","Escola Criativo","dalva.paschoalini@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/70874"],
 ["146272","Escola Municipal Militarizada Comendador Jo\u00e3o Marchesi","thais.borges@estantemagica.com.br","Moreno Loss","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/146272"],
-["70400","Escola Municipal do Campo Princesa Isabel","giovanna.munhoz@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/70400"],
 ["51038","Escola Ponto de Partida J\u00fanior","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","Medium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/51038"],
 ["146194","Escola Solar","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/146194"],
 ["70387","INST EDUC RADEANE LTDA","anaclara.peres@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/70387"],
 ["67796","INSTITUTO DE EDUCA\u00c7\u00c3O AQUARELA","viviancristina.souza@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/67796"],
 ["280760","INSTITUTO TECNICO DO BRASIL","mayane.costa@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas",7,8,1,"https://axcrm.ai/deals/280760"],
 ["64689","SISTEMA RIBRANE DE ENSINO","pamela.miranda@estantemagica.com.br","Sara Penteado","Medium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/64689"],
-["65825","CENTRO CULTURAL CLOTILDE FRAMIL","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/65825"],
 ["428628","CESEP","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/428628"],
-["146345","COLEGIO NOSSA SENHORA DE LOURDES","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/146345"],
-["281308","COLEGIO TRIVIUM","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/281308"],
-["146045","COL\u00c9GIO ADVENTISTA DE NOVO HAMBURGO","mariana.santana@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","06. Com compras",7,8,1,"https://axcrm.ai/deals/146045"],
 ["65977","COL\u00c9GIO MARIA MONTESSORI","carla.gomes@estantemagica.com.br","Larissa Garcia","Premium touch","Onboarding & Boas vindas","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/65977"],
-["56813","COL\u00c9GIO PIAGET","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/56813"],
 ["68666","COL\u00c9GIO S\u00c3O GERALDO","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/68666"],
 ["67537","Centro Integrado Educar","indlayse.ferreira@estantemagica.com.br","Moreno Loss","Premium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/67537"],
-["66577","ESC ATUAL","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/66577"],
-["68166","Escola Educativa Osasco","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/68166"],
 ["66425","Escola Edward Dodd","talita.panassol@estantemagica.com.br","Larissa Garcia","Premium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras",7,8,1,"https://axcrm.ai/deals/66425"],
 ["64866","Guizilla","sarah.moura@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras",7,8,1,"https://axcrm.ai/deals/64866"],
 ["67547","O MUNDO DA CRIAN\u00c7A","maria.elvira@estantemagica.com.br","Larissa Garcia","Premium touch 40+","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)",7,8,1,"https://axcrm.ai/deals/67547"]
