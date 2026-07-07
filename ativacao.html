@@ -470,7 +470,7 @@ nomes.forEach(function(n) {
 // ── Resumo por ativador ───────────────────────────────────────────────────────
 function buildResumo() {
   const map = {};
-  DATA.forEach(function(e) {
+  DATA.filter(function(e) { return !e.erro_ativador; }).forEach(function(e) {
     if (!map[e.nome]) map[e.nome] = { nome: e.nome, carteira: 0, agendado: 0, noshow: 0, agendar: 0 };
     map[e.nome].carteira++;
     if (e.bv_agendado)               map[e.nome].agendado++;
