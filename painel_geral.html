@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Geral CS Ops — 25/06/2026</title>
+<title>Painel Geral CS Ops — 08/07</title>
 <script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -16,12 +17,11 @@
   --yellow:#F9DC45;
   --green:#1A9957;--green-lt:#e6f5ee;
   --orange:#E8843C;--orange-lt:#fef3ec;
+  --amber:var(--purple);--amber-lt:var(--purple-lt);
   --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
 }
 body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
 .page{max-width:1240px;margin:0 auto;padding:32px 20px 80px}
-
-/* Header */
 .header{margin-bottom:28px}
 .header-inner{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .header-eyebrow{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px}
@@ -31,24 +31,19 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
 .header-rev{font-size:30px;font-weight:800;color:var(--green);line-height:1;font-variant-numeric:tabular-nums}
 .header-rev-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
 .header-divider{height:2px;background:linear-gradient(90deg,var(--yellow) 0%,var(--yellow) 40%,transparent 100%);margin-top:16px;border-radius:2px}
-
-/* KPI grid */
 .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.kpi-row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);
      border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
 .kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:700}
 .kpi-val{font-size:28px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
-
-/* Cards */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
       box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border-top:3px solid var(--yellow)}
 .card-head{padding:13px 18px;border-bottom:1px solid var(--border);
            display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .card-title{font-size:13px;font-weight:700}
 .card-body{padding:18px}
-
-/* Badge */
 .badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;
        padding:3px 9px;border-radius:20px;white-space:nowrap}
 .badge-blue{background:var(--blue-lt);color:var(--blue)}
@@ -56,14 +51,10 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
 .badge-green{background:var(--green-lt);color:var(--green)}
 .badge-purple{background:var(--purple-lt);color:var(--purple)}
 .badge-yellow{background:#fffbe6;color:#7a5c00;border:1px solid #f5d000}
-
-/* Attention bar */
 .attention-bar{background:#fffbe6;border:1px solid #f5d000;border-radius:var(--radius);
                padding:11px 16px;display:flex;gap:10px;align-items:center;
                margin-bottom:16px;font-size:12px;font-weight:600;color:#6b4e00}
-
-/* Segmento grid */
-.seg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.seg-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 .seg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
           padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .seg-accent{position:absolute;top:0;left:0;right:0;height:3px}
@@ -71,8 +62,6 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
 .seg-n{font-size:34px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .seg-label{font-size:11px;color:var(--muted);margin-top:2px}
 .seg-density{font-size:11px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
-
-/* Funil */
 .funil-list{display:flex;flex-direction:column;gap:0}
 .funil-stage{display:grid;grid-template-columns:200px 1fr 120px;align-items:center;
              gap:16px;padding:12px 0;border-bottom:1px solid #f0f0ec}
@@ -92,8 +81,6 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
 .funil-meta{text-align:right}
 .funil-count{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
 .funil-rev-lbl{font-size:11px;color:var(--muted);margin-top:2px}
-
-/* Efetividade */
 .ef-overall{display:flex;align-items:center;gap:16px;margin-bottom:20px;
             padding:16px;background:var(--bg);border-radius:8px;border:1px solid var(--border)}
 .ef-big{font-size:48px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--orange)}
@@ -108,8 +95,6 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
 .ef-pct{font-size:13px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
 .ef-legend{margin-top:10px;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
 .ef-legend-line{width:24px;height:2px;background:rgba(0,0,0,.2);display:inline-block}
-
-/* Alertas */
 .alert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .alert-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
             padding:14px 16px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
@@ -119,11 +104,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
 .alert-autografos{margin-top:12px;padding:11px 14px;background:var(--blue-lt);border-radius:8px;
                   border:1px solid #b3ddf4;font-size:12px;font-weight:600;color:var(--blue);
                   display:flex;gap:8px;align-items:center}
-
-/* Retração */
 .ret-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-
-/* Performance */
 .perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .perf-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
              margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--yellow)}
@@ -132,9 +113,31 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
           padding:9px 12px;background:var(--bg);border-radius:7px;border:1px solid var(--border)}
 .perf-lbl{font-size:12px;font-weight:600}
 .perf-val{font-size:12px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
-
-/* Dark mode */
-html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a}
+.pending-box{padding:24px;text-align:center;color:var(--muted);font-size:12px;font-style:italic;
+             background:var(--bg);border:1px dashed var(--border);border-radius:8px}
+.launcher-panel{background:var(--surface);border:1px solid var(--border);border-radius:22px;
+  padding:26px 20px 22px;margin-bottom:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.launcher-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--purple),var(--yellow))}
+.launcher-panel-title{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.8px;margin-bottom:16px;text-align:center}
+.launcher{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:920px;margin:0 auto}
+.launcher-btn{width:112px;aspect-ratio:1/1;background:var(--bg);border:1px solid var(--border);
+  border-radius:26px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:6px;padding:10px;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background-color .15s ease}
+.launcher-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 8px 18px rgba(0,0,0,.14);background:var(--surface)}
+.launcher-btn.active{border-color:var(--blue);background:var(--blue-lt)}
+.launcher-icon{font-size:25px;line-height:1}
+.launcher-title{font-size:11px;font-weight:700;color:var(--text);line-height:1.25}
+.launcher-badge{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 9px;
+  border-radius:20px;background:var(--red-lt);color:var(--red);white-space:nowrap}
+.panel{animation:panelIn .25s ease}
+@keyframes panelIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.launcher-btn{width:92px}}
+html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a;
+  --blue-lt:#123246;--purple-lt:#2b2440;--red-lt:#3a1c1f;--green-lt:#123424;--orange-lt:#3a2712;
+  --amber-lt:var(--purple-lt)}
 html.dark body{background:var(--bg);color:var(--text)}
 html.dark .card{background:var(--surface);border-color:var(--border)}
 html.dark .card-head{border-bottom-color:var(--border)}
@@ -148,8 +151,7 @@ html.dark .funil-stage{border-bottom-color:var(--border)}
 html.dark .seg-density{border-top-color:var(--border)}
 html.dark .funil-extra-tag{background:#27272a;border-color:var(--border)}
 html.dark .ef-overall{background:#27272a;border-color:var(--border)}
-
-/* Theme toggle */
+html.dark .pending-box{background:#27272a;border-color:var(--border)}
 .theme-btn{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;
            border:none;cursor:pointer;background:linear-gradient(135deg,#FFD947,#FF8C00);
            box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2);z-index:9998;
@@ -164,16 +166,17 @@ html.dark .theme-btn{background:linear-gradient(135deg,#2d1b69,#0f0c29);
 .theme-icon-moon{opacity:0;transform:scale(0) rotate(-40deg) translateY(10px)}
 html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px)}
 html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0)}
-
-/* Responsive */
 @media(max-width:960px){
-  .seg-grid{grid-template-columns:repeat(2,1fr)}
+  .seg-grid{grid-template-columns:repeat(3,1fr)}
   .alert-grid{grid-template-columns:repeat(2,1fr)}
   .perf-grid{grid-template-columns:1fr}
   .funil-stage{grid-template-columns:140px 1fr 100px}
+  .kpi-row-4{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:700px){
   .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .kpi-row-4{grid-template-columns:repeat(2,1fr)}
+  .seg-grid{grid-template-columns:repeat(2,1fr)}
   .funil-stage{grid-template-columns:1fr;gap:8px}
   .funil-lbl,.funil-meta{text-align:left}
   .ef-row{grid-template-columns:120px 1fr 48px}
@@ -182,8 +185,9 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
   .header-inner{flex-direction:column;align-items:flex-start}
   .header-receipt{text-align:left}
 }
+
 </style>
-</head>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
 <body>
 <a href="index.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Início</a>
 <button class="theme-btn" id="theme-btn" aria-label="Alternar tema">
@@ -203,116 +207,253 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
     <div>
       <div class="header-eyebrow">CS Ops · Estante Mágica</div>
       <h1>Painel Geral</h1>
-      <div class="header-date">Quarta-feira, 25 de junho de 2026</div>
-    </div>
-    <div class="header-receipt">
-      <div class="header-rev">R$ 35.8MM</div>
-      <div class="header-rev-lbl">receita esperada</div>
+      <div class="header-date">Quarta-feira, 08 de julho de 2026</div>
     </div>
   </div>
   <div class="header-divider"></div>
 </div>
 
+<!-- Lançador dos painéis -->
+<div class="launcher-panel">
+  <div class="launcher-panel-title">Painéis</div>
+  <div class="launcher">
+  <button class="launcher-btn" data-target="panel-kpis" onclick="togglePanel('panel-kpis', this)">
+    <span class="launcher-icon">📌</span>
+    <span class="launcher-title">Visão Geral</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-carteira" onclick="togglePanel('panel-carteira', this)">
+    <span class="launcher-icon">🗂️</span>
+    <span class="launcher-title">Distribuição da Carteira</span>
+    <span class="launcher-badge">2.089</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-saude" onclick="togglePanel('panel-saude', this)">
+    <span class="launcher-icon">🧪</span>
+    <span class="launcher-title">Saúde Operacional</span>
+    <span class="launcher-badge">15</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-funil" onclick="togglePanel('panel-funil', this)">
+    <span class="launcher-icon">📊</span>
+    <span class="launcher-title">Funil de Relacionamento</span>
+    <span class="launcher-badge">3.396</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-efetividade" onclick="togglePanel('panel-efetividade', this)">
+    <span class="launcher-icon">🎯</span>
+    <span class="launcher-title">Efetividade por Segmento</span>
+    <span class="launcher-badge">67.2%</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-engajamento" onclick="togglePanel('panel-engajamento', this)">
+    <span class="launcher-icon">🔥</span>
+    <span class="launcher-title">Engajamento das Escolas</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-alertas" onclick="togglePanel('panel-alertas', this)">
+    <span class="launcher-icon">⚠️</span>
+    <span class="launcher-title">Alertas Operacionais</span>
+    <span class="launcher-badge">62</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-fechando" onclick="togglePanel('panel-fechando', this)">
+    <span class="launcher-icon">⏱</span>
+    <span class="launcher-title">Fechando o Ciclo</span>
+    <span class="launcher-badge">9</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-retracao" onclick="togglePanel('panel-retracao', this)">
+    <span class="launcher-icon">📉</span>
+    <span class="launcher-title">Squad de Retração</span>
+    <span class="launcher-badge">206</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-ativacao" onclick="togglePanel('panel-ativacao', this)">
+    <span class="launcher-icon">🚀</span>
+    <span class="launcher-title">Squad de Ativação</span>
+    <span class="launcher-badge">52</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-vendas" onclick="togglePanel('panel-vendas', this)">
+    <span class="launcher-icon">💰</span>
+    <span class="launcher-title">Performance de Vendas</span>
+  </button>
+  </div>
+</div>
+
 <!-- KPIs principais -->
+<div class="panel" id="panel-kpis" hidden>
 <div class="kpi-row">
   <div class="kpi">
     <div class="kpi-lbl">Total em relacionamento</div>
-    <div class="kpi-val" style="color:var(--blue)">3.325</div>
+    <div class="kpi-val" style="color:var(--blue)">2.228</div>
     <div class="kpi-sub">escolas ativas na jornada</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Novas ontem</div>
-    <div class="kpi-val" style="color:var(--purple)">+2</div>
-    <div class="kpi-sub">chegaram ao relacionamento</div>
+    <div class="kpi-val" style="color:var(--purple)">+9</div>
+    <div class="kpi-sub">chegaram ao relacionamento <span style="color:var(--muted)">(proxy: data_criacao_jornada — confirmar fonte)</span></div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Efetividade geral</div>
-    <div class="kpi-val" style="color:var(--orange)">65.1%</div>
-    <div class="kpi-sub">meta: 80% &nbsp;·&nbsp; 1.270 de 1.951 elegíveis</div>
+    <div class="kpi-val" style="color:var(--green)">67.2%</div>
+    <div class="kpi-sub">meta: 80% &nbsp;·&nbsp; 1.304 de 1.940 elegíveis <span style="color:var(--muted)">(atualizado 08/07)</span></div>
   </div>
 </div>
 
 <!-- Atenção -->
 <div class="attention-bar">
   <span style="font-size:16px">⚠️</span>
-  <span><strong>33 escolas</strong> sem segmentação atribuída — verificar imediatamente</span>
+  <span><strong>5 escolas</strong> precisam de redistribuição de B1 — proprietário atual não está mais no time (fonte: alerta_diario.gs)</span>
+</div>
 </div>
 
 <!-- Distribuição da carteira -->
+<div class="panel" id="panel-carteira" hidden>
 <div class="card">
   <div class="card-head">
     <span class="card-title">Distribuição da Carteira</span>
-    <span class="badge badge-blue">2.094 escolas</span>
+    <span class="badge badge-blue">2.089 escolas</span>
   </div>
   <div class="card-body">
     <div class="seg-grid">
       <div class="seg-card">
         <div class="seg-accent" style="background:var(--purple)"></div>
         <div class="seg-tag" style="color:var(--purple)">Premium Touch</div>
-        <div class="seg-n" style="color:var(--purple)">213</div>
+        <div class="seg-n" style="color:var(--purple)">217</div>
         <div class="seg-label">escolas</div>
         <div class="seg-density">~80 escolas / consultor</div>
       </div>
       <div class="seg-card">
         <div class="seg-accent" style="background:#5C4E8E"></div>
         <div class="seg-tag" style="color:#5C4E8E">Premium Touch 40+</div>
-        <div class="seg-n" style="color:#5C4E8E">41</div>
+        <div class="seg-n" style="color:#5C4E8E">43</div>
         <div class="seg-label">escolas</div>
         <div class="seg-density">~40 escolas / consultor</div>
       </div>
       <div class="seg-card">
         <div class="seg-accent" style="background:var(--blue)"></div>
         <div class="seg-tag" style="color:var(--blue)">High Touch Novas</div>
-        <div class="seg-n" style="color:var(--blue)">613</div>
+        <div class="seg-n" style="color:var(--blue)">597</div>
         <div class="seg-label">escolas</div>
         <div class="seg-density">~65 escolas / consultor</div>
       </div>
       <div class="seg-card">
         <div class="seg-accent" style="background:var(--orange)"></div>
         <div class="seg-tag" style="color:var(--orange)">High Touch Renovação</div>
-        <div class="seg-n" style="color:var(--orange)">520</div>
+        <div class="seg-n" style="color:var(--orange)">525</div>
         <div class="seg-label">escolas</div>
         <div class="seg-density">~60 escolas / consultor</div>
       </div>
       <div class="seg-card">
         <div class="seg-accent" style="background:var(--green)"></div>
         <div class="seg-tag" style="color:var(--green)">Medium Touch</div>
-        <div class="seg-n" style="color:var(--green)">706</div>
+        <div class="seg-n" style="color:var(--green)">707</div>
         <div class="seg-label">escolas</div>
         <div class="seg-density">~60 escolas / consultor</div>
       </div>
     </div>
   </div>
 </div>
+</div>
 
-<!-- Funil -->
+<!-- Saúde Operacional da Carteira -->
+<div class="panel" id="panel-saude" hidden>
 <div class="card">
   <div class="card-head">
-    <span class="card-title">Funil de Relacionamento</span>
-    <span class="badge badge-purple">3.325 escolas · R$ 35.8MM</span>
+    <span class="card-title">Saúde Operacional da Carteira — igual ao alerta_diario.gs</span>
+    <span class="badge badge-red">atualizado 08/07</span>
+  </div>
+  <div class="card-body">
+    <div class="kpi-row-4">
+      <div class="kpi" style="border-top-color:var(--red)">
+        <div class="kpi-lbl">Sem B1</div>
+        <div class="kpi-val" style="color:var(--red)">5</div>
+        <div class="kpi-sub">sem proprietário ou B1 saiu do time</div>
+      </div>
+      <div class="kpi" style="border-top-color:var(--orange)">
+        <div class="kpi-lbl">Sem ativador</div>
+        <div class="kpi-val" style="color:var(--orange)">0</div>
+        <div class="kpi-sub">em onboarding, sem ativador atribuído</div>
+      </div>
+      <div class="kpi" style="border-top-color:var(--green)">
+        <div class="kpi-lbl">Segmentação divergente/nula</div>
+        <div class="kpi-val" style="color:var(--green)">7</div>
+        <div class="kpi-sub">AXCRM x BI · 0 divergente(s), 7 nula(s)</div>
+      </div>
+      <div class="kpi" style="border-top-color:var(--orange)">
+        <div class="kpi-lbl">Duplicatas</div>
+        <div class="kpi-val" style="color:var(--orange)">3</div>
+        <div class="kpi-sub">escolas · 6 cards ativos</div>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:8px 10px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px">Segmento</th>
+          <th style="text-align:right;padding:8px 10px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px">Sem B1</th>
+          <th style="text-align:right;padding:8px 10px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px">Sem ativador</th>
+          <th style="text-align:right;padding:8px 10px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px">Seg. divergente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f0f0ec"><td style="padding:8px 10px;font-weight:600">Premium Touch</td><td style="text-align:right;padding:8px 10px;color:var(--red);font-weight:800">1</td><td style="text-align:right;padding:8px 10px">0</td><td style="text-align:right;padding:8px 10px">0</td></tr>
+        <tr style="border-bottom:1px solid #f0f0ec"><td style="padding:8px 10px;font-weight:600">Premium Touch 40+</td><td style="text-align:right;padding:8px 10px">0</td><td style="text-align:right;padding:8px 10px">0</td><td style="text-align:right;padding:8px 10px">0</td></tr>
+        <tr style="border-bottom:1px solid #f0f0ec"><td style="padding:8px 10px;font-weight:600">High Touch</td><td style="text-align:right;padding:8px 10px;color:var(--red);font-weight:800">3</td><td style="text-align:right;padding:8px 10px">0</td><td style="text-align:right;padding:8px 10px">0</td></tr>
+        <tr style=""><td style="padding:8px 10px;font-weight:600">Medium Touch</td><td style="text-align:right;padding:8px 10px;color:var(--red);font-weight:800">1</td><td style="text-align:right;padding:8px 10px">0</td><td style="text-align:right;padding:8px 10px">0</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="ef-legend">Sem B1: escolas sem proprietário_b1 ou com proprietário fora do time atual (situação "Redistribuir — B1 saiu do time") · segmentação nula e divergente usam o mesmo join com a BI de `alerta_diario.gs`</div>
+  </div>
+</div>
+
+<!-- Volume de atividades e tarefas do time (mesma fonte do alerta_diario.gs) -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Volume de Atividades e Tarefas do Time — igual ao alerta_diario.gs</span>
+    <span class="badge badge-blue">hoje · 08/07</span>
+  </div>
+  <div class="card-body">
+    <div class="kpi-row-4" style="margin-bottom:0">
+      <div class="kpi">
+        <div class="kpi-lbl">Tarefas de foco criadas hoje</div>
+        <div class="kpi-val" style="color:var(--blue)">793</div>
+        <div class="kpi-sub">type='focus', time Sucesso</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Escolas com tarefa hoje</div>
+        <div class="kpi-val" style="color:var(--green)">695</div>
+        <div class="kpi-sub">32% das 2.147 ativas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Escolas sem nenhuma tarefa</div>
+        <div class="kpi-val" style="color:var(--red)">1.452</div>
+        <div class="kpi-sub">68% das 2.147 ativas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Escolas ativas (base)</div>
+        <div class="kpi-val" style="color:var(--muted)">2.147</div>
+        <div class="kpi-sub">mesmo filtro do SQL_SEM_TAREFA</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Funil -->
+<div class="panel" id="panel-funil" hidden>
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Funil de Relacionamento · Brasil</span>
+    <span class="badge badge-purple">3.396 escolas</span>
   </div>
   <div class="card-body" style="padding-top:10px;padding-bottom:10px">
     <div class="funil-list">
-
       <div class="funil-stage">
         <div class="funil-lbl">
           <div class="funil-name">Boa Vindas</div>
           <div class="funil-sub">01. Onboarding & BV</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--purple);width:clamp(120px,5%,100%)">
-            <span class="funil-bar-n">166</span>
-            <span class="funil-bar-rev">R$ 2.2MM</span>
-          </div>
-          <div class="funil-extras">
-            <span class="funil-extra-tag">Agendadas</span>
-            <span class="funil-extra-tag">No Show</span>
-            <span class="funil-extra-tag">Sumidas</span>
+          <div class="funil-bar" style="background:var(--purple);width:clamp(120px,7%,100%)">
+            <span class="funil-bar-n">106</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--purple)">166</div>
-          <div class="funil-rev-lbl">R$ 2.2MM</div>
+          <div class="funil-count" style="color:var(--purple)">106</div>
         </div>
       </div>
 
@@ -322,14 +463,12 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-sub">02. Definição de Datas</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--orange);width:clamp(120px,20%,100%)">
-            <span class="funil-bar-n">650</span>
-            <span class="funil-bar-rev">R$ 3.5MM</span>
+          <div class="funil-bar" style="background:var(--orange);width:clamp(120px,49%,100%)">
+            <span class="funil-bar-n">705</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--orange)">650</div>
-          <div class="funil-rev-lbl">R$ 3.5MM</div>
+          <div class="funil-count" style="color:var(--orange)">705</div>
         </div>
       </div>
 
@@ -339,14 +478,12 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-sub">03.x · não lockadas</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:#c0a800;width:clamp(120px,45%,100%)">
-            <span class="funil-bar-n">1.499</span>
-            <span class="funil-bar-rev">R$ 16.9MM</span>
+          <div class="funil-bar" style="background:#c0a800;width:clamp(120px,100%,100%)">
+            <span class="funil-bar-n">1.453</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:#9a8400">1.499</div>
-          <div class="funil-rev-lbl">R$ 16.9MM</div>
+          <div class="funil-count" style="color:#9a8400">1.453</div>
         </div>
       </div>
 
@@ -356,81 +493,80 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-sub">04. a 07. · com material</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--green);width:clamp(120px,30%,100%)">
-            <span class="funil-bar-n">1.010</span>
-            <span class="funil-bar-rev">R$ 13.2MM</span>
+          <div class="funil-bar" style="background:var(--green);width:clamp(120px,78%,100%)">
+            <span class="funil-bar-n">1.132</span>
           </div>
           <div class="funil-extras">
-            <span class="funil-extra-tag">327 · 5% material</span>
-            <span class="funil-extra-tag">112 · com resp.</span>
-            <span class="funil-extra-tag">376 · com compras</span>
-            <span class="funil-extra-tag">195 · concluídas</span>
+            <span class="funil-extra-tag">359 · 5% material</span>
+            <span class="funil-extra-tag">110 · com resp.</span>
+            <span class="funil-extra-tag">421 · com compras</span>
+            <span class="funil-extra-tag">242 · concluídas</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--green)">1.010</div>
-          <div class="funil-rev-lbl">R$ 13.2MM</div>
+          <div class="funil-count" style="color:var(--green)">1.132</div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
+</div>
 
 <!-- Efetividade por segmento -->
+<div class="panel" id="panel-efetividade" hidden>
 <div class="card">
   <div class="card-head">
     <span class="card-title">Efetividade por Segmento — Escolas em Aplicação</span>
-    <span class="badge badge-yellow">Meta: 80%</span>
+    <span class="badge badge-yellow">Meta: 80% · atualizado 08/07</span>
   </div>
   <div class="card-body">
     <div class="ef-overall">
-      <div class="ef-big">65.1%</div>
+      <div class="ef-big">67.2%</div>
       <div class="ef-overall-info">
         <div class="lbl">Efetividade geral</div>
-        <div class="desc">14.9 pontos abaixo da meta &nbsp;·&nbsp; 1.276 de 1.960 elegíveis no prazo</div>
+        <div class="desc">12.8 pontos abaixo da meta &nbsp;·&nbsp; 1.304 de 1.940 elegíveis no prazo</div>
       </div>
     </div>
     <div class="ef-list">
       <div class="ef-row">
         <div class="ef-lbl" style="color:#5C4E8E">Premium Touch 40+</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:97.6%;background:#5C4E8E"></div>
+          <div class="ef-fill" style="width:95.0%;background:#5C4E8E"></div>
           <div class="ef-meta-line"></div>
         </div>
-        <div class="ef-pct" style="color:var(--green)">97.6%</div>
+        <div class="ef-pct" style="color:var(--green)">95.0%</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--purple)">Premium Touch</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:81.2%;background:var(--purple)"></div>
+          <div class="ef-fill" style="width:80.6%;background:var(--purple)"></div>
           <div class="ef-meta-line"></div>
         </div>
-        <div class="ef-pct" style="color:var(--green)">81.2%</div>
+        <div class="ef-pct" style="color:var(--green)">80.6%</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--blue)">HT Novas</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:65%;background:var(--blue)"></div>
+          <div class="ef-fill" style="width:61.8%;background:var(--blue)"></div>
           <div class="ef-meta-line"></div>
         </div>
-        <div class="ef-pct" style="color:var(--red)">65.0%</div>
+        <div class="ef-pct" style="color:var(--red)">61.8%</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--orange)">HT Renovação</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:64.8%;background:var(--orange)"></div>
+          <div class="ef-fill" style="width:70.2%;background:var(--orange)"></div>
           <div class="ef-meta-line"></div>
         </div>
-        <div class="ef-pct" style="color:var(--red)">64.8%</div>
+        <div class="ef-pct" style="color:var(--orange)">70.2%</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--green)">Medium Touch</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:58.6%;background:var(--green)"></div>
+          <div class="ef-fill" style="width:63.2%;background:var(--green)"></div>
           <div class="ef-meta-line"></div>
         </div>
-        <div class="ef-pct" style="color:var(--red)">58.6%</div>
+        <div class="ef-pct" style="color:var(--red)">63.2%</div>
       </div>
     </div>
     <div class="ef-legend">
@@ -438,125 +574,280 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
     </div>
   </div>
 </div>
+</div>
 
-<!-- Alertas operacionais -->
+<!-- Engajamento das escolas -->
+<div class="panel" id="panel-engajamento" hidden>
 <div class="card">
   <div class="card-head">
-    <span class="card-title">Alertas Operacionais</span>
-    <span class="badge badge-red">71 pendências</span>
+    <span class="card-title">Engajamento das Escolas — Engagement Score v1</span>
+    <span class="badge badge-purple">4.381 escolas · score de 30/06</span>
+  </div>
+  <div class="card-body">
+    <div class="ef-list">
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--green)">Muito Engajada</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:15.0%;background:var(--green)"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--green)">658</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--blue)">Engajada</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:25.0%;background:var(--blue)"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--blue)">1.096</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--muted)">Normal</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:29.8%;background:#c9c9c2"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--text)">1.306</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--orange)">Desengajada</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:20.9%;background:var(--orange)"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--orange)">916</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-lbl" style="color:var(--red)">Muito Desengajada</div>
+        <div class="ef-track">
+          <div class="ef-fill" style="width:9.0%;background:var(--red)"></div>
+        </div>
+        <div class="ef-pct" style="color:var(--red)">394</div>
+      </div>
+    </div>
+    <div class="ef-legend">11 escolas sem dados suficientes para o score · run mais recente há 8 dias (quinzenal)</div>
+  </div>
+</div>
+</div>
+
+<!-- Alertas operacionais -->
+<div class="panel" id="panel-alertas" hidden>
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Alertas Operacionais — igual à seção Operacional do alerta_diario.gs</span>
+    <span class="badge badge-red">62 pendências · atualizado 08/07</span>
   </div>
   <div class="card-body">
     <div class="alert-grid">
       <div class="alert-card">
-        <div class="alert-dot" style="background:var(--green)"></div>
+        <div class="alert-dot" style="background:var(--orange)"></div>
         <div>
-          <div class="alert-n" style="color:var(--green)">0</div>
-          <div class="alert-txt">OK para produção atrasado</div>
+          <div class="alert-n" style="color:var(--orange)">13</div>
+          <div class="alert-txt">EG passou sem OK pra produção</div>
         </div>
       </div>
       <div class="alert-card">
         <div class="alert-dot" style="background:var(--orange)"></div>
         <div>
-          <div class="alert-n" style="color:var(--orange)">2</div>
+          <div class="alert-n" style="color:var(--orange)">17</div>
           <div class="alert-txt">Em expedição &gt;2 dias</div>
         </div>
       </div>
       <div class="alert-card">
-        <div class="alert-dot" style="background:var(--red)"></div>
+        <div class="alert-dot" style="background:var(--orange)"></div>
         <div>
-          <div class="alert-n" style="color:var(--red)">69</div>
-          <div class="alert-txt">SLA entrega ultrapassado (sem livro entregue)</div>
+          <div class="alert-n" style="color:var(--orange)">32</div>
+          <div class="alert-txt">SLA entrega ultrapassado (sem data de livro entregue)</div>
         </div>
       </div>
     </div>
+    <div class="ef-legend">"EG sem OK" filtra jornada ativa (Em Aplicação/Ciclo de Vendas/Ciclo de Eventos/Onboarding) com ≥3 alunos e pelo menos 1 e-book com compra — evita contar leads vazios. Expedição e SLA entrega via `aggregates.lotes_agg`.</div>
     <div class="alert-autografos">
       <span>📅</span>
-      <span><strong>3 escolas com autógrafos hoje</strong> — confirmar preparação e presença</span>
+      <span><strong>3 escolas com autógrafos hoje</strong> (todos os países) — confirmar preparação e presença</span>
     </div>
   </div>
 </div>
+</div>
 
-<!-- Retração -->
+<!-- Escolas fechando na semana -->
+<div class="panel" id="panel-fechando" hidden>
 <div class="card">
   <div class="card-head">
-    <span class="card-title">Retração</span>
-    <span class="badge badge-red">172 escolas · R$ 1.9MM</span>
+    <span class="card-title">Escolas Fechando o Ciclo Nesta Semana</span>
+    <span class="badge badge-blue">06/07 a 12/07</span>
+  </div>
+  <div class="card-body">
+    <div class="kpi-row">
+      <div class="kpi" style="margin-bottom:0">
+        <div class="kpi-lbl">Total concluindo</div>
+        <div class="kpi-val" style="color:var(--blue)">9</div>
+        <div class="kpi-sub">escolas · 3º aluno cadastrado nesta semana</div>
+      </div>
+      <div class="kpi" style="margin-bottom:0">
+        <div class="kpi-lbl">Renovação</div>
+        <div class="kpi-val" style="color:var(--orange)">5</div>
+        <div class="kpi-sub">56% do total</div>
+      </div>
+      <div class="kpi" style="margin-bottom:0">
+        <div class="kpi-lbl">Novas</div>
+        <div class="kpi-val" style="color:var(--purple)">4</div>
+        <div class="kpi-sub">44% do total</div>
+      </div>
+    </div>
+    <div class="ef-legend">Pela data do 3º aluno cadastrado (<code>data_cadastro_terceiro_aluno</code>) · exclui Low Touch</div>
+  </div>
+</div>
+</div>
+
+<!-- Retração -->
+<div class="panel" id="panel-retracao" hidden>
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Squad de Retração</span>
+    <span class="badge badge-red">206 escolas · R$ 2,4MM · atualizado 08/07</span>
   </div>
   <div class="card-body">
     <div class="ret-row">
       <div class="kpi" style="margin-bottom:0">
         <div class="kpi-lbl">Total em retração</div>
-        <div class="kpi-val" style="color:var(--red)">172</div>
+        <div class="kpi-val" style="color:var(--red)">206</div>
         <div class="kpi-sub">escolas</div>
       </div>
       <div class="kpi" style="margin-bottom:0">
         <div class="kpi-lbl">Entrada na semana</div>
-        <div class="kpi-val" style="color:var(--muted)">—</div>
-        <div class="kpi-sub">sem dado</div>
+        <div class="kpi-val" style="color:var(--muted)">0</div>
+        <div class="kpi-sub">segunda-feira, início da semana</div>
       </div>
       <div class="kpi" style="margin-bottom:0">
         <div class="kpi-lbl">Resgatadas na semana</div>
-        <div class="kpi-val" style="color:var(--muted)">—</div>
-        <div class="kpi-sub">sem dado</div>
+        <div class="kpi-val" style="color:var(--muted)">0</div>
+        <div class="kpi-sub">não rastreável no CRM (ver aviso)</div>
       </div>
+    </div>
+    <div class="attention-bar" style="margin-top:16px;margin-bottom:0">
+      <span style="font-size:16px">ℹ️</span>
+      <span>Nenhuma das 206 escolas tem <strong>consultor de resgate</strong> atribuído no CRM — campo não está sendo preenchido em 2026</span>
     </div>
   </div>
 </div>
+</div>
 
-<!-- Performance de vendas -->
+<!-- Squad de Ativação -->
+<div class="panel" id="panel-ativacao" hidden>
 <div class="card">
   <div class="card-head">
-    <span class="card-title">Performance de Vendas — Escolas Concluintes</span>
-    <span class="badge badge-blue">25 escolas · autógrafos realizados</span>
+    <span class="card-title">Squad de Ativação</span>
+    <span class="badge badge-purple">106 escolas · atualizado 08/07</span>
+  </div>
+  <div class="card-body">
+    <div class="kpi-row" style="margin-bottom:16px">
+      <div class="kpi">
+        <div class="kpi-lbl">BV agendado</div>
+        <div class="kpi-val" style="color:var(--green)">29</div>
+        <div class="kpi-sub">27% da carteira</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Vencido / reagendar</div>
+        <div class="kpi-val" style="color:var(--red)">52</div>
+        <div class="kpi-sub">49% da carteira</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Sem data de agendamento</div>
+        <div class="kpi-val" style="color:var(--orange)">25</div>
+        <div class="kpi-sub">24% da carteira</div>
+      </div>
+    </div>
+    <div class="funil-list">
+      <div class="funil-stage">
+        <div class="funil-lbl">
+          <div class="funil-name">Ágatha Cruz</div>
+          <div class="funil-sub">Squad Reagendamento</div>
+        </div>
+        <div class="funil-bar-wrap">
+          <div class="funil-bar" style="background:var(--purple);width:clamp(120px,100%,100%)">
+            <span class="funil-bar-n">72</span>
+          </div>
+        </div>
+        <div class="funil-meta">
+          <div class="funil-count" style="color:var(--purple)">72</div>
+        </div>
+      </div>
+      <div class="funil-stage">
+        <div class="funil-lbl">
+          <div class="funil-name">Junior Gomes</div>
+          <div class="funil-sub">Squad Reagendamento</div>
+        </div>
+        <div class="funil-bar-wrap">
+          <div class="funil-bar" style="background:var(--blue);width:clamp(120px,47%,100%)">
+            <span class="funil-bar-n">34</span>
+          </div>
+        </div>
+        <div class="funil-meta">
+          <div class="funil-count" style="color:var(--blue)">34</div>
+        </div>
+      </div>
+    </div>
+    <div class="ef-legend">0 escola(s) sem ativador atribuído (ver Saúde Operacional) · 40 escola(s) na carteira de ativador(es) que já saíram do time (ex.: Mariana Mazzero) — precisam de redistribuição</div>
+  </div>
+</div>
+</div>
+
+<!-- Performance de vendas -->
+<div class="panel" id="panel-vendas" hidden>
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Performance de Vendas</span>
+    <span class="badge badge-blue">2.659 escolas ativas · atualizado 08/07</span>
   </div>
   <div class="card-body">
     <div class="perf-grid">
       <div>
-        <div class="perf-header" style="color:var(--blue)">Novas <span style="font-size:11px;font-weight:400;color:var(--muted)">1 escola</span></div>
+        <div class="perf-header" style="color:var(--blue)">Novas <span style="font-size:11px;font-weight:400;color:var(--muted)">940 escola(s)</span></div>
         <div class="perf-rows">
           <div class="perf-row">
             <span class="perf-lbl">% e-book (prontos)</span>
-            <span class="perf-val" style="color:var(--green)">96.0%</span>
+            <span class="perf-val" style="color:var(--green)">31.2%</span>
           </div>
           <div class="perf-row">
             <span class="perf-lbl">% e-book com compra</span>
-            <span class="perf-val" style="color:var(--green)">76.0%</span>
+            <span class="perf-val" style="color:var(--green)">17.3%</span>
           </div>
           <div class="perf-row">
             <span class="perf-lbl">Receita média</span>
-            <span class="perf-val">R$ 30.655</span>
-          </div>
-          <div class="perf-row">
-            <span class="perf-lbl">vs. receita anterior</span>
-            <span class="perf-val" style="color:var(--red)">-23%</span>
+            <span class="perf-val">R$ 13.675</span>
           </div>
         </div>
       </div>
       <div>
-        <div class="perf-header" style="color:var(--orange)">Renovação <span style="font-size:11px;font-weight:400;color:var(--muted)">24 escolas</span></div>
+        <div class="perf-header" style="color:var(--orange)">Renovação <span style="font-size:11px;font-weight:400;color:var(--muted)">1.719 escola(s)</span></div>
         <div class="perf-rows">
           <div class="perf-row">
             <span class="perf-lbl">% e-book (prontos)</span>
-            <span class="perf-val" style="color:var(--green)">99.9%</span>
+            <span class="perf-val" style="color:var(--green)">28.5%</span>
           </div>
           <div class="perf-row">
             <span class="perf-lbl">% e-book com compra</span>
-            <span class="perf-val" style="color:var(--green)">77.6%</span>
+            <span class="perf-val" style="color:var(--green)">16.4%</span>
           </div>
           <div class="perf-row">
             <span class="perf-lbl">Receita média</span>
-            <span class="perf-val">R$ 21.319</span>
-          </div>
-          <div class="perf-row">
-            <span class="perf-lbl">vs. receita anterior</span>
-            <span class="perf-val" style="color:var(--green)">+34%</span>
+            <span class="perf-val">R$ 15.792</span>
           </div>
         </div>
       </div>
     </div>
+    <div class="ef-legend">Compra de livros/kits (<code>perc_ebooks_prontos</code>, <code>perc_ebooks_com_compras</code>, receita média via <code>ref_ano_anterior</code>) · base ativa geral (fora Retração/Projeto Concluído, sem Low Touch) — população pendente de confirmação com Bianca, ver relatório</div>
   </div>
+</div>
 </div>
 
 </div><!-- /.page -->
+
+<script>
+function togglePanel(id, btn) {
+  const el = document.getElementById(id);
+  const opening = el.hidden;
+  el.hidden = !el.hidden;
+  btn.classList.toggle('active', opening);
+  if (opening) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+</script>
 </body>
 </html>
