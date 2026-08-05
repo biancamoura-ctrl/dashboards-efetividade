@@ -196,7 +196,7 @@ ORDER BY seg_atual, n_escolas DESC</pre>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div id="val-htr-esc" style="font-size:22px;font-weight:900;color:#008ECF;">402</div>
+        <div id="val-htr-esc" style="font-size:22px;font-weight:900;color:#008ECF;">404</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -204,16 +204,16 @@ ORDER BY seg_atual, n_escolas DESC</pre>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div id="val-htr-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+158</div>
+        <div id="val-htr-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+156</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-htr" style="height:100%;width:71.8%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-htr" style="height:100%;width:72.1%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) · 4 Estagiários (60 esc.)</div>
-      <div id="pct-htr" style="font-size:11px;color:#9BA8B5;">71.8% utilizado</div>
+      <div id="pct-htr" style="font-size:11px;color:#9BA8B5;">72.1% utilizado</div>
     </div>
   </div>
 
@@ -225,7 +225,7 @@ ORDER BY seg_atual, n_escolas DESC</pre>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div>
-        <div id="val-mt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">318</div>
+        <div id="val-mt-esc" style="font-size:22px;font-weight:900;color:#008ECF;">317</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div>
       </div>
       <div>
@@ -233,16 +233,16 @@ ORDER BY seg_atual, n_escolas DESC</pre>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div>
       </div>
       <div>
-        <div id="val-mt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+162</div>
+        <div id="val-mt-saldo" style="font-size:22px;font-weight:900;color:#1A9957;">+163</div>
         <div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div>
       </div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div id="bar-mt" style="height:100%;width:66.2%;background:#1A9957;border-radius:4px;"></div>
+      <div id="bar-mt" style="height:100%;width:66.0%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 8 Estagiários (60 esc.)</div>
-      <div id="pct-mt" style="font-size:11px;color:#9BA8B5;">66.2% utilizado</div>
+      <div id="pct-mt" style="font-size:11px;color:#9BA8B5;">66.0% utilizado</div>
     </div>
   </div>
 
@@ -358,8 +358,8 @@ ORDER BY seg_atual, n_escolas DESC</pre>
 <script>
 // Dados embutidos — visão atual vs corrigida
 const DADOS = {
-  atual: { 'htn': { esc: 633, cap: 480, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '3 Analistas (80 esc.) · 4 Estagiários (60 esc.)' }, 'htr': { esc: 402, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 318, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' }, 'pt': { esc: 220, cap: 240, cor: '#C47A00', status: 'Atenção', statusCss: 'background:#FFF5D6;color:#C47A00', linha: '3 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 41, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } },
-  corrigida: { 'htn': { esc: 633, cap: 480, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '3 Analistas (80 esc.) · 4 Estagiários (60 esc.)' }, 'htr': { esc: 402, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 318, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' }, 'pt': { esc: 220, cap: 240, cor: '#C47A00', status: 'Atenção', statusCss: 'background:#FFF5D6;color:#C47A00', linha: '3 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 41, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } }
+  atual: { 'htn': { esc: 633, cap: 480, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '3 Analistas (80 esc.) · 4 Estagiários (60 esc.)' }, 'htr': { esc: 404, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 317, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' }, 'pt': { esc: 220, cap: 240, cor: '#C47A00', status: 'Atenção', statusCss: 'background:#FFF5D6;color:#C47A00', linha: '3 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 41, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } },
+  corrigida: { 'htn': { esc: 633, cap: 480, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '3 Analistas (80 esc.) · 4 Estagiários (60 esc.)' }, 'htr': { esc: 404, cap: 560, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 317, cap: 480, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 8 Estagiários (60 esc.)' }, 'pt': { esc: 220, cap: 240, cor: '#C47A00', status: 'Atenção', statusCss: 'background:#FFF5D6;color:#C47A00', linha: '3 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 41, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } }
 };
 
 // Labels das seções para a tabela consolidada
@@ -476,50 +476,50 @@ const DADOS_B1_ATUAL = [
   ['Erick Andrade', 'High touch - Novas', 19, 80],
   ['Carla Silva', 'High touch - Novas', 2, 60],
   ['Indlayse Ferreira', 'High touch - Novas', 1, 80],
+  ['Thais Souza', 'High touch - Novas', 1, 60],
   ['Mariana Santana', 'High touch - Novas', 1, 80],
   ['Shelry Solart', 'High touch - Novas', 1, 60],
-  ['Thais Souza', 'High touch - Novas', 1, 60],
-  ['Nicole Cavalcante de Oliveira', 'High touch - Novas', 1, 60],
   ['Kaian Luís Silva', 'High touch - Novas', 1, 60],
+  ['Nicole Cavalcante de Oliveira', 'High touch - Novas', 1, 60],
   ['Aíres Muniz Santos', 'High touch - Novas', 65, null],
   ['Kauã Coelho', 'High touch - Novas', 64, null],
   ['Sarah Moura', 'High touch - Novas', 18, null],
   ['Caroline Ferreira Calvario', 'High touch - Novas', 16, null],
   ['Rayane Barroso Santana', 'High touch - Novas', 6, null],
   ['Viviane Gomes Luz', 'High touch - Novas', 3, null],
-  ['Sem B1', 'High touch - Novas', 1, null],
-  ['Dalva Paschoalini', 'High touch - Novas', 1, null],
   ['ludmila Souza Gonçalves', 'High touch - Novas', 1, null],
+  ['Dalva Paschoalini', 'High touch - Novas', 1, null],
   ['Dandara Mariano', 'High touch - Novas', 1, null],
+  ['Sem B1', 'High touch - Novas', 1, null],
   ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 66, 80],
   ['Thayná Bastos', 'High touch - Renovação', 50, 80],
-  ['Shelry Solart', 'High touch - Renovação', 36, 60],
   ['Thais Souza', 'High touch - Renovação', 36, 60],
+  ['Shelry Solart', 'High touch - Renovação', 36, 60],
   ['Nicole Cavalcante de Oliveira', 'High touch - Renovação', 33, 60],
-  ['Indlayse Ferreira', 'High touch - Renovação', 30, 80],
   ['Carla Silva', 'High touch - Renovação', 30, 60],
+  ['Indlayse Ferreira', 'High touch - Renovação', 30, 80],
   ['Pâmela Miranda', 'High touch - Renovação', 8, 60],
   ['Stefany Soares Figueredo', 'High touch - Renovação', 7, 60],
-  ['Giovanna Munhoz', 'High touch - Renovação', 5, 60],
+  ['Kaian Luís Silva', 'High touch - Renovação', 5, 60],
   ['Ana Clara Peres', 'High touch - Renovação', 5, 60],
-  ['Kaian Luís Silva', 'High touch - Renovação', 4, 60],
+  ['Giovanna Munhoz', 'High touch - Renovação', 5, 60],
   ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 4, 80],
   ['Tatiana Silva de Jesus Portela', 'High touch - Renovação', 4, 80],
   ['Carla Ferraz Gomes', 'High touch - Renovação', 3, 80],
   ['Mariana Santana', 'High touch - Renovação', 2, 80],
   ['Vivian Cristina', 'High touch - Renovação', 1, 60],
+  ['Sarah Moura', 'High touch - Renovação', 25, null],
   ['Viviane Gomes Luz', 'High touch - Renovação', 24, null],
-  ['Sarah Moura', 'High touch - Renovação', 24, null],
   ['Mayane Oliveira', 'High touch - Renovação', 12, null],
   ['Ana Julia Martineli', 'High touch - Renovação', 5, null],
-  ['Jennifer Dos Anjos', 'High touch - Renovação', 4, null],
-  ['Dandara Mariano', 'High touch - Renovação', 4, null],
   ['Dalva Paschoalini', 'High touch - Renovação', 4, null],
+  ['Dandara Mariano', 'High touch - Renovação', 4, null],
+  ['Jennifer Dos Anjos', 'High touch - Renovação', 4, null],
   ['ludmila Souza Gonçalves', 'High touch - Renovação', 1, null],
-  ['Vivian Cristina', 'Medium touch', 42, 60],
+  ['Vivian Cristina', 'Medium touch', 41, 60],
   ['Ana Clara Peres', 'Medium touch', 37, 60],
-  ['Kaian Luís Silva', 'Medium touch', 35, 60],
-  ['Stefany Soares Figueredo', 'Medium touch', 29, 60],
+  ['Kaian Luís Silva', 'Medium touch', 34, 60],
+  ['Stefany Soares Figueredo', 'Medium touch', 30, 60],
   ['Pâmela Miranda', 'Medium touch', 26, 60],
   ['Shelry Solart', 'Medium touch', 11, 60],
   ['Carla Silva', 'Medium touch', 9, 60],
@@ -528,17 +528,17 @@ const DADOS_B1_ATUAL = [
   ['LARI FREITAS MONTEIRO', 'Medium touch', 4, 80],
   ['Tatiana Silva de Jesus Portela', 'Medium touch', 3, 80],
   ['Giovanna Munhoz', 'Medium touch', 2, 60],
-  ['Thais Souza', 'Medium touch', 1, 60],
   ['Andreina Ferreira', 'Medium touch', 1, 60],
-  ['Mariana Santana', 'Medium touch', 1, 80],
-  ['Indlayse Ferreira', 'Medium touch', 1, 80],
   ['Julia Cordeiro', 'Medium touch', 1, 60],
+  ['Indlayse Ferreira', 'Medium touch', 1, 80],
+  ['Mariana Santana', 'Medium touch', 1, 80],
+  ['Thais Souza', 'Medium touch', 1, 60],
   ['Maria Elvira Silva de Jesus', 'Medium touch', 1, 80],
-  ['Sarah Moura', 'Medium touch', 30, null],
+  ['Sarah Moura', 'Medium touch', 29, null],
   ['Dalva Paschoalini', 'Medium touch', 26, null],
   ['Mayane Oliveira', 'Medium touch', 13, null],
   ['Dandara Mariano', 'Medium touch', 12, null],
-  ['Jennifer Dos Anjos', 'Medium touch', 8, null],
+  ['Jennifer Dos Anjos', 'Medium touch', 9, null],
   ['Ana Vitoria Oliveira Marques', 'Medium touch', 7, null],
   ['Viviane Gomes Luz', 'Medium touch', 4, null],
   ['ludmila Souza Gonçalves', 'Medium touch', 2, null],
@@ -572,50 +572,50 @@ const DADOS_B1_CORRIGIDA = [
   ['Erick Andrade', 'High touch - Novas', 19, 80],
   ['Carla Silva', 'High touch - Novas', 2, 60],
   ['Indlayse Ferreira', 'High touch - Novas', 1, 80],
+  ['Thais Souza', 'High touch - Novas', 1, 60],
   ['Mariana Santana', 'High touch - Novas', 1, 80],
   ['Shelry Solart', 'High touch - Novas', 1, 60],
-  ['Thais Souza', 'High touch - Novas', 1, 60],
-  ['Nicole Cavalcante de Oliveira', 'High touch - Novas', 1, 60],
   ['Kaian Luís Silva', 'High touch - Novas', 1, 60],
+  ['Nicole Cavalcante de Oliveira', 'High touch - Novas', 1, 60],
   ['Aíres Muniz Santos', 'High touch - Novas', 65, null],
   ['Kauã Coelho', 'High touch - Novas', 64, null],
   ['Sarah Moura', 'High touch - Novas', 18, null],
   ['Caroline Ferreira Calvario', 'High touch - Novas', 16, null],
   ['Rayane Barroso Santana', 'High touch - Novas', 6, null],
   ['Viviane Gomes Luz', 'High touch - Novas', 3, null],
-  ['Sem B1', 'High touch - Novas', 1, null],
-  ['Dalva Paschoalini', 'High touch - Novas', 1, null],
   ['ludmila Souza Gonçalves', 'High touch - Novas', 1, null],
+  ['Dalva Paschoalini', 'High touch - Novas', 1, null],
   ['Dandara Mariano', 'High touch - Novas', 1, null],
+  ['Sem B1', 'High touch - Novas', 1, null],
   ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 66, 80],
   ['Thayná Bastos', 'High touch - Renovação', 50, 80],
-  ['Shelry Solart', 'High touch - Renovação', 36, 60],
   ['Thais Souza', 'High touch - Renovação', 36, 60],
+  ['Shelry Solart', 'High touch - Renovação', 36, 60],
   ['Nicole Cavalcante de Oliveira', 'High touch - Renovação', 33, 60],
-  ['Indlayse Ferreira', 'High touch - Renovação', 30, 80],
   ['Carla Silva', 'High touch - Renovação', 30, 60],
+  ['Indlayse Ferreira', 'High touch - Renovação', 30, 80],
   ['Pâmela Miranda', 'High touch - Renovação', 8, 60],
   ['Stefany Soares Figueredo', 'High touch - Renovação', 7, 60],
-  ['Giovanna Munhoz', 'High touch - Renovação', 5, 60],
+  ['Kaian Luís Silva', 'High touch - Renovação', 5, 60],
   ['Ana Clara Peres', 'High touch - Renovação', 5, 60],
-  ['Kaian Luís Silva', 'High touch - Renovação', 4, 60],
+  ['Giovanna Munhoz', 'High touch - Renovação', 5, 60],
   ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 4, 80],
   ['Tatiana Silva de Jesus Portela', 'High touch - Renovação', 4, 80],
   ['Carla Ferraz Gomes', 'High touch - Renovação', 3, 80],
   ['Mariana Santana', 'High touch - Renovação', 2, 80],
   ['Vivian Cristina', 'High touch - Renovação', 1, 60],
+  ['Sarah Moura', 'High touch - Renovação', 25, null],
   ['Viviane Gomes Luz', 'High touch - Renovação', 24, null],
-  ['Sarah Moura', 'High touch - Renovação', 24, null],
   ['Mayane Oliveira', 'High touch - Renovação', 12, null],
   ['Ana Julia Martineli', 'High touch - Renovação', 5, null],
-  ['Jennifer Dos Anjos', 'High touch - Renovação', 4, null],
-  ['Dandara Mariano', 'High touch - Renovação', 4, null],
   ['Dalva Paschoalini', 'High touch - Renovação', 4, null],
+  ['Dandara Mariano', 'High touch - Renovação', 4, null],
+  ['Jennifer Dos Anjos', 'High touch - Renovação', 4, null],
   ['ludmila Souza Gonçalves', 'High touch - Renovação', 1, null],
-  ['Vivian Cristina', 'Medium touch', 42, 60],
+  ['Vivian Cristina', 'Medium touch', 41, 60],
   ['Ana Clara Peres', 'Medium touch', 37, 60],
-  ['Kaian Luís Silva', 'Medium touch', 35, 60],
-  ['Stefany Soares Figueredo', 'Medium touch', 29, 60],
+  ['Kaian Luís Silva', 'Medium touch', 34, 60],
+  ['Stefany Soares Figueredo', 'Medium touch', 30, 60],
   ['Pâmela Miranda', 'Medium touch', 26, 60],
   ['Shelry Solart', 'Medium touch', 11, 60],
   ['Carla Silva', 'Medium touch', 9, 60],
@@ -624,17 +624,17 @@ const DADOS_B1_CORRIGIDA = [
   ['LARI FREITAS MONTEIRO', 'Medium touch', 4, 80],
   ['Tatiana Silva de Jesus Portela', 'Medium touch', 3, 80],
   ['Giovanna Munhoz', 'Medium touch', 2, 60],
-  ['Thais Souza', 'Medium touch', 1, 60],
   ['Andreina Ferreira', 'Medium touch', 1, 60],
-  ['Mariana Santana', 'Medium touch', 1, 80],
-  ['Indlayse Ferreira', 'Medium touch', 1, 80],
   ['Julia Cordeiro', 'Medium touch', 1, 60],
+  ['Indlayse Ferreira', 'Medium touch', 1, 80],
+  ['Mariana Santana', 'Medium touch', 1, 80],
+  ['Thais Souza', 'Medium touch', 1, 60],
   ['Maria Elvira Silva de Jesus', 'Medium touch', 1, 80],
-  ['Sarah Moura', 'Medium touch', 30, null],
+  ['Sarah Moura', 'Medium touch', 29, null],
   ['Dalva Paschoalini', 'Medium touch', 26, null],
   ['Mayane Oliveira', 'Medium touch', 13, null],
   ['Dandara Mariano', 'Medium touch', 12, null],
-  ['Jennifer Dos Anjos', 'Medium touch', 8, null],
+  ['Jennifer Dos Anjos', 'Medium touch', 9, null],
   ['Ana Vitoria Oliveira Marques', 'Medium touch', 7, null],
   ['Viviane Gomes Luz', 'Medium touch', 4, null],
   ['ludmila Souza Gonçalves', 'Medium touch', 2, null],
