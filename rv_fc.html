@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
+<title>RV FC · Premiação Semanal · Estante Mágica</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple:      #7668AC;
+  --purple-dark: #5A4E8E;
+  --purple-bg:   #F0EEF8;
+  --yellow:      #F9DC45;
+  --yellow-dark: #C9AC00;
+  --blue:        #008ECF;
+  --blue-bg:     #E0F3FC;
+  --red:         #E94B56;
+  --red-bg:      #FEE8EA;
+  --green:       #2E7D32;
+  --green-bg:    #E8F5E9;
+  --orange:      #E65100;
+  --orange-bg:   #FFF3E0;
+  --gray:        #595959;
+  --gray-light:  #F5F4F9;
+  --border:      #E2DEEF;
+  --shadow:      0 2px 8px rgba(118,104,172,0.10);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', sans-serif;
+  background: var(--gray-light);
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.btn-back {
+  position: fixed; top: 48px; left: 14px;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--purple); color: white;
+  text-decoration: none; padding: 7px 14px;
+  border-radius: 8px; font-size: 11px; font-weight: 700;
+  box-shadow: 0 2px 6px rgba(118,104,172,.4); z-index: 9999;
+  transition: opacity .15s;
+}
+.btn-back:hover { opacity: .85; }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 20px 16px 60px; }
+
+header {
+  background: var(--purple); color: white;
+  padding: 20px 28px; border-radius: 12px;
+  margin-bottom: 16px; margin-top: 52px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow);
+}
+header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; }
+
+/* ── Banner de foto (não é dado ao vivo) ── */
+.foto-banner {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: #fff9e0; border: 1.5px solid var(--yellow-dark);
+  border-radius: 10px; padding: 14px 18px; margin-bottom: 16px;
+  font-size: 12px; line-height: 1.6; color: #7a5800;
+}
+.foto-banner .icon { font-size: 22px; line-height: 1; flex-shrink: 0; }
+.foto-banner b { color: #7a5800; }
+
+/* ── Chips de regras ── */
+.regras-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.regra-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 20px; padding: 4px 12px;
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+  color: #aaa; cursor: pointer; transition: all .15s;
+}
+.regra-chip:hover { border-color: var(--purple); color: var(--purple); }
+.regra-chip.open  { border-color: var(--purple); color: var(--purple); background: var(--purple-bg); }
+.regra-chip .arrow { font-size: 8px; transition: transform .2s; }
+.regra-chip.open .arrow { transform: rotate(180deg); }
+.regra-body {
+  display: none; background: var(--purple-bg);
+  border-radius: 8px; padding: 12px 16px;
+  font-size: 11px; line-height: 1.8; margin-bottom: 12px; color: var(--gray);
+}
+.regra-body.open { display: block; }
+.regra-body b { color: var(--purple); }
+.regra-body table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
+.regra-body th { background: white; color: var(--purple); padding: 5px 10px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 2px solid var(--border); }
+.regra-body td { padding: 5px 10px; border-bottom: 1px solid rgba(118,104,172,.12); text-align: left; }
+.regra-body tr:last-child td { border-bottom: none; }
+.regra-body .aviso {
+  background: var(--red-bg); border-left: 3px solid var(--red); color: var(--red);
+  padding: 8px 12px; border-radius: 6px; margin-top: 10px; font-weight: 600;
+}
+
+/* ── Stat cards ── */
+.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.stat-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: var(--shadow); }
+.stat-card .s-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #aaa; }
+.stat-card .s-val { font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--purple); }
+.stat-card .s-sub { font-size: 10px; color: #bbb; margin-top: 2px; }
+.stat-card.green .s-val { color: var(--green); }
+.stat-card.orange .s-val { color: var(--orange); }
+.stat-card.blue .s-val { color: var(--blue); }
+
+/* ── Categoria cards ── */
+.cat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.cat-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+.cat-head { padding: 10px 14px; color: white; display: flex; justify-content: space-between; align-items: baseline; }
+.cat-head .c-lbl { font-size: 13px; font-weight: 800; letter-spacing: -.3px; }
+.cat-head .c-cond { font-size: 10px; opacity: .85; font-weight: 400; }
+.cat-body { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+.cat-body .c-count { font-size: 18px; font-weight: 800; }
+.cat-card.ebook .cat-head { background: var(--blue); }
+.cat-card.ebook .c-count { color: var(--blue); }
+.cat-card.receita .cat-head { background: var(--green); }
+.cat-card.receita .c-count { color: var(--green); }
+.cat-card.kit .cat-head { background: var(--orange); }
+.cat-card.kit .c-count { color: var(--orange); }
+
+/* ── Sub-tabs ── */
+.sub-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.sub-tab {
+  padding: 5px 16px; border: 1.5px solid var(--border); border-radius: 20px;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--gray); background: white; cursor: pointer;
+  transition: all .15s;
+}
+.sub-tab:hover { border-color: var(--purple); color: var(--purple); }
+.sub-tab.active { background: var(--purple); color: white; border-color: var(--purple); }
+.sub-panel { display: none; }
+.sub-panel.active { display: block; }
+
+/* ── Filtro ── */
+.cs-filter { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.cs-filter label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+.cs-filter select {
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+  color: var(--gray); background: white;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 7px 32px 7px 12px; cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237668AC' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  transition: border-color .15s;
+}
+.cs-filter select:focus { outline: none; border-color: var(--purple); }
+
+/* ── Table ── */
+.table-wrap { background: white; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 16px; overflow-x: auto; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 760px; }
+.table-wrap thead { background: var(--purple); color: white; }
+.table-wrap th {
+  padding: 10px 11px; text-align: center;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.8px;
+  text-transform: uppercase; white-space: nowrap;
+}
+.table-wrap td { padding: 8px 11px; border-bottom: 1px solid var(--purple-bg); text-align: center; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tr:hover td { background: #FAF9FE; }
+.num { text-align: center; font-variant-numeric: tabular-nums; }
+.chk-yes { color: var(--green); font-weight: 800; font-size: 14px; }
+.chk-no  { color: #ccc; font-size: 12px; }
+.pill {
+  display: inline-block; padding: 2px 8px; border-radius: 12px;
+  font-size: 10px; font-weight: 700; white-space: nowrap;
+}
+.pill-ok  { background: var(--green-bg); color: var(--green); }
+.pill-nao { background: var(--red-bg); color: var(--red); }
+
+.footer { text-align: center; font-size: 10px; color: #ccc; margin-top: 32px; }
+
+@media (max-width: 600px) { .btn-back { top: 42px; } }
+
+/* ── Dark mode ── */
+html.dark { --purple-bg:#2a2440; --border:#2d2d33; --gray-light:#18181b; --shadow:0 2px 8px rgba(0,0,0,.35); }
+html.dark body { background:#18181b; color:#d4d4d0; }
+html.dark .sub-tab { background:#1e1e22; border-color:#2d2d33; color:#a1a1aa; }
+html.dark .sub-tab:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .stat-card, html.dark .cat-card { background: #1e1e22; }
+html.dark .stat-card .s-sub { color:#71717a; }
+html.dark .regra-chip { background:#1e1e22; border-color:#2d2d33; color:#71717a; }
+html.dark .regra-chip:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .regra-chip.open { background:#2a2440; border-color:#7668AC; color:#c4b5fd; }
+html.dark .regra-body { background:#2a2440; color:#d4d4d0; }
+html.dark .regra-body th { background:#1e1e22; border-color:#2d2d33; }
+html.dark .regra-body td { border-color:#2d2d33; }
+html.dark .regra-body .aviso { background: rgba(233,75,86,.15); }
+html.dark .foto-banner { background:#2a2200; border-color:var(--yellow-dark); color:#f0d060; }
+html.dark .foto-banner b { color:#f0d060; }
+html.dark .table-wrap { background:#1e1e22; }
+html.dark .table-wrap thead { background:#27272a; }
+html.dark .table-wrap th { background:#27272a; }
+html.dark .table-wrap td { border-color:#2d2d33; color:#d4d4d0; }
+html.dark .table-wrap tr:hover td { background:#27272a; }
+html.dark .chk-no { color:#52525b; }
+html.dark .cs-filter label { color:#71717a; }
+html.dark .cs-filter select {
+  background-color:#27272a; color:#d4d4d0; border-color:#2d2d33;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a78bfa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 10px center; }
+html.dark .footer { color:#3f3f46; }
+html.dark .pill-nao { background: rgba(233,75,86,.15); color: #f87171; }
+html.dark .pill-ok  { background: rgba(46,125,50,.15); color: #4ade80; }
+
+/* ── Botão tema ── */
+body,thead th,.table-wrap td,.sub-tab,.regra-chip,.regra-body,.cs-filter select {
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+@keyframes sun-glow   { 0%,100%{filter:drop-shadow(0 0 3px #FFD700) drop-shadow(0 0 6px #FF9500)} 50%{filter:drop-shadow(0 0 7px #FFD700) drop-shadow(0 0 12px #FF6B00)} }
+@keyframes sun-rays   { 0%{transform:scale(1) rotate(0deg)} 100%{transform:scale(1) rotate(360deg)} }
+@keyframes moon-twinkle { 0%,100%{filter:drop-shadow(0 0 2px #c4b5fd)} 50%{filter:drop-shadow(0 0 6px #a78bfa)} }
+.theme-btn { position:fixed; top:16px; right:16px; width:42px; height:42px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg,#FFD947,#FF8C00); box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2); z-index:9998; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center; transition:background .5s ease,box-shadow .5s ease,transform .2s ease; }
+html.dark .theme-btn { background:linear-gradient(135deg,#2d1b69,#0f0c29); box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4); }
+.theme-btn:hover { transform:scale(1.13); }
+.theme-icon-sun,.theme-icon-moon { position:absolute; font-size:22px; line-height:1; transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease; }
+.theme-icon-sun  { opacity:1; transform:scale(1) rotate(0deg) translateY(0); animation:sun-glow 2.5s ease-in-out infinite,sun-rays 12s linear infinite; }
+.theme-icon-moon { opacity:0; transform:scale(0) rotate(-40deg) translateY(10px); }
+html.dark .theme-icon-sun  { opacity:0; transform:scale(0) rotate(60deg) translateY(10px); animation:none; }
+html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translateY(0); animation:moon-twinkle 3s ease-in-out infinite; }
+</style>
+<body>
+  <a href="index.html" class="btn-back">&#8592; Início</a>
+
+<div class="container">
+
+  <header>
+    <div>
+      <h1>RV FC &nbsp;&middot;&nbsp; Premiação Semanal por Fecha-Compras</h1>
+      <div class="sub">Escolas fechando FC na semana &nbsp;&#183;&nbsp; CS Ops &nbsp;&#183;&nbsp; Agosto 2026</div>
+    </div>
+    <div style="font-size:11px;opacity:.75;font-weight:400;">Semana 03/08/2026 a 07/08/2026</div>
+  </header>
+
+  <div class="foto-banner">
+    <div class="icon">&#128248;</div>
+    <div>
+      <b>Isto é uma FOTO da semana, não é dado em tempo real.</b><br>
+      Apuração feita <b>sexta-feira 07/08/2026</b>, depois das 17h30, fechando o período de
+      <b>03/08/2026 a 07/08/2026</b>. Página atualizada 1x por semana, todo domingo.
+      Apuração registrada em: <b>06/08/2026 às 13:15</b>.
+    </div>
+  </div>
+
+  <div class="regras-row">
+    <button class="regra-chip" onclick="toggleRegra('regras')">
+      &#128203; Como funciona a premiação <span class="arrow">&#9662;</span>
+    </button>
+  </div>
+
+  <div id="regra-regras" class="regra-body">
+    Apuração <b>semanal, de segunda a sexta</b>. Coleta toda sexta-feira, após 17h30. Pagamento na semana
+    seguinte à apuração. Uma mesma escola pode gerar prêmio em <b>até 3 categorias diferentes</b> —
+    os valores por escola se somam (potencial máximo: <b>R$ 250/escola</b>).
+    <table>
+      <tr><th>Categoria</th><th>Como funciona</th><th>Prêmio</th></tr>
+      <tr><td>Ebooks vs. ano anterior</td><td>Bater a % de ebooks com compra em relação ao mesmo período do ano anterior (ou dela mesma, na renovação)</td><td><b>R$ 50</b></td></tr>
+      <tr><td>Meta de relacionamento de receita</td><td>Bater a meta de relacionamento de receita da escola</td><td><b>R$ 100</b></td></tr>
+      <tr><td>Kits nos alunos</td><td>Escola ter pelo menos 50% dos alunos com kits</td><td><b>R$ 100</b></td></tr>
+    </table>
+    <div class="aviso">
+      &#9888; Elegibilidade do CS (regra atualizada): só recebe premiação o consultor com
+      <b>efetividade &#8805; 70%</b> (mesmo cálculo do dashboard de efetividade). A regra original do
+      documento de agosto/2026 ("máx. 10% da base em retração") foi <b>substituída</b> por esta.
+    </div>
+  </div>
+
+  <div class="stat-cards">
+    <div class="stat-card">
+      <div class="s-lbl">Escolas na semana</div>
+      <div class="s-val">48</div>
+      <div class="s-sub">com Fecha-Compras no período</div>
+    </div>
+    <div class="stat-card green">
+      <div class="s-lbl">Escolas premiadas</div>
+      <div class="s-val">20</div>
+      <div class="s-sub">bateram ≥1 categoria</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="s-lbl">CSs elegíveis</div>
+      <div class="s-val">14 <span style="font-size:12px;color:#bbb;">/ 23</span></div>
+      <div class="s-sub">efetividade &#8805; 70%</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="s-lbl">Valor a pagar</div>
+      <div class="s-val" style="font-size:18px;">R$ 1.200</div>
+      <div class="s-sub">potencial: R$ 1.750</div>
+    </div>
+  </div>
+
+  <div class="cat-cards">
+    <div class="cat-card ebook">
+      <div class="cat-head"><span class="c-lbl">Ebooks vs. ano anterior</span><span class="c-cond">R$ 50/escola</span></div>
+      <div class="cat-body"><span>Escolas que bateram</span><span class="c-count">13</span></div>
+    </div>
+    <div class="cat-card receita">
+      <div class="cat-head"><span class="c-lbl">Meta de receita</span><span class="c-cond">R$ 100/escola</span></div>
+      <div class="cat-body"><span>Escolas que bateram</span><span class="c-count">9</span></div>
+    </div>
+    <div class="cat-card kit">
+      <div class="cat-head"><span class="c-lbl">Kits nos alunos</span><span class="c-cond">R$ 100/escola</span></div>
+      <div class="cat-body"><span>Escolas que bateram</span><span class="c-count">2</span></div>
+    </div>
+  </div>
+
+  <div class="sub-tabs">
+    <button class="sub-tab active" onclick="switchSub('escola')">Por Escola</button>
+    <button class="sub-tab" onclick="switchSub('cs')">Por CS</button>
+  </div>
+
+  <!-- ── SUB-TAB: Por Escola ── -->
+  <div id="sub-escola" class="sub-panel active">
+    <div class="cs-filter">
+      <label>Filtrar</label>
+      <select id="select-escola-filter" onchange="filtrarEscolas(this.value)">
+        <option value="todos">Todas</option>
+        <option value="premiadas">Só premiadas (≥1 categoria)</option>
+        <option value="pagas">Só com valor a pagar (CS elegível)</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table id="tabela-escolas">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th style="text-align:left">Escola</th>
+            <th style="text-align:left">CS</th>
+            <th>% Efet. CS</th>
+            <th>CS Elegível?</th>
+            <th>Ebook<br><span style="font-weight:400;opacity:.7">R$50</span></th>
+            <th>Receita<br><span style="font-weight:400;opacity:.7">R$100</span></th>
+            <th>Kit<br><span style="font-weight:400;opacity:.7">R$100</span></th>
+            <th>Total escola</th>
+            <th>A pagar</th>
+            <th>Data FC</th>
+          </tr>
+        </thead>
+        <tbody>
+<tr data-cs="Stefany Soares Figueredo" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">68144</td><td style="text-align:left">Escada do tempo</td><td style="text-align:left">Stefany Soares Figueredo</td><td class="num">80.6%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 150</td><td class="num"><b style="color:var(--green)">R$ 150</b></td><td>06/08/2026</td></tr>
+<tr data-cs="Stefany Soares Figueredo" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">70506</td><td style="text-align:left">INST EDUC RECANTO DOS ANJOS</td><td style="text-align:left">Stefany Soares Figueredo</td><td class="num">80.6%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 150</td><td class="num"><b style="color:var(--green)">R$ 150</b></td><td>04/08/2026</td></tr>
+<tr data-cs="Carla Ferraz Gomes" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">71040</td><td style="text-align:left">INSTITUTO DE EDUCACAO MARIA SALOME</td><td style="text-align:left">Carla Ferraz Gomes</td><td class="num">92.5%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 150</td><td class="num"><b style="color:var(--green)">R$ 150</b></td><td>06/08/2026</td></tr>
+<tr data-cs="LARI FREITAS MONTEIRO" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">64559</td><td style="text-align:left">L M P BURINI CENTRO DE APRENDIZAGEM</td><td style="text-align:left">LARI FREITAS MONTEIRO</td><td class="num">86.1%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 150</td><td class="num"><b style="color:var(--green)">R$ 150</b></td><td>06/08/2026</td></tr>
+<tr data-cs="Nicole Cavalcante de Oliveira" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">70605</td><td style="text-align:left">CEFIQUE</td><td style="text-align:left">Nicole Cavalcante de Oliveira</td><td class="num">73.7%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 100</td><td class="num"><b style="color:var(--green)">R$ 100</b></td><td>04/08/2026</td></tr>
+<tr data-cs="Pâmela Miranda" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">64753</td><td style="text-align:left">COL STATUS</td><td style="text-align:left">Pâmela Miranda</td><td class="num">73.0%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 100</td><td class="num"><b style="color:var(--green)">R$ 100</b></td><td>06/08/2026</td></tr>
+<tr data-cs="Nicole Cavalcante de Oliveira" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">68206</td><td style="text-align:left">THE JOY SCHOOL BOA VISTA</td><td style="text-align:left">Nicole Cavalcante de Oliveira</td><td class="num">73.7%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td class="num">R$ 100</td><td class="num"><b style="color:var(--green)">R$ 100</b></td><td>06/08/2026</td></tr>
+<tr data-cs="Maria Eduarda Carvalho" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">444835</td><td style="text-align:left">BERCARIO E EDUCACAO INFANTIL CORDEL DA VILA</td><td style="text-align:left">Maria Eduarda Carvalho</td><td class="num">89.6%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td>04/08/2026</td></tr>
+<tr data-cs="Julia Cordeiro" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">33580</td><td style="text-align:left">CENTRO EDUCACIONAL INFANTIL ESPACO ESTIMULAR</td><td style="text-align:left">Julia Cordeiro</td><td class="num">70.2%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td>05/08/2026</td></tr>
+<tr data-cs="Viviane Gomes Luz" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">63663</td><td style="text-align:left">COLÉGIO DOM FERRAZ</td><td style="text-align:left">Viviane Gomes Luz</td><td class="num">92.3%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td>06/08/2026</td></tr>
+<tr data-cs="Andreina Ferreira" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">23914</td><td style="text-align:left">CONSTRUINDO O SABER E EI EF</td><td style="text-align:left">Andreina Ferreira</td><td class="num">70.4%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td>05/08/2026</td></tr>
+<tr data-cs="Julia Cordeiro" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">14051</td><td style="text-align:left">EEB COOPESG ROBUSTA</td><td style="text-align:left">Julia Cordeiro</td><td class="num">70.2%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td>07/08/2026</td></tr>
+<tr data-cs="Andreina Ferreira" data-elig="sim" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">428611</td><td style="text-align:left">colégio crescer</td><td style="text-align:left">Andreina Ferreira</td><td class="num">70.4%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td>07/08/2026</td></tr>
+<tr data-cs="Mayane Oliveira" data-elig="nao" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">68081</td><td style="text-align:left">COLEGIO SAN PETRUS</td><td style="text-align:left">Mayane Oliveira</td><td class="num">57.9%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td class="num">R$ 100</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>05/08/2026</td></tr>
+<tr data-cs="Kaian Luís Silva" data-elig="nao" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">63576</td><td style="text-align:left">ESCOLA MONTE MORIA</td><td style="text-align:left">Kaian Luís Silva</td><td class="num">63.8%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 100</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Indlayse Ferreira" data-elig="nao" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">64765</td><td style="text-align:left">Escola Municipal Professor Marcelino Espíndola Dutra</td><td style="text-align:left">Indlayse Ferreira</td><td class="num">46.1%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 100</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Mayane Oliveira" data-elig="nao" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">63818</td><td style="text-align:left">RODA DO TEMPO E EI EF</td><td style="text-align:left">Mayane Oliveira</td><td class="num">57.9%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 100</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Dalva Paschoalini" data-elig="nao" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">64612</td><td style="text-align:left">Colégio Eduardo Gomes</td><td style="text-align:left">Dalva Paschoalini</td><td class="num">39.3%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Ana Clara Peres" data-elig="nao" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">88313</td><td style="text-align:left">EMEIFTI Um novo amanhecer, rua jose marques brasil 715</td><td style="text-align:left">Ana Clara Peres</td><td class="num">56.9%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Vivian Cristina" data-elig="nao" data-premiada="sim"><td style="font-size:10px;opacity:.6;text-align:right">64666</td><td style="text-align:left">ESCOLA VILA LUZ MONTESSORI</td><td style="text-align:left">Vivian Cristina</td><td class="num">61.7%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-yes">&#10003;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">R$ 50</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Nicole Cavalcante de Oliveira" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">64580</td><td style="text-align:left">ALICE ROSSITO CERVONI CENTRO EDUCACIONAL</td><td style="text-align:left">Nicole Cavalcante de Oliveira</td><td class="num">73.7%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Vivian Cristina" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">63718</td><td style="text-align:left">CENTRO CULTURAL ILHA DO GOVERNADOR</td><td style="text-align:left">Vivian Cristina</td><td class="num">61.7%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Aíres Muniz Santos" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">42782</td><td style="text-align:left">CENTRO EDUCACIONAL ANJINHOS DO CEU</td><td style="text-align:left">Aíres Muniz Santos</td><td class="num">43.8%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Thais Souza" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">64734</td><td style="text-align:left">CENTRO EDUCACIONAL PADRE ANCHIETA - CEPAN</td><td style="text-align:left">Thais Souza</td><td class="num">80.0%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Indlayse Ferreira" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">63735</td><td style="text-align:left">COLEGIO CURSO INTELLECTUS - UNIDADE OCEANICA</td><td style="text-align:left">Indlayse Ferreira</td><td class="num">46.1%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Mayane Oliveira" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">280822</td><td style="text-align:left">COLÉGIO EDUCACIONAL DE CARLÓPOLIS</td><td style="text-align:left">Mayane Oliveira</td><td class="num">57.9%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>05/08/2026</td></tr>
+<tr data-cs="Indlayse Ferreira" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">146073</td><td style="text-align:left">COLÉGIO JOSÉ CORREIA VIANNA</td><td style="text-align:left">Indlayse Ferreira</td><td class="num">46.1%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Renata Brandão" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">49865</td><td style="text-align:left">CORRE COTIA EDUC INF E ENS FUND</td><td style="text-align:left">Renata Brandão</td><td class="num">74.7%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>03/08/2026</td></tr>
+<tr data-cs="Thais Souza" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">146450</td><td style="text-align:left">Centro Educativo Sapiens Riacho das Almas</td><td style="text-align:left">Thais Souza</td><td class="num">80.0%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Sarah Moura" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">293436</td><td style="text-align:left">Colegio Energia BC</td><td style="text-align:left">Sarah Moura</td><td class="num">84.8%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Talita Panassol" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">67580</td><td style="text-align:left">Colégio Leão Norte</td><td style="text-align:left">Talita Panassol</td><td class="num">76.1%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Vivian Cristina" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">66544</td><td style="text-align:left">Creche Escola do Futuro</td><td style="text-align:left">Vivian Cristina</td><td class="num">61.7%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Vivian Cristina" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">70484</td><td style="text-align:left">EDUCANDÁRIO ÊXITO COLÉGIO E CURSO</td><td style="text-align:left">Vivian Cristina</td><td class="num">61.7%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Thais Souza" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">67520</td><td style="text-align:left">EM JOAO ANICIO DE BRITO</td><td style="text-align:left">Thais Souza</td><td class="num">80.0%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Tatiana Silva de Jesus Portela" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">69087</td><td style="text-align:left">ESC NUCLEO MUN TEUTONIA</td><td style="text-align:left">Tatiana Silva de Jesus Portela</td><td class="num">75.0%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Carla Ferraz Gomes" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">292814</td><td style="text-align:left">ESCOLA MARIA BERNARDA</td><td style="text-align:left">Carla Ferraz Gomes</td><td class="num">92.5%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Thayná Bastos" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">66606</td><td style="text-align:left">ESCOLA PEQUENOS PASSOS</td><td style="text-align:left">Thayná Bastos</td><td class="num">65.4%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Indlayse Ferreira" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">281241</td><td style="text-align:left">ESCOLA RAIOS DE SOL</td><td style="text-align:left">Indlayse Ferreira</td><td class="num">46.1%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Kaian Luís Silva" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">63615</td><td style="text-align:left">ESCOLA SANTA MONICA</td><td style="text-align:left">Kaian Luís Silva</td><td class="num">63.8%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Renata Brandão" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">35607</td><td style="text-align:left">ESCOLA SAO FRANCISCO DE ASSIS</td><td style="text-align:left">Renata Brandão</td><td class="num">74.7%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Pâmela Miranda" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">64609</td><td style="text-align:left">Escola e Jardim de Infância Pintando o Sete</td><td style="text-align:left">Pâmela Miranda</td><td class="num">73.0%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Shelry Solart" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">63929</td><td style="text-align:left">FREIRE CASTRO COLEGIO EDUCACAO INFANTIL TIC TAC</td><td style="text-align:left">Shelry Solart</td><td class="num">39.7%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Sarah Moura" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">64866</td><td style="text-align:left">Guizilla</td><td style="text-align:left">Sarah Moura</td><td class="num">84.8%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Nicole Cavalcante de Oliveira" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">70541</td><td style="text-align:left">INSTITUTO THAIEL DE ENSINO LTDA</td><td style="text-align:left">Nicole Cavalcante de Oliveira</td><td class="num">73.7%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Aíres Muniz Santos" data-elig="nao" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">20217</td><td style="text-align:left">MONFORTE COLEGIO</td><td style="text-align:left">Aíres Muniz Santos</td><td class="num">43.8%</td><td style="text-align:center"><span class="pill pill-nao">Não</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>07/08/2026</td></tr>
+<tr data-cs="Sarah Moura" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">293027</td><td style="text-align:left">Maple Bear Valparaíso</td><td style="text-align:left">Sarah Moura</td><td class="num">84.8%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>06/08/2026</td></tr>
+<tr data-cs="Stefany Soares Figueredo" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">70593</td><td style="text-align:left">TRANSFORMARE BAMBINI ESCOLA DA PRO LILIAN</td><td style="text-align:left">Stefany Soares Figueredo</td><td class="num">80.6%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>03/08/2026</td></tr>
+<tr data-cs="Nicole Cavalcante de Oliveira" data-elig="sim" data-premiada="nao"><td style="font-size:10px;opacity:.6;text-align:right">146028</td><td style="text-align:left">UMI WANDERLY FERRAZ</td><td style="text-align:left">Nicole Cavalcante de Oliveira</td><td class="num">73.7%</td><td style="text-align:center"><span class="pill pill-ok">Sim</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td style="text-align:center"><span class="chk-no">&#8212;</span></td><td class="num">—</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td>05/08/2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
+      Foto de 03/08/2026 a 07/08/2026 &nbsp;&#183;&nbsp; 48 escolas &nbsp;&#183;&nbsp; "A pagar" = 0 quando o CS não é elegível (efetividade &lt; 70%)
+    </div>
+  </div>
+
+  <!-- ── SUB-TAB: Por CS ── -->
+  <div id="sub-cs" class="sub-panel">
+    <div class="cs-filter">
+      <label>Filtrar</label>
+      <select id="select-cs-filter" onchange="filtrarCS(this.value)">
+        <option value="todos">Todos</option>
+        <option value="elegiveis">Só elegíveis (≥70% ef.)</option>
+        <option value="nao-elegiveis">Só não elegíveis</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table id="tabela-cs">
+        <thead>
+          <tr>
+            <th style="text-align:left">CS</th>
+            <th>% Efetividade</th>
+            <th>Elegibilidade</th>
+            <th>Escolas na semana</th>
+            <th>Escolas premiadas</th>
+            <th>Valor total a receber</th>
+          </tr>
+        </thead>
+        <tbody>
+<tr data-elig="sim"><td style="text-align:left">Stefany Soares Figueredo</td><td class="num">80.6%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">3</td><td class="num">2</td><td class="num"><b style="color:var(--green)">R$ 300</b></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Nicole Cavalcante de Oliveira</td><td class="num">73.7%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">5</td><td class="num">2</td><td class="num"><b style="color:var(--green)">R$ 200</b></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Carla Ferraz Gomes</td><td class="num">92.5%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 150</b></td></tr>
+<tr data-elig="sim"><td style="text-align:left">LARI FREITAS MONTEIRO</td><td class="num">86.1%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 150</b></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Andreina Ferreira</td><td class="num">70.4%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">2</td><td class="num"><b style="color:var(--green)">R$ 100</b></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Julia Cordeiro</td><td class="num">70.2%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">2</td><td class="num"><b style="color:var(--green)">R$ 100</b></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Pâmela Miranda</td><td class="num">73.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 100</b></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Maria Eduarda Carvalho</td><td class="num">89.6%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 50</b></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Viviane Gomes Luz</td><td class="num">92.3%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 50</b></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Ana Clara Peres</td><td class="num">56.9%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Aíres Muniz Santos</td><td class="num">43.8%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">2</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Dalva Paschoalini</td><td class="num">39.3%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Indlayse Ferreira</td><td class="num">46.1%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">4</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Kaian Luís Silva</td><td class="num">63.8%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Mayane Oliveira</td><td class="num">57.9%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">3</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Renata Brandão</td><td class="num">74.7%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Sarah Moura</td><td class="num">84.8%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">3</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Shelry Solart</td><td class="num">39.7%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Talita Panassol</td><td class="num">76.1%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Tatiana Silva de Jesus Portela</td><td class="num">75.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim"><td style="text-align:left">Thais Souza</td><td class="num">80.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">3</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Thayná Bastos</td><td class="num">65.4%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao"><td style="text-align:left">Vivian Cristina</td><td class="num">61.7%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">4</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:10px;color:#bbb;margin-top:-8px;margin-bottom:16px;">
+      Foto de 03/08/2026 a 07/08/2026 &nbsp;&#183;&nbsp; 23 CSs com escolas na semana &nbsp;&#183;&nbsp; valor só é pago quando o CS está elegível
+    </div>
+  </div>
+
+  <div class="footer">
+    RV FC &nbsp;&middot;&nbsp; Foto de 03/08/2026 a 07/08/2026 &nbsp;&middot;&nbsp; Apurado em 06/08/2026 às 13:15 &nbsp;&middot;&nbsp;
+    Fonte: BigQuery (ax_deals_temp_ + gold.etl_jornada_escolas_aplicacao)
+  </div>
+
+</div><!-- /container -->
+
+<script>
+function filtrarEscolas(f) {
+  document.querySelectorAll('#tabela-escolas tbody tr[data-premiada]').forEach(function(r) {
+    var show = false;
+    if      (f === 'todos')     show = true;
+    else if (f === 'premiadas') show = r.dataset.premiada === 'sim';
+    else if (f === 'pagas')     show = r.dataset.elig === 'sim' && r.dataset.premiada === 'sim';
+    r.style.display = show ? '' : 'none';
+  });
+}
+
+function filtrarCS(f) {
+  document.querySelectorAll('#tabela-cs tbody tr[data-elig]').forEach(function(r) {
+    var show = false;
+    if      (f === 'todos')         show = true;
+    else if (f === 'elegiveis')     show = r.dataset.elig === 'sim';
+    else if (f === 'nao-elegiveis') show = r.dataset.elig === 'nao';
+    r.style.display = show ? '' : 'none';
+  });
+}
+
+function switchSub(s) {
+  document.querySelectorAll('.sub-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.sub-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('sub-' + s).classList.add('active');
+  document.querySelectorAll('.sub-tab').forEach(function(b) {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + s + "'")) b.classList.add('active');
+  });
+}
+
+function toggleRegra(id) {
+  var btn  = document.querySelector('.regra-chip[onclick="toggleRegra(\'' + id + '\')"]');
+  var body = document.getElementById('regra-' + id);
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  btn.classList.toggle('open', !open);
+}
+</script>
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button>
+<script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')});})();</script>
+
+</body>
+</html>
