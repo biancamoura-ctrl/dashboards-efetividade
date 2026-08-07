@@ -232,6 +232,57 @@ html.dark .card thead th:hover{background:#433b82!important}
 html.dark .ev-bar{background:linear-gradient(180deg,#6459a0 0%,#3f3670 100%)}
 html.dark .ev-bar-val{color:#a78bfa}
 html.dark .ev-lbl{color:#71717a}
+/* ── Simulador de prazo ── */
+.sim-badge{display:inline-block;background:#F9DC45;color:#595959;font-size:9px;
+  font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:3px 10px;
+  border-radius:20px;margin-left:8px;vertical-align:middle}
+.sim-desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.sim-slider-box{background:#f5f3ff;border-radius:16px;padding:16px 18px;margin-bottom:18px;
+  border:1px solid rgba(118,104,172,.14)}
+.sim-slider-head{display:flex;align-items:baseline;justify-content:space-between;
+  flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.sim-slider-lbl{font-size:10px;font-weight:800;color:#7668AC;text-transform:uppercase;letter-spacing:.7px}
+.sim-slider-val{font-size:26px;font-weight:900;color:#7668AC;line-height:1}
+#sl-sim-prazo{width:100%;height:6px}
+.sim-slider-ticks{display:flex;justify-content:space-between;font-size:9px;
+  color:#b0a8d0;font-weight:700;margin-top:6px}
+.sim-slider-ticks span.tick-atual{color:#E87A20}
+.sim-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-bottom:16px}
+@media(max-width:560px){.sim-compare{grid-template-columns:1fr}.sim-arrow{transform:rotate(90deg);margin:0 auto}}
+.sim-col{background:#fff;border-radius:18px;padding:18px 16px;text-align:center;
+  border:1.5px solid rgba(118,104,172,.16);box-shadow:0 2px 14px rgba(118,104,172,.08)}
+.sim-col-novo{background:linear-gradient(135deg,#7668AC 0%,#9b8fd4 100%);border:none;
+  box-shadow:0 8px 24px rgba(118,104,172,.28)}
+.sim-col-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;
+  color:#9a8fc0;margin-bottom:8px}
+.sim-col-novo .sim-col-lbl{color:rgba(255,255,255,.75)}
+.sim-col-val{font-size:34px;font-weight:900;color:#7668AC;line-height:1}
+.sim-col-novo .sim-col-val{color:#F9DC45}
+.sim-col-sub{font-size:10.5px;color:#b0a8d0;margin-top:6px;font-weight:600}
+.sim-col-novo .sim-col-sub{color:rgba(255,255,255,.68)}
+.sim-arrow{font-size:24px;color:#7668AC;font-weight:900}
+.sim-delta-box{display:flex;align-items:center;gap:10px;justify-content:center;
+  background:#f5f3ff;border-radius:14px;padding:13px 16px;font-size:13px;font-weight:700;
+  color:#7668AC;text-align:center}
+.sim-delta-box .sim-delta-icon{font-size:18px}
+.sim-delta-box.up{background:#eafaf1;color:#1a7a4c}
+.sim-delta-box.down{background:#fdecee;color:#c0293b}
+.sim-foot{font-size:10.5px;color:#c0b8d8;margin-top:12px;text-align:center;line-height:1.6}
+html.dark .sim-slider-box{background:#27272a;border-color:#3f3f46}
+html.dark .sim-slider-lbl{color:#a78bfa}
+html.dark .sim-slider-val{color:#a78bfa}
+html.dark .sim-slider-ticks{color:#52525b}
+html.dark .sim-slider-ticks span.tick-atual{color:#fb923c}
+html.dark .sim-col{background:#1e1e22;border-color:#3f3f46;box-shadow:none}
+html.dark .sim-col-lbl{color:#71717a}
+html.dark .sim-col-val{color:#a78bfa}
+html.dark .sim-col-sub{color:#52525b}
+html.dark .sim-arrow{color:#a78bfa}
+html.dark .sim-delta-box{background:#27272a;color:#a78bfa}
+html.dark .sim-delta-box.up{background:#052e1c;color:#4ade80}
+html.dark .sim-delta-box.down{background:#3f0d14;color:#fb7185}
+html.dark .sim-foot{color:#52525b}
+html.dark .sim-desc{color:#a1a1aa}
 
 </style>
 <script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
@@ -400,8 +451,53 @@ html.dark .ev-lbl{color:#71717a}
     </div>
   </div>
 
+  <!-- Simulador de prazo -->
+  <div class="card">
+    <div class="card-head">
+      <span class="card-title">&#129514; Simulador de prazo &mdash; escolas de 7 dias<span class="sim-badge">interativo</span></span>
+    </div>
+    <div style="padding:0 18px 20px">
+      <p class="sim-desc">
+        Hoje <b id="sim-eleg-g7">&#8212;</b> escolas (Medium, High, Premium e Premium 40+) t&#234;m prazo de contato de <b>7 dias &#250;teis</b>.
+        Arraste o slider para simular a efetividade do time se esse prazo fosse outro &#8212; os demais prazos (15, 21 e 30 dias) continuam fixos.
+      </p>
+
+      <div class="sim-slider-box">
+        <div class="sim-slider-head">
+          <span class="sim-slider-lbl">Novo prazo p/ escolas de 7 dias</span>
+          <span class="sim-slider-val" id="sim-prazo-val">15 d.&#250;.</span>
+        </div>
+        <input type="range" id="sl-sim-prazo" min="1" max="30" value="15" step="1">
+        <div class="sim-slider-ticks">
+          <span>1</span><span class="tick-atual">7 (atual)</span><span>15</span><span>21</span><span>30</span>
+        </div>
+      </div>
+
+      <div class="sim-compare">
+        <div class="sim-col">
+          <div class="sim-col-lbl">Cen&#225;rio atual &mdash; 7 d.&#250;.</div>
+          <div class="sim-col-val" id="sim-pct-atual">&#8212;</div>
+          <div class="sim-col-sub" id="sim-ef-atual">&#8212;</div>
+        </div>
+        <div class="sim-arrow">&#8594;</div>
+        <div class="sim-col sim-col-novo">
+          <div class="sim-col-lbl">Simulado &mdash; <span id="sim-prazo-lbl-inline">15</span> d.&#250;.</div>
+          <div class="sim-col-val" id="sim-pct-novo">&#8212;</div>
+          <div class="sim-col-sub" id="sim-ef-novo">&#8212;</div>
+        </div>
+      </div>
+
+      <div class="sim-delta-box" id="sim-delta-box">
+        <span class="sim-delta-icon" id="sim-delta-icon">&#8212;</span>
+        <span id="sim-delta-txt">Ajuste o slider para simular</span>
+      </div>
+
+      <p class="sim-foot">Simula&#231;&#227;o recalcula, para cada escola hoje com prazo de 7 dias &#250;teis, se ela seria &#171;efetiva no prazo&#187; com o novo prazo &#8212; mantendo fixas as escolas com prazo de 15, 21 ou 30 dias.</p>
+    </div>
+  </div>
+
 </div>
-<script>const C = {"efetivas": 1368, "elegiveis": 2021, "pef_atual": 67.7, "novas_dia": 112.0, "novas_analista": 44.3, "novas_estagiario": 61.8, "novas_historico": [102, 112, 92, 102, 98, 75, 79, 117, 93, 239, 70, 94, 119, 94, 174, 94, 70, 178, 129, 108], "novas_datas": ["09/07", "10/07", "13/07", "14/07", "15/07", "16/07", "17/07", "20/07", "21/07", "22/07", "23/07", "24/07", "27/07", "28/07", "29/07", "30/07", "31/07", "03/08", "04/08", "05/08", "06/08"], "semana_novas": [178, 129, 108, 110], "semana_datas": ["03/08", "04/08", "05/08", "06/08"], "semana_dias": ["Seg", "Ter", "Qua", "Qui"], "semana_passada_novas": [119, 94, 174, 94, 70], "semana_passada_datas": ["27/07", "28/07", "29/07", "30/07", "31/07"], "semana_passada_dias": ["Seg", "Ter", "Qua", "Qui", "Sex"], "ritmos_periodos": {"semana": {"total": 131.2, "analista": 55.8, "estagiario": 66.8, "n": 4}, "semana_passada": {"total": 110.2, "analista": 47.0, "estagiario": 60.0, "n": 5}, "mes": {"total": 131.2, "analista": 55.8, "estagiario": 66.8, "n": 4}, "mes_passado": {"total": 107.3, "analista": 42.4, "estagiario": 59.6, "n": 17}}, "novas_hist_analista": [36, 44, 44, 32, 32, 20, 21, 47, 49, 94, 23, 43, 60, 42, 78, 31, 24, 73, 51, 42], "novas_hist_estagiario": [59, 63, 45, 62, 57, 47, 52, 62, 39, 136, 44, 47, 54, 52, 93, 56, 45, 97, 65, 61], "delta_ef_obs": 227.1, "delta_ef_analista": 100.0, "delta_ef_estagiario": 117.9, "ef_historico": [209, 252, 178, 211, 208, 175, 169, 203, 190, 340, 172, 168, 224, 196, 318, 231, 205, 308, 287, 298, 285], "ef_hist_analista": [90, 106, 88, 86, 79, 64, 53, 86, 89, 138, 62, 70, 112, 96, 146, 107, 94, 161, 137, 136, 146], "ef_hist_estagiario": [112, 137, 85, 113, 113, 98, 107, 105, 89, 189, 106, 91, 105, 99, 167, 114, 106, 139, 132, 151, 129], "n_consultores": 38, "n_analistas": 18, "n_estagiarios": 25, "data_ref": "2026-08-07", "expiracoes": [130, 103, 78, 149, 152, 200, 236, 31, 53, 51, 16, 30, 10, 30, 20, 10, 5, 7, 13, 7, 1, 5, 2, 2, 2, 4, 4, 3, 7, 7], "a_vencer_7du": 1048, "semana_label": "09/07–06/08", "delta_faltam_global": 4.1, "novas_ef_hoje": 0, "ref_novas_semana_passada": 110.2, "ref_vencem_semana_passada": 102.4, "ref_semana_passada_label": "27/07–31/07"};
+<script>const C = {"efetivas": 1369, "elegiveis": 2022, "pef_atual": 67.7, "novas_dia": 112.3, "novas_analista": 45.4, "novas_estagiario": 61.0, "novas_historico": [112, 92, 102, 98, 75, 79, 117, 93, 239, 70, 94, 119, 94, 174, 94, 70, 178, 129, 108, 110], "novas_datas": ["10/07", "13/07", "14/07", "15/07", "16/07", "17/07", "20/07", "21/07", "22/07", "23/07", "24/07", "27/07", "28/07", "29/07", "30/07", "31/07", "03/08", "04/08", "05/08", "06/08", "07/08"], "semana_novas": [178, 129, 108, 110], "semana_datas": ["03/08", "04/08", "05/08", "06/08"], "semana_dias": ["Seg", "Ter", "Qua", "Qui"], "semana_passada_novas": [119, 94, 174, 94, 70], "semana_passada_datas": ["27/07", "28/07", "29/07", "30/07", "31/07"], "semana_passada_dias": ["Seg", "Ter", "Qua", "Qui", "Sex"], "ritmos_periodos": {"semana": {"total": 131.2, "analista": 55.8, "estagiario": 66.8, "n": 4}, "semana_passada": {"total": 110.2, "analista": 47.0, "estagiario": 60.0, "n": 5}, "mes": {"total": 131.2, "analista": 55.8, "estagiario": 66.8, "n": 4}, "mes_passado": {"total": 107.6, "analista": 42.8, "estagiario": 59.6, "n": 16}}, "novas_hist_analista": [44, 44, 32, 32, 20, 21, 47, 49, 94, 23, 43, 60, 42, 78, 31, 24, 73, 51, 42, 57], "novas_hist_estagiario": [63, 45, 62, 57, 47, 52, 62, 39, 136, 44, 47, 54, 52, 93, 56, 45, 97, 65, 61, 44], "delta_ef_obs": 230.9, "delta_ef_analista": 102.8, "delta_ef_estagiario": 118.8, "ef_historico": [252, 178, 211, 208, 175, 169, 203, 190, 340, 172, 168, 224, 196, 318, 231, 205, 308, 287, 298, 285, 5], "ef_hist_analista": [106, 88, 86, 79, 64, 53, 86, 89, 138, 62, 70, 112, 96, 146, 107, 94, 161, 137, 136, 146, 4], "ef_hist_estagiario": [137, 85, 113, 113, 98, 107, 105, 89, 189, 106, 91, 105, 99, 167, 114, 106, 139, 132, 151, 129, 1], "n_consultores": 38, "n_analistas": 18, "n_estagiarios": 25, "data_ref": "2026-08-07", "expiracoes": [130, 103, 78, 148, 151, 199, 236, 33, 53, 52, 18, 30, 10, 30, 20, 10, 5, 7, 13, 7, 1, 5, 2, 2, 2, 4, 4, 3, 7, 7], "a_vencer_7du": 1045, "semana_label": "10/07–07/08", "delta_faltam_global": 4.1, "novas_ef_hoje": 1, "ref_novas_semana_passada": 110.2, "ref_vencem_semana_passada": 102.4, "ref_semana_passada_label": "27/07–31/07", "sim": {"elegiveis_total": 2022, "efetivas_total": 1369, "pef_atual": 67.7, "elegiveis_g7": 1424, "efetivas_g7_atual": 880, "elegiveis_outros": 598, "efetivas_outros": 489, "hist_g7": [3, 205, 171, 123, 116, 61, 86, 115, 42, 40, 34, 23, 71, 19, 27, 23, 18, 17, 17, 10, 13, 20, 9, 8, 5, 4, 15, 6, 13, 4, 5, 8, 7, 6, 6, 3, 3, 3, 5, 2, 1, 3, 3, 3, 4, 1, 0, 1, 1, 3, 5, 1, 0, 1, 1, 1, 2, 2, 1, 0, 1, 1, 3, 0, 0, 0, 2, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11]}};
 
 function nextBusDay(d) {
   var nd = new Date(d.getTime());
@@ -676,13 +772,65 @@ function setarSlidersHistorico() {
   document.getElementById('sl-est').value = b1_est;
 }
 
+function renderSimulacao() {
+  var novoPrazo = +document.getElementById('sl-sim-prazo').value;
+  document.getElementById('sim-prazo-val').textContent = novoPrazo + ' d.ú.';
+  document.getElementById('sim-prazo-lbl-inline').textContent = novoPrazo;
+
+  var sim  = C.sim || {};
+  var hist = sim.hist_g7 || [];
+
+  // Soma o histograma (dias úteis desde a última ativ. efetiva das escolas hoje
+  // com prazo=7) até o novo prazo escolhido — isso simula quantas ficariam
+  // "efetivas no prazo" se o prazo delas fosse N em vez de 7.
+  var efG7Sim = 0;
+  var limite  = Math.min(novoPrazo, hist.length - 1);
+  for (var i = 0; i <= limite; i++) efG7Sim += (hist[i] || 0);
+
+  var elegiveis     = sim.elegiveis_total || 0;
+  var efetivasAtual = sim.efetivas_total  || 0;
+  var pctAtual      = sim.pef_atual != null ? sim.pef_atual : 0;
+  var efetivasSim   = (sim.efetivas_outros || 0) + efG7Sim;
+  var pctSim        = elegiveis > 0 ? Math.round(efetivasSim / elegiveis * 1000) / 10 : 0;
+
+  document.getElementById('sim-eleg-g7').textContent  = (sim.elegiveis_g7 || 0).toLocaleString('pt-BR');
+  document.getElementById('sim-pct-atual').textContent = pctAtual + '%';
+  document.getElementById('sim-ef-atual').textContent  = efetivasAtual.toLocaleString('pt-BR') + ' de ' + elegiveis.toLocaleString('pt-BR') + ' efetivas';
+  document.getElementById('sim-pct-novo').textContent  = pctSim + '%';
+  document.getElementById('sim-ef-novo').textContent   = efetivasSim.toLocaleString('pt-BR') + ' de ' + elegiveis.toLocaleString('pt-BR') + ' efetivas';
+
+  var deltaPct = Math.round((pctSim - pctAtual) * 10) / 10;
+  var deltaEsc = efetivasSim - efetivasAtual;
+  var box  = document.getElementById('sim-delta-box');
+  var icon = document.getElementById('sim-delta-icon');
+  var txt  = document.getElementById('sim-delta-txt');
+  box.classList.remove('up', 'down');
+  if (deltaEsc === 0) {
+    icon.textContent = '⏸️';
+    txt.innerHTML = novoPrazo === 7
+      ? 'Esse &#233; o prazo atual — sem mudan&#231;a'
+      : 'Nenhuma mudan&#231;a na efetividade com esse prazo';
+  } else if (deltaEsc > 0) {
+    box.classList.add('up');
+    icon.textContent = '📈';
+    txt.innerHTML = '<b>+' + deltaEsc.toLocaleString('pt-BR') + ' escolas</b> passariam a ser efetivas no prazo &middot; efetividade <b>' + (deltaPct > 0 ? '+' : '') + deltaPct.toFixed(1) + ' p.p.</b>';
+  } else {
+    box.classList.add('down');
+    icon.textContent = '📉';
+    txt.innerHTML = '<b>' + Math.abs(deltaEsc).toLocaleString('pt-BR') + ' escolas</b> deixariam de ser efetivas no prazo &middot; efetividade <b>' + deltaPct.toFixed(1) + ' p.p.</b>';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('sl-meta').oninput  = function() { render(); };
   document.getElementById('sl-du').onchange   = function() { setarSlidersHistorico(); render(); };
   document.getElementById('sl-ana').oninput   = function() { render(); };
   document.getElementById('sl-est').oninput   = function() { render(); };
+  var slSim = document.getElementById('sl-sim-prazo');
+  if (slSim) slSim.oninput = function() { renderSimulacao(); };
   setarSlidersHistorico();
   render();
+  renderSimulacao();
 });
 </script>
 
