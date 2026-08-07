@@ -96,6 +96,26 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
   .ef-row{grid-template-columns:120px 1fr 48px}
   .header-inner{flex-direction:column;align-items:flex-start}
 }
+/* ── TC Dinâmico (movido de escolas_nao_efetivas.html) ── */
+.tc-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:2px 0 14px}
+.tc-swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.tcd-chart{display:flex;flex-direction:column;gap:10px}
+.tcd-row{display:grid;grid-template-columns:60px 1fr 70px;align-items:center;gap:12px}
+.tcd-lbl{font-size:11px;font-weight:600;color:var(--text)}
+.tcd-track{height:22px;background:#e8e8e4;border-radius:5px;overflow:hidden;position:relative}
+html.dark .tcd-track{background:var(--border)}
+.tcd-fill{height:100%;border-radius:5px}
+.tcd-meta{font-size:11px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tbl-plain{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl-plain thead th{background:var(--bg);padding:8px 11px;text-align:left;font-weight:700;
+  font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;
+  border-bottom:1px solid var(--border)}
+.tbl-plain thead th.r{text-align:right}
+.tbl-plain tbody td{padding:7px 11px;border-bottom:1px solid #f0f0ec}
+.tbl-plain tbody tr:last-child td{border-bottom:none}
+.tbl-plain td.num{text-align:right;font-variant-numeric:tabular-nums}
+html.dark .tbl-plain thead th{background:#27272a;border-bottom-color:var(--border)}
+html.dark .tbl-plain tbody td{border-bottom-color:var(--border)}
 /* ── Tabela mesclada Funil × Engagement ── */
 .tbl-wrap{overflow-x:auto}
 .tbl-cruz{width:100%;border-collapse:collapse;font-size:12px}
@@ -203,17 +223,17 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 <div class="kpi-row">
   <div class="kpi" style="border-top-color:var(--red)">
     <div class="kpi-lbl">Efetividade no prazo</div>
-    <div class="kpi-val" style="color:var(--red)">68.5%</div>
+    <div class="kpi-val" style="color:var(--red)">69.1%</div>
     <div class="kpi-sub">meta: 80%</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Escolas eleg&iacute;veis</div>
-    <div class="kpi-val" style="color:var(--purple)">2.022</div>
+    <div class="kpi-val" style="color:var(--purple)">2.023</div>
     <div class="kpi-sub">com prazo de contato definido</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Efetivas no prazo</div>
-    <div class="kpi-val" style="color:var(--blue)">1.385</div>
+    <div class="kpi-val" style="color:var(--blue)">1.397</div>
     <div class="kpi-sub">&#250;ltima atividade efetiva dentro do prazo</div>
   </div>
 </div>
@@ -223,10 +243,15 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 <div class="launcher-panel">
   <div class="launcher-panel-title">Pain&#233;is</div>
   <div class="launcher">
+  <button class="launcher-btn" data-target="panel-tcd" onclick="togglePanel('panel-tcd', this)">
+    <span class="launcher-icon">&#129514;</span>
+    <span class="launcher-title">TC Din&acirc;mico</span>
+    <span class="launcher-badge">2.023</span>
+  </button>
   <button class="launcher-btn" data-target="panel-sim" onclick="togglePanel('panel-sim', this)">
     <span class="launcher-icon">&#127899;&#65039;</span>
     <span class="launcher-title">Simulador de Prazo</span>
-    <span class="launcher-badge">2.022</span>
+    <span class="launcher-badge">2.023</span>
   </button>
   <button class="launcher-btn" data-target="panel-funil" onclick="togglePanel('panel-funil', this)">
     <span class="launcher-icon">&#128202;</span>
@@ -246,12 +271,77 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
   </div>
 </div>
 
+<!-- TC Dinâmico -->
+<div class="panel" id="panel-tcd" hidden>
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">&#129514; Monitoramento: Tempo de Contato Din&acirc;mico</span>
+    <span style="font-size:11px;color:var(--muted)">Esfor&#231;o esperado do time por segmento, com a matriz nova (V2) aplicada</span>
+  </div>
+  <div class="card-body">
+    <div class="kpi-row" style="margin-bottom:16px">
+      <div class="kpi">
+        <div class="kpi-lbl">Universo avaliado</div>
+        <div class="kpi-val" style="color:var(--blue)">2.023</div>
+        <div class="kpi-sub">escolas eleg&iacute;veis p/ TC</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Classificado na V2</div>
+        <div class="kpi-val" style="color:var(--blue)">99%</div>
+        <div class="kpi-sub">25 ainda na regra antiga (V1)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Carga semanal esperada</div>
+        <div class="kpi-val" style="color:var(--text)">1233</div>
+        <div class="kpi-sub">toques/semana pra manter a carteira no prazo</div>
+      </div>
+    </div>
+
+    <div class="tc-legend">
+      <span><span class="tc-swatch" style="background:#2F9E44"></span>15 dias</span>
+      <span><span class="tc-swatch" style="background:#1565C0"></span>12 dias</span>
+      <span><span class="tc-swatch" style="background:#C98A00"></span>10 dias</span>
+      <span><span class="tc-swatch" style="background:#E94B56"></span>7 dias</span>
+      <span><span class="tc-swatch" style="background:#5A6478"></span>outro (ex. 20/30d)</span>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:700;margin-bottom:8px">Distribui&#231;&#227;o do Tempo de Contato (hoje)</h3>
+    <div class="tcd-chart">
+<div class="tcd-row"><div class="tcd-lbl">7d</div><div class="tcd-track"><div class="tcd-fill" style="width:100.0%;background:#E94B56"></div></div><div class="tcd-meta"><span style="font-weight:700;color:#E94B56">1.425</span></div></div>
+<div class="tcd-row"><div class="tcd-lbl">10d</div><div class="tcd-track"><div class="tcd-fill" style="width:13.4%;background:#C98A00"></div></div><div class="tcd-meta"><span style="font-weight:700;color:#C98A00">191</span></div></div>
+<div class="tcd-row"><div class="tcd-lbl">12d</div><div class="tcd-track"><div class="tcd-fill" style="width:5.8%;background:#1565C0"></div></div><div class="tcd-meta"><span style="font-weight:700;color:#1565C0">83</span></div></div>
+<div class="tcd-row"><div class="tcd-lbl">15d</div><div class="tcd-track"><div class="tcd-fill" style="width:10.3%;background:#2F9E44"></div></div><div class="tcd-meta"><span style="font-weight:700;color:#2F9E44">147</span></div></div>
+<div class="tcd-row"><div class="tcd-lbl">20d</div><div class="tcd-track"><div class="tcd-fill" style="width:5.3%;background:#5A6478"></div></div><div class="tcd-meta"><span style="font-weight:700;color:#5A6478">75</span></div></div>
+<div class="tcd-row"><div class="tcd-lbl">30d</div><div class="tcd-track"><div class="tcd-fill" style="width:7.2%;background:#5A6478"></div></div><div class="tcd-meta"><span style="font-weight:700;color:#5A6478">102</span></div></div>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:700;margin:18px 0 4px">Esfor&#231;o por segmento</h3>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:8px">
+      Carga = escolas &times; (5 dias &uacute;teis / TC) &#8212; toques/semana esperados pra manter a carteira dentro do prazo.
+      TC menor &#8594; mais toques necess&aacute;rios &#8594; mais esfor&#231;o. Ordenado por maior carga.
+    </p>
+    <div class="tbl-wrap">
+      <table class="tbl-plain">
+        <thead><tr><th>Segmento</th><th class="r">Escolas</th><th class="r">TC m&eacute;dio</th><th class="r">Carga (toques/semana)</th></tr></thead>
+        <tbody>
+<tr><td>High touch - Novas</td><td class="num">604</td><td class="num">8.0d</td><td class="num" style="font-weight:700">403</td></tr>
+<tr><td>Medium touch</td><td class="num">585</td><td class="num">9.0d</td><td class="num" style="font-weight:700">374</td></tr>
+<tr><td>High touch - Renovação</td><td class="num">576</td><td class="num">11.3d</td><td class="num" style="font-weight:700">325</td></tr>
+<tr><td>Premium touch</td><td class="num">221</td><td class="num">11.1d</td><td class="num" style="font-weight:700">117</td></tr>
+<tr><td>Premium touch 40+</td><td class="num">37</td><td class="num">15.9d</td><td class="num" style="font-weight:700">14</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
 <!-- Simulador de prazo -->
 <div class="panel" id="panel-sim" hidden>
 <div class="card">
   <div class="card-head">
     <span class="card-title">Simulador de prazo por segmenta&#231;&#227;o</span>
-    <span class="badge badge-purple">2.022 escolas</span>
+    <span class="badge badge-purple">2.023 escolas</span>
   </div>
   <div class="card-body">
       <p class="sim-desc">
@@ -264,7 +354,7 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
       <div class="sim-row" data-key="high_touch" data-tc-atual="7">
         <div>
           <div class="sim-row-name">High touch</div>
-          <div class="sim-row-sub">1.179 escolas &middot; hoje 7 d.&#250;.</div>
+          <div class="sim-row-sub">1.180 escolas &middot; hoje 7 d.&#250;.</div>
         </div>
         <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="7">
         <div class="sim-row-val">7 d.&#250;.</div>
@@ -573,7 +663,7 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 <div class="footer" style="text-align:center;margin-top:24px;font-size:11px;color:var(--muted);font-weight:600">Estante M&aacute;gica &middot; CS Ops &nbsp;&middot;&nbsp; Tempo para Contato &nbsp;&middot;&nbsp; 07/08/2026</div>
 
 </div><!-- /page -->
-<script>window.SIM_DATA = {"elegiveis_total": 2022, "efetivas_total": 1385, "pef_atual": 68.5, "categorias": [{"key": "high_touch", "label": "High touch", "tc_atual": 7, "elegiveis": 1179, "efetivas_atual": 805, "hist": [31, 154, 130, 104, 90, 50, 58, 104, 32, 39, 23, 23, 50, 16, 18, 20, 17, 17, 17, 8, 11, 18, 11, 10, 7, 6, 27, 3, 12, 4, 8, 4, 5, 6, 5, 4, 2, 1, 4, 2, 1, 4, 3, 1, 2, 0, 0, 1, 0, 1, 2, 0, 1, 1, 0, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 4]}, {"key": "medium_touch", "label": "Medium touch", "tc_atual": 7, "elegiveis": 585, "efetivas_atual": 363, "hist": [13, 74, 64, 39, 40, 29, 34, 40, 22, 17, 14, 6, 32, 8, 19, 13, 9, 7, 8, 3, 5, 9, 3, 3, 1, 1, 6, 3, 4, 2, 0, 6, 1, 4, 2, 0, 2, 1, 1, 1, 1, 0, 0, 3, 2, 1, 0, 0, 1, 2, 3, 1, 0, 1, 1, 0, 2, 2, 2, 0, 1, 0, 2, 1, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 8]}, {"key": "premium_touch", "label": "Premium touch", "tc_atual": 7, "elegiveis": 221, "efetivas_atual": 182, "hist": [9, 48, 31, 20, 19, 8, 9, 17, 3, 4, 6, 4, 8, 2, 0, 0, 3, 3, 7, 5, 0, 2, 2, 2, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"key": "premium_touch_40mais", "label": "Premium touch 40+", "tc_atual": 7, "elegiveis": 37, "efetivas_atual": 35, "hist": [2, 7, 5, 5, 5, 3, 0, 0, 2, 1, 0, 0, 2, 0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]};</script>
+<script>window.SIM_DATA = {"elegiveis_total": 2023, "efetivas_total": 1397, "pef_atual": 69.1, "categorias": [{"key": "high_touch", "label": "High touch", "tc_atual": 7, "elegiveis": 1180, "efetivas_atual": 812, "hist": [46, 152, 128, 102, 89, 50, 57, 104, 29, 38, 23, 23, 50, 16, 18, 20, 17, 17, 17, 8, 11, 18, 11, 9, 7, 6, 27, 3, 12, 4, 8, 4, 5, 6, 5, 4, 1, 1, 4, 2, 1, 4, 3, 1, 2, 0, 0, 1, 0, 1, 2, 0, 1, 1, 0, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 4]}, {"key": "medium_touch", "label": "Medium touch", "tc_atual": 7, "elegiveis": 585, "efetivas_atual": 368, "hist": [23, 73, 62, 39, 40, 28, 33, 40, 21, 17, 13, 6, 32, 8, 19, 13, 8, 7, 7, 3, 5, 9, 2, 3, 1, 1, 6, 3, 4, 2, 0, 6, 1, 4, 2, 0, 2, 1, 1, 1, 1, 0, 0, 3, 2, 1, 0, 0, 1, 2, 3, 1, 0, 1, 1, 0, 2, 2, 2, 0, 1, 0, 2, 1, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 8]}, {"key": "premium_touch", "label": "Premium touch", "tc_atual": 7, "elegiveis": 221, "efetivas_atual": 182, "hist": [12, 47, 31, 18, 19, 8, 9, 17, 3, 4, 6, 4, 8, 2, 0, 0, 3, 3, 7, 5, 0, 2, 2, 2, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"key": "premium_touch_40mais", "label": "Premium touch 40+", "tc_atual": 7, "elegiveis": 37, "efetivas_atual": 35, "hist": [3, 7, 4, 5, 5, 3, 0, 0, 2, 1, 0, 0, 2, 0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]};</script>
 <script>
 (function() {
   var SIM = window.SIM_DATA || {};
