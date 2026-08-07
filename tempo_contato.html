@@ -96,6 +96,43 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
   .ef-row{grid-template-columns:120px 1fr 48px}
   .header-inner{flex-direction:column;align-items:flex-start}
 }
+/* ── Simulador de prazo ── */
+.sim-desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.sim-slider-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:16px}
+.sim-slider-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.6px;margin-bottom:8px}
+.sim-slider-controls{display:flex;align-items:center;gap:14px}
+#sl-sim-prazo{flex:1;accent-color:var(--purple);cursor:pointer}
+.sim-slider-val{font-size:20px;font-weight:800;color:var(--purple);min-width:64px;
+  text-align:right;font-variant-numeric:tabular-nums}
+.sim-slider-ticks{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);
+  font-weight:700;margin-top:6px}
+.sim-slider-ticks .tick-atual{color:var(--orange)}
+.sim-compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-bottom:14px}
+.sim-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;text-align:center}
+.sim-box-novo{background:var(--purple-lt);border-color:var(--purple)}
+.sim-box-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+  color:var(--muted);margin-bottom:6px}
+.sim-box-val{font-size:28px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--purple)}
+.sim-box-sub{font-size:10.5px;color:var(--muted);margin-top:5px;font-weight:600}
+.sim-box-arrow{font-size:20px;color:var(--purple);font-weight:800}
+.sim-delta{display:flex;align-items:center;gap:8px;justify-content:center;background:var(--bg);
+  border:1px solid var(--border);border-radius:var(--radius);padding:11px 14px;font-size:12.5px;
+  font-weight:700;color:var(--text)}
+.sim-delta.up{background:var(--green-lt);border-color:var(--green);color:var(--green)}
+.sim-delta.down{background:var(--red-lt);border-color:var(--red);color:var(--red)}
+.sim-foot{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7}
+html.dark .sim-slider-box{background:#27272a;border-color:var(--border)}
+html.dark .sim-box{background:#27272a;border-color:var(--border)}
+html.dark .sim-box-novo{background:#2b2440;border-color:var(--purple)}
+html.dark .sim-delta{background:#27272a;border-color:var(--border)}
+@media(max-width:560px){
+  .sim-compare-row{grid-template-columns:1fr}
+  .sim-box-arrow{transform:rotate(90deg);margin:0 auto}
+  .sim-slider-controls{flex-wrap:wrap}
+}
 
 </style>
 <script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
@@ -144,11 +181,57 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
 </div>
 <div class="ef-legend">Efetividade calculada com a mesma query padr&atilde;o de prazo de contato j&aacute; usada no site &middot; Brasil &middot; 2026 &middot; Low Touch exclu&iacute;do &middot; sem filtro por pipeline_id/propriet&aacute;rio (alinhado ao BI oficial).</div>
 
+<!-- Simulador de prazo -->
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">Simulador de prazo &mdash; escolas de 7 dias</span>
+    <span class="badge badge-purple">1.424 escolas</span>
+  </div>
+  <div class="card-body">
+      <p class="sim-desc">
+        Hoje <b>1.424</b> escolas (Medium, High, Premium, Premium 40+ e M&#233;xico) t&#234;m prazo de contato de <b>7 dias &#250;teis</b>.
+        Arraste o slider para simular a efetividade do time se esse prazo fosse outro &#8212; os demais prazos (15, 21 e 30 dias) continuam fixos.
+      </p>
+
+      <div class="sim-slider-box">
+        <div class="sim-slider-lbl">Novo prazo p/ escolas de 7 dias</div>
+        <div class="sim-slider-controls">
+          <input type="range" id="sl-sim-prazo" min="1" max="30" value="15" step="1">
+          <span class="sim-slider-val" id="sim-prazo-val">15 d.&#250;.</span>
+        </div>
+        <div class="sim-slider-ticks">
+          <span>1</span><span class="tick-atual">7 (atual)</span><span>15</span><span>21</span><span>30</span>
+        </div>
+      </div>
+
+      <div class="sim-compare-row">
+        <div class="sim-box">
+          <div class="sim-box-lbl">Cen&#225;rio atual &mdash; 7 d.&#250;.</div>
+          <div class="sim-box-val" id="sim-pct-atual">&#8212;</div>
+          <div class="sim-box-sub" id="sim-ef-atual">&#8212;</div>
+        </div>
+        <div class="sim-box-arrow">&#8594;</div>
+        <div class="sim-box sim-box-novo">
+          <div class="sim-box-lbl">Simulado &mdash; <span id="sim-prazo-lbl-inline">15</span> d.&#250;.</div>
+          <div class="sim-box-val" id="sim-pct-novo">&#8212;</div>
+          <div class="sim-box-sub" id="sim-ef-novo">&#8212;</div>
+        </div>
+      </div>
+
+      <div class="sim-delta" id="sim-delta-box">
+        <span id="sim-delta-icon">&#8212;</span>
+        <span id="sim-delta-txt">Ajuste o slider para simular</span>
+      </div>
+
+      <div class="sim-foot">Simula&#231;&#227;o recalcula, para cada escola hoje com prazo de 7 dias &#250;teis, se ela seria &#171;efetiva no prazo&#187; com o novo prazo &#8212; mantendo fixas as escolas com prazo de 15, 21 ou 30 dias.</div>
+  </div>
+</div>
+
 <!-- Funil Normalizado -->
 <div class="card">
   <div class="card-head">
     <span class="card-title">Escolas por Funil Normalizado</span>
-    <span class="badge badge-purple">2.569 escolas</span>
+    <span class="badge badge-purple">2.571 escolas</span>
   </div>
   <div class="card-body">
     <div class="funil-list">
@@ -157,13 +240,13 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-name">01. Onboarding & BV</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--purple);width:clamp(90px,4%,100%)">
-            <span class='funil-bar-n'>104</span>
+          <div class="funil-bar" style="background:var(--purple);width:clamp(90px,4.1%,100%)">
+            <span class='funil-bar-n'>106</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--purple)">104</div>
-          <div class="funil-rev-lbl">4.0%</div>
+          <div class="funil-count" style="color:var(--purple)">106</div>
+          <div class="funil-rev-lbl">4.1%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -172,11 +255,11 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--orange);width:clamp(90px,5.4%,100%)">
-            <span class='funil-bar-n'>140</span>
+            <span class='funil-bar-n'>139</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--orange)">140</div>
+          <div class="funil-count" style="color:var(--orange)">139</div>
           <div class="funil-rev-lbl">5.4%</div>
         </div>
       </div>
@@ -186,11 +269,11 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--blue);width:clamp(90px,38.5%,100%)">
-            <span class='funil-bar-n'>990</span>
+            <span class='funil-bar-n'>991</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">990</div>
+          <div class="funil-count" style="color:var(--blue)">991</div>
           <div class="funil-rev-lbl">38.5%</div>
         </div>
       </div>
@@ -227,13 +310,13 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-name">04. 5% Material</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--blue);width:clamp(90px,10.2%,100%)">
-            <span class='funil-bar-n'>261</span>
+          <div class="funil-bar" style="background:var(--blue);width:clamp(90px,10.1%,100%)">
+            <span class='funil-bar-n'>260</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">261</div>
-          <div class="funil-rev-lbl">10.2%</div>
+          <div class="funil-count" style="color:var(--blue)">260</div>
+          <div class="funil-rev-lbl">10.1%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -242,12 +325,12 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--blue);width:clamp(90px,4%,100%)">
-            <span class='funil-bar-n'>73</span>
+            <span class='funil-bar-n'>75</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">73</div>
-          <div class="funil-rev-lbl">2.8%</div>
+          <div class="funil-count" style="color:var(--blue)">75</div>
+          <div class="funil-rev-lbl">2.9%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -256,11 +339,11 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--green);width:clamp(90px,17.6%,100%)">
-            <span class='funil-bar-n'>451</span>
+            <span class='funil-bar-n'>452</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--green)">451</div>
+          <div class="funil-count" style="color:var(--green)">452</div>
           <div class="funil-rev-lbl">17.6%</div>
         </div>
       </div>
@@ -269,13 +352,13 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-name">07.1 Conc. c/ Compras</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--green);width:clamp(90px,9.7%,100%)">
-            <span class='funil-bar-n'>249</span>
+          <div class="funil-bar" style="background:var(--green);width:clamp(90px,9.6%,100%)">
+            <span class='funil-bar-n'>248</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--green)">249</div>
-          <div class="funil-rev-lbl">9.7%</div>
+          <div class="funil-count" style="color:var(--green)">248</div>
+          <div class="funil-rev-lbl">9.6%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -297,13 +380,13 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-name">08. Retração</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--muted);width:clamp(90px,10.8%,100%)">
-            <span class='funil-bar-n'>277</span>
+          <div class="funil-bar" style="background:var(--muted);width:clamp(90px,10.7%,100%)">
+            <span class='funil-bar-n'>276</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--muted)">277</div>
-          <div class="funil-rev-lbl">10.8%</div>
+          <div class="funil-count" style="color:var(--muted)">276</div>
+          <div class="funil-rev-lbl">10.7%</div>
         </div>
       </div>
     </div>
@@ -362,4 +445,61 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
 <div class="footer" style="text-align:center;margin-top:24px;font-size:11px;color:var(--muted);font-weight:600">Estante M&aacute;gica &middot; CS Ops &nbsp;&middot;&nbsp; Tempo para Contato &nbsp;&middot;&nbsp; 07/08/2026</div>
 
 </div><!-- /page -->
+<script>window.SIM_DATA = {"elegiveis_total": 2022, "efetivas_total": 1369, "pef_atual": 67.7, "elegiveis_g7": 1424, "efetivas_g7_atual": 880, "elegiveis_outros": 598, "efetivas_outros": 489, "hist_g7": [3, 205, 171, 123, 116, 61, 86, 115, 42, 40, 34, 23, 71, 19, 27, 23, 18, 17, 17, 10, 13, 20, 9, 8, 5, 4, 15, 6, 13, 4, 5, 8, 7, 6, 6, 3, 3, 3, 5, 2, 1, 3, 3, 3, 4, 1, 0, 1, 1, 3, 5, 1, 0, 1, 1, 1, 2, 2, 1, 0, 1, 1, 3, 0, 0, 0, 2, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11]};</script>
+<script>
+(function() {
+  var SIM = window.SIM_DATA || {};
+  var slider = document.getElementById('sl-sim-prazo');
+  if (!slider) return;
+
+  function render() {
+    var novoPrazo = +slider.value;
+    document.getElementById('sim-prazo-val').textContent = novoPrazo + ' d.ú.';
+    document.getElementById('sim-prazo-lbl-inline').textContent = novoPrazo;
+
+    var hist = SIM.hist_g7 || [];
+    // Soma o histograma (dias úteis desde a última ativ. efetiva das escolas
+    // hoje com prazo=7) até o novo prazo — simula quantas ficariam "efetivas
+    // no prazo" se o prazo delas fosse N em vez de 7.
+    var efG7Sim = 0;
+    var limite = Math.min(novoPrazo, hist.length - 1);
+    for (var i = 0; i <= limite; i++) efG7Sim += (hist[i] || 0);
+
+    var elegiveis = SIM.elegiveis_total || 0;
+    var efetivasAtual = SIM.efetivas_total || 0;
+    var pctAtual = SIM.pef_atual != null ? SIM.pef_atual : 0;
+    var efetivasSim = (SIM.efetivas_outros || 0) + efG7Sim;
+    var pctSim = elegiveis > 0 ? Math.round(efetivasSim / elegiveis * 1000) / 10 : 0;
+
+    document.getElementById('sim-pct-atual').textContent = pctAtual + '%';
+    document.getElementById('sim-ef-atual').textContent = efetivasAtual.toLocaleString('pt-BR') + ' de ' + elegiveis.toLocaleString('pt-BR') + ' efetivas';
+    document.getElementById('sim-pct-novo').textContent = pctSim + '%';
+    document.getElementById('sim-ef-novo').textContent = efetivasSim.toLocaleString('pt-BR') + ' de ' + elegiveis.toLocaleString('pt-BR') + ' efetivas';
+
+    var deltaPct = Math.round((pctSim - pctAtual) * 10) / 10;
+    var deltaEsc = efetivasSim - efetivasAtual;
+    var box = document.getElementById('sim-delta-box');
+    var icon = document.getElementById('sim-delta-icon');
+    var txt = document.getElementById('sim-delta-txt');
+    box.classList.remove('up', 'down');
+    if (deltaEsc === 0) {
+      icon.textContent = '⏸️';
+      txt.innerHTML = novoPrazo === 7
+        ? 'Esse é o prazo atual — sem mudança'
+        : 'Nenhuma mudança na efetividade com esse prazo';
+    } else if (deltaEsc > 0) {
+      box.classList.add('up');
+      icon.textContent = '📈';
+      txt.innerHTML = '<b>+' + deltaEsc.toLocaleString('pt-BR') + ' escolas</b> passariam a ser efetivas no prazo · efetividade <b>' + (deltaPct > 0 ? '+' : '') + deltaPct.toFixed(1) + ' p.p.</b>';
+    } else {
+      box.classList.add('down');
+      icon.textContent = '📉';
+      txt.innerHTML = '<b>' + Math.abs(deltaEsc).toLocaleString('pt-BR') + ' escolas</b> deixariam de ser efetivas no prazo · efetividade <b>' + deltaPct.toFixed(1) + ' p.p.</b>';
+    }
+  }
+
+  slider.oninput = render;
+  render();
+})();
+</script>
 </body></html>
