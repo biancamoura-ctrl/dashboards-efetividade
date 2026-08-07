@@ -102,6 +102,10 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
   padding:14px 16px;margin-bottom:16px}
 .sim-slider-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;
   letter-spacing:.6px;margin-bottom:8px}
+.sim-select{width:100%;font-family:inherit;font-size:13px;font-weight:600;color:var(--text);
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;
+  cursor:pointer;outline:none}
+.sim-select:focus{border-color:var(--purple)}
 .sim-slider-controls{display:flex;align-items:center;gap:14px}
 #sl-sim-prazo{flex:1;accent-color:var(--purple);cursor:pointer}
 .sim-slider-val{font-size:20px;font-weight:800;color:var(--purple);min-width:64px;
@@ -184,35 +188,45 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 <!-- Simulador de prazo -->
 <div class="card">
   <div class="card-head">
-    <span class="card-title">Simulador de prazo &mdash; escolas de 7 dias</span>
-    <span class="badge badge-purple">1.424 escolas</span>
+    <span class="card-title">Simulador de prazo por segmenta&#231;&#227;o</span>
+    <span class="badge badge-purple">2.022 escolas</span>
   </div>
   <div class="card-body">
       <p class="sim-desc">
-        Hoje <b>1.424</b> escolas (Medium, High, Premium, Premium 40+ e M&#233;xico) t&#234;m prazo de contato de <b>7 dias &#250;teis</b>.
-        Arraste o slider para simular a efetividade do time se esse prazo fosse outro &#8212; os demais prazos (15, 21 e 30 dias) continuam fixos.
+        Escolha uma segmenta&#231;&#227;o e simule a efetividade do time se o prazo de contato dela fosse outro &#8212; as demais segmenta&#231;&#245;es continuam no prazo real delas.
       </p>
 
       <div class="sim-slider-box">
-        <div class="sim-slider-lbl">Novo prazo p/ escolas de 7 dias</div>
+        <div class="sim-slider-lbl">Segmenta&#231;&#227;o</div>
+        <select id="sim-categoria" class="sim-select">
+          <option value="high_touch" selected>High touch (1.165 escolas, hoje 7d.&#250;.)</option>
+          <option value="medium_touch">Medium touch (581 escolas, hoje 7d.&#250;.)</option>
+          <option value="premium_touch">Premium touch (216 escolas, hoje 7d.&#250;.)</option>
+          <option value="premium_touch_40mais">Premium touch 40+ (35 escolas, hoje 7d.&#250;.)</option>
+          <option value="mexico">México (0 escolas, hoje 7d.&#250;.)</option>
+          <option value="colombia">Colômbia (0 escolas, hoje 15d.&#250;.)</option>
+          <option value="nao_quer_contato">Não quer contato ativo (25 escolas, hoje 30d.&#250;.)</option>
+          <option value="demais">Demais (padrão) (0 escolas, hoje 15d.&#250;.)</option>
+        </select>
+        <div class="sim-slider-lbl" style="margin-top:12px">Novo prazo</div>
         <div class="sim-slider-controls">
-          <input type="range" id="sl-sim-prazo" min="1" max="30" value="15" step="1">
-          <span class="sim-slider-val" id="sim-prazo-val">15 d.&#250;.</span>
+          <input type="range" id="sl-sim-prazo" min="1" max="45" value="7" step="1">
+          <span class="sim-slider-val" id="sim-prazo-val">&#8212;</span>
         </div>
         <div class="sim-slider-ticks">
-          <span>1</span><span class="tick-atual">7 (atual)</span><span>15</span><span>21</span><span>30</span>
+          <span>1</span><span class="tick-atual" id="sim-tick-atual">&#8212;</span><span>45</span>
         </div>
       </div>
 
       <div class="sim-compare-row">
         <div class="sim-box">
-          <div class="sim-box-lbl">Cen&#225;rio atual &mdash; 7 d.&#250;.</div>
+          <div class="sim-box-lbl" id="sim-lbl-atual">Cen&#225;rio atual</div>
           <div class="sim-box-val" id="sim-pct-atual">&#8212;</div>
           <div class="sim-box-sub" id="sim-ef-atual">&#8212;</div>
         </div>
         <div class="sim-box-arrow">&#8594;</div>
         <div class="sim-box sim-box-novo">
-          <div class="sim-box-lbl">Simulado &mdash; <span id="sim-prazo-lbl-inline">15</span> d.&#250;.</div>
+          <div class="sim-box-lbl">Simulado &mdash; <span id="sim-prazo-lbl-inline">&#8212;</span> d.&#250;.</div>
           <div class="sim-box-val" id="sim-pct-novo">&#8212;</div>
           <div class="sim-box-sub" id="sim-ef-novo">&#8212;</div>
         </div>
@@ -223,7 +237,7 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
         <span id="sim-delta-txt">Ajuste o slider para simular</span>
       </div>
 
-      <div class="sim-foot">Simula&#231;&#227;o recalcula, para cada escola hoje com prazo de 7 dias &#250;teis, se ela seria &#171;efetiva no prazo&#187; com o novo prazo &#8212; mantendo fixas as escolas com prazo de 15, 21 ou 30 dias.</div>
+      <div class="sim-foot">Simula&#231;&#227;o recalcula, para cada escola da segmenta&#231;&#227;o escolhida, se ela seria &#171;efetiva no prazo&#187; com o novo prazo &#8212; mantendo fixas as escolas das demais segmenta&#231;&#245;es (no prazo real de cada uma).</div>
   </div>
 </div>
 
@@ -231,7 +245,7 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 <div class="card">
   <div class="card-head">
     <span class="card-title">Escolas por Funil Normalizado</span>
-    <span class="badge badge-purple">2.571 escolas</span>
+    <span class="badge badge-purple">2.574 escolas</span>
   </div>
   <div class="card-body">
     <div class="funil-list">
@@ -240,13 +254,13 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
           <div class="funil-name">01. Onboarding & BV</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--purple);width:clamp(90px,4.1%,100%)">
-            <span class='funil-bar-n'>106</span>
+          <div class="funil-bar" style="background:var(--purple);width:clamp(90px,4.2%,100%)">
+            <span class='funil-bar-n'>107</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--purple)">106</div>
-          <div class="funil-rev-lbl">4.1%</div>
+          <div class="funil-count" style="color:var(--purple)">107</div>
+          <div class="funil-rev-lbl">4.2%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -255,11 +269,11 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--orange);width:clamp(90px,5.4%,100%)">
-            <span class='funil-bar-n'>139</span>
+            <span class='funil-bar-n'>138</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--orange)">139</div>
+          <div class="funil-count" style="color:var(--orange)">138</div>
           <div class="funil-rev-lbl">5.4%</div>
         </div>
       </div>
@@ -268,13 +282,13 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
           <div class="funil-name">03.1 Crono (no prazo)</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--blue);width:clamp(90px,38.5%,100%)">
-            <span class='funil-bar-n'>991</span>
+          <div class="funil-bar" style="background:var(--blue);width:clamp(90px,38.4%,100%)">
+            <span class='funil-bar-n'>988</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">991</div>
-          <div class="funil-rev-lbl">38.5%</div>
+          <div class="funil-count" style="color:var(--blue)">988</div>
+          <div class="funil-rev-lbl">38.4%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -283,12 +297,12 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:#c9a227;width:clamp(90px,4%,100%)">
-            <span class='funil-bar-n'>11</span>
+            <span class='funil-bar-n'>12</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:#c9a227">11</div>
-          <div class="funil-rev-lbl">0.4%</div>
+          <div class="funil-count" style="color:#c9a227">12</div>
+          <div class="funil-rev-lbl">0.5%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -310,13 +324,13 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
           <div class="funil-name">04. 5% Material</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--blue);width:clamp(90px,10.1%,100%)">
-            <span class='funil-bar-n'>260</span>
+          <div class="funil-bar" style="background:var(--blue);width:clamp(90px,10.3%,100%)">
+            <span class='funil-bar-n'>264</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">260</div>
-          <div class="funil-rev-lbl">10.1%</div>
+          <div class="funil-count" style="color:var(--blue)">264</div>
+          <div class="funil-rev-lbl">10.3%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -325,12 +339,12 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--blue);width:clamp(90px,4%,100%)">
-            <span class='funil-bar-n'>75</span>
+            <span class='funil-bar-n'>76</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">75</div>
-          <div class="funil-rev-lbl">2.9%</div>
+          <div class="funil-count" style="color:var(--blue)">76</div>
+          <div class="funil-rev-lbl">3.0%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -338,13 +352,13 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
           <div class="funil-name">06. Com Compras</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--green);width:clamp(90px,17.6%,100%)">
-            <span class='funil-bar-n'>452</span>
+          <div class="funil-bar" style="background:var(--green);width:clamp(90px,17.8%,100%)">
+            <span class='funil-bar-n'>457</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--green)">452</div>
-          <div class="funil-rev-lbl">17.6%</div>
+          <div class="funil-count" style="color:var(--green)">457</div>
+          <div class="funil-rev-lbl">17.8%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -352,13 +366,13 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
           <div class="funil-name">07.1 Conc. c/ Compras</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--green);width:clamp(90px,9.6%,100%)">
-            <span class='funil-bar-n'>248</span>
+          <div class="funil-bar" style="background:var(--green);width:clamp(90px,9.5%,100%)">
+            <span class='funil-bar-n'>244</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--green)">248</div>
-          <div class="funil-rev-lbl">9.6%</div>
+          <div class="funil-count" style="color:var(--green)">244</div>
+          <div class="funil-rev-lbl">9.5%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -367,11 +381,11 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:#9a8400;width:clamp(90px,4%,100%)">
-            <span class='funil-bar-n'>3</span>
+            <span class='funil-bar-n'>2</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:#9a8400">3</div>
+          <div class="funil-count" style="color:#9a8400">2</div>
           <div class="funil-rev-lbl">0.1%</div>
         </div>
       </div>
@@ -445,30 +459,49 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 <div class="footer" style="text-align:center;margin-top:24px;font-size:11px;color:var(--muted);font-weight:600">Estante M&aacute;gica &middot; CS Ops &nbsp;&middot;&nbsp; Tempo para Contato &nbsp;&middot;&nbsp; 07/08/2026</div>
 
 </div><!-- /page -->
-<script>window.SIM_DATA = {"elegiveis_total": 2022, "efetivas_total": 1385, "pef_atual": 68.5, "elegiveis_g7": 1424, "efetivas_g7_atual": 892, "elegiveis_outros": 598, "efetivas_outros": 493, "hist_g7": [39, 196, 162, 121, 115, 60, 85, 114, 42, 40, 34, 23, 69, 19, 27, 23, 18, 17, 17, 9, 13, 20, 8, 7, 5, 4, 15, 4, 12, 4, 5, 7, 6, 6, 6, 3, 3, 2, 5, 2, 1, 3, 3, 3, 4, 1, 0, 1, 1, 3, 4, 1, 0, 1, 1, 1, 2, 2, 1, 0, 1, 1, 3, 0, 0, 0, 2, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11]};</script>
+<script>window.SIM_DATA = {"elegiveis_total": 2022, "efetivas_total": 1385, "pef_atual": 68.5, "categorias": [{"key": "high_touch", "label": "High touch", "tc_atual": 7, "elegiveis": 1165, "efetivas_atual": 793, "hist": [31, 152, 129, 104, 90, 49, 57, 104, 32, 39, 22, 23, 50, 16, 18, 20, 16, 17, 17, 8, 11, 18, 11, 10, 5, 6, 24, 3, 12, 4, 8, 4, 5, 6, 5, 4, 2, 1, 4, 2, 1, 3, 3, 1, 2, 0, 0, 1, 0, 1, 2, 0, 0, 1, 0, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 4]}, {"key": "medium_touch", "label": "Medium touch", "tc_atual": 7, "elegiveis": 581, "efetivas_atual": 360, "hist": [13, 74, 62, 39, 40, 29, 34, 40, 22, 17, 14, 6, 32, 8, 19, 13, 9, 6, 8, 3, 5, 9, 3, 3, 1, 1, 6, 3, 4, 2, 0, 6, 1, 4, 2, 0, 2, 1, 1, 1, 1, 0, 0, 2, 2, 1, 0, 0, 1, 2, 3, 1, 0, 1, 1, 0, 2, 2, 2, 0, 1, 0, 2, 1, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 8]}, {"key": "premium_touch", "label": "Premium touch", "tc_atual": 7, "elegiveis": 216, "efetivas_atual": 177, "hist": [9, 47, 31, 19, 19, 8, 9, 17, 3, 4, 6, 4, 7, 2, 0, 0, 3, 3, 6, 5, 0, 2, 1, 2, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"key": "premium_touch_40mais", "label": "Premium touch 40+", "tc_atual": 7, "elegiveis": 35, "efetivas_atual": 33, "hist": [2, 7, 4, 5, 5, 3, 0, 0, 2, 1, 0, 0, 2, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"key": "mexico", "label": "México", "tc_atual": 7, "elegiveis": 0, "efetivas_atual": 0, "hist": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"key": "colombia", "label": "Colômbia", "tc_atual": 15, "elegiveis": 0, "efetivas_atual": 0, "hist": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"key": "nao_quer_contato", "label": "Não quer contato ativo", "tc_atual": 30, "elegiveis": 25, "efetivas_atual": 22, "hist": [0, 3, 4, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"key": "demais", "label": "Demais (padrão)", "tc_atual": 15, "elegiveis": 0, "efetivas_atual": 0, "hist": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]};</script>
 <script>
 (function() {
   var SIM = window.SIM_DATA || {};
   var slider = document.getElementById('sl-sim-prazo');
-  if (!slider) return;
+  var select = document.getElementById('sim-categoria');
+  if (!slider || !select) return;
+
+  var porKey = {};
+  (SIM.categorias || []).forEach(function(c) { porKey[c.key] = c; });
+
+  function categoriaAtual() {
+    return porKey[select.value] || { hist: [], elegiveis: 0, efetivas_atual: 0, tc_atual: 0, label: '' };
+  }
+
+  function onCategoriaChange() {
+    var cat = categoriaAtual();
+    slider.value = cat.tc_atual || 1;
+    document.getElementById('sim-tick-atual').textContent = (cat.tc_atual || '—') + ' (padrão)';
+    document.getElementById('sim-lbl-atual').textContent = 'Cenário atual — ' + cat.label;
+    render();
+  }
 
   function render() {
+    var cat = categoriaAtual();
     var novoPrazo = +slider.value;
     document.getElementById('sim-prazo-val').textContent = novoPrazo + ' d.ú.';
     document.getElementById('sim-prazo-lbl-inline').textContent = novoPrazo;
 
-    var hist = SIM.hist_g7 || [];
+    var hist = cat.hist || [];
     // Soma o histograma (dias úteis desde a última ativ. efetiva das escolas
-    // hoje com prazo=7) até o novo prazo — simula quantas ficariam "efetivas
-    // no prazo" se o prazo delas fosse N em vez de 7.
-    var efG7Sim = 0;
+    // da categoria escolhida) até o novo prazo — simula quantas ficariam
+    // "efetivas no prazo" se o prazo delas fosse N em vez do prazo atual.
+    var efCatSim = 0;
     var limite = Math.min(novoPrazo, hist.length - 1);
-    for (var i = 0; i <= limite; i++) efG7Sim += (hist[i] || 0);
+    for (var i = 0; i <= limite; i++) efCatSim += (hist[i] || 0);
 
     var elegiveis = SIM.elegiveis_total || 0;
     var efetivasAtual = SIM.efetivas_total || 0;
     var pctAtual = SIM.pef_atual != null ? SIM.pef_atual : 0;
-    var efetivasSim = (SIM.efetivas_outros || 0) + efG7Sim;
+    // Efetividade simulada = total atual, menos as efetivas hoje da categoria
+    // (no prazo real dela), mais as efetivas simuladas com o novo prazo.
+    var efetivasSim = efetivasAtual - (cat.efetivas_atual || 0) + efCatSim;
     var pctSim = elegiveis > 0 ? Math.round(efetivasSim / elegiveis * 1000) / 10 : 0;
 
     document.getElementById('sim-pct-atual').textContent = pctAtual + '%';
@@ -484,9 +517,7 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
     box.classList.remove('up', 'down');
     if (deltaEsc === 0) {
       icon.textContent = '⏸️';
-      txt.innerHTML = novoPrazo === 7
-        ? 'Esse é o prazo atual — sem mudança'
-        : 'Nenhuma mudança na efetividade com esse prazo';
+      txt.innerHTML = 'Nenhuma mudança na efetividade com esse prazo';
     } else if (deltaEsc > 0) {
       box.classList.add('up');
       icon.textContent = '📈';
@@ -499,7 +530,8 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
   }
 
   slider.oninput = render;
-  render();
+  select.onchange = onCategoriaChange;
+  onCategoriaChange();
 })();
 </script>
 </body></html>
