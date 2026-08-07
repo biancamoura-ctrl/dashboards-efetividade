@@ -334,10 +334,16 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
   <div class="sub-panel active" data-sub="cs">
     <div class="cs-filter">
       <label>Filtrar</label>
-      <select onchange="filtrarCS(this)">
+      <select class="filtro-status" onchange="filtrarCS(this)">
         <option value="todos">Todos</option>
         <option value="elegiveis">Só elegíveis (≥70% ef.)</option>
         <option value="nao-elegiveis">Só não elegíveis</option>
+      </select>
+      <label>Pago</label>
+      <select class="filtro-pago" onchange="filtrarCS(this)">
+        <option value="todos">Todos</option>
+        <option value="pagos">Só pagos</option>
+        <option value="nao-pagos">Só não pagos</option>
       </select>
     </div>
     <div class="table-wrap">
@@ -350,33 +356,34 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
             <th>Escolas na semana</th>
             <th>Escolas premiadas</th>
             <th>Valor total a receber</th>
+            <th>Pago?</th>
           </tr>
         </thead>
         <tbody>
-<tr data-elig="sim"><td style="text-align:left">Nicole Cavalcante de Oliveira</td><td class="num">75.4%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">4</td><td class="num">3</td><td class="num"><b style="color:var(--green)">R$ 350</b></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Stefany Soares Figueredo</td><td class="num">79.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">3</td><td class="num">2</td><td class="num"><b style="color:var(--green)">R$ 250</b></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Carla Ferraz Gomes</td><td class="num">92.5%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 150</b></td></tr>
-<tr data-elig="sim"><td style="text-align:left">LARI FREITAS MONTEIRO</td><td class="num">84.4%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 100</b></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Pâmela Miranda</td><td class="num">71.9%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 100</b></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Renata Brandão</td><td class="num">72.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">2</td><td class="num"><b style="color:var(--green)">R$ 100</b></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Aíres Muniz Santos</td><td class="num">70.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 50</b></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Maria Eduarda Carvalho</td><td class="num">85.7%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 50</b></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Viviane Gomes Luz</td><td class="num">88.5%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 50</b></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Ana Clara Peres</td><td class="num">50.0%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Andreina Ferreira</td><td class="num">59.3%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">2</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Dalva Paschoalini</td><td class="num">39.3%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Indlayse Ferreira</td><td class="num">47.4%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">4</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Julia Cordeiro</td><td class="num">63.8%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">2</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Kaian Luís Silva</td><td class="num">62.1%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Mayane Oliveira</td><td class="num">52.6%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">3</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Rayane Barroso Santana</td><td class="num">33.3%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Sarah Moura</td><td class="num">92.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Shelry Solart</td><td class="num">39.7%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Talita Panassol</td><td class="num">77.6%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Tatiana Silva de Jesus Portela</td><td class="num">75.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Thais Souza</td><td class="num">80.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">3</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="sim"><td style="text-align:left">Thayná Bastos</td><td class="num">72.2%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
-<tr data-elig="nao"><td style="text-align:left">Vivian Cristina</td><td class="num">68.9%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">3</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Nicole Cavalcante de Oliveira</td><td class="num">75.4%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">4</td><td class="num">3</td><td class="num"><b style="color:var(--green)">R$ 350</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Stefany Soares Figueredo</td><td class="num">79.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">3</td><td class="num">2</td><td class="num"><b style="color:var(--green)">R$ 250</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Carla Ferraz Gomes</td><td class="num">92.5%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 150</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">LARI FREITAS MONTEIRO</td><td class="num">84.4%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 100</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Pâmela Miranda</td><td class="num">71.9%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 100</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Renata Brandão</td><td class="num">72.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">2</td><td class="num">2</td><td class="num"><b style="color:var(--green)">R$ 100</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Aíres Muniz Santos</td><td class="num">70.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Maria Eduarda Carvalho</td><td class="num">85.7%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Viviane Gomes Luz</td><td class="num">88.5%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><b style="color:var(--green)">R$ 50</b></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Ana Clara Peres</td><td class="num">50.0%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Andreina Ferreira</td><td class="num">59.3%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">2</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Dalva Paschoalini</td><td class="num">39.3%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Indlayse Ferreira</td><td class="num">47.4%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">4</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Julia Cordeiro</td><td class="num">63.8%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">2</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Kaian Luís Silva</td><td class="num">62.1%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">2</td><td class="num">1</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Mayane Oliveira</td><td class="num">52.6%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">3</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Rayane Barroso Santana</td><td class="num">33.3%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Sarah Moura</td><td class="num">92.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Shelry Solart</td><td class="num">39.7%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Talita Panassol</td><td class="num">77.6%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Tatiana Silva de Jesus Portela</td><td class="num">75.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Thais Souza</td><td class="num">80.0%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">3</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="sim" data-pago="nao"><td style="text-align:left">Thayná Bastos</td><td class="num">72.2%</td><td style="text-align:center"><span class="pill pill-ok">Elegível</span></td><td class="num">1</td><td class="num">0</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
+<tr data-elig="nao" data-pago="nao"><td style="text-align:left">Vivian Cristina</td><td class="num">68.9%</td><td style="text-align:center"><span class="pill pill-nao">Não elegível</span></td><td class="num">3</td><td class="num">2</td><td class="num"><span style="color:#bbb;font-size:11px;">—</span></td><td style="text-align:center"><span style="color:#bbb;font-size:11px;">—</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -517,14 +524,18 @@ function filtrarEscolas(sel) {
 }
 
 function filtrarCS(sel) {
-  var f = sel.value;
   var panel = sel.closest('.sub-panel');
+  var status = panel.querySelector('.filtro-status').value;
+  var pago   = panel.querySelector('.filtro-pago').value;
   panel.querySelectorAll('table tbody tr[data-elig]').forEach(function(r) {
-    var show = false;
-    if      (f === 'todos')         show = true;
-    else if (f === 'elegiveis')     show = r.dataset.elig === 'sim';
-    else if (f === 'nao-elegiveis') show = r.dataset.elig === 'nao';
-    r.style.display = show ? '' : 'none';
+    var showStatus = false;
+    if      (status === 'todos')         showStatus = true;
+    else if (status === 'elegiveis')     showStatus = r.dataset.elig === 'sim';
+    else if (status === 'nao-elegiveis') showStatus = r.dataset.elig === 'nao';
+    var showPago = true;
+    if      (pago === 'pagos')     showPago = r.dataset.pago === 'sim';
+    else if (pago === 'nao-pagos') showPago = r.dataset.pago === 'nao';
+    r.style.display = (showStatus && showPago) ? '' : 'none';
   });
 }
 
