@@ -17,7 +17,6 @@
   --yellow:#F9DC45;
   --green:#1A9957;--green-lt:#e6f5ee;
   --orange:#E8843C;--orange-lt:#fef3ec;
-  --amber:var(--purple);--amber-lt:var(--purple-lt);
   --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
 }
 body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
@@ -27,12 +26,8 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
 .header-eyebrow{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px}
 .header h1{font-size:22px;font-weight:800;letter-spacing:-.4px}
 .header-date{font-size:12px;color:var(--muted);margin-top:4px}
-.header-receipt{text-align:right}
-.header-rev{font-size:30px;font-weight:800;color:var(--green);line-height:1;font-variant-numeric:tabular-nums}
-.header-rev-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
 .header-divider{height:2px;background:linear-gradient(90deg,var(--yellow) 0%,var(--yellow) 40%,transparent 100%);margin-top:16px;border-radius:2px}
 .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-.kpi-row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);
      border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
 .kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:700}
@@ -47,111 +42,36 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);
 .badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;
        padding:3px 9px;border-radius:20px;white-space:nowrap}
 .badge-blue{background:var(--blue-lt);color:var(--blue)}
-.badge-red{background:var(--red-lt);color:var(--red)}
-.badge-green{background:var(--green-lt);color:var(--green)}
 .badge-purple{background:var(--purple-lt);color:var(--purple)}
-.badge-yellow{background:#fffbe6;color:#7a5c00;border:1px solid #f5d000}
-.attention-bar{background:#fffbe6;border:1px solid #f5d000;border-radius:var(--radius);
-               padding:11px 16px;display:flex;gap:10px;align-items:center;
-               margin-bottom:16px;font-size:12px;font-weight:600;color:#6b4e00}
-.seg-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.seg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-          padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.seg-accent{position:absolute;top:0;left:0;right:0;height:3px}
-.seg-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;margin-top:2px}
-.seg-n{font-size:34px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
-.seg-label{font-size:11px;color:var(--muted);margin-top:2px}
-.seg-density{font-size:11px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
 .funil-list{display:flex;flex-direction:column;gap:0}
 .funil-stage{display:grid;grid-template-columns:200px 1fr 120px;align-items:center;
              gap:16px;padding:12px 0;border-bottom:1px solid #f0f0ec}
 .funil-stage:last-child{border-bottom:none}
 .funil-lbl{text-align:right}
 .funil-name{font-size:12px;font-weight:700}
-.funil-sub{font-size:11px;color:var(--muted);margin-top:2px}
 .funil-bar-wrap{position:relative}
 .funil-bar{height:32px;border-radius:6px;display:flex;align-items:center;padding:0 14px;
            justify-content:space-between;color:#fff;font-size:12px;font-weight:700;
            white-space:nowrap;min-width:100px}
 .funil-bar-n{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
-.funil-bar-rev{font-size:11px;opacity:.85}
-.funil-extras{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
-.funil-extra-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;
-                 background:var(--bg);border:1px solid var(--border);color:var(--muted)}
 .funil-meta{text-align:right}
 .funil-count{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
 .funil-rev-lbl{font-size:11px;color:var(--muted);margin-top:2px}
-.ef-overall{display:flex;align-items:center;gap:16px;margin-bottom:20px;
-            padding:16px;background:var(--bg);border-radius:8px;border:1px solid var(--border)}
-.ef-big{font-size:48px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--orange)}
-.ef-overall-info .lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
-.ef-overall-info .desc{font-size:12px;color:var(--text);margin-top:3px}
 .ef-list{display:flex;flex-direction:column;gap:10px}
 .ef-row{display:grid;grid-template-columns:180px 1fr 52px;align-items:center;gap:12px}
 .ef-lbl{font-size:12px;font-weight:600}
 .ef-track{height:20px;background:#e8e8e4;border-radius:5px;overflow:hidden;position:relative}
 .ef-fill{height:100%;border-radius:5px}
-.ef-meta-line{position:absolute;top:0;bottom:0;left:80%;width:2px;background:rgba(0,0,0,.18)}
 .ef-pct{font-size:13px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
 .ef-legend{margin-top:10px;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
-.ef-legend-line{width:24px;height:2px;background:rgba(0,0,0,.2);display:inline-block}
-.alert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.alert-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-            padding:14px 16px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
-.alert-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px}
-.alert-n{font-size:24px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
-.alert-txt{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
-.alert-autografos{margin-top:12px;padding:11px 14px;background:var(--blue-lt);border-radius:8px;
-                  border:1px solid #b3ddf4;font-size:12px;font-weight:600;color:var(--blue);
-                  display:flex;gap:8px;align-items:center}
-.ret-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.perf-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
-             margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--yellow)}
-.perf-rows{display:flex;flex-direction:column;gap:6px}
-.perf-row{display:flex;justify-content:space-between;align-items:center;
-          padding:9px 12px;background:var(--bg);border-radius:7px;border:1px solid var(--border)}
-.perf-lbl{font-size:12px;font-weight:600}
-.perf-val{font-size:12px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
-.pending-box{padding:24px;text-align:center;color:var(--muted);font-size:12px;font-style:italic;
-             background:var(--bg);border:1px dashed var(--border);border-radius:8px}
-.launcher-panel{background:var(--surface);border:1px solid var(--border);border-radius:22px;
-  padding:26px 20px 22px;margin-bottom:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.launcher-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--purple),var(--yellow))}
-.launcher-panel-title{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;
-  letter-spacing:.8px;margin-bottom:16px;text-align:center}
-.launcher{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:920px;margin:0 auto}
-.launcher-btn{width:112px;aspect-ratio:1/1;background:var(--bg);border:1px solid var(--border);
-  border-radius:26px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;text-align:center;gap:6px;padding:10px;
-  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background-color .15s ease}
-.launcher-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 8px 18px rgba(0,0,0,.14);background:var(--surface)}
-.launcher-btn.active{border-color:var(--blue);background:var(--blue-lt)}
-.launcher-icon{font-size:25px;line-height:1}
-.launcher-title{font-size:11px;font-weight:700;color:var(--text);line-height:1.25}
-.launcher-badge{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 9px;
-  border-radius:20px;background:var(--red-lt);color:var(--red);white-space:nowrap}
-.panel{animation:panelIn .25s ease}
-@keyframes panelIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){.launcher-btn{width:92px}}
 html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a;
-  --blue-lt:#123246;--purple-lt:#2b2440;--red-lt:#3a1c1f;--green-lt:#123424;--orange-lt:#3a2712;
-  --amber-lt:var(--purple-lt)}
+  --blue-lt:#123246;--purple-lt:#2b2440;--red-lt:#3a1c1f;--green-lt:#123424;--orange-lt:#3a2712}
 html.dark body{background:var(--bg);color:var(--text)}
 html.dark .card{background:var(--surface);border-color:var(--border)}
 html.dark .card-head{border-bottom-color:var(--border)}
 html.dark .kpi{background:var(--surface);border-color:var(--border)}
-html.dark .seg-card{background:var(--surface);border-color:var(--border)}
-html.dark .alert-card{background:var(--surface);border-color:var(--border)}
 html.dark .ef-track{background:var(--border)}
-html.dark .attention-bar{background:#2a2200;border-color:#5a4500;color:#f5c84a}
-html.dark .perf-row{background:#27272a;border-color:var(--border)}
 html.dark .funil-stage{border-bottom-color:var(--border)}
-html.dark .seg-density{border-top-color:var(--border)}
-html.dark .funil-extra-tag{background:#27272a;border-color:var(--border)}
-html.dark .ef-overall{background:#27272a;border-color:var(--border)}
-html.dark .pending-box{background:#27272a;border-color:var(--border)}
 .theme-btn{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;
            border:none;cursor:pointer;background:linear-gradient(135deg,#FFD947,#FF8C00);
            box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2);z-index:9998;
@@ -167,23 +87,14 @@ html.dark .theme-btn{background:linear-gradient(135deg,#2d1b69,#0f0c29);
 html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px)}
 html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0)}
 @media(max-width:960px){
-  .seg-grid{grid-template-columns:repeat(3,1fr)}
-  .alert-grid{grid-template-columns:repeat(2,1fr)}
-  .perf-grid{grid-template-columns:1fr}
   .funil-stage{grid-template-columns:140px 1fr 100px}
-  .kpi-row-4{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:700px){
   .kpi-row{grid-template-columns:repeat(2,1fr)}
-  .kpi-row-4{grid-template-columns:repeat(2,1fr)}
-  .seg-grid{grid-template-columns:repeat(2,1fr)}
   .funil-stage{grid-template-columns:1fr;gap:8px}
   .funil-lbl,.funil-meta{text-align:left}
   .ef-row{grid-template-columns:120px 1fr 48px}
-  .alert-grid{grid-template-columns:1fr}
-  .ret-row{grid-template-columns:1fr}
   .header-inner{flex-direction:column;align-items:flex-start}
-  .header-receipt{text-align:left}
 }
 
 </style>
@@ -217,17 +128,17 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
 <div class="kpi-row">
   <div class="kpi" style="border-top-color:var(--red)">
     <div class="kpi-lbl">Efetividade no prazo</div>
-    <div class="kpi-val" style="color:var(--red)">66.5%</div>
+    <div class="kpi-val" style="color:var(--red)">67.7%</div>
     <div class="kpi-sub">meta: 80%</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Escolas eleg&iacute;veis</div>
-    <div class="kpi-val" style="color:var(--purple)">2.021</div>
+    <div class="kpi-val" style="color:var(--purple)">2.022</div>
     <div class="kpi-sub">com prazo de contato definido</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Efetivas no prazo</div>
-    <div class="kpi-val" style="color:var(--blue)">1.343</div>
+    <div class="kpi-val" style="color:var(--blue)">1.369</div>
     <div class="kpi-sub">&#250;ltima atividade efetiva dentro do prazo</div>
   </div>
 </div>
@@ -246,13 +157,13 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-name">01. Onboarding & BV</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--purple);width:clamp(90px,4.1%,100%)">
-            <span class='funil-bar-n'>105</span>
+          <div class="funil-bar" style="background:var(--purple);width:clamp(90px,4%,100%)">
+            <span class='funil-bar-n'>104</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--purple)">105</div>
-          <div class="funil-rev-lbl">4.1%</div>
+          <div class="funil-count" style="color:var(--purple)">104</div>
+          <div class="funil-rev-lbl">4.0%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -275,11 +186,11 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--blue);width:clamp(90px,38.5%,100%)">
-            <span class='funil-bar-n'>989</span>
+            <span class='funil-bar-n'>990</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">989</div>
+          <div class="funil-count" style="color:var(--blue)">990</div>
           <div class="funil-rev-lbl">38.5%</div>
         </div>
       </div>
@@ -289,12 +200,12 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:#c9a227;width:clamp(90px,4%,100%)">
-            <span class='funil-bar-n'>12</span>
+            <span class='funil-bar-n'>11</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:#c9a227">12</div>
-          <div class="funil-rev-lbl">0.5%</div>
+          <div class="funil-count" style="color:#c9a227">11</div>
+          <div class="funil-rev-lbl">0.4%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -317,11 +228,11 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--blue);width:clamp(90px,10.2%,100%)">
-            <span class='funil-bar-n'>263</span>
+            <span class='funil-bar-n'>261</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">263</div>
+          <div class="funil-count" style="color:var(--blue)">261</div>
           <div class="funil-rev-lbl">10.2%</div>
         </div>
       </div>
@@ -331,11 +242,11 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--blue);width:clamp(90px,4%,100%)">
-            <span class='funil-bar-n'>71</span>
+            <span class='funil-bar-n'>73</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">71</div>
+          <div class="funil-count" style="color:var(--blue)">73</div>
           <div class="funil-rev-lbl">2.8%</div>
         </div>
       </div>
@@ -344,13 +255,13 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
           <div class="funil-name">06. Com Compras</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--green);width:clamp(90px,17.5%,100%)">
-            <span class='funil-bar-n'>450</span>
+          <div class="funil-bar" style="background:var(--green);width:clamp(90px,17.6%,100%)">
+            <span class='funil-bar-n'>451</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--green)">450</div>
-          <div class="funil-rev-lbl">17.5%</div>
+          <div class="funil-count" style="color:var(--green)">451</div>
+          <div class="funil-rev-lbl">17.6%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -396,7 +307,7 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         </div>
       </div>
     </div>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7">Fonte: coluna oficial <code>funil_normalizado</code> em <code>gold.etl_jornada_escolas_aplicacao</code> &middot; mesma base do dashboard "Funil Normalizado" &middot; Brasil &middot; 2026 &middot; qtd_alunos &#8805; 3 &middot; Low Touch exclu&iacute;do.</div>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7">Fonte: coluna oficial <code>funil_normalizado</code> em <code>gold.etl_jornada_escolas_aplicacao</code> &middot; Brasil &middot; 2026 &middot; qtd_alunos &#8805; 3 &middot; Low Touch exclu&iacute;do.</div>
   </div>
 </div>
 
@@ -404,7 +315,7 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
 <div class="card">
   <div class="card-head">
     <span class="card-title">Escolas por Engagement Score</span>
-    <span class="badge badge-blue">2.409 escolas com score · atualizado em 30/06/2026 (38 dias atrás — cálculo é quinzenal)</span>
+    <span class="badge badge-blue">2.408 escolas com score · atualizado em 30/06/2026 (38 dias atrás — cálculo é quinzenal)</span>
   </div>
   <div class="card-body">
     <div class="ef-list">
@@ -420,14 +331,14 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         <div class="ef-track">
           <div class="ef-fill" style="width:29.9%;background:var(--blue)"></div>
         </div>
-        <div class="ef-pct" style="color:var(--blue)">720</div>
+        <div class="ef-pct" style="color:var(--blue)">719</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--muted)">Normal</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:38.8%;background:#c9c9c2"></div>
+          <div class="ef-fill" style="width:38.9%;background:#c9c9c2"></div>
         </div>
-        <div class="ef-pct" style="color:var(--text)">935</div>
+        <div class="ef-pct" style="color:var(--text)">936</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--orange)">Desengajada</div>
@@ -441,10 +352,10 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
         <div class="ef-track">
           <div class="ef-fill" style="width:1.0%;background:var(--red)"></div>
         </div>
-        <div class="ef-pct" style="color:var(--red)">24</div>
+        <div class="ef-pct" style="color:var(--red)">23</div>
       </div>
     </div>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7">Fonte: <code>datascience.engagement_score_v1</code>, join por <code>journey_uuid = id_jornada</code> contra o mesmo escopo Relacionamento acima &middot; c&aacute;lculo roda quinzenalmente, pode haver escolas do escopo ainda sem score.</div>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7">Fonte: <code>datascience.engagement_score_v1</code>, deduplicado por par (actor_uuid, journey_uuid) pelo run_date mais recente, join por <code>journey_uuid = id_jornada</code> contra o mesmo escopo Relacionamento acima &middot; c&aacute;lculo roda quinzenalmente, pode haver escolas do escopo ainda sem score.</div>
   </div>
 </div>
 
