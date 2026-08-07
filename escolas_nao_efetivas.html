@@ -184,6 +184,10 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
     <span class="launcher-icon">📶</span>
     <span class="launcher-title">Engajamento</span>
   </button>
+  <button class="launcher-btn" data-target="panel-tc" onclick="togglePanel('panel-tc', this)">
+    <span class="launcher-icon">⏳</span>
+    <span class="launcher-title">Tempo de Contato</span>
+  </button>
   <button class="launcher-btn" data-target="panel-lista" onclick="togglePanel('panel-lista', this)">
     <span class="launcher-icon">📋</span>
     <span class="launcher-title">Lista de Escolas</span>
@@ -322,6 +326,33 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
 </div>
 </div>
 
+<!-- Tempo de Contato (TC) -->
+<div class="panel" id="panel-tc" hidden>
+<div class="card">
+  <div class="card-head">
+    <span class="card-title">⏳ Não Efetivas por Tempo de Contato (TC)</span>
+    <span style="font-size:11px;color:var(--muted)">prazo permitido entre contatos, não "dias além do prazo"</span>
+  </div>
+  <div class="card-body" style="padding:0">
+    <table>
+      <thead><tr>
+        <th>TC</th>
+        <th style="text-align:right">Elegíveis</th>
+        <th style="text-align:right">Não ef.</th>
+        <th style="min-width:120px">% não ef.</th>
+      </tr></thead>
+      <tbody><tr><td><span class="badge" style="background:#E94B5622;color:#E94B56">7 dias</span></td><td class="num">1424</td><td class="num" style="color:var(--red);font-weight:700">506</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:35.5%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">36%</span></div></td></tr><tr><td><span class="badge" style="background:#C98A0022;color:#C98A00">10 dias</span></td><td class="num">192</td><td class="num" style="color:var(--red);font-weight:700">31</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:16.1%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">16%</span></div></td></tr><tr><td><span class="badge" style="background:#1565C022;color:#1565C0">12 dias</span></td><td class="num">83</td><td class="num" style="color:var(--red);font-weight:700">13</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:15.7%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">16%</span></div></td></tr><tr><td><span class="badge" style="background:#2F9E4422;color:#2F9E44">15 dias</span></td><td class="num">147</td><td class="num" style="color:var(--red);font-weight:700">28</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:19.0%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">19%</span></div></td></tr><tr><td><span class="badge" style="background:#5A647822;color:#5A6478">20 dias</span></td><td class="num">75</td><td class="num" style="color:var(--red);font-weight:700">17</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:22.7%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">23%</span></div></td></tr><tr><td><span class="badge" style="background:#5A647822;color:#5A6478">30 dias</span></td><td class="num">102</td><td class="num" style="color:var(--red);font-weight:700">12</td><td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:11.8%;background:var(--red)"></div></div><span style="font-size:11px;min-width:34px;text-align:right">12%</span></div></td></tr></tbody>
+    </table>
+  </div>
+  <div style="padding:12px 18px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)">
+    TC (dias úteis) calculado por segmentação de atendimento, país e overrides manuais
+    (<code>tempo_para_contato_V2</code> / <code>forma_de_contato_com_a_escola</code>) &middot;
+    quebra diferente das "Faixas de Prazo": aqui é o prazo permitido em si, não quanto já passou dele
+    &middot; a tabela na aba "Lista de Escolas" pode ser ordenada e filtrada por TC.
+  </div>
+</div>
+</div>
+
 <!-- Lista de escolas -->
 <div class="panel" id="panel-lista" hidden>
 <div class="card">
@@ -340,6 +371,10 @@ localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
       <select id="filterEng" onchange="render()">
         <option value="">Todos os engajamentos</option>
         <option value="Muito Engajada">Muito Engajada</option><option value="Engajada">Engajada</option><option value="Normal">Normal</option><option value="Desengajada">Desengajada</option><option value="Muito Desengajada">Muito Desengajada</option><option value="Sem score">Sem score</option>
+      </select>
+      <select id="filterTC" onchange="render()">
+        <option value="">Todos os TCs</option>
+        <option value="7">7 dias</option><option value="10">10 dias</option><option value="12">12 dias</option><option value="15">15 dias</option><option value="20">20 dias</option><option value="30">30 dias</option>
       </select>
       <button onclick="exportCSV()" style="font-size:12px;padding:5px 12px;border-radius:6px;
               background:var(--amber);color:#fff;border:none;cursor:pointer;font-family:inherit;font-weight:600">
@@ -605,8 +640,8 @@ const RAW = [
 ["146375","Col\u00e9gio Rui Barbosa - Objetivo","mariana.santana@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras","Normal",15.8,7,19,12,"https://axcrm.ai/deals/146375"],
 ["70687","Col\u00e9gio Zaccaria","mariana.santana@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)","Normal",28.4,7,19,12,"https://axcrm.ai/deals/70687"],
 ["70235","Creche Escola Santa Beatriz","larissa.freitas@estantemagica.com.br","Moreno Loss","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)","Normal",19.1,30,42,12,"https://axcrm.ai/deals/70235"],
-["444410","","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)","Normal",28.9,7,18,11,"https://axcrm.ai/deals/444410"],
 ["428619","","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)","Normal",18.8,7,18,11,"https://axcrm.ai/deals/428619"],
+["444410","","kaua.coelho@estantemagica.com.br","Larissa Garcia","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)","Normal",28.9,7,18,11,"https://axcrm.ai/deals/444410"],
 ["67514","CEI CANTINHO DO BOM PASTOR","tatiana.portela@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras","Normal",25.5,7,18,11,"https://axcrm.ai/deals/67514"],
 ["64804","COLEGIO ALDA RIBEIRO CORREA - ARC","indlayse.ferreira@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","06. Com compras","Engajada",42.3,7,18,11,"https://axcrm.ai/deals/64804"],
 ["35128","COL\u00c9GIO DOS SANTOS ANJOS","laura.pagliuzo@estantemagica.com.br","Larissa Garcia","High touch","Onboarding & Boas vindas","04. Com 5% material e sem compras","Normal",17.6,7,18,11,"https://axcrm.ai/deals/35128"],
@@ -756,8 +791,8 @@ const RAW = [
 ["428627","COL\u00c9GIO CRIATIVO","mariana.santana@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras","Engajada",50.1,12,18,6,"https://axcrm.ai/deals/428627"],
 ["146013","Centro Educacional ArteCeb","talita.panassol@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)","Normal",22.9,15,21,6,"https://axcrm.ai/deals/146013"],
 ["42430","RENOVO CENTRO DE EDUCACAO","maria.elvira@estantemagica.com.br","Carine Leite","Premium touch","Em Aplica\u00e7\u00e3o","06. Com compras","Engajada",30.2,15,21,6,"https://axcrm.ai/deals/42430"],
-["444421","","mariana.santana@estantemagica.com.br","Carine Leite","High touch","Em Aplica\u00e7\u00e3o","06. Com compras","Engajada",45.6,12,17,5,"https://axcrm.ai/deals/444421"],
 ["444373","","dalva.paschoalini@estantemagica.com.br","Sara Penteado","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)","Desengajada",10.3,7,12,5,"https://axcrm.ai/deals/444373"],
+["444421","","mariana.santana@estantemagica.com.br","Carine Leite","High touch","Em Aplica\u00e7\u00e3o","06. Com compras","Engajada",45.6,12,17,5,"https://axcrm.ai/deals/444421"],
 ["67768","ANNA PINTO BANKS PROFA EMEB","kaian.silva@estantemagica.com.br","Sara Penteado","High touch","Em Aplica\u00e7\u00e3o","03.1 Com cronograma e sem material (no prazo)","Engajada",29.8,7,12,5,"https://axcrm.ai/deals/67768"],
 ["60504","ANTO TOMAZ DE AQUINO EEF","jennifer.anjos@estantemagica.com.br","Sara Penteado","High touch","Em Aplica\u00e7\u00e3o","02. Defini\u00e7\u00e3o de Datas","Desengajada",9.9,7,12,5,"https://axcrm.ai/deals/60504"],
 ["35645","CENTRO EDUCACIONAL EUREKA","shelry.solart@estantemagica.com.br","Moreno Loss","High touch","Em Aplica\u00e7\u00e3o","04. Com 5% material e sem compras","Normal",24.3,7,12,5,"https://axcrm.ai/deals/35645"],
@@ -1033,11 +1068,13 @@ function filtered() {
   const seg = document.getElementById('filterSeg').value;
   const lid = document.getElementById('filterLid').value;
   const eng = document.getElementById('filterEng').value;
+  const tc  = document.getElementById('filterTC').value;
   return RAW.filter(r => {
     if (q   && !r[1].toLowerCase().includes(q) && !r[2].toLowerCase().includes(q)) return false;
     if (seg && r[4] !== seg) return false;
     if (lid && r[3] !== lid) return false;
     if (eng && r[7] !== eng) return false;
+    if (tc  && String(r[9]) !== tc) return false;
     return true;
   });
 }
