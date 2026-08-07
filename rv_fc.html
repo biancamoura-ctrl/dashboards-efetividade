@@ -389,10 +389,38 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
   <div class="sub-panel" data-sub="escola">
     <div class="cs-filter">
       <label>Filtrar</label>
-      <select onchange="filtrarEscolas(this)">
+      <select class="filtro-status" onchange="filtrarEscolas(this)">
         <option value="todos">Todas</option>
         <option value="premiadas">Só premiadas (≥1 categoria)</option>
         <option value="pagas">Só com valor a pagar (CS elegível)</option>
+      </select>
+      <label>CS</label>
+      <select class="filtro-cs" onchange="filtrarEscolas(this)">
+        <option value="todos">Todos os CS</option>
+<option value="Ana Clara Peres">Ana Clara Peres</option>
+<option value="Andreina Ferreira">Andreina Ferreira</option>
+<option value="Aíres Muniz Santos">Aíres Muniz Santos</option>
+<option value="Carla Ferraz Gomes">Carla Ferraz Gomes</option>
+<option value="Dalva Paschoalini">Dalva Paschoalini</option>
+<option value="Indlayse Ferreira">Indlayse Ferreira</option>
+<option value="Julia Cordeiro">Julia Cordeiro</option>
+<option value="Kaian Luís Silva">Kaian Luís Silva</option>
+<option value="LARI FREITAS MONTEIRO">LARI FREITAS MONTEIRO</option>
+<option value="Maria Eduarda Carvalho">Maria Eduarda Carvalho</option>
+<option value="Mayane Oliveira">Mayane Oliveira</option>
+<option value="Nicole Cavalcante de Oliveira">Nicole Cavalcante de Oliveira</option>
+<option value="Pâmela Miranda">Pâmela Miranda</option>
+<option value="Rayane Barroso Santana">Rayane Barroso Santana</option>
+<option value="Renata Brandão">Renata Brandão</option>
+<option value="Sarah Moura">Sarah Moura</option>
+<option value="Shelry Solart">Shelry Solart</option>
+<option value="Stefany Soares Figueredo">Stefany Soares Figueredo</option>
+<option value="Talita Panassol">Talita Panassol</option>
+<option value="Tatiana Silva de Jesus Portela">Tatiana Silva de Jesus Portela</option>
+<option value="Thais Souza">Thais Souza</option>
+<option value="Thayná Bastos">Thayná Bastos</option>
+<option value="Vivian Cristina">Vivian Cristina</option>
+<option value="Viviane Gomes Luz">Viviane Gomes Luz</option>
       </select>
     </div>
     <div class="table-wrap">
@@ -475,14 +503,16 @@ html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translat
 
 <script>
 function filtrarEscolas(sel) {
-  var f = sel.value;
   var panel = sel.closest('.sub-panel');
+  var status = panel.querySelector('.filtro-status').value;
+  var cs     = panel.querySelector('.filtro-cs').value;
   panel.querySelectorAll('table tbody tr[data-premiada]').forEach(function(r) {
-    var show = false;
-    if      (f === 'todos')     show = true;
-    else if (f === 'premiadas') show = r.dataset.premiada === 'sim';
-    else if (f === 'pagas')     show = r.dataset.elig === 'sim' && r.dataset.premiada === 'sim';
-    r.style.display = show ? '' : 'none';
+    var showStatus = false;
+    if      (status === 'todos')     showStatus = true;
+    else if (status === 'premiadas') showStatus = r.dataset.premiada === 'sim';
+    else if (status === 'pagas')     showStatus = r.dataset.elig === 'sim' && r.dataset.premiada === 'sim';
+    var showCs = (cs === 'todos') || (r.dataset.cs === cs);
+    r.style.display = (showStatus && showCs) ? '' : 'none';
   });
 }
 
