@@ -96,6 +96,27 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
   .ef-row{grid-template-columns:120px 1fr 48px}
   .header-inner{flex-direction:column;align-items:flex-start}
 }
+/* ── Lançador de painéis (ícones), mesmo padrão de escolas_nao_efetivas.html ── */
+.launcher-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 20px 22px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.launcher-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#7668AC,#F9DC45)}
+.launcher-panel-title{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.8px;margin-bottom:16px;text-align:center}
+.launcher{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:720px;margin:0 auto}
+.launcher-btn{width:118px;aspect-ratio:1/1;background:var(--bg);border:1px solid var(--border);
+  border-radius:28px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:6px;padding:10px;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background-color .15s ease}
+.launcher-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 8px 18px rgba(0,0,0,.14);background:var(--surface)}
+.launcher-btn.active{border-color:var(--blue);background:var(--blue-lt)}
+.launcher-icon{font-size:26px;line-height:1}
+.launcher-title{font-size:11.5px;font-weight:700;color:var(--text);line-height:1.25}
+.launcher-badge{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 9px;
+  border-radius:20px;background:var(--purple-lt);color:var(--purple);white-space:nowrap}
+.panel{animation:panelIn .25s ease}
+@keyframes panelIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.launcher-btn{width:96px}}
 /* ── Simulador de prazo ── */
 .sim-desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px}
 .sim-rows{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
@@ -182,7 +203,30 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 </div>
 <div class="ef-legend">Efetividade calculada com a mesma query padr&atilde;o de prazo de contato j&aacute; usada no site &middot; Brasil &middot; 2026 &middot; Low Touch exclu&iacute;do &middot; sem filtro por pipeline_id/propriet&aacute;rio (alinhado ao BI oficial).</div>
 
+<!-- Lan&#231;ador dos pain&#233;is -->
+<div class="launcher-panel">
+  <div class="launcher-panel-title">Pain&#233;is</div>
+  <div class="launcher">
+  <button class="launcher-btn" data-target="panel-sim" onclick="togglePanel('panel-sim', this)">
+    <span class="launcher-icon">&#127899;&#65039;</span>
+    <span class="launcher-title">Simulador de Prazo</span>
+    <span class="launcher-badge">2.022</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-funil" onclick="togglePanel('panel-funil', this)">
+    <span class="launcher-icon">&#128202;</span>
+    <span class="launcher-title">Funil Normalizado</span>
+    <span class="launcher-badge">2.574</span>
+  </button>
+  <button class="launcher-btn" data-target="panel-eng" onclick="togglePanel('panel-eng', this)">
+    <span class="launcher-icon">&#128200;</span>
+    <span class="launcher-title">Engagement Score</span>
+    <span class="launcher-badge">2.408</span>
+  </button>
+  </div>
+</div>
+
 <!-- Simulador de prazo -->
+<div class="panel" id="panel-sim" hidden>
 <div class="card">
   <div class="card-head">
     <span class="card-title">Simulador de prazo por segmenta&#231;&#227;o</span>
@@ -252,8 +296,10 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
       <div class="sim-foot">Simula&#231;&#227;o recalcula, para cada escola de cada segmenta&#231;&#227;o, se ela seria &#171;efetiva no prazo&#187; com o prazo escolhido no slider daquela linha &#8212; combinando todos os ajustes ao mesmo tempo.</div>
   </div>
 </div>
+</div>
 
 <!-- Funil Normalizado -->
+<div class="panel" id="panel-funil" hidden>
 <div class="card">
   <div class="card-head">
     <span class="card-title">Escolas por Funil Normalizado</span>
@@ -336,13 +382,13 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
           <div class="funil-name">04. 5% Material</div>
         </div>
         <div class="funil-bar-wrap">
-          <div class="funil-bar" style="background:var(--blue);width:clamp(90px,10.3%,100%)">
-            <span class='funil-bar-n'>264</span>
+          <div class="funil-bar" style="background:var(--blue);width:clamp(90px,10.2%,100%)">
+            <span class='funil-bar-n'>263</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--blue)">264</div>
-          <div class="funil-rev-lbl">10.3%</div>
+          <div class="funil-count" style="color:var(--blue)">263</div>
+          <div class="funil-rev-lbl">10.2%</div>
         </div>
       </div>
       <div class="funil-stage">
@@ -365,11 +411,11 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
         </div>
         <div class="funil-bar-wrap">
           <div class="funil-bar" style="background:var(--green);width:clamp(90px,17.8%,100%)">
-            <span class='funil-bar-n'>457</span>
+            <span class='funil-bar-n'>458</span>
           </div>
         </div>
         <div class="funil-meta">
-          <div class="funil-count" style="color:var(--green)">457</div>
+          <div class="funil-count" style="color:var(--green)">458</div>
           <div class="funil-rev-lbl">17.8%</div>
         </div>
       </div>
@@ -419,8 +465,10 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
     <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7">Fonte: coluna oficial <code>funil_normalizado</code> em <code>gold.etl_jornada_escolas_aplicacao</code> &middot; Brasil &middot; 2026 &middot; qtd_alunos &#8805; 3 &middot; Low Touch exclu&iacute;do.</div>
   </div>
 </div>
+</div>
 
 <!-- Engagement Score -->
+<div class="panel" id="panel-eng" hidden>
 <div class="card">
   <div class="card-head">
     <span class="card-title">Escolas por Engagement Score</span>
@@ -466,6 +514,7 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
     </div>
     <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7">Fonte: <code>datascience.engagement_score_v1</code>, deduplicado por par (actor_uuid, journey_uuid) pelo run_date mais recente, join por <code>journey_uuid = id_jornada</code> contra o mesmo escopo Relacionamento acima &middot; c&aacute;lculo roda quinzenalmente, pode haver escolas do escopo ainda sem score.</div>
   </div>
+</div>
 </div>
 
 <div class="footer" style="text-align:center;margin-top:24px;font-size:11px;color:var(--muted);font-weight:600">Estante M&aacute;gica &middot; CS Ops &nbsp;&middot;&nbsp; Tempo para Contato &nbsp;&middot;&nbsp; 07/08/2026</div>
@@ -554,5 +603,14 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
   }
   render();
 })();
+</script>
+<script>
+function togglePanel(id, btn) {
+  const el = document.getElementById(id);
+  const opening = el.hidden;
+  el.hidden = !el.hidden;
+  btn.classList.toggle('active', opening);
+  if (opening) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
 </script>
 </body></html>
