@@ -261,7 +261,7 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
   <button class="launcher-btn" data-target="panel-eng" onclick="togglePanel('panel-eng', this)">
     <span class="launcher-icon">&#128200;</span>
     <span class="launcher-title">Engagement Score</span>
-    <span class="launcher-badge">1.931</span>
+    <span class="launcher-badge">2.017</span>
   </button>
   <button class="launcher-btn" data-target="panel-cruz" onclick="togglePanel('panel-cruz', this)">
     <span class="launcher-icon">&#128203;</span>
@@ -583,44 +583,44 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 <div class="card">
   <div class="card-head">
     <span class="card-title">Escolas por Engagement Score</span>
-    <span class="badge badge-blue">1.931 escolas com score · atualizado em 30/06/2026 (38 dias atrás — cálculo é quinzenal)</span>
+    <span class="badge badge-blue">2.017 escolas com score · atualizado em 07/08/2026</span>
   </div>
   <div class="card-body">
     <div class="ef-list">
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--green)">Muito Engajada</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:12.3%;background:var(--green)"></div>
+          <div class="ef-fill" style="width:14.9%;background:var(--green)"></div>
         </div>
-        <div class="ef-pct" style="color:var(--green)">237</div>
+        <div class="ef-pct" style="color:var(--green)">301</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--blue)">Engajada</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:33.6%;background:var(--blue)"></div>
+          <div class="ef-fill" style="width:31.8%;background:var(--blue)"></div>
         </div>
-        <div class="ef-pct" style="color:var(--blue)">648</div>
+        <div class="ef-pct" style="color:var(--blue)">642</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--muted)">Normal</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:40.5%;background:#c9c9c2"></div>
+          <div class="ef-fill" style="width:41.8%;background:#c9c9c2"></div>
         </div>
-        <div class="ef-pct" style="color:var(--text)">782</div>
+        <div class="ef-pct" style="color:var(--text)">844</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--orange)">Desengajada</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:13.0%;background:var(--orange)"></div>
+          <div class="ef-fill" style="width:11.2%;background:var(--orange)"></div>
         </div>
-        <div class="ef-pct" style="color:var(--orange)">251</div>
+        <div class="ef-pct" style="color:var(--orange)">225</div>
       </div>
       <div class="ef-row">
         <div class="ef-lbl" style="color:var(--red)">Muito Desengajada</div>
         <div class="ef-track">
-          <div class="ef-fill" style="width:0.7%;background:var(--red)"></div>
+          <div class="ef-fill" style="width:0.2%;background:var(--red)"></div>
         </div>
-        <div class="ef-pct" style="color:var(--red)">13</div>
+        <div class="ef-pct" style="color:var(--red)">5</div>
       </div>
     </div>
     <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7">Fonte: <code>datascience.engagement_score_v1</code>, deduplicado por par (actor_uuid, journey_uuid) pelo run_date mais recente, join por <code>journey_uuid = id_jornada</code> contra as mesmas escolas eleg&iacute;veis para efetividade do topo da p&aacute;gina &middot; c&aacute;lculo roda quinzenalmente, pode haver escolas eleg&iacute;veis ainda sem score.</div>
@@ -640,18 +640,18 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
       <table class="tbl-cruz">
         <thead><tr><th>Funil Normalizado</th><th style="color:var(--green)">Muito Engajada</th><th style="color:var(--blue)">Engajada</th><th style="color:#c9c9c2">Normal</th><th style="color:var(--orange)">Desengajada</th><th style="color:var(--red)">Muito Desengajada</th><th style="color:var(--muted)">Sem score</th><th>Total</th></tr></thead>
         <tbody>
-<tr><td style="color:var(--purple)">01. Onboarding & BV</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td>1</td><td style="font-weight:800">1</td></tr>
-<tr><td style="color:var(--orange)">02. Ag. Cronograma</td><td class="zero">&#8212;</td><td style="color:var(--blue)">14</td><td>50</td><td style="color:var(--orange)">37</td><td style="color:var(--red)">6</td><td>33</td><td style="font-weight:800">140</td></tr>
-<tr><td style="color:var(--blue)">03.1 Crono (no prazo)</td><td style="color:var(--green)">4</td><td style="color:var(--blue)">201</td><td>512</td><td style="color:var(--orange)">180</td><td style="color:var(--red)">6</td><td>49</td><td style="font-weight:800">952</td></tr>
-<tr><td style="color:#c9a227">03.2 Crono (5 dias)</td><td class="zero">&#8212;</td><td style="color:var(--blue)">3</td><td>5</td><td style="color:var(--orange)">3</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">11</td></tr>
-<tr><td style="color:var(--red)">03.3 Crono (passou)</td><td class="zero">&#8212;</td><td style="color:var(--blue)">3</td><td>1</td><td style="color:var(--orange)">3</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">7</td></tr>
-<tr><td style="color:var(--blue)">04. 5% Material</td><td style="color:var(--green)">10</td><td style="color:var(--blue)">122</td><td>111</td><td style="color:var(--orange)">14</td><td class="zero">&#8212;</td><td>3</td><td style="font-weight:800">260</td></tr>
-<tr><td style="color:var(--blue)">05. Com Resp.</td><td style="color:var(--green)">3</td><td style="color:var(--blue)">38</td><td>25</td><td style="color:var(--orange)">5</td><td class="zero">&#8212;</td><td>3</td><td style="font-weight:800">74</td></tr>
-<tr><td style="color:var(--green)">06. Com Compras</td><td style="color:var(--green)">158</td><td style="color:var(--blue)">213</td><td>71</td><td style="color:var(--orange)">9</td><td style="color:var(--red)">1</td><td>1</td><td style="font-weight:800">453</td></tr>
-<tr><td style="color:var(--green)">07.1 Conc. c/ Compras</td><td style="color:var(--green)">61</td><td style="color:var(--blue)">54</td><td>6</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">121</td></tr>
-<tr><td style="color:#9a8400">07.2 Conc. s/ Compras</td><td style="color:var(--green)">1</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">1</td></tr>
-<tr><td style="color:var(--muted)">08. Retração</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td>1</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">1</td></tr>
-<tr class="tr-total"><td>Total</td><td>237</td><td>648</td><td>782</td><td>251</td><td>13</td><td>90</td><td>2.021</td></tr>
+<tr><td style="color:var(--purple)">01. Onboarding & BV</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="color:var(--orange)">1</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">1</td></tr>
+<tr><td style="color:var(--orange)">02. Ag. Cronograma</td><td class="zero">&#8212;</td><td style="color:var(--blue)">14</td><td>64</td><td style="color:var(--orange)">55</td><td style="color:var(--red)">3</td><td>4</td><td style="font-weight:800">140</td></tr>
+<tr><td style="color:var(--blue)">03.1 Crono (no prazo)</td><td style="color:var(--green)">8</td><td style="color:var(--blue)">193</td><td>590</td><td style="color:var(--orange)">159</td><td style="color:var(--red)">2</td><td class="zero">&#8212;</td><td style="font-weight:800">952</td></tr>
+<tr><td style="color:#c9a227">03.2 Crono (5 dias)</td><td class="zero">&#8212;</td><td style="color:var(--blue)">3</td><td>6</td><td style="color:var(--orange)">2</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">11</td></tr>
+<tr><td style="color:var(--red)">03.3 Crono (passou)</td><td class="zero">&#8212;</td><td style="color:var(--blue)">3</td><td>3</td><td style="color:var(--orange)">1</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">7</td></tr>
+<tr><td style="color:var(--blue)">04. 5% Material</td><td style="color:var(--green)">8</td><td style="color:var(--blue)">135</td><td>114</td><td style="color:var(--orange)">3</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">260</td></tr>
+<tr><td style="color:var(--blue)">05. Com Resp.</td><td style="color:var(--green)">8</td><td style="color:var(--blue)">35</td><td>29</td><td style="color:var(--orange)">2</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">74</td></tr>
+<tr><td style="color:var(--green)">06. Com Compras</td><td style="color:var(--green)">185</td><td style="color:var(--blue)">229</td><td>38</td><td style="color:var(--orange)">1</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">453</td></tr>
+<tr><td style="color:var(--green)">07.1 Conc. c/ Compras</td><td style="color:var(--green)">92</td><td style="color:var(--blue)">29</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">121</td></tr>
+<tr><td style="color:#9a8400">07.2 Conc. s/ Compras</td><td class="zero">&#8212;</td><td style="color:var(--blue)">1</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">1</td></tr>
+<tr><td style="color:var(--muted)">08. Retração</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="color:var(--orange)">1</td><td class="zero">&#8212;</td><td class="zero">&#8212;</td><td style="font-weight:800">1</td></tr>
+<tr class="tr-total"><td>Total</td><td>301</td><td>642</td><td>844</td><td>225</td><td>5</td><td>4</td><td>2.021</td></tr>
         </tbody>
       </table>
     </div>
