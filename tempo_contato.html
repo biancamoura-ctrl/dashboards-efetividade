@@ -98,21 +98,17 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
 }
 /* ── Simulador de prazo ── */
 .sim-desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px}
-.sim-slider-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
-  padding:14px 16px;margin-bottom:16px}
-.sim-slider-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;
-  letter-spacing:.6px;margin-bottom:8px}
-.sim-select{width:100%;font-family:inherit;font-size:13px;font-weight:600;color:var(--text);
-  background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;
-  cursor:pointer;outline:none}
-.sim-select:focus{border-color:var(--purple)}
-.sim-slider-controls{display:flex;align-items:center;gap:14px}
-#sl-sim-prazo{flex:1;accent-color:var(--purple);cursor:pointer}
-.sim-slider-val{font-size:20px;font-weight:800;color:var(--purple);min-width:64px;
-  text-align:right;font-variant-numeric:tabular-nums}
-.sim-slider-ticks{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);
-  font-weight:700;margin-top:6px}
-.sim-slider-ticks .tick-atual{color:var(--orange)}
+.sim-rows{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.sim-row{display:grid;grid-template-columns:200px 1fr 56px;gap:16px;align-items:center;
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px}
+.sim-row-name{font-size:12.5px;font-weight:700;color:var(--text)}
+.sim-row-sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+.sim-row-slider{width:100%;accent-color:var(--purple);cursor:pointer}
+.sim-row-val{font-size:13px;font-weight:800;color:var(--purple);text-align:right;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.sim-row.is-empty{opacity:.45}
+.sim-reset{background:none;border:none;color:var(--purple);font-size:11px;font-weight:700;
+  cursor:pointer;text-decoration:underline;padding:0;margin-bottom:14px}
 .sim-compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-bottom:14px}
 .sim-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
   padding:14px 16px;text-align:center}
@@ -128,14 +124,15 @@ html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(
 .sim-delta.up{background:var(--green-lt);border-color:var(--green);color:var(--green)}
 .sim-delta.down{background:var(--red-lt);border-color:var(--red);color:var(--red)}
 .sim-foot{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.7}
-html.dark .sim-slider-box{background:#27272a;border-color:var(--border)}
+html.dark .sim-row{background:#27272a;border-color:var(--border)}
 html.dark .sim-box{background:#27272a;border-color:var(--border)}
 html.dark .sim-box-novo{background:#2b2440;border-color:var(--purple)}
 html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 @media(max-width:560px){
+  .sim-row{grid-template-columns:1fr;gap:6px}
+  .sim-row-val{text-align:left}
   .sim-compare-row{grid-template-columns:1fr}
   .sim-box-arrow{transform:rotate(90deg);margin:0 auto}
-  .sim-slider-controls{flex-wrap:wrap}
 }
 
 </style>
@@ -193,40 +190,87 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
   </div>
   <div class="card-body">
       <p class="sim-desc">
-        Escolha uma segmenta&#231;&#227;o e simule a efetividade do time se o prazo de contato dela fosse outro &#8212; as demais segmenta&#231;&#245;es continuam no prazo real delas.
+        Arraste o prazo de cada segmenta&#231;&#227;o pra simular a efetividade do time combinando os ajustes &#8212; o padr&#227;o de cada slider &#233; o prazo real de hoje daquela segmenta&#231;&#227;o.
       </p>
 
-      <div class="sim-slider-box">
-        <div class="sim-slider-lbl">Segmenta&#231;&#227;o</div>
-        <select id="sim-categoria" class="sim-select">
-          <option value="high_touch" selected>High touch (1.165 escolas, hoje 7d.&#250;.)</option>
-          <option value="medium_touch">Medium touch (581 escolas, hoje 7d.&#250;.)</option>
-          <option value="premium_touch">Premium touch (216 escolas, hoje 7d.&#250;.)</option>
-          <option value="premium_touch_40mais">Premium touch 40+ (35 escolas, hoje 7d.&#250;.)</option>
-          <option value="mexico">México (0 escolas, hoje 7d.&#250;.)</option>
-          <option value="colombia">Colômbia (0 escolas, hoje 15d.&#250;.)</option>
-          <option value="nao_quer_contato">Não quer contato ativo (25 escolas, hoje 30d.&#250;.)</option>
-          <option value="demais">Demais (padrão) (0 escolas, hoje 15d.&#250;.)</option>
-        </select>
-        <div class="sim-slider-lbl" style="margin-top:12px">Novo prazo</div>
-        <div class="sim-slider-controls">
-          <input type="range" id="sl-sim-prazo" min="1" max="45" value="7" step="1">
-          <span class="sim-slider-val" id="sim-prazo-val">&#8212;</span>
+      <button type="button" class="sim-reset" id="sim-reset">&#8634; Restaurar prazos atuais</button>
+
+      <div class="sim-rows">
+      <div class="sim-row" data-key="high_touch" data-tc-atual="7">
+        <div>
+          <div class="sim-row-name">High touch</div>
+          <div class="sim-row-sub">1.165 escolas &middot; hoje 7 d.&#250;.</div>
         </div>
-        <div class="sim-slider-ticks">
-          <span>1</span><span class="tick-atual" id="sim-tick-atual">&#8212;</span><span>45</span>
+        <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="7">
+        <div class="sim-row-val">7 d.&#250;.</div>
+      </div>
+      <div class="sim-row" data-key="medium_touch" data-tc-atual="7">
+        <div>
+          <div class="sim-row-name">Medium touch</div>
+          <div class="sim-row-sub">581 escolas &middot; hoje 7 d.&#250;.</div>
         </div>
+        <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="7">
+        <div class="sim-row-val">7 d.&#250;.</div>
+      </div>
+      <div class="sim-row" data-key="premium_touch" data-tc-atual="7">
+        <div>
+          <div class="sim-row-name">Premium touch</div>
+          <div class="sim-row-sub">216 escolas &middot; hoje 7 d.&#250;.</div>
+        </div>
+        <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="7">
+        <div class="sim-row-val">7 d.&#250;.</div>
+      </div>
+      <div class="sim-row" data-key="premium_touch_40mais" data-tc-atual="7">
+        <div>
+          <div class="sim-row-name">Premium touch 40+</div>
+          <div class="sim-row-sub">35 escolas &middot; hoje 7 d.&#250;.</div>
+        </div>
+        <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="7">
+        <div class="sim-row-val">7 d.&#250;.</div>
+      </div>
+      <div class="sim-row is-empty" data-key="mexico" data-tc-atual="7">
+        <div>
+          <div class="sim-row-name">México</div>
+          <div class="sim-row-sub">0 escolas &middot; hoje 7 d.&#250;.</div>
+        </div>
+        <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="7">
+        <div class="sim-row-val">7 d.&#250;.</div>
+      </div>
+      <div class="sim-row is-empty" data-key="colombia" data-tc-atual="15">
+        <div>
+          <div class="sim-row-name">Colômbia</div>
+          <div class="sim-row-sub">0 escolas &middot; hoje 15 d.&#250;.</div>
+        </div>
+        <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="15">
+        <div class="sim-row-val">15 d.&#250;.</div>
+      </div>
+      <div class="sim-row" data-key="nao_quer_contato" data-tc-atual="30">
+        <div>
+          <div class="sim-row-name">Não quer contato ativo</div>
+          <div class="sim-row-sub">25 escolas &middot; hoje 30 d.&#250;.</div>
+        </div>
+        <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="30">
+        <div class="sim-row-val">30 d.&#250;.</div>
+      </div>
+      <div class="sim-row is-empty" data-key="demais" data-tc-atual="15">
+        <div>
+          <div class="sim-row-name">Demais (padrão)</div>
+          <div class="sim-row-sub">0 escolas &middot; hoje 15 d.&#250;.</div>
+        </div>
+        <input type="range" class="sim-row-slider" min="1" max="45" step="1" value="15">
+        <div class="sim-row-val">15 d.&#250;.</div>
+      </div>
       </div>
 
       <div class="sim-compare-row">
         <div class="sim-box">
-          <div class="sim-box-lbl" id="sim-lbl-atual">Cen&#225;rio atual</div>
+          <div class="sim-box-lbl">Cen&#225;rio atual</div>
           <div class="sim-box-val" id="sim-pct-atual">&#8212;</div>
           <div class="sim-box-sub" id="sim-ef-atual">&#8212;</div>
         </div>
         <div class="sim-box-arrow">&#8594;</div>
         <div class="sim-box sim-box-novo">
-          <div class="sim-box-lbl">Simulado &mdash; <span id="sim-prazo-lbl-inline">&#8212;</span> d.&#250;.</div>
+          <div class="sim-box-lbl">Simulado</div>
           <div class="sim-box-val" id="sim-pct-novo">&#8212;</div>
           <div class="sim-box-sub" id="sim-ef-novo">&#8212;</div>
         </div>
@@ -234,10 +278,10 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 
       <div class="sim-delta" id="sim-delta-box">
         <span id="sim-delta-icon">&#8212;</span>
-        <span id="sim-delta-txt">Ajuste o slider para simular</span>
+        <span id="sim-delta-txt">Ajuste os sliders para simular</span>
       </div>
 
-      <div class="sim-foot">Simula&#231;&#227;o recalcula, para cada escola da segmenta&#231;&#227;o escolhida, se ela seria &#171;efetiva no prazo&#187; com o novo prazo &#8212; mantendo fixas as escolas das demais segmenta&#231;&#245;es (no prazo real de cada uma).</div>
+      <div class="sim-foot">Simula&#231;&#227;o recalcula, para cada escola de cada segmenta&#231;&#227;o, se ela seria &#171;efetiva no prazo&#187; com o prazo escolhido no slider daquela linha &#8212; combinando todos os ajustes ao mesmo tempo.</div>
   </div>
 </div>
 
@@ -463,45 +507,45 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
 <script>
 (function() {
   var SIM = window.SIM_DATA || {};
-  var slider = document.getElementById('sl-sim-prazo');
-  var select = document.getElementById('sim-categoria');
-  if (!slider || !select) return;
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.sim-row'));
+  var resetBtn = document.getElementById('sim-reset');
+  if (!rows.length) return;
 
   var porKey = {};
   (SIM.categorias || []).forEach(function(c) { porKey[c.key] = c; });
 
-  function categoriaAtual() {
-    return porKey[select.value] || { hist: [], elegiveis: 0, efetivas_atual: 0, tc_atual: 0, label: '' };
-  }
-
-  function onCategoriaChange() {
-    var cat = categoriaAtual();
-    slider.value = cat.tc_atual || 1;
-    document.getElementById('sim-tick-atual').textContent = (cat.tc_atual || '—') + ' (padrão)';
-    document.getElementById('sim-lbl-atual').textContent = 'Cenário atual — ' + cat.label;
-    render();
+  function efCatSimulada(cat, novoPrazo) {
+    var hist = cat.hist || [];
+    var soma = 0;
+    var limite = Math.min(novoPrazo, hist.length - 1);
+    for (var i = 0; i <= limite; i++) soma += (hist[i] || 0);
+    return soma;
   }
 
   function render() {
-    var cat = categoriaAtual();
-    var novoPrazo = +slider.value;
-    document.getElementById('sim-prazo-val').textContent = novoPrazo + ' d.ú.';
-    document.getElementById('sim-prazo-lbl-inline').textContent = novoPrazo;
-
-    var hist = cat.hist || [];
-    // Soma o histograma (dias úteis desde a última ativ. efetiva das escolas
-    // da categoria escolhida) até o novo prazo — simula quantas ficariam
-    // "efetivas no prazo" se o prazo delas fosse N em vez do prazo atual.
-    var efCatSim = 0;
-    var limite = Math.min(novoPrazo, hist.length - 1);
-    for (var i = 0; i <= limite; i++) efCatSim += (hist[i] || 0);
-
     var elegiveis = SIM.elegiveis_total || 0;
     var efetivasAtual = SIM.efetivas_total || 0;
     var pctAtual = SIM.pef_atual != null ? SIM.pef_atual : 0;
-    // Efetividade simulada = total atual, menos as efetivas hoje da categoria
-    // (no prazo real dela), mais as efetivas simuladas com o novo prazo.
-    var efetivasSim = efetivasAtual - (cat.efetivas_atual || 0) + efCatSim;
+
+    // Efetividade simulada combinando TODOS os sliders ao mesmo tempo: parte
+    // do total atual, e para cada segmentação troca suas efetivas reais
+    // pelas efetivas simuladas com o prazo escolhido naquela linha.
+    var efetivasSim = efetivasAtual;
+    rows.forEach(function(row) {
+      var cat = porKey[row.dataset.key];
+      if (!cat) return;
+      var slider = row.querySelector('.sim-row-slider');
+      var novoPrazo = +slider.value;
+      var valEl = row.querySelector('.sim-row-val');
+      valEl.textContent = novoPrazo + ' d.ú.';
+      // Slider no valor padrão (prazo real de hoje) = sem ajuste nessa linha,
+      // mantém a efetividade real dessa segmentação (algumas escolas têm
+      // prazo individual diferente do padrão, então a aproximação "prazo
+      // igual pra todo mundo" só entra em jogo quando ela move o slider).
+      if (novoPrazo === +row.dataset.tcAtual) return;
+      efetivasSim += efCatSimulada(cat, novoPrazo) - (cat.efetivas_atual || 0);
+    });
+
     var pctSim = elegiveis > 0 ? Math.round(efetivasSim / elegiveis * 1000) / 10 : 0;
 
     document.getElementById('sim-pct-atual').textContent = pctAtual + '%';
@@ -517,7 +561,7 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
     box.classList.remove('up', 'down');
     if (deltaEsc === 0) {
       icon.textContent = '⏸️';
-      txt.innerHTML = 'Nenhuma mudança na efetividade com esse prazo';
+      txt.innerHTML = 'Nenhuma mudança na efetividade com esses prazos';
     } else if (deltaEsc > 0) {
       box.classList.add('up');
       icon.textContent = '📈';
@@ -529,9 +573,18 @@ html.dark .sim-delta{background:#27272a;border-color:var(--border)}
     }
   }
 
-  slider.oninput = render;
-  select.onchange = onCategoriaChange;
-  onCategoriaChange();
+  rows.forEach(function(row) {
+    row.querySelector('.sim-row-slider').oninput = render;
+  });
+  if (resetBtn) {
+    resetBtn.onclick = function() {
+      rows.forEach(function(row) {
+        row.querySelector('.sim-row-slider').value = row.dataset.tcAtual;
+      });
+      render();
+    };
+  }
+  render();
 })();
 </script>
 </body></html>
