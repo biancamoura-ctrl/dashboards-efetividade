@@ -104,6 +104,8 @@
   .cs-name.orange { color: var(--orange); }
   .cs-tag { font-size: 10px; color: #5A5280; margin-top: 2px; }
   html.light .cs-tag { color: #9a90c4; }
+  .cs-rowlabel { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #5A5280; margin-bottom: 6px; }
+  html.light .cs-rowlabel { color: #9a90c4; }
   .cs-funnel { display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
   .cs-step { text-align: center; flex: 1; }
   .cs-n { font-size: 20px; font-weight: 800; color: var(--gray); }
@@ -186,24 +188,34 @@
       <div class="kpi-sub">universo atual &#183; Brasil</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Esforço hoje</div>
-      <div class="kpi-val">63</div>
-      <div class="kpi-sub">escolas com atividade &#183; 4 pessoas</div>
+      <div class="kpi-label">Atividades hoje</div>
+      <div class="kpi-val">160</div>
+      <div class="kpi-sub">total de atividades registradas &#183; 4 pessoas</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Efetiva hoje</div>
+      <div class="kpi-label">Atividades Efetivas hoje</div>
       <div class="kpi-val green">3</div>
-      <div class="kpi-sub">5% do esforço de hoje</div>
+      <div class="kpi-sub">2% das atividades de hoje</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Esforço 14 dias</div>
-      <div class="kpi-val">591</div>
-      <div class="kpi-sub">escolas·dia com atividade</div>
+      <div class="kpi-label">Escolas Abordadas hoje (Esforço)</div>
+      <div class="kpi-val">63</div>
+      <div class="kpi-sub">escolas distintas com atividade hoje</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Efetiva 14 dias</div>
+      <div class="kpi-label">Atividades 14 dias</div>
+      <div class="kpi-val">1053</div>
+      <div class="kpi-sub">total de atividades registradas no período</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Atividades Efetivas 14 dias</div>
       <div class="kpi-val green">12</div>
-      <div class="kpi-sub">2% do esforço do período</div>
+      <div class="kpi-sub">1% das atividades do período</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Escolas Abordadas 14 dias (Esforço)</div>
+      <div class="kpi-val">591</div>
+      <div class="kpi-sub">escolas distintas com atividade no período</div>
     </div>
   </div>
 
@@ -214,21 +226,28 @@
         <div class="cs-avatar">JB</div>
         <div>
           <div class="cs-name">Julia Bravo</div>
-          <div class="cs-tag">114 escolas tocadas em 14 dias</div>
+          <div class="cs-tag">114 escolas distintas abordadas em 14 dias</div>
         </div>
       </div>
+      <div class="cs-rowlabel">Hoje</div>
       <div class="cs-funnel">
-        <div class="cs-step"><div class="cs-n">11</div><div class="cs-l">Esforço hoje</div><div class="cs-p">escolas</div></div>
+        <div class="cs-step"><div class="cs-n">19</div><div class="cs-l">Atividades</div><div class="cs-p">registradas</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n green">0</div><div class="cs-l">Efetiva hoje</div><div class="cs-p">0%</div></div>
+        <div class="cs-step"><div class="cs-n green">0</div><div class="cs-l">Atividades Efetivas</div><div class="cs-p">0% das atividades</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n">114</div><div class="cs-l">Esforço 14d</div><div class="cs-p">escolas·dia</div></div>
+        <div class="cs-step"><div class="cs-n">11</div><div class="cs-l">Escolas Abordadas</div><div class="cs-p">distintas (esforço)</div></div>
+      </div>
+      <div class="cs-rowlabel">Últimos 14 dias</div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n">153</div><div class="cs-l">Atividades</div><div class="cs-p">registradas</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Efetiva 14d</div><div class="cs-p">1%</div></div>
+        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Atividades Efetivas</div><div class="cs-p">1% das atividades</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n">114</div><div class="cs-l">Escolas Abordadas</div><div class="cs-p">distintas (esforço)</div></div>
       </div>
       <div class="cs-divider"></div>
       <div class="tags-row">
-        <span class="tag fila">153 atividades no período</span>
+        <span class="tag fila" title="Métrica distinta de &quot;Atividades Efetivas&quot;: conta escolas únicas, não atividades">1 escolas distintas com ao menos 1 atividade efetiva no período</span>
       </div>
     </div>
     <div class="cs-card blue">
@@ -236,21 +255,28 @@
         <div class="cs-avatar blue">MM</div>
         <div>
           <div class="cs-name blue">Mariana Mazzero</div>
-          <div class="cs-tag">417 escolas tocadas em 14 dias</div>
+          <div class="cs-tag">417 escolas distintas abordadas em 14 dias</div>
         </div>
       </div>
+      <div class="cs-rowlabel">Hoje</div>
       <div class="cs-funnel">
-        <div class="cs-step"><div class="cs-n blue">44</div><div class="cs-l">Esforço hoje</div><div class="cs-p">escolas</div></div>
+        <div class="cs-step"><div class="cs-n blue">126</div><div class="cs-l">Atividades</div><div class="cs-p">registradas</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Efetiva hoje</div><div class="cs-p">2%</div></div>
+        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Atividades Efetivas</div><div class="cs-p">1% das atividades</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n blue">417</div><div class="cs-l">Esforço 14d</div><div class="cs-p">escolas·dia</div></div>
+        <div class="cs-step"><div class="cs-n blue">44</div><div class="cs-l">Escolas Abordadas</div><div class="cs-p">distintas (esforço)</div></div>
+      </div>
+      <div class="cs-rowlabel">Últimos 14 dias</div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n blue">814</div><div class="cs-l">Atividades</div><div class="cs-p">registradas</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n green">6</div><div class="cs-l">Efetiva 14d</div><div class="cs-p">1%</div></div>
+        <div class="cs-step"><div class="cs-n green">6</div><div class="cs-l">Atividades Efetivas</div><div class="cs-p">1% das atividades</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n blue">417</div><div class="cs-l">Escolas Abordadas</div><div class="cs-p">distintas (esforço)</div></div>
       </div>
       <div class="cs-divider"></div>
       <div class="tags-row">
-        <span class="tag fila">814 atividades no período</span>
+        <span class="tag fila" title="Métrica distinta de &quot;Atividades Efetivas&quot;: conta escolas únicas, não atividades">6 escolas distintas com ao menos 1 atividade efetiva no período</span>
       </div>
     </div>
     <div class="cs-card teal">
@@ -258,21 +284,28 @@
         <div class="cs-avatar teal">AB</div>
         <div>
           <div class="cs-name teal">Ana Beatriz Gonçalves</div>
-          <div class="cs-tag">50 escolas tocadas em 14 dias</div>
+          <div class="cs-tag">50 escolas distintas abordadas em 14 dias</div>
         </div>
       </div>
+      <div class="cs-rowlabel">Hoje</div>
       <div class="cs-funnel">
-        <div class="cs-step"><div class="cs-n teal">7</div><div class="cs-l">Esforço hoje</div><div class="cs-p">escolas</div></div>
+        <div class="cs-step"><div class="cs-n teal">12</div><div class="cs-l">Atividades</div><div class="cs-p">registradas</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n green">2</div><div class="cs-l">Efetiva hoje</div><div class="cs-p">29%</div></div>
+        <div class="cs-step"><div class="cs-n green">2</div><div class="cs-l">Atividades Efetivas</div><div class="cs-p">17% das atividades</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n teal">50</div><div class="cs-l">Esforço 14d</div><div class="cs-p">escolas·dia</div></div>
+        <div class="cs-step"><div class="cs-n teal">7</div><div class="cs-l">Escolas Abordadas</div><div class="cs-p">distintas (esforço)</div></div>
+      </div>
+      <div class="cs-rowlabel">Últimos 14 dias</div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n teal">68</div><div class="cs-l">Atividades</div><div class="cs-p">registradas</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n green">4</div><div class="cs-l">Efetiva 14d</div><div class="cs-p">8%</div></div>
+        <div class="cs-step"><div class="cs-n green">4</div><div class="cs-l">Atividades Efetivas</div><div class="cs-p">6% das atividades</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n teal">50</div><div class="cs-l">Escolas Abordadas</div><div class="cs-p">distintas (esforço)</div></div>
       </div>
       <div class="cs-divider"></div>
       <div class="tags-row">
-        <span class="tag fila">68 atividades no período</span>
+        <span class="tag fila" title="Métrica distinta de &quot;Atividades Efetivas&quot;: conta escolas únicas, não atividades">4 escolas distintas com ao menos 1 atividade efetiva no período</span>
       </div>
     </div>
     <div class="cs-card orange">
@@ -280,21 +313,28 @@
         <div class="cs-avatar orange">JG</div>
         <div>
           <div class="cs-name orange">Junior Gomes</div>
-          <div class="cs-tag">10 escolas tocadas em 14 dias</div>
+          <div class="cs-tag">10 escolas distintas abordadas em 14 dias</div>
         </div>
       </div>
+      <div class="cs-rowlabel">Hoje</div>
       <div class="cs-funnel">
-        <div class="cs-step"><div class="cs-n orange">1</div><div class="cs-l">Esforço hoje</div><div class="cs-p">escolas</div></div>
+        <div class="cs-step"><div class="cs-n orange">3</div><div class="cs-l">Atividades</div><div class="cs-p">registradas</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n green">0</div><div class="cs-l">Efetiva hoje</div><div class="cs-p">0%</div></div>
+        <div class="cs-step"><div class="cs-n green">0</div><div class="cs-l">Atividades Efetivas</div><div class="cs-p">0% das atividades</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n orange">10</div><div class="cs-l">Esforço 14d</div><div class="cs-p">escolas·dia</div></div>
+        <div class="cs-step"><div class="cs-n orange">1</div><div class="cs-l">Escolas Abordadas</div><div class="cs-p">distintas (esforço)</div></div>
+      </div>
+      <div class="cs-rowlabel">Últimos 14 dias</div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n orange">18</div><div class="cs-l">Atividades</div><div class="cs-p">registradas</div></div>
         <div class="cs-arrow">›</div>
-        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Efetiva 14d</div><div class="cs-p">10%</div></div>
+        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Atividades Efetivas</div><div class="cs-p">6% das atividades</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n orange">10</div><div class="cs-l">Escolas Abordadas</div><div class="cs-p">distintas (esforço)</div></div>
       </div>
       <div class="cs-divider"></div>
       <div class="tags-row">
-        <span class="tag fila">18 atividades no período</span>
+        <span class="tag fila" title="Métrica distinta de &quot;Atividades Efetivas&quot;: conta escolas únicas, não atividades">1 escolas distintas com ao menos 1 atividade efetiva no período</span>
       </div>
     </div>
   </div>
@@ -317,31 +357,33 @@
   <div class="table-wrap">
     <table>
       <thead>
-        <tr><th></th><th colspan="2" class="th-pessoa">Julia Bravo</th><th colspan="2" class="th-pessoa blue">Mariana Mazzero</th><th colspan="2" class="th-pessoa teal">Ana Beatriz Gonçalves</th><th colspan="2" class="th-pessoa orange">Junior Gomes</th><th colspan="2" class="th-pessoa">Total</th></tr>
-        <tr><th></th><th class="num">Esforço</th><th class="num">Efetiva</th><th class="num">Esforço</th><th class="num">Efetiva</th><th class="num">Esforço</th><th class="num">Efetiva</th><th class="num">Esforço</th><th class="num">Efetiva</th><th class="num td-total">Esforço</th><th class="num td-total">Efetiva</th></tr>
+        <tr><th></th><th colspan="3" class="th-pessoa">Julia Bravo</th><th colspan="3" class="th-pessoa blue">Mariana Mazzero</th><th colspan="3" class="th-pessoa teal">Ana Beatriz Gonçalves</th><th colspan="3" class="th-pessoa orange">Junior Gomes</th><th colspan="3" class="th-pessoa">Total</th></tr>
+        <tr><th></th><th class="num" title="Total de atividades registradas (contagem de atividades)">Atividades</th><th class="num" title="Atividades com resultado Efetivo* (contagem de atividades, não de escolas)">Ativ. Efetivas</th><th class="num" title="Escolas distintas abordadas (esforço)">Abordadas</th><th class="num" title="Total de atividades registradas (contagem de atividades)">Atividades</th><th class="num" title="Atividades com resultado Efetivo* (contagem de atividades, não de escolas)">Ativ. Efetivas</th><th class="num" title="Escolas distintas abordadas (esforço)">Abordadas</th><th class="num" title="Total de atividades registradas (contagem de atividades)">Atividades</th><th class="num" title="Atividades com resultado Efetivo* (contagem de atividades, não de escolas)">Ativ. Efetivas</th><th class="num" title="Escolas distintas abordadas (esforço)">Abordadas</th><th class="num" title="Total de atividades registradas (contagem de atividades)">Atividades</th><th class="num" title="Atividades com resultado Efetivo* (contagem de atividades, não de escolas)">Ativ. Efetivas</th><th class="num" title="Escolas distintas abordadas (esforço)">Abordadas</th><th class="num td-total">Atividades</th><th class="num td-total">Ativ. Efetivas</th><th class="num td-total">Abordadas</th></tr>
       </thead>
       <tbody>
-<tr><td class="td-name">11/08</td><td class="num"><span class="num-purple">11</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">44</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-green">2</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">63</td><td class="num td-total">3</td></tr>
-<tr><td class="td-name">10/08</td><td class="num"><span class="num-purple">13</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">43</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">2</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">58</td><td class="num td-total">1</td></tr>
-<tr><td class="td-name">09/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
-<tr><td class="td-name">08/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
-<tr><td class="td-name">07/08</td><td class="num"><span class="num-purple">3</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">43</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">5</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">52</td><td class="num td-total">0</td></tr>
-<tr><td class="td-name">06/08</td><td class="num"><span class="num-purple">11</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">49</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-teal">6</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">66</td><td class="num td-total">1</td></tr>
-<tr><td class="td-name">05/08</td><td class="num"><span class="num-purple">10</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">32</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">8</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">51</td><td class="num td-total">0</td></tr>
-<tr><td class="td-name">04/08</td><td class="num"><span class="num-purple">16</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">27</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">8</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">51</td><td class="num td-total">1</td></tr>
-<tr><td class="td-name">03/08</td><td class="num"><span class="num-purple">16</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">27</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">2</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">52</td><td class="num td-total">0</td></tr>
-<tr><td class="td-name">02/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
-<tr><td class="td-name">01/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
-<tr><td class="td-name">31/07</td><td class="num"><span class="num-purple">5</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-blue">45</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-green">1</span></td><td class="num td-total">58</td><td class="num td-total">3</td></tr>
-<tr><td class="td-name">30/07</td><td class="num"><span class="num-purple">12</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">56</span></td><td class="num"><span class="num-green">2</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">69</td><td class="num td-total">2</td></tr>
-<tr><td class="td-name">29/07</td><td class="num"><span class="num-purple">17</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">51</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">3</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">71</td><td class="num td-total">1</td></tr>
+<tr><td class="td-name">11/08</td><td class="num"><span class="num-purple">19</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">11</span></td><td class="num"><span class="num-blue">126</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-blue">44</span></td><td class="num"><span class="num-teal">12</span></td><td class="num"><span class="num-green">2</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-orange">3</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num td-total">160</td><td class="num td-total">3</td><td class="num td-total">63</td></tr>
+<tr><td class="td-name">10/08</td><td class="num"><span class="num-purple">14</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">13</span></td><td class="num"><span class="num-blue">111</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">43</span></td><td class="num"><span class="num-teal">6</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-teal">2</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">131</td><td class="num td-total">1</td><td class="num td-total">58</td></tr>
+<tr><td class="td-name">09/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">08/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">07/08</td><td class="num"><span class="num-purple">5</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">3</span></td><td class="num"><span class="num-blue">80</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">43</span></td><td class="num"><span class="num-teal">5</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">5</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num td-total">91</td><td class="num td-total">0</td><td class="num td-total">52</td></tr>
+<tr><td class="td-name">06/08</td><td class="num"><span class="num-purple">12</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">11</span></td><td class="num"><span class="num-blue">80</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-blue">49</span></td><td class="num"><span class="num-teal">6</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">6</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">98</td><td class="num td-total">1</td><td class="num td-total">66</td></tr>
+<tr><td class="td-name">05/08</td><td class="num"><span class="num-purple">16</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">10</span></td><td class="num"><span class="num-blue">64</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">32</span></td><td class="num"><span class="num-teal">9</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">8</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num td-total">90</td><td class="num td-total">0</td><td class="num td-total">51</td></tr>
+<tr><td class="td-name">04/08</td><td class="num"><span class="num-purple">30</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">16</span></td><td class="num"><span class="num-blue">49</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">27</span></td><td class="num"><span class="num-teal">11</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-teal">8</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">90</td><td class="num td-total">1</td><td class="num td-total">51</td></tr>
+<tr><td class="td-name">03/08</td><td class="num"><span class="num-purple">22</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">16</span></td><td class="num"><span class="num-blue">66</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">27</span></td><td class="num"><span class="num-teal">12</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-orange">2</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">2</span></td><td class="num td-total">102</td><td class="num td-total">0</td><td class="num td-total">52</td></tr>
+<tr><td class="td-name">02/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">01/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">31/07</td><td class="num"><span class="num-purple">6</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-purple">5</span></td><td class="num"><span class="num-blue">75</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-blue">45</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-orange">2</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-orange">1</span></td><td class="num td-total">90</td><td class="num td-total">3</td><td class="num td-total">58</td></tr>
+<tr><td class="td-name">30/07</td><td class="num"><span class="num-purple">12</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">12</span></td><td class="num"><span class="num-blue">84</span></td><td class="num"><span class="num-green">2</span></td><td class="num"><span class="num-blue">56</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num td-total">97</td><td class="num td-total">2</td><td class="num td-total">69</td></tr>
+<tr><td class="td-name">29/07</td><td class="num"><span class="num-purple">17</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-purple">17</span></td><td class="num"><span class="num-blue">79</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-blue">51</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">8</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">3</span></td><td class="num td-total">104</td><td class="num td-total">1</td><td class="num td-total">71</td></tr>
       </tbody>
     </table>
   </div>
 
   <p class="footer-note">
-    Esforço = escolas em Retração (etapa = "Retração", Brasil) onde a pessoa registrou pelo menos 1 atividade no dia (exceto Observação) &#183; identificada pelo responsável (assigned_to) da própria atividade, não por proprietário na deal, já que consultor_de_resgate nunca é preenchido em 2026.<br>
-    Efetiva = dessas escolas, quantas tiveram atividade com resultado começando em "Efetivo" (ex.: Efetivo, Efetivo - Sem oportunidade) no mesmo dia.<br>
+    <strong>Atividades</strong> = contagem de atividades registradas (COUNT de atividades, não de escolas distintas) &#183; qualquer resultado, exceto tipo "Observação".<br>
+    <strong>Atividades Efetivas</strong> = dessas atividades, quantas têm resultado começando em "Efetivo" (ex.: Efetivo, Efetivo - Sem oportunidade) — também é contagem de atividades, não de escolas distintas.<br>
+    <strong>Escolas Abordadas (Esforço)</strong> = escolas distintas em Retração (etapa = "Retração", Brasil) que receberam pelo menos 1 atividade no dia/período &#183; identificada pelo responsável (assigned_to) da própria atividade, não por proprietário na deal, já que consultor_de_resgate nunca é preenchido em 2026.<br>
+    <em>Escolas distintas com atividade efetiva</em> (tag nos cards) é uma leitura complementar: quantas dessas escolas abordadas tiveram ao menos 1 atividade efetiva — métrica de escolas, diferente de "Atividades Efetivas" (que conta atividades).<br>
     Fonte: ax_activities (não a _temp_, que atrasa vários dias) &#183; Janela: últimos 14 dias &#183; Estante Mágica
   </p>
 </div>
