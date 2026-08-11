@@ -98,7 +98,7 @@
   .cs-avatar.teal   { background: var(--teal-bg);   color: var(--teal); }
   .cs-avatar.orange { background: var(--orange-bg); color: var(--orange); }
   .cs-name { font-size: 13px; font-weight: 800; color: var(--gray); }
-  html.dark .cs-name { color: white; }
+  html.light .cs-name:not(.blue):not(.teal):not(.orange) { color: #15122A; }
   .cs-name.blue   { color: var(--blue); }
   .cs-name.teal   { color: var(--teal); }
   .cs-name.orange { color: var(--orange); }
@@ -109,7 +109,7 @@
   .cs-funnel { display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
   .cs-step { text-align: center; flex: 1; }
   .cs-n { font-size: 20px; font-weight: 800; color: var(--gray); }
-  html.dark .cs-n { color: white; }
+  html.light .cs-n:not(.blue):not(.teal):not(.orange):not(.green) { color: #15122A; }
   .cs-n.blue { color: var(--blue); } .cs-n.teal { color: var(--teal); } .cs-n.orange { color: var(--orange); } .cs-n.green { color: var(--green); }
   .cs-l { font-size: 9px; color: #5A5280; text-transform: uppercase; letter-spacing: .5px; }
   html.light .cs-l { color: #9a90c4; }
@@ -137,17 +137,15 @@
   .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 16px; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 760px; }
   thead { background: var(--purple-bg); }
-  html.dark thead { background: #1A1728; }
   th { padding: 9px 12px; text-align: center; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #5A5280; white-space: nowrap; }
   html.light th { color: #7a70a0; }
   th.th-pessoa { color: var(--purple); font-size: 10px; }
   th.th-pessoa.blue { color: var(--blue); } th.th-pessoa.teal { color: var(--teal); } th.th-pessoa.orange { color: var(--orange); }
   td { padding: 7px 12px; text-align: center; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  html.dark td { border-bottom-color: #1A1728; }
   tbody tr:hover td { background: var(--purple-bg); }
   tbody tr:last-child td { border-bottom: none; }
   .td-name { font-weight: 700; text-align: left; color: var(--gray); font-size: 11px; }
-  html.dark .td-name { color: white; }
+  html.light .td-name { color: #15122A; }
   .td-total { font-weight: 800; }
   .num-zero { color: #55507a; }
   html.light .num-zero { color: #cbc4e6; }
@@ -184,7 +182,7 @@
   <div class="kpi-grid">
     <div class="kpi-card">
       <div class="kpi-label">Escolas em Retração</div>
-      <div class="kpi-val">1598</div>
+      <div class="kpi-val">1599</div>
       <div class="kpi-sub">universo atual &#183; Brasil</div>
     </div>
     <div class="kpi-card">
@@ -395,6 +393,11 @@ const SERIE = {"dias": ["29/07", "30/07", "31/07", "01/08", "02/08", "03/08", "0
 (function() {
   var saved = localStorage.getItem('esforco_retracao_theme');
   var html = document.documentElement;
+  // esta página usa esquema próprio (padrão escuro, classe .light pro claro).
+  // remove a classe .dark que o script global do site (_inject_dark_mode, via
+  // cs_ops_theme) possa ter adicionado — evita as duas classes coexistirem e
+  // forçarem texto branco sobre fundo branco quando o tema local vira claro.
+  html.classList.remove('dark');
   if (saved === 'light') html.classList.add('light');
   else html.classList.remove('light');
   document.getElementById('theme-btn').addEventListener('click', function() {
