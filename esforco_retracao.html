@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esforço · Célula de Retração · Estante Mágica</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:      #A89DD8;
+    --purple-dark: #7668AC;
+    --purple-bg:   #201C33;
+    --yellow:      #F9DC45;
+    --blue:        #3BBCF0;
+    --blue-bg:     #091C2B;
+    --red:         #F07080;
+    --red-bg:      #2A0D14;
+    --green:       #5CC75F;
+    --green-bg:    #0C200E;
+    --orange:      #FB923C;
+    --orange-bg:   #201008;
+    --teal:        #2DD4BF;
+    --teal-bg:     #051A17;
+    --gray:        #C4BDE0;
+    --gray-light:  #0F0D1A;
+    --border:      #2C2745;
+    --shadow:      0 2px 12px rgba(0,0,0,0.45);
+    --card-bg:     #181528;
+    --input-bg:    #201C33;
+  }
+  html.light {
+    --purple:      #7668AC;
+    --purple-dark: #5A4E8E;
+    --purple-bg:   #F0EEF8;
+    --yellow:      #C9AC00;
+    --blue:        #008ECF;
+    --blue-bg:     #E6F4FB;
+    --red:         #E94B56;
+    --red-bg:      #FEE8EA;
+    --green:       #2E7D32;
+    --green-bg:    #E8F5E9;
+    --orange:      #F97316;
+    --orange-bg:   #FFF0E6;
+    --teal:        #0F9E90;
+    --teal-bg:     #E3FBF7;
+    --gray:        #595959;
+    --gray-light:  #F5F4F9;
+    --border:      #E2DEEF;
+    --shadow:      0 2px 8px rgba(118,104,172,0.10);
+    --card-bg:     #FFFFFF;
+    --input-bg:    #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Montserrat', -apple-system, 'Segoe UI', sans-serif; background: var(--gray-light); color: var(--gray); line-height: 1.5; transition: background-color .2s ease, color .2s ease; }
+  .container { max-width: 1320px; margin: 0 auto; padding: 20px 16px; }
+  a.back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; color: var(--purple);
+    text-decoration: none; margin-bottom: 14px;
+  }
+  a.back:hover { color: var(--purple-dark); }
+  header {
+    background: var(--purple-dark); color: white;
+    padding: 20px 28px; border-radius: 12px; margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    box-shadow: var(--shadow);
+  }
+  header h1 { font-size: 18px; font-weight: 800; letter-spacing: -0.4px; }
+  header .sub { font-size: 10px; opacity: .7; font-weight: 400; margin-top: 3px; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .stamp { background: var(--yellow); color: #2B2200; padding: 5px 13px; border-radius: 6px; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+  .theme-btn {
+    width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0; transition: background .15s;
+  }
+  .theme-btn:hover { background: rgba(255,255,255,0.30); }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }
+  .kpi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .kpi-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #5A5280; }
+  html.light .kpi-label { color: #9a90c4; }
+  .kpi-val { font-size: 26px; font-weight: 800; color: var(--purple); margin-top: 4px; }
+  .kpi-val.green { color: var(--green); }
+  .kpi-sub { font-size: 10px; color: #5A5280; margin-top: 2px; }
+  html.light .kpi-sub { color: #9a90c4; }
+  .section-title { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; color: var(--purple); }
+  .cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin-bottom: 18px; }
+  .cs-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .cs-card.blue   { border-color: #1A3550; }
+  .cs-card.teal   { border-color: #123330; }
+  .cs-card.orange { border-color: #3A2410; }
+  html.light .cs-card.blue   { border-color: #cfe6f5; }
+  html.light .cs-card.teal   { border-color: #c3ede6; }
+  html.light .cs-card.orange { border-color: #fbdcc0; }
+  .cs-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .cs-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--purple); background: var(--purple-bg); flex-shrink: 0; }
+  .cs-avatar.blue   { background: var(--blue-bg);   color: var(--blue); }
+  .cs-avatar.teal   { background: var(--teal-bg);   color: var(--teal); }
+  .cs-avatar.orange { background: var(--orange-bg); color: var(--orange); }
+  .cs-name { font-size: 13px; font-weight: 800; color: var(--gray); }
+  html.dark .cs-name { color: white; }
+  .cs-name.blue   { color: var(--blue); }
+  .cs-name.teal   { color: var(--teal); }
+  .cs-name.orange { color: var(--orange); }
+  .cs-tag { font-size: 10px; color: #5A5280; margin-top: 2px; }
+  html.light .cs-tag { color: #9a90c4; }
+  .cs-funnel { display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
+  .cs-step { text-align: center; flex: 1; }
+  .cs-n { font-size: 20px; font-weight: 800; color: var(--gray); }
+  html.dark .cs-n { color: white; }
+  .cs-n.blue { color: var(--blue); } .cs-n.teal { color: var(--teal); } .cs-n.orange { color: var(--orange); } .cs-n.green { color: var(--green); }
+  .cs-l { font-size: 9px; color: #5A5280; text-transform: uppercase; letter-spacing: .5px; }
+  html.light .cs-l { color: #9a90c4; }
+  .cs-p { font-size: 9px; color: #3D3660; margin-top: 1px; }
+  html.light .cs-p { color: #b3aad6; }
+  .cs-arrow { font-size: 16px; color: #2C2745; flex-shrink: 0; }
+  html.light .cs-arrow { color: #d8d3ec; }
+  .cs-divider { height: 1px; background: var(--border); margin-bottom: 10px; }
+  .tags-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .tag.fila { background: var(--purple-bg); color: #5A5280; }
+  html.light .tag.fila { color: var(--purple-dark); }
+  .pills-wrap { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .pill { padding: 5px 14px; border: 1px solid var(--border); border-radius: 20px; font-size: 11px; font-weight: 700; color: #5A5280; background: var(--card-bg); cursor: pointer; transition: all .15s; font-family: inherit; }
+  html.light .pill { color: #7a70a0; }
+  .pill.active { background: var(--purple-dark); border-color: var(--purple-dark); color: #fff; }
+  .pill.blue.active   { background: var(--blue);   border-color: var(--blue);   color: #fff; }
+  .pill.teal.active   { background: var(--teal);   border-color: var(--teal);   color: #fff; }
+  .pill.orange.active { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .chart-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 18px; }
+  .chart-wrap { overflow-x: auto; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-size: 10px; color: #5A5280; }
+  html.light .legend { color: #7a70a0; }
+  .legend-dot { width: 9px; height: 9px; border-radius: 3px; display: inline-block; margin-right: 5px; vertical-align: middle; }
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 760px; }
+  thead { background: var(--purple-bg); }
+  html.dark thead { background: #1A1728; }
+  th { padding: 9px 12px; text-align: center; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #5A5280; white-space: nowrap; }
+  html.light th { color: #7a70a0; }
+  th.th-pessoa { color: var(--purple); font-size: 10px; }
+  th.th-pessoa.blue { color: var(--blue); } th.th-pessoa.teal { color: var(--teal); } th.th-pessoa.orange { color: var(--orange); }
+  td { padding: 7px 12px; text-align: center; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  html.dark td { border-bottom-color: #1A1728; }
+  tbody tr:hover td { background: var(--purple-bg); }
+  tbody tr:last-child td { border-bottom: none; }
+  .td-name { font-weight: 700; text-align: left; color: var(--gray); font-size: 11px; }
+  html.dark .td-name { color: white; }
+  .td-total { font-weight: 800; }
+  .num-zero { color: #55507a; }
+  html.light .num-zero { color: #cbc4e6; }
+  .num-green  { color: var(--green);  font-weight: 700; }
+  .num-blue   { color: var(--blue);   font-weight: 700; }
+  .num-teal   { color: var(--teal);   font-weight: 700; }
+  .num-orange { color: var(--orange); font-weight: 700; }
+  .num-purple { color: var(--purple); font-weight: 700; }
+  .footer-note { text-align: center; font-size: 10px; color: #5A5280; margin-top: 12px; line-height: 1.7; }
+  html.light .footer-note { color: #9a90c4; }
+  @media (max-width: 700px) {
+    header h1 { font-size: 15px; }
+    .cs-n { font-size: 16px; }
+    th, td { padding: 6px 8px; font-size: 10px; }
+  }
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+<div class="container">
+  <a href="retracao_hub.html" class="back">&#8592; Retração</a>
+
+  <header>
+    <div>
+      <h1>Esforço &nbsp;&#183;&nbsp; Célula de Retração</h1>
+      <div class="sub">Julia Bravo &#183; Mariana Mazzero &#183; Ana Beatriz Gonçalves &#183; Junior Gomes &nbsp;&#183;&nbsp; Atualizado 11/08/2026</div>
+    </div>
+    <div class="header-right">
+      <div class="stamp">HOJE 11/08/2026</div>
+      <button class="theme-btn" id="theme-btn" title="Alternar tema">&#127769;</button>
+    </div>
+  </header>
+
+  <div class="section-title">Resumo</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Escolas em Retração</div>
+      <div class="kpi-val">1597</div>
+      <div class="kpi-sub">universo atual &#183; Brasil</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Esforço hoje</div>
+      <div class="kpi-val">46</div>
+      <div class="kpi-sub">escolas com atividade &#183; 4 pessoas</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Efetiva hoje</div>
+      <div class="kpi-val green">1</div>
+      <div class="kpi-sub">2% do esforço de hoje</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Esforço 14 dias</div>
+      <div class="kpi-val">578</div>
+      <div class="kpi-sub">escolas·dia com atividade</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Efetiva 14 dias</div>
+      <div class="kpi-val green">10</div>
+      <div class="kpi-sub">2% do esforço do período</div>
+    </div>
+  </div>
+
+  <div class="section-title">Por pessoa</div>
+  <div class="cs-grid">
+    <div class="cs-card">
+      <div class="cs-header">
+        <div class="cs-avatar">JB</div>
+        <div>
+          <div class="cs-name">Julia Bravo</div>
+          <div class="cs-tag">106 escolas tocadas em 14 dias</div>
+        </div>
+      </div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n">0</div><div class="cs-l">Esforço hoje</div><div class="cs-p">escolas</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">0</div><div class="cs-l">Efetiva hoje</div><div class="cs-p">—</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n">106</div><div class="cs-l">Esforço 14d</div><div class="cs-p">escolas·dia</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Efetiva 14d</div><div class="cs-p">1%</div></div>
+      </div>
+      <div class="cs-divider"></div>
+      <div class="tags-row">
+        <span class="tag fila">140 atividades no período</span>
+      </div>
+    </div>
+    <div class="cs-card blue">
+      <div class="cs-header">
+        <div class="cs-avatar blue">MM</div>
+        <div>
+          <div class="cs-name blue">Mariana Mazzero</div>
+          <div class="cs-tag">415 escolas tocadas em 14 dias</div>
+        </div>
+      </div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n blue">42</div><div class="cs-l">Esforço hoje</div><div class="cs-p">escolas</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">0</div><div class="cs-l">Efetiva hoje</div><div class="cs-p">0%</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n blue">415</div><div class="cs-l">Esforço 14d</div><div class="cs-p">escolas·dia</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">5</div><div class="cs-l">Efetiva 14d</div><div class="cs-p">1%</div></div>
+      </div>
+      <div class="cs-divider"></div>
+      <div class="tags-row">
+        <span class="tag fila">753 atividades no período</span>
+      </div>
+    </div>
+    <div class="cs-card teal">
+      <div class="cs-header">
+        <div class="cs-avatar teal">AB</div>
+        <div>
+          <div class="cs-name teal">Ana Beatriz Gonçalves</div>
+          <div class="cs-tag">46 escolas tocadas em 14 dias</div>
+        </div>
+      </div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n teal">3</div><div class="cs-l">Esforço hoje</div><div class="cs-p">escolas</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Efetiva hoje</div><div class="cs-p">33%</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n teal">46</div><div class="cs-l">Esforço 14d</div><div class="cs-p">escolas·dia</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">3</div><div class="cs-l">Efetiva 14d</div><div class="cs-p">7%</div></div>
+      </div>
+      <div class="cs-divider"></div>
+      <div class="tags-row">
+        <span class="tag fila">60 atividades no período</span>
+      </div>
+    </div>
+    <div class="cs-card orange">
+      <div class="cs-header">
+        <div class="cs-avatar orange">JG</div>
+        <div>
+          <div class="cs-name orange">Junior Gomes</div>
+          <div class="cs-tag">11 escolas tocadas em 14 dias</div>
+        </div>
+      </div>
+      <div class="cs-funnel">
+        <div class="cs-step"><div class="cs-n orange">1</div><div class="cs-l">Esforço hoje</div><div class="cs-p">escolas</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">0</div><div class="cs-l">Efetiva hoje</div><div class="cs-p">0%</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n orange">11</div><div class="cs-l">Esforço 14d</div><div class="cs-p">escolas·dia</div></div>
+        <div class="cs-arrow">›</div>
+        <div class="cs-step"><div class="cs-n green">1</div><div class="cs-l">Efetiva 14d</div><div class="cs-p">9%</div></div>
+      </div>
+      <div class="cs-divider"></div>
+      <div class="tags-row">
+        <span class="tag fila">17 atividades no período</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Esforço x Efetiva por dia</div>
+  <div class="chart-card">
+    <div class="pills-wrap" id="chart-pills">
+      <button class="pill active" data-email="__all__" onclick="setPill(this)">Todas</button><button class="pill" data-email="julia.bravo@estantemagica.com.br" onclick="setPill(this)">Julia</button><button class="pill blue" data-email="mariana.mazzero@estantemagica.com.br" onclick="setPill(this)">Mariana</button><button class="pill teal" data-email="anabeatriz.santana@estantemagica.com.br" onclick="setPill(this)">Ana</button><button class="pill orange" data-email="junior.gomes@estantemagica.com.br" onclick="setPill(this)">Junior</button>
+    </div>
+    <div class="chart-wrap">
+      <svg id="chart-svg" width="100%" height="220" style="min-width:640px"></svg>
+    </div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:var(--purple)"></span>Esforço (escolas com atividade)</span>
+      <span><span class="legend-dot" style="background:var(--green)"></span>Efetiva (escolas com atividade efetiva)</span>
+    </div>
+  </div>
+
+  <div class="section-title">Detalhe diário</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th></th><th colspan="2" class="th-pessoa">Julia Bravo</th><th colspan="2" class="th-pessoa blue">Mariana Mazzero</th><th colspan="2" class="th-pessoa teal">Ana Beatriz Gonçalves</th><th colspan="2" class="th-pessoa orange">Junior Gomes</th><th colspan="2" class="th-pessoa">Total</th></tr>
+        <tr><th></th><th class="num">Esforço</th><th class="num">Efetiva</th><th class="num">Esforço</th><th class="num">Efetiva</th><th class="num">Esforço</th><th class="num">Efetiva</th><th class="num">Esforço</th><th class="num">Efetiva</th><th class="num td-total">Esforço</th><th class="num td-total">Efetiva</th></tr>
+      </thead>
+      <tbody>
+<tr><td class="td-name">11/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">42</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">3</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">46</td><td class="num td-total">1</td></tr>
+<tr><td class="td-name">10/08</td><td class="num"><span class="num-purple">13</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">43</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">2</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">58</td><td class="num td-total">1</td></tr>
+<tr><td class="td-name">09/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">08/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">07/08</td><td class="num"><span class="num-purple">3</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">43</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">5</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">52</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">06/08</td><td class="num"><span class="num-purple">11</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">49</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-teal">6</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">67</td><td class="num td-total">1</td></tr>
+<tr><td class="td-name">05/08</td><td class="num"><span class="num-purple">10</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">32</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">8</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">51</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">04/08</td><td class="num"><span class="num-purple">16</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">27</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">8</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">51</td><td class="num td-total">1</td></tr>
+<tr><td class="td-name">03/08</td><td class="num"><span class="num-purple">17</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">27</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">2</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">53</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">02/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">01/08</td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">0</td><td class="num td-total">0</td></tr>
+<tr><td class="td-name">31/07</td><td class="num"><span class="num-purple">6</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-blue">45</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-teal">7</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-green">1</span></td><td class="num td-total">59</td><td class="num td-total">3</td></tr>
+<tr><td class="td-name">30/07</td><td class="num"><span class="num-purple">12</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">56</span></td><td class="num"><span class="num-green">2</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">69</td><td class="num td-total">2</td></tr>
+<tr><td class="td-name">29/07</td><td class="num"><span class="num-purple">18</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-blue">51</span></td><td class="num"><span class="num-green">1</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-zero">—</span></td><td class="num"><span class="num-orange">3</span></td><td class="num"><span class="num-zero">—</span></td><td class="num td-total">72</td><td class="num td-total">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="footer-note">
+    Esforço = escolas em Retração (etapa = "Retração", Brasil) onde a pessoa registrou pelo menos 1 atividade no dia (exceto Observação) &#183; identificada pelo responsável (assigned_to) da própria atividade, não por proprietário na deal, já que consultor_de_resgate nunca é preenchido em 2026.<br>
+    Efetiva = dessas escolas, quantas tiveram atividade com resultado começando em "Efetivo" (ex.: Efetivo, Efetivo - Sem oportunidade) no mesmo dia.<br>
+    Fonte: ax_activities (não a _temp_, que atrasa vários dias) &#183; Janela: últimos 14 dias &#183; Estante Mágica
+  </p>
+</div>
+
+<script>
+const SERIE = {"dias": ["29/07", "30/07", "31/07", "01/08", "02/08", "03/08", "04/08", "05/08", "06/08", "07/08", "08/08", "09/08", "10/08", "11/08"], "pessoas": [{"email": "julia.bravo@estantemagica.com.br", "nome": "Julia Bravo", "cls": "", "esforco": [18, 12, 6, 0, 0, 17, 16, 10, 11, 3, 0, 0, 13, 0], "efetiva": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"email": "mariana.mazzero@estantemagica.com.br", "nome": "Mariana Mazzero", "cls": "blue", "esforco": [51, 56, 45, 0, 0, 27, 27, 32, 49, 43, 0, 0, 43, 42], "efetiva": [1, 2, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]}, {"email": "anabeatriz.santana@estantemagica.com.br", "nome": "Ana Beatriz Gonçalves", "cls": "teal", "esforco": [0, 0, 7, 0, 0, 7, 8, 8, 6, 5, 0, 0, 2, 3], "efetiva": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1]}, {"email": "junior.gomes@estantemagica.com.br", "nome": "Junior Gomes", "cls": "orange", "esforco": [3, 1, 1, 0, 0, 2, 0, 1, 1, 1, 0, 0, 0, 1], "efetiva": [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]};
+
+// ---- tema sol/lua ----
+(function() {
+  var saved = localStorage.getItem('esforco_retracao_theme');
+  var html = document.documentElement;
+  if (saved === 'light') html.classList.add('light');
+  else html.classList.remove('light');
+  document.getElementById('theme-btn').addEventListener('click', function() {
+    var isLight = html.classList.toggle('light');
+    localStorage.setItem('esforco_retracao_theme', isLight ? 'light' : 'dark');
+    this.textContent = isLight ? '\u2600\uFE0F' : '\uD83C\uDF19';
+    drawChart();
+  });
+  document.getElementById('theme-btn').textContent = html.classList.contains('light') ? '\u2600\uFE0F' : '\uD83C\uDF19';
+})();
+
+// ---- pills de filtro do gráfico ----
+let pessoaAtiva = '__all__';
+function setPill(btn) {
+  document.querySelectorAll('#chart-pills .pill').forEach(function(p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  pessoaAtiva = btn.dataset.email;
+  drawChart();
+}
+
+// ---- gráfico SVG vanilla (sem libs externas) ----
+function seriesAgregada() {
+  if (pessoaAtiva === '__all__') {
+    const n = SERIE.dias.length;
+    const esforco = new Array(n).fill(0);
+    const efetiva = new Array(n).fill(0);
+    SERIE.pessoas.forEach(function(p) {
+      p.esforco.forEach(function(v, i) { esforco[i] += v; });
+      p.efetiva.forEach(function(v, i) { efetiva[i] += v; });
+    });
+    return { esforco: esforco, efetiva: efetiva };
+  }
+  const p = SERIE.pessoas.find(function(x) { return x.email === pessoaAtiva; });
+  return { esforco: p.esforco, efetiva: p.efetiva };
+}
+
+function drawChart() {
+  const svg = document.getElementById('chart-svg');
+  const dias = SERIE.dias;
+  const { esforco, efetiva } = seriesAgregada();
+  const max = Math.max(1, ...esforco, ...efetiva);
+  const W = Math.max(640, dias.length * 46);
+  const H = 220, padL = 28, padB = 26, padT = 10;
+  const plotW = W - padL - 10, plotH = H - padT - padB;
+  const bw = plotW / dias.length;
+  const isLight = document.documentElement.classList.contains('light');
+  const axisColor = isLight ? '#cbc4e6' : '#2C2745';
+  const textColor = isLight ? '#9a90c4' : '#5A5280';
+  const cPurple = isLight ? '#7668AC' : '#A89DD8';
+  const cGreen  = '#5CC75F';
+
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('width', W);
+
+  let bars = '';
+  for (let i = 0; i < dias.length; i++) {
+    const x = padL + i * bw;
+    const hEsf = (esforco[i] / max) * plotH;
+    const hEfe = (efetiva[i] / max) * plotH;
+    const barW = bw * 0.32;
+    const x1 = x + bw * 0.14;
+    const x2 = x + bw * 0.54;
+    bars += '<rect x="' + x1 + '" y="' + (padT + plotH - hEsf) + '" width="' + barW + '" height="' + hEsf + '" fill="' + cPurple + '" rx="2"><title>' + dias[i] + ' · Esforço: ' + esforco[i] + '</title></rect>';
+    bars += '<rect x="' + x2 + '" y="' + (padT + plotH - hEfe) + '" width="' + barW + '" height="' + hEfe + '" fill="' + cGreen + '" rx="2"><title>' + dias[i] + ' · Efetiva: ' + efetiva[i] + '</title></rect>';
+    bars += '<text x="' + (x + bw / 2) + '" y="' + (H - 8) + '" font-size="9" fill="' + textColor + '" text-anchor="middle" font-family="Montserrat,sans-serif">' + dias[i] + '</text>';
+  }
+  const axisLine = '<line x1="' + padL + '" y1="' + (padT + plotH) + '" x2="' + (padL + plotW) + '" y2="' + (padT + plotH) + '" stroke="' + axisColor + '" stroke-width="1"/>';
+  svg.innerHTML = axisLine + bars;
+}
+
+drawChart();
+</script>
+</body>
+</html>
