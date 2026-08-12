@@ -346,8 +346,9 @@
       <svg id="chart-svg" width="100%" height="220" style="min-width:640px"></svg>
     </div>
     <div class="legend">
-      <span><span class="legend-dot" style="background:var(--purple)"></span>Esforço (escolas com atividade)</span>
-      <span><span class="legend-dot" style="background:var(--green)"></span>Efetiva (escolas com atividade efetiva)</span>
+      <span><span class="legend-dot" style="background:var(--purple)"></span>Atividades (registradas)</span>
+      <span><span class="legend-dot" style="background:var(--green)"></span>Ativ. Efetivas (resultado Efetivo*)</span>
+      <span><span class="legend-dot" style="background:var(--blue)"></span>Abordadas (escolas distintas)</span>
     </div>
   </div>
 
@@ -387,7 +388,7 @@
 </div>
 
 <script>
-const SERIE = {"dias": ["30/07", "31/07", "01/08", "02/08", "03/08", "04/08", "05/08", "06/08", "07/08", "08/08", "09/08", "10/08", "11/08", "12/08"], "pessoas": [{"email": "julia.bravo@estantemagica.com.br", "nome": "Julia Bravo", "cls": "", "esforco": [12, 5, 0, 0, 16, 16, 10, 11, 3, 0, 0, 13, 10, 8], "efetiva": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, {"email": "mariana.mazzero@estantemagica.com.br", "nome": "Mariana Mazzero", "cls": "blue", "esforco": [55, 45, 0, 0, 27, 27, 32, 49, 43, 0, 0, 43, 45, 55], "efetiva": [1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0]}, {"email": "anabeatriz.santana@estantemagica.com.br", "nome": "Ana Beatriz Gonçalves", "cls": "teal", "esforco": [0, 7, 0, 0, 7, 8, 8, 6, 5, 0, 0, 2, 7, 9], "efetiva": [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 0]}, {"email": "junior.gomes@estantemagica.com.br", "nome": "Junior Gomes", "cls": "orange", "esforco": [1, 1, 0, 0, 2, 0, 1, 0, 1, 0, 0, 0, 1, 1], "efetiva": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]}]};
+const SERIE = {"dias": ["30/07", "31/07", "01/08", "02/08", "03/08", "04/08", "05/08", "06/08", "07/08", "08/08", "09/08", "10/08", "11/08", "12/08"], "pessoas": [{"email": "julia.bravo@estantemagica.com.br", "nome": "Julia Bravo", "cls": "", "atividades": [12, 6, 0, 0, 22, 30, 16, 12, 5, 0, 0, 14, 20, 13], "efetivas": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "abordadas": [12, 5, 0, 0, 16, 16, 10, 11, 3, 0, 0, 13, 10, 8]}, {"email": "mariana.mazzero@estantemagica.com.br", "nome": "Mariana Mazzero", "cls": "blue", "atividades": [83, 75, 0, 0, 66, 49, 64, 80, 80, 0, 0, 111, 129, 58], "efetivas": [1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0], "abordadas": [55, 45, 0, 0, 27, 27, 32, 49, 43, 0, 0, 43, 45, 55]}, {"email": "anabeatriz.santana@estantemagica.com.br", "nome": "Ana Beatriz Gonçalves", "cls": "teal", "atividades": [0, 7, 0, 0, 12, 11, 9, 6, 5, 0, 0, 6, 12, 15], "efetivas": [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 0], "abordadas": [0, 7, 0, 0, 7, 8, 8, 6, 5, 0, 0, 2, 7, 9]}, {"email": "junior.gomes@estantemagica.com.br", "nome": "Junior Gomes", "cls": "orange", "atividades": [1, 2, 0, 0, 2, 0, 1, 0, 1, 0, 0, 0, 3, 2], "efetivas": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], "abordadas": [1, 1, 0, 0, 2, 0, 1, 0, 1, 0, 0, 0, 1, 1]}]};
 
 // ---- tema sol/lua ----
 (function() {
@@ -419,27 +420,30 @@ function setPill(btn) {
 }
 
 // ---- gráfico SVG vanilla (sem libs externas) ----
+// mesmas 3 métricas da tabela "Detalhe diário": Atividades, Ativ. Efetivas, Abordadas.
 function seriesAgregada() {
   if (pessoaAtiva === '__all__') {
     const n = SERIE.dias.length;
-    const esforco = new Array(n).fill(0);
-    const efetiva = new Array(n).fill(0);
+    const atividades = new Array(n).fill(0);
+    const efetivas = new Array(n).fill(0);
+    const abordadas = new Array(n).fill(0);
     SERIE.pessoas.forEach(function(p) {
-      p.esforco.forEach(function(v, i) { esforco[i] += v; });
-      p.efetiva.forEach(function(v, i) { efetiva[i] += v; });
+      p.atividades.forEach(function(v, i) { atividades[i] += v; });
+      p.efetivas.forEach(function(v, i) { efetivas[i] += v; });
+      p.abordadas.forEach(function(v, i) { abordadas[i] += v; });
     });
-    return { esforco: esforco, efetiva: efetiva };
+    return { atividades: atividades, efetivas: efetivas, abordadas: abordadas };
   }
   const p = SERIE.pessoas.find(function(x) { return x.email === pessoaAtiva; });
-  return { esforco: p.esforco, efetiva: p.efetiva };
+  return { atividades: p.atividades, efetivas: p.efetivas, abordadas: p.abordadas };
 }
 
 function drawChart() {
   const svg = document.getElementById('chart-svg');
   const dias = SERIE.dias;
-  const { esforco, efetiva } = seriesAgregada();
-  const max = Math.max(1, ...esforco, ...efetiva);
-  const W = Math.max(640, dias.length * 46);
+  const { atividades, efetivas, abordadas } = seriesAgregada();
+  const max = Math.max(1, ...atividades, ...efetivas, ...abordadas);
+  const W = Math.max(640, dias.length * 56);
   const H = 220, padL = 28, padB = 26, padT = 10;
   const plotW = W - padL - 10, plotH = H - padT - padB;
   const bw = plotW / dias.length;
@@ -448,6 +452,7 @@ function drawChart() {
   const textColor = isLight ? '#9a90c4' : '#5A5280';
   const cPurple = isLight ? '#7668AC' : '#A89DD8';
   const cGreen  = '#5CC75F';
+  const cBlue   = isLight ? '#008ECF' : '#3BBCF0';
 
   svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
   svg.setAttribute('width', W);
@@ -455,13 +460,16 @@ function drawChart() {
   let bars = '';
   for (let i = 0; i < dias.length; i++) {
     const x = padL + i * bw;
-    const hEsf = (esforco[i] / max) * plotH;
-    const hEfe = (efetiva[i] / max) * plotH;
-    const barW = bw * 0.32;
-    const x1 = x + bw * 0.14;
-    const x2 = x + bw * 0.54;
-    bars += '<rect x="' + x1 + '" y="' + (padT + plotH - hEsf) + '" width="' + barW + '" height="' + hEsf + '" fill="' + cPurple + '" rx="2"><title>' + dias[i] + ' · Esforço: ' + esforco[i] + '</title></rect>';
-    bars += '<rect x="' + x2 + '" y="' + (padT + plotH - hEfe) + '" width="' + barW + '" height="' + hEfe + '" fill="' + cGreen + '" rx="2"><title>' + dias[i] + ' · Efetiva: ' + efetiva[i] + '</title></rect>';
+    const hAtv = (atividades[i] / max) * plotH;
+    const hEfe = (efetivas[i] / max) * plotH;
+    const hAbo = (abordadas[i] / max) * plotH;
+    const barW = bw * 0.24;
+    const x1 = x + bw * 0.08;
+    const x2 = x + bw * 0.38;
+    const x3 = x + bw * 0.68;
+    bars += '<rect x="' + x1 + '" y="' + (padT + plotH - hAtv) + '" width="' + barW + '" height="' + hAtv + '" fill="' + cPurple + '" rx="2"><title>' + dias[i] + ' · Atividades: ' + atividades[i] + '</title></rect>';
+    bars += '<rect x="' + x2 + '" y="' + (padT + plotH - hEfe) + '" width="' + barW + '" height="' + hEfe + '" fill="' + cGreen + '" rx="2"><title>' + dias[i] + ' · Ativ. Efetivas: ' + efetivas[i] + '</title></rect>';
+    bars += '<rect x="' + x3 + '" y="' + (padT + plotH - hAbo) + '" width="' + barW + '" height="' + hAbo + '" fill="' + cBlue + '" rx="2"><title>' + dias[i] + ' · Abordadas: ' + abordadas[i] + '</title></rect>';
     bars += '<text x="' + (x + bw / 2) + '" y="' + (H - 8) + '" font-size="9" fill="' + textColor + '" text-anchor="middle" font-family="Montserrat,sans-serif">' + dias[i] + '</text>';
   }
   const axisLine = '<line x1="' + padL + '" y1="' + (padT + plotH) + '" x2="' + (padL + plotW) + '" y2="' + (padT + plotH) + '" stroke="' + axisColor + '" stroke-width="1"/>';
