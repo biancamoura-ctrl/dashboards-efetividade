@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Eventos — 19/08/2026</title>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;--green:#008ECF;--green-lt:#e6f4fb;
+  --amber:#7668AC;--amber-lt:#f0eef8;--red:#E94B56;--red-lt:#fef0f1;
+  --yellow:#F9DC45;--purple:#7668AC;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px;text-align:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border-top:3px solid var(--yellow)}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:700}
+.card-body{padding:18px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+thead th{background:#f8f8f6;padding:9px 12px;text-align:left;font-weight:700;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f0ec}
+.sort-icon{opacity:.35;margin-left:4px;font-size:10px}
+th.sorted .sort-icon{opacity:1}
+tbody tr{border-bottom:1px solid #f0f0ec;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fdfdf9}
+tbody td{padding:8px 12px;white-space:nowrap}
+td.nome{white-space:normal;min-width:160px;font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ef-high{color:#008ECF;font-weight:700}.ef-mid{color:#7668AC;font-weight:700}.ef-low{color:#E94B56;font-weight:700}
+.qbadge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.qbadge.q1{background:#e6f4fb;color:#008ECF}.qbadge.q2{background:#fef0f1;color:#E94B56}
+.qbadge.q3{background:#f0eef8;color:#7668AC}.qbadge.q4{background:#f3f3f0;color:#595959}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e8e8e4;border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none}
+.chip.active{border-color:currentColor}
+.chip.all{background:#f3f3f0;color:#595959}.chip.all.active{background:#e8e8e4}
+.chip.q1{background:#e6f4fb;color:#008ECF}.chip.q1.active{background:#c5e8f7}
+.chip.q2{background:#fef0f1;color:#E94B56}.chip.q2.active{background:#fdd8db}
+.chip.q3{background:#f0eef8;color:#7668AC}.chip.q3.active{background:#dddaf0}
+.chip.q4{background:#f3f3f0;color:#595959}.chip.q4.active{background:#e8e8e4}
+select,input[type=text]{font-family:'Montserrat',sans-serif;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;outline:none}
+select:focus{border-color:var(--yellow)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:6px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:700;color:var(--text)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:600}
+.kpi-val{font-size:28px;font-weight:800;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.blue .kpi-val{color:#008ECF}.kpi.amber .kpi-val{color:#7668AC}.kpi.green .kpi-val{color:#008ECF}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:380px}
+#tooltip{position:fixed;background:#595959;color:#fff;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
+html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a}
+html.dark body{background:var(--bg);color:var(--text)}
+html.dark thead th{background:#27272a;border-bottom-color:var(--border)}
+html.dark thead th:hover{background:#303038}
+html.dark tbody tr{border-bottom-color:var(--border)}
+html.dark tbody tr:hover{background:#27272a}
+html.dark .card{background:var(--surface);border-color:var(--border)}
+html.dark .card-head{border-bottom-color:var(--border)}
+html.dark .kpi{background:var(--surface);border-color:var(--border)}
+html.dark .bar-bg{background:var(--border)}
+html.dark select,html.dark input[type=text]{background:#27272a;color:var(--text);border-color:var(--border)}
+html.dark #tooltip{background:#303038;color:var(--text)}
+html.dark .note-box{background:#27272a;border-color:var(--border);color:var(--text)}
+html.dark .insight-box{background:#2a2a1a;color:var(--text)}
+html.dark .chip.all{background:#3f3f46;color:#a1a1aa}
+html.dark .chip.all.active{background:#52525b}
+html.dark .canal-card{background:var(--surface);border-color:var(--border)}
+html.dark .canal-bar-wrap{background:var(--border)}
+html.dark .summary-bar{color:var(--muted)}
+body,tbody tr,.card,.kpi,.card-head,thead th,select,input[type=text],.chip,.bar-bg,.note-box,.insight-box,.canal-card,.canal-bar-wrap{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
+@keyframes sun-glow{0%,100%{filter:drop-shadow(0 0 3px #FFD700) drop-shadow(0 0 6px #FF9500)}50%{filter:drop-shadow(0 0 7px #FFD700) drop-shadow(0 0 12px #FF6B00)}}
+@keyframes sun-rays{0%{transform:scale(1) rotate(0deg)}100%{transform:scale(1) rotate(360deg)}}
+@keyframes moon-twinkle{0%,100%{filter:drop-shadow(0 0 2px #c4b5fd)}50%{filter:drop-shadow(0 0 6px #a78bfa)}}
+.theme-btn{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#FFD947,#FF8C00);box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2);z-index:9998;overflow:hidden;padding:0;display:flex;align-items:center;justify-content:center;transition:background .5s ease,box-shadow .5s ease,transform .2s ease}
+html.dark .theme-btn{background:linear-gradient(135deg,#2d1b69,#0f0c29);box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4)}
+.theme-btn:hover{transform:scale(1.13)}
+.theme-icon-sun,.theme-icon-moon{position:absolute;font-size:22px;line-height:1;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease}
+.theme-icon-sun{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:sun-glow 2.5s ease-in-out infinite,sun-rays 12s linear infinite}
+.theme-icon-moon{opacity:0;transform:scale(0) rotate(-40deg) translateY(10px)}
+html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px);animation:none}
+html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:moon-twinkle 3s ease-in-out infinite}
+
+.back{position:fixed;top:14px;left:14px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s}
+body{padding:56px 20px 48px;background:linear-gradient(160deg,#f5f3ff 0%,#fdfcff 60%,#f0f4ff 100%)}
+html.dark body{background:#18181b!important}
+.container{width:100%;max-width:820px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#008ECF 0%,#5fb8e8 100%);border-radius:20px;padding:28px 28px 24px;margin-bottom:22px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(0,142,207,.28)}
+.hero-title{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:2px}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.80);font-weight:600;margin-bottom:16px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+.hs{background:rgba(255,255,255,.18);border-radius:14px;padding:12px 14px;border:1px solid rgba(255,255,255,.20)}
+.hs-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.70);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.hs-val{font-size:22px;font-weight:900;color:#fff;line-height:1}
+.card{border-radius:18px!important;border:1px solid rgba(0,142,207,.15)!important;box-shadow:0 2px 16px rgba(0,142,207,.08)!important;margin-bottom:16px}
+.card thead th{background:#008ECF!important;color:#fff!important;font-size:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button><script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
+<a href="calculadora_efetividade.html" class="back">← Calculadora</a>
+<div class="container">
+  <div class="hero">
+    <div class="hero-title">🎉 Calculadora de Eventos</div>
+    <div class="hero-sub">Referência: 19/08/2026 &nbsp;·&nbsp; escolas com frente de relacionamento = Eventos (já concluíram o funil, com ou sem venda)</div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-lbl">Escolas</div><div class="hs-val">249</div></div>
+      <div class="hs"><div class="hs-lbl">Receita (ano ant.)</div><div class="hs-val">R$ 3.565.206</div></div>
+      <div class="hs"><div class="hs-lbl">Alunos (ano ant.)</div><div class="hs-val">23,828</div></div>
+      <div class="hs"><div class="hs-lbl">Com atividade 30d</div><div class="hs-val">59.4%</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-title">Esforço recente (últimos 30 dias)</span></div>
+    <div style="padding:0 18px 18px;font-size:13px;line-height:1.9;color:var(--text)">
+      <p><b>148</b> de 249 escolas tiveram ao menos uma atividade nos últimos 30 dias (59.4%).</p>
+      <p><b>149000</b> atividades registradas · <b>743</b> marcadas como efetivas.</p>
+      <p style="color:var(--muted);font-size:11px;margin-top:8px">Esta frente já concluiu o funil de venda (com ou sem compra) — por isso não há aqui projeção de "% efetividade no prazo" nem meta de 80%, diferente das páginas de Retenção e Receita. O acompanhamento é de esforço/composição.</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-head"><span class="card-title">Por segmentação</span></div>
+      <table style="width:100%;font-size:12px;border-collapse:collapse">
+        <thead><tr><th style="text-align:left;padding:6px 10px">Segmentação</th><th style="text-align:right;padding:6px 10px">Escolas</th><th style="text-align:right;padding:6px 10px">%</th></tr></thead>
+        <tbody><tr><td style="padding:6px 10px">High touch</td><td style="text-align:right;padding:6px 10px">113</td><td style="text-align:right;padding:6px 10px">45.4%</td></tr><tr><td style="padding:6px 10px">Medium touch</td><td style="text-align:right;padding:6px 10px">94</td><td style="text-align:right;padding:6px 10px">37.8%</td></tr><tr><td style="padding:6px 10px">Premium touch</td><td style="text-align:right;padding:6px 10px">32</td><td style="text-align:right;padding:6px 10px">12.9%</td></tr><tr><td style="padding:6px 10px">Premium touch 40+</td><td style="text-align:right;padding:6px 10px">10</td><td style="text-align:right;padding:6px 10px">4.0%</td></tr></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">Por baldinho</span></div>
+      <table style="width:100%;font-size:12px;border-collapse:collapse">
+        <thead><tr><th style="text-align:left;padding:6px 10px">Baldinho</th><th style="text-align:right;padding:6px 10px">Escolas</th><th style="text-align:right;padding:6px 10px">%</th></tr></thead>
+        <tbody><tr><td style="padding:6px 10px">Renovação</td><td style="text-align:right;padding:6px 10px">194</td><td style="text-align:right;padding:6px 10px">77.9%</td></tr><tr><td style="padding:6px 10px">Anos Anteriores</td><td style="text-align:right;padding:6px 10px">27</td><td style="text-align:right;padding:6px 10px">10.8%</td></tr><tr><td style="padding:6px 10px">Novas - Outbound</td><td style="text-align:right;padding:6px 10px">12</td><td style="text-align:right;padding:6px 10px">4.8%</td></tr><tr><td style="padding:6px 10px">Retração Anos Anteriores</td><td style="text-align:right;padding:6px 10px">7</td><td style="text-align:right;padding:6px 10px">2.8%</td></tr><tr><td style="padding:6px 10px">Concorrência</td><td style="text-align:right;padding:6px 10px">5</td><td style="text-align:right;padding:6px 10px">2.0%</td></tr><tr><td style="padding:6px 10px">Retração</td><td style="text-align:right;padding:6px 10px">4</td><td style="text-align:right;padding:6px 10px">1.6%</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-title">Top consultores (por nº de escolas em Eventos)</span></div>
+    <table style="width:100%;font-size:12px;border-collapse:collapse">
+      <thead><tr><th style="text-align:left;padding:6px 10px">Consultor</th><th style="text-align:right;padding:6px 10px">Escolas</th><th style="text-align:right;padding:6px 10px">Receita (ano ant.)</th></tr></thead>
+      <tbody><tr><td style="padding:6px 10px">Pâmela Miranda</td><td style="text-align:right;padding:6px 10px">22</td><td style="text-align:right;padding:6px 10px">R$ 152.509</td></tr><tr><td style="padding:6px 10px">Sarah Moura</td><td style="text-align:right;padding:6px 10px">18</td><td style="text-align:right;padding:6px 10px">R$ 202.712</td></tr><tr><td style="padding:6px 10px">Talita Panassol</td><td style="text-align:right;padding:6px 10px">18</td><td style="text-align:right;padding:6px 10px">R$ 387.292</td></tr><tr><td style="padding:6px 10px">Vivian Cristina</td><td style="text-align:right;padding:6px 10px">16</td><td style="text-align:right;padding:6px 10px">R$ 117.658</td></tr><tr><td style="padding:6px 10px">Renata Brandão</td><td style="text-align:right;padding:6px 10px">14</td><td style="text-align:right;padding:6px 10px">R$ 242.657</td></tr><tr><td style="padding:6px 10px">Thayná Bastos</td><td style="text-align:right;padding:6px 10px">13</td><td style="text-align:right;padding:6px 10px">R$ 209.616</td></tr><tr><td style="padding:6px 10px">Nicole Cavalcante de Oliveira</td><td style="text-align:right;padding:6px 10px">13</td><td style="text-align:right;padding:6px 10px">R$ 181.033</td></tr><tr><td style="padding:6px 10px">LARI FREITAS MONTEIRO</td><td style="text-align:right;padding:6px 10px">12</td><td style="text-align:right;padding:6px 10px">R$ 177.148</td></tr><tr><td style="padding:6px 10px">Andreina Ferreira</td><td style="text-align:right;padding:6px 10px">10</td><td style="text-align:right;padding:6px 10px">R$ 169.599</td></tr><tr><td style="padding:6px 10px">Kaian Luís Silva</td><td style="text-align:right;padding:6px 10px">9</td><td style="text-align:right;padding:6px 10px">R$ 58.686</td></tr><tr><td style="padding:6px 10px">Thais Souza</td><td style="text-align:right;padding:6px 10px">8</td><td style="text-align:right;padding:6px 10px">R$ 129.032</td></tr><tr><td style="padding:6px 10px">Carla Ferraz Gomes</td><td style="text-align:right;padding:6px 10px">8</td><td style="text-align:right;padding:6px 10px">R$ 198.538</td></tr><tr><td style="padding:6px 10px">Mayane Oliveira</td><td style="text-align:right;padding:6px 10px">7</td><td style="text-align:right;padding:6px 10px">R$ 74.947</td></tr><tr><td style="padding:6px 10px">Stefany Soares Figueredo</td><td style="text-align:right;padding:6px 10px">7</td><td style="text-align:right;padding:6px 10px">R$ 50.098</td></tr><tr><td style="padding:6px 10px">Julia Cordeiro</td><td style="text-align:right;padding:6px 10px">7</td><td style="text-align:right;padding:6px 10px">R$ 130.461</td></tr><tr><td style="padding:6px 10px">Shelry Solart</td><td style="text-align:right;padding:6px 10px">7</td><td style="text-align:right;padding:6px 10px">R$ 59.592</td></tr><tr><td style="padding:6px 10px">Laura Pagliuzo</td><td style="text-align:right;padding:6px 10px">6</td><td style="text-align:right;padding:6px 10px">R$ 93.365</td></tr><tr><td style="padding:6px 10px">Indlayse Ferreira</td><td style="text-align:right;padding:6px 10px">6</td><td style="text-align:right;padding:6px 10px">R$ 123.638</td></tr><tr><td style="padding:6px 10px">Maria Elvira Silva de Jesus</td><td style="text-align:right;padding:6px 10px">5</td><td style="text-align:right;padding:6px 10px">R$ 196.592</td></tr><tr><td style="padding:6px 10px">Mariana Santana</td><td style="text-align:right;padding:6px 10px">5</td><td style="text-align:right;padding:6px 10px">R$ 103.718</td></tr></tbody>
+    </table>
+  </div>
+</div>
+</body></html>
