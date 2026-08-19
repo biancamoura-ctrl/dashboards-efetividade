@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capacidade &middot; Receita (B1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:#7668AC;color:#fff;min-height:100vh;overflow-x:hidden}
+.page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 24px 48px}
+.container{width:100%;max-width:900px}
+.brand-name{text-align:center;font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:4px}
+.brand-name span{color:#F9DC45}
+.tagline{text-align:center;font-size:11px;font-weight:700;color:#fff;opacity:.55;text-transform:uppercase;letter-spacing:2.5px;margin-bottom:6px}
+.date-line{text-align:center;font-size:12px;color:#fff;opacity:.65;font-weight:600;margin-bottom:22px}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#fff;opacity:.7;text-decoration:none;font-weight:600;transition:opacity .15s}
+.back-link:hover{opacity:1}
+.nav-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:20px}
+.frente-tabs{display:flex;gap:8px;}
+.frente-tab{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:999px;font-size:12px;font-weight:700;text-decoration:none;border:1.5px solid rgba(255,255,255,.35);color:#fff;opacity:.75;transition:opacity .15s,background .15s}
+.frente-tab:hover{opacity:1}
+.frente-tab.active{background:#F9DC45;color:#3B2D8F;border-color:#F9DC45;opacity:1}
+.section-title{font-size:14px;font-weight:800;color:#fff;opacity:.8;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;margin-top:28px}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.table-wrap{background:#fff;border-radius:16px;padding:0;box-shadow:0 4px 20px rgba(0,0,0,.15);overflow:hidden;margin-bottom:28px}
+.table-title{background:#7668AC;color:#fff;padding:16px 22px;font-size:14px;font-weight:800;letter-spacing:.5px}
+table{width:100%;border-collapse:collapse;font-family:'Montserrat',sans-serif;}
+th{background:#F3F6F9;color:#595959;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:12px 14px;border-bottom:2px solid #E0E6ED;white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid #F0F3F6;vertical-align:middle;color:#1D1C1D;font-size:13px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAFBFC}
+.nota-box{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:16px 20px;margin-bottom:28px;font-size:12px;line-height:1.7;color:#fff;opacity:.85}
+.nota-box strong{color:#F9DC45}
+.footer{text-align:center;margin-top:32px;font-size:11px;color:#fff;opacity:.4;font-weight:600}
+.toggle-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 16px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;cursor:pointer;transition:background .15s,border-color .15s;white-space:nowrap}
+.toggle-btn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.6)}
+.toggle-btn.active{background:#F9DC45;color:#3B2D8F;border-color:#F9DC45}
+@media(max-width:700px){.card-grid{grid-template-columns:1fr}.table-wrap{overflow-x:auto}.nav-row{flex-direction:column;align-items:flex-start;}}
+html.dark{background:#18181b;color:#d4d4d0;}
+html.dark body{background:#18181b;color:#d4d4d0}
+html.dark .table-wrap{background:#1e1e22;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+html.dark table{background:#1e1e22}
+html.dark th{background:#27272a;color:#71717a;border-bottom-color:#2d2d33}
+html.dark td{color:#d4d4d0;border-bottom-color:#2d2d33}
+html.dark tr:hover td{background:#27272a}
+html.dark .nota-box{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+<div class="page">
+<div class="container">
+  <div class="brand-name">Estante <span>M&aacute;gica</span></div>
+  <div class="tagline">CS Ops &nbsp;&middot;&nbsp; Relacionamento</div>
+  <div class="date-line">Capacidade por Frente &middot; Receita (B1) &nbsp;&middot;&nbsp; 19/08/2026</div>
+
+  <div class="nav-row">
+    <a href="capacidade_carteira.html" class="back-link">&#8592; Vis&atilde;o geral (todos os segmentos)</a>
+    <div class="frente-tabs">
+      <a href="capacidade_receita.html" class="frente-tab active">Receita (B1)</a>
+      <a href="capacidade_retencao.html" class="frente-tab">Retenção (B0)</a>
+    </div>
+  </div>
+
+  <div style="margin-bottom:20px;display:flex;gap:8px;flex-wrap:wrap;">
+    <button class="toggle-btn" id="metodoBtn" onclick="toggleMetodologia()" style="font-size:11px;padding:6px 14px;">
+      <span style="font-size:13px;">&#9432;</span><span id="metodoLabel">Como funciona?</span>
+    </button>
+    <button class="toggle-btn" id="queryBtn" onclick="toggleQuery()" style="font-size:11px;padding:6px 14px;">
+      <span style="font-size:13px;">&#128196;</span><span id="queryLabel">Query</span>
+    </button>
+  </div>
+
+  <div class="nota-box" id="queryBox" style="display:none;">
+    <strong>Query da p&aacute;gina:</strong><br><br>
+    <pre style="white-space:pre-wrap;word-break:break-word;font-size:11px;font-family:monospace;color:#fff;opacity:.9;line-height:1.6;">WITH ativas AS (
+  SELECT
+    d.id_ax,
+    LOWER(IFNULL(d.proprietario_b1_email, &#x27;&#x27;)) AS owner_email,
+    COALESCE(
+      NULLIF(TRIM(d.proprietario_b1_fullname), &#x27;&#x27;),
+      NULLIF(TRIM(d.proprietario_b1_name), &#x27;&#x27;)
+    ) AS nome_owner_raw,
+    CASE
+      WHEN LOWER(d.segmentacao_atendimento) IN (&#x27;high touch&#x27;, &#x27;high_touch&#x27;) AND d.baldinho = &#x27;Renovação&#x27;
+        THEN &#x27;High touch - Renovação&#x27;
+      WHEN LOWER(d.segmentacao_atendimento) IN (&#x27;high touch&#x27;, &#x27;high_touch&#x27;)
+        THEN &#x27;High touch - Novas&#x27;
+      WHEN LOWER(d.segmentacao_atendimento) IN (&#x27;medium touch&#x27;, &#x27;medium_touch&#x27;)
+        THEN &#x27;Medium touch&#x27;
+      ELSE &#x27;Outros&#x27;
+    END AS seg
+  FROM `lakehouse-378716.crm_ax_raw.ax_deals_temp_` d
+  WHERE d.pais = &#x27;Brasil&#x27;
+    AND d.ano_jornada = &#x27;2026&#x27;
+    AND (d.etapa IN (&#x27;Ciclo de Vendas&#x27;, &#x27;Ciclo de Eventos&#x27;, &#x27;Onboarding &amp; Boas vindas&#x27;, &#x27;Em Aplicação&#x27;, &#x27;Retração&#x27;)
+       OR (d.etapa = &#x27;Enviou Lista de Alunos&#x27; AND d.tipo_de_entrada = &#x27;self service&#x27;))
+    AND d.segmentacao_atendimento IN (&#x27;High touch&#x27;, &#x27;Medium touch&#x27;)
+    AND d.data_da_reuniao_bv_concluida IS NOT NULL
+    AND (data_do_evento_de_autografos IS NULL OR CAST(NULLIF(TRIM(data_do_evento_de_autografos), &#x27;&#x27;) AS DATE) &gt; CURRENT_DATE())
+    AND LOWER(IFNULL(d.frente_de_relacionamento, &#x27;&#x27;)) = &#x27;receita&#x27;
+)
+SELECT seg, owner_email, nome_owner_raw, COUNT(*) AS n_escolas
+FROM ativas
+WHERE seg != &#x27;Outros&#x27;
+GROUP BY 1, 2, 3
+ORDER BY seg, n_escolas DESC</pre>
+  </div>
+
+  <div class="nota-box" id="notaBox" style="display:none;">
+    <strong>Metodologia:</strong> mostra s&oacute; escolas com <strong>frente_de_relacionamento = receita</strong> no AXCRM,
+    nos 3 segmentos com frente por consultor mapeada na aba <strong>Time novo</strong> (High touch - Novas, High touch - Renova&ccedil;&atilde;o, Medium touch).
+    Premium touch e Premium touch 40+ n&atilde;o t&ecirc;m consultor de reten&ccedil;&atilde;o/receita definido ainda &mdash; ficam s&oacute; na vis&atilde;o geral.
+    <br><br>
+    <strong>Proprietário B1</strong> &eacute; o dono relevante pra esta frente &mdash; em escolas de reten&ccedil;&atilde;o o B1 do deal costuma ser legado/desatualizado, por isso B0 e B1 s&atilde;o campos independentes, n&atilde;o o mesmo campo filtrado de dois jeitos.
+    <br><br>
+    Capacidade m&aacute;xima por consultor: <strong>80 escolas (Analista)</strong> &middot; <strong>60 (Estagi&aacute;rio)</strong>. Consultor do segmento sem frente mapeada na aba Time novo n&atilde;o entra em nenhuma das 2 p&aacute;ginas.
+    <br><br>
+    <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos (self service), Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas e Ciclo de Eventos &middot; BV conclu&iacute;da &middot; sem evento de aut&oacute;grafos j&aacute; realizado.
+  </div>
+
+  <div class="section-title">Resumo por Segmento</div>
+  <div class="card-grid">
+
+  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <div style="font-weight:800;font-size:14px;color:#1D1C1D;">High touch - Novas</div>
+      <span id="badge-htn" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">94</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">360</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+266</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+    </div>
+    <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
+      <div style="height:100%;width:26.1%;background:#1A9957;border-radius:4px;"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px;">
+      <div style="font-size:11px;color:#9BA8B5;">3 Analistas (80 esc.) · 2 Estagiários (60 esc.)</div>
+      <div style="font-size:11px;color:#9BA8B5;">26.1% utilizado</div>
+    </div>
+  </div>
+
+  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <div style="font-weight:800;font-size:14px;color:#1D1C1D;">High touch - Renova&ccedil;&atilde;o</div>
+      <span id="badge-htr" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">75</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">320</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+245</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+    </div>
+    <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
+      <div style="height:100%;width:23.4%;background:#1A9957;border-radius:4px;"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px;">
+      <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) · 4 Estagiários (60 esc.)</div>
+      <div style="font-size:11px;color:#9BA8B5;">23.4% utilizado</div>
+    </div>
+  </div>
+
+  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #1A9957;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <div style="font-weight:800;font-size:14px;color:#1D1C1D;">Medium touch</div>
+      <span id="badge-mt" style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">56</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">240</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+184</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+    </div>
+    <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
+      <div style="height:100%;width:23.3%;background:#1A9957;border-radius:4px;"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px;">
+      <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 4 Estagiários (60 esc.)</div>
+      <div style="font-size:11px;color:#9BA8B5;">23.3% utilizado</div>
+    </div>
+  </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-title">Tabela Consolidada &middot; Receita (B1)</div>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Segmento / Time</th>
+          <th style="text-align:center;">Escolas Ativas</th>
+          <th style="text-align:center;">Capacidade Total</th>
+          <th style="text-align:center;">Saldo</th>
+          <th style="text-align:center;">Status</th>
+          <th style="text-align:center;">Contratar</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-resumo"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="section-title">Distribui&ccedil;&atilde;o por Proprietário B1</div>
+  <div class="table-wrap">
+    <div class="table-title">Escolas por Proprietário B1</div>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Proprietário B1</th>
+          <th style="text-align:center;">Escolas</th>
+          <th style="text-align:center;">Capacidade individual</th>
+          <th style="text-align:center;">% ocupa&ccedil;&atilde;o</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-donos"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="footer">Fonte: BigQuery (ax_deals_temp_, frente_de_relacionamento) &middot; 19/08/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
+</div>
+</div>
+
+<script>
+const DADOS = { 'htn': { esc: 94, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 75, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 56, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' } };
+const SEGS_LABEL = [['htn','High touch - Novas'],['htr','High touch - Renovação'],['mt','Medium touch']];
+const DONOS = [
+  ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 16, 80],
+  ['Vivian Cristina', 'High touch - Novas', 13, 60],
+  ['Ana Julia Martineli', 'High touch - Novas', 13, 60],
+  ['Indlayse Ferreira', 'High touch - Novas', 11, 80],
+  ['Thayná Bastos', 'High touch - Novas', 9, 80],
+  ['Laura Pagliuzo', 'High touch - Novas', 2, 60],
+  ['Julia Cordeiro', 'High touch - Novas', 9, null],
+  ['Renata Brandão', 'High touch - Novas', 4, null],
+  ['Kauã Coelho', 'High touch - Novas', 3, null],
+  ['Sarah Moura', 'High touch - Novas', 3, null],
+  ['Gabriela Ribeiro', 'High touch - Novas', 3, null],
+  ['Andreina Ferreira', 'High touch - Novas', 2, null],
+  ['Aíres Muniz Santos', 'High touch - Novas', 2, null],
+  ['Maria Eduarda Carvalho', 'High touch - Novas', 2, null],
+  ['Sem B1', 'High touch - Novas', 1, null],
+  ['Viviane Gomes Luz', 'High touch - Novas', 1, null],
+  ['Erick Andrade', 'High touch - Renovação', 8, 80],
+  ['Vitoria Borges', 'High touch - Renovação', 8, 60],
+  ['Laura Pagliuzo', 'High touch - Renovação', 7, 60],
+  ['Kaian Luís Silva', 'High touch - Renovação', 7, 60],
+  ['Maria Eduarda Carriello dos Santos', 'High touch - Renovação', 5, 60],
+  ['Thayná Bastos', 'High touch - Renovação', 3, 80],
+  ['Vivian Cristina', 'High touch - Renovação', 2, 60],
+  ['Indlayse Ferreira', 'High touch - Renovação', 1, 80],
+  ['Sarah Moura', 'High touch - Renovação', 13, null],
+  ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 9, null],
+  ['Andreina Ferreira', 'High touch - Renovação', 3, null],
+  ['Jennifer Dos Anjos', 'High touch - Renovação', 2, null],
+  ['Carla Ferraz Gomes', 'High touch - Renovação', 1, null],
+  ['Mariana Santana', 'High touch - Renovação', 1, null],
+  ['Shelry Solart', 'High touch - Renovação', 1, null],
+  ['Sem B1', 'High touch - Renovação', 1, null],
+  ['Admin', 'High touch - Renovação', 1, null],
+  ['Viviane Gomes Luz', 'High touch - Renovação', 1, null],
+  ['Carla Silva', 'High touch - Renovação', 1, null],
+  ['Mayane Oliveira', 'Medium touch', 12, 60],
+  ['Pâmela Miranda', 'Medium touch', 10, 60],
+  ['Dalva Paschoalini', 'Medium touch', 10, 60],
+  ['Stefany de Brito', 'Medium touch', 8, 60],
+  ['Kaian Luís Silva', 'Medium touch', 2, 60],
+  ['Vivian Cristina', 'Medium touch', 1, 60],
+  ['Sarah Moura', 'Medium touch', 7, null],
+  ['Jennifer Dos Anjos', 'Medium touch', 2, null],
+  ['Stefany Soares Figueredo', 'Medium touch', 2, null],
+  ['Ana Clara Peres', 'Medium touch', 1, null],
+  ['Nicole Cavalcante de Oliveira', 'Medium touch', 1, null]
+];
+
+function isDarkMode() { return document.documentElement.classList.contains('dark'); }
+function statusColor(pct) { if (pct >= 100) return '#D32F2F'; if (pct >= 80) return '#C47A00'; return '#1A9957'; }
+
+function renderTbody() {
+  const textColor = isDarkMode() ? '#d4d4d0' : '#1D1C1D';
+  const totalBg = isDarkMode() ? '#27272a' : '#F3F6F9';
+  const totalBorder = isDarkMode() ? '#3f3f46' : '#D0D7E0';
+  let htmlOut = '';
+  let totalEsc = 0, totalCap = 0;
+  for (const [key, label] of SEGS_LABEL) {
+    const v = DADOS[key];
+    const saldo = v.cap - v.esc;
+    const pct = v.cap ? Math.round(v.esc / v.cap * 1000) / 10 : 0;
+    const saldoColor = saldo >= 0 ? '#1A9957' : '#D32F2F';
+    const saldoStr = saldo >= 0 ? '+' + saldo : '−' + Math.abs(saldo);
+    const barColor = statusColor(pct);
+    const barW = Math.min(pct, 100);
+    const contratar = saldo < 0 ? Math.ceil(Math.abs(saldo) / 60) + ' Estag.' : '—';
+    totalEsc += v.esc; totalCap += v.cap;
+    htmlOut += `<tr>
+      <td><div style="font-weight:700;font-size:13px;color:${textColor};">${label}</div><div style="font-size:11px;color:#9BA8B5;margin-top:2px;">${v.linha}</div></td>
+      <td style="text-align:center;font-weight:700;font-size:15px;">${v.esc}</td>
+      <td style="text-align:center;">
+        <div style="font-weight:700;">${v.cap}</div>
+        <div style="margin:4px auto 0;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;width:80px;"><div style="height:100%;width:${barW}%;background:${barColor};border-radius:3px;"></div></div>
+        <div style="font-size:10px;color:#9BA8B5;margin-top:2px;">${pct}% utilizado</div>
+      </td>
+      <td style="text-align:center;"><span style="font-weight:800;font-size:16px;color:${saldoColor};">${saldoStr}</span></td>
+      <td style="text-align:center;"><span style="${v.statusCss};padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">${v.status}</span></td>
+      <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">${contratar}</span></td>
+    </tr>`;
+  }
+  const totalSaldo = totalCap - totalEsc;
+  const totalPct = totalCap ? Math.round(totalEsc / totalCap * 1000) / 10 : 0;
+  const totalSaldoStr = totalSaldo >= 0 ? '+' + totalSaldo : '−' + Math.abs(totalSaldo);
+  const totalSaldoColor = totalSaldo >= 0 ? '#1A9957' : '#D32F2F';
+  htmlOut += `<tr style="background:${totalBg};border-top:2px solid ${totalBorder};">
+    <td style="font-weight:800;font-size:13px;color:${textColor};">Total &mdash; 3 segmentos</td>
+    <td style="text-align:center;font-weight:800;font-size:15px;color:${textColor};">${totalEsc}</td>
+    <td style="text-align:center;"><div style="font-weight:800;color:${textColor};">${totalCap}</div><div style="font-size:10px;color:#9BA8B5;margin-top:2px;">${totalPct}% utilizado</div></td>
+    <td style="text-align:center;"><span style="font-weight:800;font-size:16px;color:${totalSaldoColor};">${totalSaldoStr}</span></td>
+    <td style="text-align:center;"><span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px;">Saudável</span></td>
+    <td style="text-align:center;"><span style="color:#9BA8B5;font-size:12px;">—</span></td>
+  </tr>`;
+  document.getElementById('tbody-resumo').innerHTML = htmlOut;
+}
+
+function isSemDono(nome) { return nome.indexOf('Sem B') === 0; }
+
+function renderDonos() {
+  const dark = isDarkMode();
+  const textColor = dark ? '#d4d4d0' : '#1D1C1D';
+  const segHeaderBorder = dark ? '#3f3f46' : '#D0D7E0';
+  const SEG_COLORS = {
+    'High touch - Novas':     { bg:'#E6F5EE', color:'#1A7A45' },
+    'High touch - Renovação': { bg:'#E8F4FB', color:'#0A6696' },
+    'Medium touch':           { bg:'#FFF3E0', color:'#B35E00' },
+  };
+  let htmlOut = '';
+  let lastSeg = null;
+  for (const [prop, seg, escolas, cap] of DONOS) {
+    const especial = isSemDono(prop);
+    if (seg !== lastSeg) {
+      lastSeg = seg;
+      const sc = SEG_COLORS[seg] || { bg:'#F3F6F9', color:'#595959' };
+      htmlOut += `<tr><td colspan="4" style="background:${sc.bg};color:${sc.color};font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.08em;padding:9px 14px;border-top:${htmlOut !== '' ? '3px solid ' + segHeaderBorder : 'none'};">${seg}</td></tr>`;
+    }
+    const capStr = cap !== null ? cap : '—';
+    let pctStr = '—', pctColor = '#9BA8B5', barW = 0, barColor = '#E0E6ED';
+    if (cap !== null) {
+      const pct = Math.round(escolas / cap * 1000) / 10;
+      pctStr = pct + '%'; barW = Math.min(pct, 100);
+      if (pct >= 100) { pctColor = '#D32F2F'; barColor = '#D32F2F'; }
+      else if (pct >= 80) { pctColor = '#C47A00'; barColor = '#C47A00'; }
+      else { pctColor = '#1A9957'; barColor = '#1A9957'; }
+    }
+    const nameStyle = especial ? 'color:#9BA8B5;font-style:italic;font-size:12px;' : `font-weight:600;font-size:13px;color:${textColor};`;
+    htmlOut += `<tr>
+      <td style="${nameStyle}">${prop}</td>
+      <td style="text-align:center;font-weight:700;font-size:14px;">${escolas}</td>
+      <td style="text-align:center;color:#9BA8B5;font-size:13px;">${capStr}</td>
+      <td style="text-align:center;">`;
+    if (cap !== null) {
+      htmlOut += `<div style="display:flex;align-items:center;gap:8px;justify-content:center;">
+        <div style="width:64px;height:6px;background:#E0E6ED;border-radius:3px;overflow:hidden;flex-shrink:0;"><div style="height:100%;width:${barW}%;background:${barColor};border-radius:3px;"></div></div>
+        <span style="font-size:12px;font-weight:700;color:${pctColor};white-space:nowrap;">${pctStr}</span>
+      </div>`;
+    } else {
+      htmlOut += `<span style="color:#9BA8B5;font-size:12px;">—</span>`;
+    }
+    htmlOut += `</td></tr>`;
+  }
+  document.getElementById('tbody-donos').innerHTML = htmlOut;
+}
+
+renderTbody();
+renderDonos();
+
+function toggleQuery() {
+  const box = document.getElementById('queryBox');
+  const label = document.getElementById('queryLabel');
+  const isOpen = box.style.display !== 'none';
+  box.style.display = isOpen ? 'none' : 'block';
+  label.textContent = isOpen ? 'Query' : 'Ocultar query';
+}
+function toggleMetodologia() {
+  const box = document.getElementById('notaBox');
+  const label = document.getElementById('metodoLabel');
+  const isOpen = box.style.display !== 'none';
+  box.style.display = isOpen ? 'none' : 'block';
+  label.textContent = isOpen ? 'Como funciona?' : 'Ocultar metodologia';
+}
+</script>
+</body>
+</html>
