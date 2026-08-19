@@ -97,10 +97,9 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
   FROM `lakehouse-378716.use_cases.hubspot_cs_deals` d
   WHERE d.pais_escola = &#x27;BR&#x27;
     AND d.ano_jornada = &#x27;2026&#x27;
-    AND (d.deal_stage IN (&#x27;Ciclo de Vendas&#x27;, &#x27;Ciclo de Eventos&#x27;, &#x27;Onboarding &amp; Boas vindas&#x27;, &#x27;Em Aplicação&#x27;, &#x27;Retração&#x27;)
+    AND (d.deal_stage IN (&#x27;Ciclo de Vendas&#x27;, &#x27;Ciclo de Eventos&#x27;, &#x27;Onboarding &amp; Boas vindas&#x27;, &#x27;Em Aplicação&#x27;, &#x27;Projeto Concluído&#x27;)
        OR (d.deal_stage = &#x27;Enviou Lista de Alunos&#x27; AND d.tipo_de_entrada = &#x27;self service&#x27;))
-    AND d.segmentacao_atendimento IN (&#x27;High touch&#x27;, &#x27;Medium touch&#x27;, &#x27;Premium touch&#x27;, &#x27;Premium touch 40+&#x27;)
-    AND (d.DA IS NULL OR CAST(NULLIF(TRIM(d.DA), &#x27;&#x27;) AS DATE) &gt; CURRENT_DATE())
+    AND LOWER(IFNULL(d.segmentacao_atendimento, &#x27;&#x27;)) NOT IN (&#x27;low touch&#x27;, &#x27;low_touch&#x27;)
     AND LOWER(IFNULL(d.frente_de_relacionamento, &#x27;&#x27;)) = &#x27;receita&#x27;
 )
 SELECT seg, owner_email, nome_owner_raw, quem_vai_comprar, COUNT(*) AS n_escolas
@@ -121,7 +120,7 @@ ORDER BY seg, n_escolas DESC</pre>
     <br><br>
     Capacidade m&aacute;xima por consultor: <strong>80 escolas (Analista)</strong> &middot; <strong>60 (Estagi&aacute;rio)</strong>. Consultor de HT/MT sem frente mapeada na aba Time novo n&atilde;o entra em nenhuma das 2 p&aacute;ginas.
     <br><br>
-    <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos (self service), Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas e Ciclo de Eventos &middot; sem evento de aut&oacute;grafos j&aacute; realizado.
+    <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos (self service), Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas, Ciclo de Eventos e Projeto Conclu&iacute;do &middot; qualquer segmenta&ccedil;&atilde;o exceto Low touch.
   </div>
 
   <div class="section-title">Resumo por Pool</div>
@@ -133,16 +132,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">100</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">71</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">360</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+260</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+289</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:27.8%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:19.7%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">3 Analistas (80 esc.) · 2 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">27.8% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">19.7% utilizado</div>
     </div>
   </div>
 
@@ -152,16 +151,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">75</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">70</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">320</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+245</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+250</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:23.4%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:21.9%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) · 4 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">23.4% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">21.9% utilizado</div>
     </div>
   </div>
 
@@ -171,16 +170,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">67</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">62</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">240</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+173</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+178</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:27.9%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:25.8%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 4 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">27.9% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">25.8% utilizado</div>
     </div>
   </div>
 
@@ -190,16 +189,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">43</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">41</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">320</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+277</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+279</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:13.4%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:12.8%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) · 0 Estagiários</div>
-      <div style="font-size:11px;color:#9BA8B5;">13.4% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">12.8% utilizado</div>
     </div>
   </div>
 
@@ -209,16 +208,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">10</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">9</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">80</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+70</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+71</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:12.5%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:11.2%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) · 0 Estagiários</div>
-      <div style="font-size:11px;color:#9BA8B5;">12.5% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">11.2% utilizado</div>
     </div>
   </div>
 
@@ -303,59 +302,51 @@ ORDER BY seg, n_escolas DESC</pre>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 100, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 75, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 67, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 43, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 10, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' }, 'rd': { esc: 34, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' }, 'sd': { esc: 7, cap: 60, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 1 Estagiário (60 esc.)' } };
+const DADOS = { 'htn': { esc: 71, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 70, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 62, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 41, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 9, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' }, 'rd': { esc: 34, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' }, 'sd': { esc: 7, cap: 60, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 1 Estagiário (60 esc.)' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+'], ['rd','Redes'], ['sd','SEDUC']];
 const DONOS = [
   ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 17, 80],
-  ['Indlayse Ferreira', 'High touch - Novas', 13, 80],
-  ['Vivian Cristina', 'High touch - Novas', 13, 60],
-  ['Ana Julia Martineli', 'High touch - Novas', 13, 60],
+  ['Indlayse Ferreira', 'High touch - Novas', 12, 80],
+  ['Ana Julia Martineli', 'High touch - Novas', 12, 60],
+  ['Vivian Cristina', 'High touch - Novas', 11, 60],
   ['Thayná Bastos', 'High touch - Novas', 11, 80],
-  ['Maria Eduarda Carvalho', 'High touch - Novas', 2, 80],
   ['Laura Pagliuzo', 'High touch - Novas', 2, 60],
-  ['Julia Cordeiro', 'High touch - Novas', 9, null],
-  ['Renata Brandão', 'High touch - Novas', 5, null],
-  ['Gabriela Ribeiro', 'High touch - Novas', 4, null],
-  ['Aíres Muniz Santos', 'High touch - Novas', 3, null],
-  ['Kauã Coelho', 'High touch - Novas', 3, null],
-  ['Sem B1', 'High touch - Novas', 2, null],
-  ['Andreina Ferreira', 'High touch - Novas', 2, null],
-  ['Viviane Gomes Luz', 'High touch - Novas', 1, null],
+  ['Julia Cordeiro', 'High touch - Novas', 4, null],
+  ['Renata Brandão', 'High touch - Novas', 1, null],
+  ['Andreina Ferreira', 'High touch - Novas', 1, null],
   ['Erick Andrade', 'High touch - Renovação', 11, 80],
   ['Vitoria Borges', 'High touch - Renovação', 10, 60],
   ['Kaian Luís Silva', 'High touch - Renovação', 9, 60],
   ['Laura Pagliuzo', 'High touch - Renovação', 8, 60],
   ['Maria Eduarda Carriello dos Santos', 'High touch - Renovação', 6, 60],
-  ['Thayná Bastos', 'High touch - Renovação', 5, 80],
+  ['Thayná Bastos', 'High touch - Renovação', 2, 80],
   ['Vivian Cristina', 'High touch - Renovação', 2, 60],
-  ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 1, 80],
   ['Carla Ferraz Gomes', 'High touch - Renovação', 1, 80],
+  ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 1, 80],
   ['Mariana Santana', 'High touch - Renovação', 1, 80],
   ['Indlayse Ferreira', 'High touch - Renovação', 1, 80],
-  ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 9, null],
+  ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 10, null],
   ['Sem B1', 'High touch - Renovação', 4, null],
-  ['Carla Silva', 'High touch - Renovação', 3, null],
-  ['Andreina Ferreira', 'High touch - Renovação', 2, null],
-  ['Viviane Gomes Luz', 'High touch - Renovação', 1, null],
+  ['Carla Silva', 'High touch - Renovação', 1, null],
+  ['Andreina Ferreira', 'High touch - Renovação', 1, null],
   ['Shelry Solart', 'High touch - Renovação', 1, null],
-  ['Mayane Oliveira', 'Medium touch', 17, 60],
+  ['Viviane Gomes Luz', 'High touch - Renovação', 1, null],
+  ['Mayane Oliveira', 'Medium touch', 16, 60],
   ['Pâmela Miranda', 'Medium touch', 15, 60],
-  ['Dalva Paschoalini', 'Medium touch', 13, 60],
-  ['Stefany de Brito', 'Medium touch', 10, 60],
-  ['Kaian Luís Silva', 'Medium touch', 4, 60],
+  ['Dalva Paschoalini', 'Medium touch', 12, 60],
+  ['Stefany de Brito', 'Medium touch', 11, 60],
+  ['Kaian Luís Silva', 'Medium touch', 3, 60],
   ['Vivian Cristina', 'Medium touch', 1, 60],
   ['Giovanna Munhoz', 'Medium touch', 2, null],
-  ['Stefany Soares Figueredo', 'Medium touch', 2, null],
   ['Andreina Ferreira', 'Medium touch', 1, null],
-  ['Nicole Cavalcante de Oliveira', 'Medium touch', 1, null],
-  ['Ana Clara Peres', 'Medium touch', 1, null],
-  ['Mariana Santana', 'Premium touch', 14, 80],
+  ['Stefany Soares Figueredo', 'Medium touch', 1, null],
+  ['Mariana Santana', 'Premium touch', 13, 80],
   ['Talita Panassol', 'Premium touch', 11, 80],
   ['Maria Eduarda Carvalho', 'Premium touch', 8, 80],
-  ['Carla Ferraz Gomes', 'Premium touch', 6, 80],
+  ['Carla Ferraz Gomes', 'Premium touch', 5, 80],
   ['Maria Elvira Silva de Jesus', 'Premium touch', 2, 80],
   ['LARI FREITAS MONTEIRO', 'Premium touch', 2, null],
-  ['Maria Elvira Silva de Jesus', 'Premium touch 40+', 8, 80],
+  ['Maria Elvira Silva de Jesus', 'Premium touch 40+', 7, 80],
   ['Carla Ferraz Gomes', 'Premium touch 40+', 2, 80],
   ['Sarah Moura', 'Redes', 34, 80],
   ['Jennifer Dos Anjos', 'SEDUC', 7, 60]
