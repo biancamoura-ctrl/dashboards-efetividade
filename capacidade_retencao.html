@@ -97,9 +97,9 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
   FROM `lakehouse-378716.use_cases.hubspot_cs_deals` d
   WHERE d.pais_escola = &#x27;BR&#x27;
     AND d.ano_jornada = &#x27;2026&#x27;
+    AND d.segmentacao_atendimento NOT IN (&#x27;Low touch&#x27;)
     AND (d.deal_stage IN (&#x27;Ciclo de Vendas&#x27;, &#x27;Ciclo de Eventos&#x27;, &#x27;Onboarding &amp; Boas vindas&#x27;, &#x27;Em Aplicação&#x27;, &#x27;Projeto Concluído&#x27;)
        OR (d.deal_stage = &#x27;Enviou Lista de Alunos&#x27; AND d.tipo_de_entrada = &#x27;self service&#x27;))
-    AND LOWER(IFNULL(d.segmentacao_atendimento, &#x27;&#x27;)) NOT IN (&#x27;low touch&#x27;, &#x27;low_touch&#x27;)
     AND LOWER(IFNULL(d.frente_de_relacionamento, &#x27;&#x27;)) = &#x27;retenção&#x27;
 )
 SELECT seg, owner_email, nome_owner_raw, quem_vai_comprar, COUNT(*) AS n_escolas
