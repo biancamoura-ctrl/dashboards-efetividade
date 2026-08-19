@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Calculadora de Receita &#8212; 19/08/2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;--green:#008ECF;--green-lt:#e6f4fb;
+  --amber:#7668AC;--amber-lt:#f0eef8;--red:#E94B56;--red-lt:#fef0f1;
+  --yellow:#F9DC45;--purple:#7668AC;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:24px;text-align:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border-top:3px solid var(--yellow)}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:700}
+.card-body{padding:18px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+thead th{background:#f8f8f6;padding:9px 12px;text-align:left;font-weight:700;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{background:#f0f0ec}
+.sort-icon{opacity:.35;margin-left:4px;font-size:10px}
+th.sorted .sort-icon{opacity:1}
+tbody tr{border-bottom:1px solid #f0f0ec;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fdfdf9}
+tbody td{padding:8px 12px;white-space:nowrap}
+td.nome{white-space:normal;min-width:160px;font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ef-high{color:#008ECF;font-weight:700}.ef-mid{color:#7668AC;font-weight:700}.ef-low{color:#E94B56;font-weight:700}
+.qbadge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.qbadge.q1{background:#e6f4fb;color:#008ECF}.qbadge.q2{background:#fef0f1;color:#E94B56}
+.qbadge.q3{background:#f0eef8;color:#7668AC}.qbadge.q4{background:#f3f3f0;color:#595959}
+.bar-wrap{display:inline-flex;align-items:center;gap:6px;width:100%}
+.bar-bg{flex:1;height:6px;background:#e8e8e4;border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none}
+.chip.active{border-color:currentColor}
+.chip.all{background:#f3f3f0;color:#595959}.chip.all.active{background:#e8e8e4}
+.chip.q1{background:#e6f4fb;color:#008ECF}.chip.q1.active{background:#c5e8f7}
+.chip.q2{background:#fef0f1;color:#E94B56}.chip.q2.active{background:#fdd8db}
+.chip.q3{background:#f0eef8;color:#7668AC}.chip.q3.active{background:#dddaf0}
+.chip.q4{background:#f3f3f0;color:#595959}.chip.q4.active{background:#e8e8e4}
+select,input[type=text]{font-family:'Montserrat',sans-serif;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;outline:none}
+select:focus{border-color:var(--yellow)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:6px}
+.summary-bar{font-size:12px;color:var(--muted);padding:10px 16px}
+.summary-bar span{font-weight:700;color:var(--text)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;font-weight:600}
+.kpi-val{font-size:28px;font-weight:800;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi.blue .kpi-val{color:#008ECF}.kpi.amber .kpi-val{color:#7668AC}.kpi.green .kpi-val{color:#008ECF}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:380px}
+#tooltip{position:fixed;background:#595959;color:#fff;font-size:12px;padding:10px 14px;border-radius:8px;pointer-events:none;display:none;max-width:220px;line-height:1.6;z-index:999}
+#tooltip strong{display:block;margin-bottom:4px;font-size:13px}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:300px}}
+html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a}
+html.dark body{background:var(--bg);color:var(--text)}
+html.dark thead th{background:#27272a;border-bottom-color:var(--border)}
+html.dark thead th:hover{background:#303038}
+html.dark tbody tr{border-bottom-color:var(--border)}
+html.dark tbody tr:hover{background:#27272a}
+html.dark .card{background:var(--surface);border-color:var(--border)}
+html.dark .card-head{border-bottom-color:var(--border)}
+html.dark .kpi{background:var(--surface);border-color:var(--border)}
+html.dark .bar-bg{background:var(--border)}
+html.dark select,html.dark input[type=text]{background:#27272a;color:var(--text);border-color:var(--border)}
+html.dark #tooltip{background:#303038;color:var(--text)}
+html.dark .note-box{background:#27272a;border-color:var(--border);color:var(--text)}
+html.dark .insight-box{background:#2a2a1a;color:var(--text)}
+html.dark .chip.all{background:#3f3f46;color:#a1a1aa}
+html.dark .chip.all.active{background:#52525b}
+html.dark .canal-card{background:var(--surface);border-color:var(--border)}
+html.dark .canal-bar-wrap{background:var(--border)}
+html.dark .summary-bar{color:var(--muted)}
+body,tbody tr,.card,.kpi,.card-head,thead th,select,input[type=text],.chip,.bar-bg,.note-box,.insight-box,.canal-card,.canal-bar-wrap{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
+@keyframes sun-glow{0%,100%{filter:drop-shadow(0 0 3px #FFD700) drop-shadow(0 0 6px #FF9500)}50%{filter:drop-shadow(0 0 7px #FFD700) drop-shadow(0 0 12px #FF6B00)}}
+@keyframes sun-rays{0%{transform:scale(1) rotate(0deg)}100%{transform:scale(1) rotate(360deg)}}
+@keyframes moon-twinkle{0%,100%{filter:drop-shadow(0 0 2px #c4b5fd)}50%{filter:drop-shadow(0 0 6px #a78bfa)}}
+.theme-btn{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#FFD947,#FF8C00);box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2);z-index:9998;overflow:hidden;padding:0;display:flex;align-items:center;justify-content:center;transition:background .5s ease,box-shadow .5s ease,transform .2s ease}
+html.dark .theme-btn{background:linear-gradient(135deg,#2d1b69,#0f0c29);box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4)}
+.theme-btn:hover{transform:scale(1.13)}
+.theme-icon-sun,.theme-icon-moon{position:absolute;font-size:22px;line-height:1;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease}
+.theme-icon-sun{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:sun-glow 2.5s ease-in-out infinite,sun-rays 12s linear infinite}
+.theme-icon-moon{opacity:0;transform:scale(0) rotate(-40deg) translateY(10px)}
+html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px);animation:none}
+html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:moon-twinkle 3s ease-in-out infinite}
+
+
+/* ── Fundo geral ── */
+body{background:linear-gradient(160deg,#f5f3ff 0%,#fdfcff 60%,#f0f4ff 100%);min-height:100vh}
+html.dark body{background:#18181b!important}
+/* ── Estrelinhas decorativas ── */
+.page{position:relative}
+.page::before{content:'★';position:fixed;top:80px;left:30px;font-size:28px;color:#F9DC45;opacity:.35;pointer-events:none}
+.page::after{content:'★';position:fixed;bottom:120px;right:40px;font-size:20px;color:#F9DC45;opacity:.25;pointer-events:none}
+/* ── Hero ── */
+.calc-hero{background:linear-gradient(135deg,#7668AC 0%,#9b8fd4 100%);
+  border-radius:24px;padding:28px 28px 24px;margin-bottom:20px;color:#fff;
+  position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(118,104,172,.30)}
+.calc-hero::before{content:'★';position:absolute;top:16px;right:28px;
+  font-size:40px;color:rgba(249,220,69,.25);line-height:1}
+.hero-inner{position:relative;z-index:1}
+.hero-tag{display:inline-block;background:#F9DC45;color:#595959;font-size:9px;
+  font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;
+  border-radius:20px;margin-bottom:12px}
+.hero-title{font-size:24px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:4px}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.70);font-weight:500;margin-bottom:20px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+.hs{background:rgba(255,255,255,.18);border-radius:14px;padding:14px 16px;border:1px solid rgba(255,255,255,.20)}
+.hs-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.hs-val{font-size:26px;font-weight:900;color:#fff;line-height:1}
+.hs-val.hs-yellow{color:#F9DC45}
+/* ── Controls ── */
+.controls-bar{background:#fff;border-radius:18px;padding:12px 16px;margin-bottom:16px;
+  display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;
+  box-shadow:0 2px 16px rgba(118,104,172,.10);border:1px solid rgba(118,104,172,.12)}
+.ctrl-group{display:flex;flex-direction:column;gap:4px;min-width:120px}
+.ctrl-label{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.8px}
+.ctrl-val{font-size:20px;font-weight:900;color:#7668AC;line-height:1;margin-bottom:2px}
+input[type=range]{accent-color:#7668AC;cursor:pointer;width:160px}
+/* ── KPI cards ── */
+.kpi9{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:560px){.kpi9{grid-template-columns:1fr}}
+.kpi-c{background:#fff;border-radius:18px;padding:20px 18px 16px;
+  box-shadow:0 2px 16px rgba(118,104,172,.09);
+  display:flex;flex-direction:column;gap:5px;transition:transform .15s,box-shadow .15s;
+  border:1px solid rgba(118,104,172,.10)}
+.kpi-c:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(118,104,172,.16)}
+.kc-icon{font-size:20px;margin-bottom:4px}
+.kc-lbl{font-size:9px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.6px}
+.kc-val{font-size:26px;font-weight:900;line-height:1.1;color:#7668AC}
+.kc-val.v-blue{color:#008ECF}.kc-val.v-red{color:#E94B56}.kc-val.v-orange{color:#E87A20}
+.kc-sub{font-size:10px;color:#c0b8d8;margin-top:2px}
+/* ── Cargo grid ── */
+.cargo-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:640px){.cargo-grid{grid-template-columns:1fr}}
+.cargo-card{background:#fff;border-radius:18px;padding:18px 18px 14px;
+  border:1px solid rgba(118,104,172,.15);box-shadow:0 2px 16px rgba(118,104,172,.09)}
+.cargo-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;
+  color:#7668AC;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.cargo-title span{font-size:15px}
+.cargo-kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.ck{background:#f5f3ff;border-radius:12px;padding:10px 12px}
+.ck-lbl{font-size:8px;font-weight:700;color:#9a9a9a;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.ck-val{font-size:20px;font-weight:900;color:#7668AC;line-height:1}
+.ck-sub{font-size:9px;color:#c0b8d8;margin-top:2px}
+.cargo-proj{background:#f5f3ff;border-radius:12px;padding:12px 14px;text-align:center}
+.cp-lbl{font-size:9px;font-weight:700;color:rgba(118,104,172,.7);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.cp-dias{font-size:28px;font-weight:900;color:#7668AC;line-height:1}
+.cp-dias.cp-green{color:#65a30d}.cp-dias.cp-red{color:#E94B56}
+.cp-data{font-size:11px;font-weight:700;color:#7668AC;margin-top:4px}
+.cp-det{font-size:9px;color:#a09ac0;margin-top:6px}
+/* dark */
+html.dark .cargo-card{background:#1e1e22;border-color:#2d2d33}
+html.dark .cargo-title{color:#a78bfa}
+html.dark .ck{background:#27272a}
+html.dark .ck-lbl{color:#71717a}
+html.dark .ck-val{color:#a78bfa}
+html.dark .ck-sub{color:#52525b}
+html.dark .cargo-proj{background:#27272a}
+html.dark .cp-lbl{color:#71717a}
+html.dark .cp-dias{color:#a78bfa}
+html.dark .cp-data{color:#a78bfa}
+html.dark .cp-det{color:#52525b}
+/* ── Info grid ── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+/* ── Projeção ── */
+.proj-hero{background:linear-gradient(135deg,#7668AC 0%,#9b8fd4 100%);
+  border-radius:24px;padding:36px 28px 28px;margin-bottom:20px;text-align:center;
+  color:#fff;box-shadow:0 8px 32px rgba(118,104,172,.28);position:relative;overflow:hidden}
+.proj-hero::before{content:'★';position:absolute;bottom:20px;left:24px;
+  font-size:32px;color:rgba(249,220,69,.20);line-height:1}
+.ph-status{font-size:10px;font-weight:700;color:rgba(255,255,255,.60);text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:14px}
+.ph-dias{font-size:64px;font-weight:900;color:#F9DC45;line-height:1}
+.ph-dias.ph-green{color:#a3e635}
+.ph-dias.ph-red{color:#fb7185}
+.ph-data{font-size:20px;font-weight:700;color:#fff;margin-top:8px}
+.ph-detail{font-size:11px;color:rgba(255,255,255,.55);margin-top:12px;
+  border-top:1px solid rgba(255,255,255,.18);padding-top:12px}
+.ph-faltam{font-size:13px;font-weight:700;color:#F9DC45;margin-top:8px}
+
+/* ── Cards tabela/gráfico ── */
+.card{border-radius:18px!important;border:1px solid rgba(118,104,172,.12)!important;
+  box-shadow:0 2px 16px rgba(118,104,172,.09)!important}
+.card thead th{background:#7668AC!important;color:#fff!important;font-size:10px}
+.card thead th:hover{background:#6459a0!important}
+.meta-atual{background:#f5f3ff!important}
+.status-ok{color:#7668AC;font-weight:700}
+/* ── Gráfico ── */
+.ev-chart-wrap{display:flex;align-items:flex-end;gap:8px;height:100px;padding-top:24px}
+.ev-col{flex:1;display:flex;flex-direction:column;align-items:center}
+.ev-bar{width:100%;border-radius:6px 6px 0 0;position:relative;min-height:3px;
+  background:linear-gradient(180deg,#b8aee0 0%,#7668AC 100%)}
+.ev-bar-val{position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  font-size:9px;font-weight:800;color:#7668AC;white-space:nowrap}
+.ev-lbl{font-size:9px;color:#9a9a9a;margin-top:5px;text-align:center;font-weight:600}
+/* ── Dark mode: calculadora ── */
+html.dark .controls-bar{background:#1e1e22;border-color:#2d2d33;box-shadow:none}
+html.dark .ctrl-label{color:#71717a}
+html.dark .ctrl-val{color:#a78bfa}
+html.dark #sl-du{background:#27272a;color:#a78bfa;border-color:#3f3f46}
+html.dark .kpi-c{background:#1e1e22;border-color:#2d2d33;box-shadow:none}
+html.dark .kc-lbl{color:#71717a}
+html.dark .kc-sub{color:#52525b}
+html.dark .kc-val{color:#a78bfa}
+html.dark .kc-val.v-blue{color:#38bdf8}
+html.dark .kc-val.v-red{color:#fb7185}
+html.dark .kc-val.v-orange{color:#fb923c}
+html.dark .meta-atual{background:#27272a!important}
+html.dark .card thead th{background:#52479b!important;color:#fff!important}
+html.dark .card thead th:hover{background:#433b82!important}
+html.dark .ev-bar{background:linear-gradient(180deg,#6459a0 0%,#3f3670 100%)}
+html.dark .ev-bar-val{color:#a78bfa}
+html.dark .ev-lbl{color:#71717a}
+
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+<a href="calculadora_efetividade.html" style="position:fixed;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">&#8592; Calculadora</a>
+<div class="page">
+
+  <div class="calc-hero">
+    <div class="hero-inner">
+      <div class="hero-tag">&#11088; Estante M&#225;gica &middot; CS Ops &middot; &#128176; Frente Receita &middot; dono B1</div>
+      <div class="hero-title">Calculadora de Receita</div>
+      <div class="hero-sub">Refer&#234;ncia: 19/08/2026 &nbsp;&#183;&nbsp; 31 consultores &middot; escolas com frente de relacionamento = Receita</div>
+      <div class="hero-stats">
+        <div class="hs">
+          <div class="hs-lbl">% Efetividade</div>
+          <div class="hs-val" id="kpi-pef">&#8212;</div>
+        </div>
+        <div class="hs">
+          <div class="hs-lbl">Faltam p/ Meta</div>
+          <div class="hs-val hs-yellow" id="kpi-faltam">&#8212;</div>
+        </div>
+        <div class="hs">
+          <div class="hs-lbl">Meta Alvo (escolas)</div>
+          <div class="hs-val" id="kpi-meta-alvo">&#8212;</div>
+        </div>
+        <div class="hs">
+          <div class="hs-lbl">Consultores</div>
+          <div class="hs-val" id="kpi-consultores">&#8212;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles universais -->
+  <div class="controls-bar" style="margin-bottom:16px">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Meta</span>
+      <span class="ctrl-val" id="meta-val">80%</span>
+      <input type="range" id="sl-meta" min="65" max="95" value="80" step="5">
+      <span style="font-size:9px;color:var(--muted);font-weight:600">65 &middot; 70 &middot; 75 &middot; 80 &middot; 85 &middot; 90 &middot; 95</span>
+    </div>
+    <div class="ctrl-group" style="min-width:120px">
+      <span class="ctrl-label">Janela do ritmo</span>
+      <span class="ctrl-val" id="du-val">7 d.&#250;.</span>
+      <select id="sl-du" style="margin-top:4px;padding:6px 10px;border-radius:8px;
+        border:1.5px solid rgba(118,104,172,.30);font-size:13px;font-weight:700;
+        color:#7668AC;background:#fff;cursor:pointer">
+        <option value="semana" selected>Essa semana</option>
+        <option value="semana_passada">Semana passada</option>
+        <option value="mes">Este m&#234;s</option>
+        <option value="mes_passado">M&#234;s passado</option>
+      </select>
+      <span style="font-size:9px;color:var(--muted);font-weight:600">base do ritmo atual</span>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#128200;</div>
+      <div class="kc-lbl">Novas ef./dia</div>
+      <div class="kc-val" style="font-size:24px" id="kpi-delta">&#8212;</div>
+      <div class="kc-sub" id="kpi-delta-sub">m&#233;dia &#250;lt. 7 d.&#250;.</div>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0" id="rl-card-wrap">
+      <div class="kc-icon" style="font-size:16px">&#9889;</div>
+      <div class="kc-lbl">Ritmo l&#237;quido</div>
+      <div class="kc-val" style="font-size:24px" id="rl-val">&#8212;</div>
+      <div class="kc-sub">novas &minus; vencem</div>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#9200;</div>
+      <div class="kc-lbl">Vencem/dia</div>
+      <div class="kc-val v-red" style="font-size:24px" id="kpi-vencem">&#8212;</div>
+      <div class="kc-sub">m&#233;dia do per&#237;odo</div>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#128197;</div>
+      <div class="kc-lbl" id="kpi-vencem-amanha-lbl">Vencem pr&#243;x. d.&#250;.</div>
+      <div class="kc-val v-red" style="font-size:24px" id="kpi-vencem-amanha">&#8212;</div>
+      <div class="kc-sub">escolas no prazo</div>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#128293;</div>
+      <div class="kc-lbl">Novas ef. hoje</div>
+      <div class="kc-val" style="font-size:24px" id="kpi-novas-ef-hoje">&#8212;</div>
+      <div class="kc-sub" id="kpi-novas-ef-hoje-sub">novas efetiva&#231;&#245;es</div>
+    </div>
+    <div class="kpi-c" style="margin:0;padding:8px 10px;min-width:90px;flex-shrink:0">
+      <div class="kc-icon" style="font-size:16px">&#128197;</div>
+      <div class="kc-lbl" id="kpi-proj-amanha-lbl">% pr&#243;x. d.&#250;. (proj.)</div>
+      <div class="kc-val" style="font-size:24px" id="kpi-proj-amanha">&#8212;</div>
+      <div class="kc-sub" id="kpi-proj-amanha-sub">se fecharmos na m&#233;dia</div>
+    </div>
+  </div>
+
+  <!-- Grid de dois cargos -->
+  <div class="cargo-grid">
+
+    <!-- Consultor (Analista) -->
+    <div class="cargo-card">
+      <div class="cargo-title"><span>&#128188;</span> Consultor &mdash; <span id="ana-ncargo">&#8212;</span> analistas</div>
+      <div class="ctrl-group" style="margin-bottom:12px">
+        <span class="ctrl-label">Ef/dia por consultor</span>
+        <span class="ctrl-val" id="ana-b1val">0.5/B1</span>
+        <input type="range" id="sl-ana" min="0.5" max="10" value="0.5" step="0.5" style="width:100%">
+      </div>
+      <div class="cargo-kpis">
+        <div class="ck">
+          <div class="ck-lbl">Ritmo</div>
+          <div class="ck-val" id="ana-delta">&#8212;</div>
+          <div class="ck-sub" id="ana-delta-sub">méd. 7d.ú.</div>
+        </div>
+        <div class="ck">
+          <div class="ck-lbl">Hist. B1</div>
+          <div class="ck-val" id="ana-b1h">&#8212;</div>
+          <div class="ck-sub">ef/dia &#247; B1</div>
+        </div>
+        <div class="ck">
+          <div class="ck-lbl">Analistas</div>
+          <div class="ck-val" id="ana-ncargo2">17</div>
+          <div class="ck-sub">no time</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estagiário -->
+    <div class="cargo-card">
+      <div class="cargo-title"><span>&#127891;</span> Estagi&#225;rio &mdash; <span id="est-ncargo">&#8212;</span> estagi&#225;rios</div>
+      <div class="ctrl-group" style="margin-bottom:12px">
+        <span class="ctrl-label">Ef/dia por estagi&#225;rio</span>
+        <span class="ctrl-val" id="est-b1val">0.5/B1</span>
+        <input type="range" id="sl-est" min="0.5" max="10" value="0.5" step="0.5" style="width:100%">
+      </div>
+      <div class="cargo-kpis">
+        <div class="ck">
+          <div class="ck-lbl">Ritmo</div>
+          <div class="ck-val" id="est-delta">&#8212;</div>
+          <div class="ck-sub" id="est-delta-sub">méd. 7d.ú.</div>
+        </div>
+        <div class="ck">
+          <div class="ck-lbl">Hist. B1</div>
+          <div class="ck-val" id="est-b1h">&#8212;</div>
+          <div class="ck-sub">ef/dia &#247; B1</div>
+        </div>
+        <div class="ck">
+          <div class="ck-lbl">Estagi&#225;rios</div>
+          <div class="ck-val" id="est-ncargo2">43</div>
+          <div class="ck-sub">no time</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Projeção combinada -->
+  <div class="proj-hero">
+    <div class="ph-status" id="proj-status">Carregando proje&#231;&#227;o&#8230;</div>
+    <div class="ph-dias" id="proj-dias">&#8212;</div>
+    <div class="ph-data" id="proj-data"></div>
+    <div class="ph-detail" id="proj-detalhe"></div>
+    <div id="proj-raciocinio" style="margin-top:14px;border-top:1px solid rgba(255,255,255,.18);
+      padding-top:14px;font-size:12px;color:rgba(255,255,255,.75);line-height:1.9;text-align:left"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-title" id="chart-title">Evolu&#231;&#227;o &mdash; novas ef./dia</span></div>
+    <div style="padding:0 18px 18px">
+      <div id="chart-bars" class="ev-chart-wrap"></div>
+    </div>
+  </div>
+
+</div>
+<script>const C = {"efetivas": 255, "elegiveis": 287, "pef_atual": 88.9, "novas_dia": 16.6, "novas_analista": 7.5, "novas_estagiario": 8.8, "novas_historico": [35, 6, 7, 15, 19, 21, 22, 15, 30, 21, 16, 10, 14, 19, 11, 13, 20, 9, 21, 9], "novas_datas": ["22/07", "23/07", "24/07", "27/07", "28/07", "29/07", "30/07", "31/07", "03/08", "04/08", "05/08", "06/08", "07/08", "10/08", "11/08", "12/08", "13/08", "14/08", "17/08", "18/08", "19/08"], "semana_novas": [21, 9], "semana_datas": ["17/08", "18/08"], "semana_dias": ["Seg", "Ter"], "semana_passada_novas": [19, 11, 13, 20, 9], "semana_passada_datas": ["10/08", "11/08", "12/08", "13/08", "14/08"], "semana_passada_dias": ["Seg", "Ter", "Qua", "Qui", "Sex"], "ritmos_periodos": {"semana": {"total": 15.0, "analista": 5.0, "estagiario": 9.5, "n": 2}, "semana_passada": {"total": 14.4, "analista": 6.2, "estagiario": 7.8, "n": 5}, "mes": {"total": 16.1, "analista": 6.9, "estagiario": 8.8, "n": 12}, "mes_passado": {"total": 17.5, "analista": 8.4, "estagiario": 8.8, "n": 8}}, "novas_hist_analista": [19, 4, 3, 5, 13, 12, 9, 2, 17, 11, 7, 3, 4, 8, 2, 5, 14, 2, 7, 3], "novas_hist_estagiario": [16, 2, 4, 10, 6, 8, 12, 12, 13, 10, 8, 7, 10, 11, 9, 8, 4, 7, 14, 5], "delta_ef_obs": 73.5, "delta_ef_analista": 41.5, "delta_ef_estagiario": 31.5, "ef_historico": [66, 28, 21, 40, 48, 61, 61, 53, 77, 68, 86, 73, 86, 85, 97, 104, 111, 92, 115, 97, 4], "ef_hist_analista": [36, 17, 10, 22, 32, 39, 33, 27, 46, 37, 53, 41, 46, 47, 52, 56, 68, 48, 74, 46, 3], "ef_hist_estagiario": [29, 11, 10, 18, 16, 21, 26, 25, 31, 31, 32, 32, 40, 38, 45, 48, 42, 44, 41, 50, 1], "n_consultores": 31, "n_analistas": 17, "n_estagiarios": 43, "data_ref": "2026-08-19", "expiracoes": [4, 6, 9, 20, 27, 57, 86, 5, 7, 5, 4, 5, 0, 1, 8, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 3, 3], "a_vencer_7du": 209, "semana_label": "22/07–19/08", "delta_faltam_global": null, "novas_ef_hoje": 1, "ref_novas_semana_passada": 14.4, "ref_vencem_semana_passada": null, "ref_semana_passada_label": "10/08–14/08"};
+
+function nextBusDay(d) {
+  var nd = new Date(d.getTime());
+  nd.setDate(nd.getDate() + 1);
+  while (nd.getDay() === 0 || nd.getDay() === 6) nd.setDate(nd.getDate() + 1);
+  return nd;
+}
+function addBusDays(d, n) {
+  var nd = new Date(d.getTime());
+  for (var i = 0; i < n; i++) nd = nextBusDay(nd);
+  return nd;
+}
+function fmtDate(d) {
+  return d.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'short'});
+}
+function calcDelta(hist, n_du) {
+  var h = hist.slice(-n_du);
+  return h.length ? Math.round(h.reduce(function(a,b){return a+b;},0)/h.length*10)/10 : 0;
+}
+function mediaExpJanela(expiracoes, inicio) {
+  // Calcula a média diária de expirações nos próximos 7 dias corridos (≈5 dias úteis).
+  // Usar só o dia de amanhã (expiracoes[1]) causava distorção quando havia pico pontual.
+  var janela = expiracoes.slice(inicio, inicio + 7);
+  if (!janela.length) return 0;
+  var soma = janela.reduce(function(a, b) { return a + b; }, 0);
+  // Divide por 5 (dias úteis esperados na semana) para obter média diária de dias úteis
+  return Math.round(soma / 5 * 10) / 10;
+}
+function projetarDias(efetivas, nec_meta, ritmo, media_exp) {
+  if (efetivas >= nec_meta) return 0;
+  var faltam = nec_meta - efetivas;
+  var ritmo_liq = ritmo - media_exp;
+  if (ritmo_liq <= 0) return Infinity;
+  return Math.ceil(faltam / ritmo_liq);
+}
+function renderCargo(prefix, delta, n_cargo, n_du) {
+  var b1_alvo = +document.getElementById('sl-' + prefix).value;
+  document.getElementById(prefix + '-b1val').textContent = b1_alvo.toFixed(1) + '/B1';
+
+  var b1_hist = n_cargo > 0 ? delta / n_cargo : 0;
+
+  var dc = delta >= 5 ? 'ck-val v-blue' : delta < 0 ? 'ck-val v-red' : 'ck-val';
+  document.getElementById(prefix + '-delta').className   = dc;
+  document.getElementById(prefix + '-delta').textContent = (delta > 0 ? '+' : '') + delta.toFixed(1) + '/dia';
+  document.getElementById(prefix + '-delta-sub').textContent = 'méd. ' + n_du + 'd.ú.';
+  document.getElementById(prefix + '-b1h').textContent   = b1_hist.toFixed(2) + '/B1';
+  document.getElementById(prefix + '-ncargo').textContent = n_cargo;
+}
+
+function getRitmoPeriodo() {
+  var periodo = document.getElementById('sl-du').value;
+  var rp = (C.ritmos_periodos && C.ritmos_periodos[periodo]) || {};
+  return {
+    total:      rp.total      || 0,
+    analista:   rp.analista   || 0,
+    estagiario: rp.estagiario || 0,
+    n:          rp.n          || 1
+  };
+}
+
+function render() {
+  var meta   = +document.getElementById('sl-meta').value;
+  var periodo = document.getElementById('sl-du').value;
+  document.getElementById('meta-val').textContent = meta + '%';
+  document.getElementById('du-val').textContent   = '';
+
+  var periodo_labels = {semana:'essa semana', semana_passada:'semana passada', mes:'este mês', mes_passado:'mês passado'};
+
+  // Título do gráfico reflete o período selecionado
+  var chartTitleEl = document.getElementById('chart-title');
+  if (chartTitleEl) {
+    chartTitleEl.innerHTML = periodo === 'semana_passada'
+      ? 'Novas ef./dia &mdash; semana passada (' + (C.ref_semana_passada_label || '') + ')'
+      : 'Evolu&#231;&#227;o &mdash; novas ef./dia';
+  }
+
+  // Ritmo de novas efetivações por dia — soma dos sliders de cargo
+  var rp = getRitmoPeriodo();
+  var isSemanaFallback = false;
+  if (periodo === 'semana' && !rp.total) {
+    var rp_sp = (C.ritmos_periodos && C.ritmos_periodos['semana_passada']) || {};
+    if (rp_sp.total) {
+      rp = {total: rp_sp.total, analista: rp_sp.analista||0, estagiario: rp_sp.estagiario||0, n: rp_sp.n||1};
+      isSemanaFallback = true;
+    }
+  }
+  var delta_periodo = rp.total;
+  var dc = delta_periodo >= 5 ? 'kc-val v-blue' : delta_periodo < 0 ? 'kc-val v-red' : 'kc-val';
+  document.getElementById('kpi-delta').className   = dc;
+  document.getElementById('kpi-delta').textContent = delta_periodo.toFixed(1) + '/dia';
+  document.getElementById('kpi-delta-sub').textContent = isSemanaFallback
+    ? 'ref.: semana passada (sem dados hoje)'
+    : 'novas ef. — ' + (periodo_labels[periodo] || periodo);
+
+  // KPI vencem/dia: para "semana" (que inclui hoje), usar o valor de hoje (expiracoes[0]);
+  // para "semana_passada", usar a média real calculada do historico_vencimentos.csv;
+  // para outros períodos, usar a referência da semana passada como proxy (melhor que valor fixo).
+  var vencem_dia;
+  if (periodo === 'semana') {
+    vencem_dia = (C.expiracoes && C.expiracoes.length > 0 ? C.expiracoes[0] : 0);
+  } else if (periodo === 'semana_passada' && C.ref_vencem_semana_passada != null) {
+    vencem_dia = C.ref_vencem_semana_passada;
+  } else {
+    vencem_dia = (C.ref_vencem_semana_passada != null ? C.ref_vencem_semana_passada : 100);
+  }
+  document.getElementById('kpi-vencem').className   = 'kc-val v-red';
+  document.getElementById('kpi-vencem').textContent = vencem_dia.toFixed(0) + '/dia';
+  // KPI vencem próx. dia útil — expiracoes já está em dias úteis, índice 1 = próximo dia útil
+  var vencem_amanha = (C.expiracoes && C.expiracoes.length > 1 ? C.expiracoes[1] : 0);
+  document.getElementById('kpi-vencem-amanha').className   = 'kc-val v-red';
+  document.getElementById('kpi-vencem-amanha').textContent = vencem_amanha.toFixed(0);
+
+  // Card 2 — Novas ef. hoje
+  var nhjEl  = document.getElementById('kpi-novas-ef-hoje');
+  var nhjSub = document.getElementById('kpi-novas-ef-hoje-sub');
+  var novas_hoje = C.novas_ef_hoje || 0;
+  var media_diaria = delta_periodo;
+  var faltam_media = Math.max(0, Math.round(media_diaria - novas_hoje));
+  nhjEl.textContent  = novas_hoje;
+  nhjSub.textContent = faltam_media > 0
+    ? 'faltam ' + faltam_media + ' p/ bater a média'
+    : 'meta diária atingida!';
+  nhjEl.className = novas_hoje >= Math.ceil(media_diaria) ? 'kc-val v-blue' : 'kc-val';
+
+  // Card 3 — % amanhã (projeção)
+  var projEl  = document.getElementById('kpi-proj-amanha');
+  var projSub = document.getElementById('kpi-proj-amanha-sub');
+  if (C.elegiveis > 0) {
+    var ef_fim_dia   = C.efetivas + Math.max(0, media_diaria - novas_hoje);
+    var ef_amanha    = ef_fim_dia - vencem_amanha;
+    var pct_amanha   = Math.round(ef_amanha / C.elegiveis * 100);
+    projEl.textContent  = pct_amanha + '%';
+    projEl.className    = pct_amanha >= 80 ? 'kc-val v-blue' : 'kc-val v-red';
+    projSub.textContent = 'se fecharmos na média hoje';
+  } else {
+    projEl.textContent  = '—';
+    projEl.className    = 'kc-val';
+    projSub.textContent = '';
+  }
+
+  // KPIs universais
+  var nec_meta   = Math.ceil(C.elegiveis * meta / 100);
+  var faltam_proj  = Math.max(0, nec_meta - C.efetivas);
+  document.getElementById('kpi-pef').textContent         = C.pef_atual + '%';
+  document.getElementById('kpi-faltam').textContent      = faltam_proj.toLocaleString('pt-BR');
+  document.getElementById('kpi-meta-alvo').textContent   = nec_meta.toLocaleString('pt-BR');
+  document.getElementById('kpi-consultores').textContent = C.n_consultores;
+
+  // Breakdown por cargo — sliders informativos, não usados na projeção
+  var n_du_p = rp.n || 1;
+  renderCargo('ana', rp.analista,   C.n_analistas,   n_du_p);
+  renderCargo('est', rp.estagiario, C.n_estagiarios, n_du_p);
+
+  var projDias  = document.getElementById('proj-dias');
+  var projData  = document.getElementById('proj-data');
+  var projDet   = document.getElementById('proj-detalhe');
+  var statusEl  = document.getElementById('proj-status');
+  var faltamEl  = document.getElementById('proj-faltam');
+  var racEl     = document.getElementById('proj-raciocinio');
+  var rlVal     = document.getElementById('rl-val');
+  function updateRlCard(v, neg) {
+    rlVal.textContent = neg ? v : (v > 0 ? '+' + v : v);
+    rlVal.className = 'kc-val' + (neg ? ' v-red' : ' v-blue');
+  }
+  if (faltam_proj <= 0) {
+    statusEl.textContent = 'Meta ' + meta + '% atingida!';
+    projDias.innerHTML   = '&#10003;'; projDias.className = 'ph-dias ph-green';
+    projData.textContent = 'Efetivas hoje: ' + C.efetivas.toLocaleString('pt-BR');
+    projDet.textContent  = ''; racEl.innerHTML = '';
+    updateRlCard((delta_periodo - vencem_dia).toFixed(0), (delta_periodo - vencem_dia) < 0);
+  } else if (delta_periodo <= 0) {
+    statusEl.textContent = 'Sem novas efetivações no período — projeção indisponível';
+    projDias.innerHTML   = '&#8212;'; projDias.className = 'ph-dias';
+    projData.textContent = ''; projDet.textContent = ''; racEl.innerHTML = '';
+    updateRlCard('—', false);
+  } else {
+    var dp_real;
+    var periodo_lbl = periodo_labels[periodo] || periodo;
+    // Dias para fechar o gap = faltam ÷ (novas ef./dia − vencem/dia).
+    // Usa delta_periodo — exatamente o mesmo valor exibido no KPI "novas ef./dia".
+    // O denominador é o ganho líquido real: quanto a base efetiva cresce por dia
+    // descontando as que expiram.
+    var ritmo_liq = delta_periodo - vencem_dia;
+    updateRlCard(ritmo_liq.toFixed(0), ritmo_liq <= 0);
+    if (ritmo_liq <= 0) {
+      statusEl.textContent = 'Ritmo líquido negativo — mais escolas expiram do que são efetivadas';
+      projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
+      projData.textContent = 'Aumente o ritmo de efetivações ou reduza expirações';
+      projDet.textContent  = ''; racEl.innerHTML = '';
+    } else {
+      dp_real = Math.ceil(faltam_proj / ritmo_liq);
+
+      statusEl.textContent = 'Para atingir ' + meta + '%:';
+
+      if (dp_real > 365) {
+        projDias.innerHTML   = '&#8734;'; projDias.className = 'ph-dias ph-red';
+        projData.textContent = 'Meta muito distante no ritmo atual';
+        projDet.textContent  = ''; racEl.innerHTML = '';
+      } else {
+        var d = addBusDays(new Date(C.data_ref + 'T12:00:00'), dp_real);
+        projDias.innerHTML   = dp_real + (dp_real === 1 ? ' dia útil' : ' dias úteis');
+        projDias.className   = 'ph-dias' + (dp_real <= 5 ? ' ph-green' : dp_real > 15 ? ' ph-red' : '');
+        projData.textContent = fmtDate(d);
+        projDet.textContent  = '';
+        racEl.innerHTML =
+          '&#10146; Hoje: <b>' + C.efetivas.toLocaleString('pt-BR') + '</b> efetivas (' + C.pef_atual + '%) &mdash; faltam <b>' + faltam_proj.toLocaleString('pt-BR') + '</b> para ' + meta + '%<br>'
+          + '&#10146; Novas ef./dia (' + periodo_lbl + '): <b>' + delta_periodo.toFixed(0) + '</b> &minus; vencem/dia: <b>' + vencem_dia.toFixed(0) + '</b><br>'
+          + '&#10146; Estimativa: ' + faltam_proj + ' &divide; ' + ritmo_liq.toFixed(0) + ' = <b>' + dp_real + ' dias úteis</b> &mdash; ' + fmtDate(d);
+      }
+    }
+  }
+
+  // Gráfico de barras — novas ef./dia (troca conforme janela selecionada)
+  var wrap = document.getElementById('chart-bars');
+  var chartVals, chartDatas, chartDias, isLastWeek;
+  if (periodo === 'semana_passada' && C.semana_passada_novas && C.semana_passada_novas.length) {
+    chartVals  = C.semana_passada_novas;
+    chartDatas = C.semana_passada_datas || [];
+    chartDias  = C.semana_passada_dias  || [];
+    isLastWeek = true;
+  } else {
+    chartVals  = C.semana_novas  || [];
+    chartDatas = C.semana_datas  || [];
+    chartDias  = C.semana_dias   || [];
+    isLastWeek = false;
+  }
+  if (wrap && chartVals.length) {
+    var maxV  = Math.max.apply(null, chartVals) || 1;
+    var n     = chartVals.length;
+    var media = delta_periodo.toFixed(0);
+    wrap.innerHTML = '';
+    wrap.style.cssText = 'display:flex;align-items:flex-end;gap:12px;height:160px;padding:0 8px 0';
+
+    chartVals.forEach(function(v, i) {
+      var pct    = Math.round(v / maxV * 88) + 12;
+      // Para semana passada: sem destaque de "hoje" (semana já encerrou)
+      var isHoje = !isLastWeek && (i === n - 1);
+      var col    = document.createElement('div');
+      col.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:100%';
+      col.innerHTML =
+        '<span style="font-size:11px;font-weight:800;color:' + (isHoje ? '#7668AC' : '#555') + ';margin-bottom:4px">' + v + '</span>'
+        + '<div style="width:100%;background:' + (isHoje ? '#7668AC' : 'rgba(118,104,172,.30)') + ';'
+        + 'border-radius:6px 6px 0 0;height:' + pct + '%;transition:height .3s"></div>'
+        + '<div style="font-size:10px;font-weight:700;color:var(--muted);margin-top:5px">' + (chartDias[i] || '') + '</div>'
+        + '<div style="font-size:9px;color:var(--muted)">' + (chartDatas[i] || '') + '</div>';
+      wrap.appendChild(col);
+    });
+
+    var wrapOuter = wrap.parentElement;
+    wrapOuter.style.position = 'relative';
+    // Remove legenda anterior para não acumular ao trocar período
+    var oldMed = wrapOuter.querySelector('.chart-media-lbl');
+    if (oldMed) oldMed.remove();
+    var medWrap = document.createElement('div');
+    medWrap.className = 'chart-media-lbl';
+    medWrap.style.cssText = 'text-align:right;padding:8px 8px 0;font-size:10px;font-weight:700;color:#7668AC';
+    medWrap.textContent = 'méd. ' + (periodo_labels[periodo] || periodo) + ': ' + media + '/dia';
+    wrapOuter.appendChild(medWrap);
+  }
+}
+
+function setarSlidersHistorico() {
+  var periodo = document.getElementById('sl-du').value;
+  var rp = getRitmoPeriodo();
+  if (periodo === 'semana' && !rp.total) {
+    var rp_sp = (C.ritmos_periodos && C.ritmos_periodos['semana_passada']) || {};
+    if (rp_sp.total) rp = {total: rp_sp.total, analista: rp_sp.analista||0, estagiario: rp_sp.estagiario||0, n: rp_sp.n||1};
+  }
+  var b1_ana = C.n_analistas   > 0 ? Math.max(0.5, Math.round(rp.analista   / C.n_analistas   * 2) / 2) : 0.5;
+  var b1_est = C.n_estagiarios > 0 ? Math.max(0.5, Math.round(rp.estagiario / C.n_estagiarios * 2) / 2) : 0.5;
+  document.getElementById('sl-ana').value = b1_ana;
+  document.getElementById('sl-est').value = b1_est;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('sl-meta').oninput  = function() { render(); };
+  document.getElementById('sl-du').onchange   = function() { setarSlidersHistorico(); render(); };
+  document.getElementById('sl-ana').oninput   = function() { render(); };
+  document.getElementById('sl-est').oninput   = function() { render(); };
+  setarSlidersHistorico();
+  render();
+});
+</script>
+
+<!-- Botão de ajuda -->
+<button onclick="document.getElementById('modal-ajuda').style.display='flex'"
+  style="position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;
+         background:#7668AC;color:#fff;font-size:20px;font-weight:900;border:none;
+         cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:100;
+         display:flex;align-items:center;justify-content:center;line-height:1">?</button>
+
+<!-- Modal de explicação -->
+<div id="modal-ajuda"
+  style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;
+         align-items:center;justify-content:center;padding:20px"
+  onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:16px;max-width:520px;width:100%;max-height:85vh;
+              overflow-y:auto;padding:28px 28px 24px;color:#333;position:relative">
+    <button onclick="document.getElementById('modal-ajuda').style.display='none'"
+      style="position:absolute;top:14px;right:16px;background:none;border:none;
+             font-size:22px;cursor:pointer;color:#aaa;line-height:1">&#215;</button>
+    <h2 style="font-size:16px;font-weight:900;color:#7668AC;margin-bottom:16px">
+      Como a calculadora funciona
+    </h2>
+    <div style="font-size:13px;line-height:1.8;color:#444">
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#127919; Meta &amp; Janela de ritmo</p>
+      <p style="margin-bottom:14px">Meta = percentual-alvo de efetividade. Janela = per&#237;odo usado para calcular o ritmo de novas ef./dia: <b>essa semana, semana passada, este m&#234;s ou m&#234;s passado</b>.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128200; Novas ef./dia</p>
+      <p style="margin-bottom:14px">Escolas que <b>voltaram a ser efetivas depois de expirar</b> (gap desde a &#250;ltima atividade efetiva &#8805; prazo em dias corridos). Calculado pela <b>data de cria&#231;&#227;o</b> da atividade. Prazo: High/Medium/Premium = 10 dias corridos, demais = 21 dias corridos.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128197; Vencem/dia</p>
+      <p style="margin-bottom:14px">
+        <b>Essa semana:</b> escolas que chegam no prazo <b>hoje</b> (snapshot em tempo real).<br>
+        <b>Semana passada e demais per&#237;odos:</b> m&#233;dia real de vencimentos/dia da semana passada (calculada do hist&#243;rico salvo diariamente).
+      </p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#9997; Faltam</p>
+      <p style="margin-bottom:14px"><code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Necess&#225;rias &minus; Efetivas hoje</code> — onde necess&#225;rias = ceil(eleg&#237;veis &times; meta%).</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#9200; Proje&#231;&#227;o</p>
+      <p style="margin-bottom:14px">
+        <code style="background:#f4f2fb;padding:2px 6px;border-radius:4px;font-size:12px">Faltam &#247; (novas ef./dia &minus; vencem/dia)</code><br>
+        O denominador &#233; o <b>ganho l&#237;quido real por dia</b>: quanto a base efetiva cresce de fato descontando as que vencem.
+      </p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128101; Ef/dia/B1 (analista &amp; estagi&#225;rio)</p>
+      <p style="margin-bottom:14px">Breakdown informativo por cargo. A proje&#231;&#227;o usa o <b>novas ef./dia do per&#237;odo</b> (o mesmo valor exibido no KPI acima) — n&#227;o os sliders, para garantir consist&#234;ncia entre o que &#233; exibido e o que &#233; calculado.</p>
+
+      <p style="font-weight:800;color:#333;margin-bottom:4px">&#128206; Efetivo no prazo (regra de carteira)</p>
+      <table style="width:100%;font-size:12px;border-collapse:collapse">
+        <thead><tr style="background:#f4f2fb">
+          <th style="text-align:left;padding:5px 8px">Segmenta&#231;&#227;o</th>
+          <th style="text-align:right;padding:5px 8px">Prazo (d.&#250;.)</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:4px 8px">High, Medium, Premium, Premium 40+</td><td style="text-align:right;padding:4px 8px">7</td></tr>
+          <tr style="background:#fafafa"><td style="padding:4px 8px">Demais</td><td style="text-align:right;padding:4px 8px">15</td></tr>
+          <tr><td style="padding:4px 8px">N&#227;o quer contato ativo</td><td style="text-align:right;padding:4px 8px">30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
