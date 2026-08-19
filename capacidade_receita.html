@@ -77,12 +77,9 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
     <strong>Query da p&aacute;gina:</strong><br><br>
     <pre style="white-space:pre-wrap;word-break:break-word;font-size:11px;font-family:monospace;color:#fff;opacity:.9;line-height:1.6;">WITH ativas AS (
   SELECT
-    d.id_ax,
-    LOWER(IFNULL(d.proprietario_b1_email, &#x27;&#x27;)) AS owner_email,
-    COALESCE(
-      NULLIF(TRIM(d.proprietario_b1_fullname), &#x27;&#x27;),
-      NULLIF(TRIM(d.proprietario_b1_name), &#x27;&#x27;)
-    ) AS nome_owner_raw,
+    d.deal_id_ax AS id_ax,
+    LOWER(IFNULL(d.prop_b1.email, &#x27;&#x27;)) AS owner_email,
+    d.prop_b1.nome AS nome_owner_raw,
     d.quem_vai_comprar,
     JSON_VALUE(p.custom_values, &#x27;$.nome_da_rede&#x27;) AS nome_da_rede,
     JSON_VALUE(p.custom_values, &#x27;$.nome_do_grupo_rede&#x27;) AS nome_do_grupo_rede,
@@ -99,14 +96,14 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
         THEN &#x27;Premium touch&#x27;
       ELSE &#x27;Outros&#x27;
     END AS seg
-  FROM `lakehouse-378716.crm_ax_raw.ax_deals_temp_` d
-  LEFT JOIN `lakehouse-378716.crm_ax_raw.public_deals_deal` p ON d.id_ax = p.id
-  WHERE d.pais = &#x27;Brasil&#x27;
+  FROM `lakehouse-378716.use_cases.hubspot_cs_deals` d
+  LEFT JOIN `lakehouse-378716.crm_ax_raw.public_deals_deal` p ON d.deal_id_ax = p.id
+  WHERE d.pais_escola = &#x27;BR&#x27;
     AND d.ano_jornada = &#x27;2026&#x27;
-    AND (d.etapa IN (&#x27;Ciclo de Vendas&#x27;, &#x27;Ciclo de Eventos&#x27;, &#x27;Onboarding &amp; Boas vindas&#x27;, &#x27;Em Aplicação&#x27;, &#x27;Retração&#x27;)
-       OR (d.etapa = &#x27;Enviou Lista de Alunos&#x27; AND d.tipo_de_entrada = &#x27;self service&#x27;))
+    AND (d.deal_stage IN (&#x27;Ciclo de Vendas&#x27;, &#x27;Ciclo de Eventos&#x27;, &#x27;Onboarding &amp; Boas vindas&#x27;, &#x27;Em Aplicação&#x27;, &#x27;Retração&#x27;)
+       OR (d.deal_stage = &#x27;Enviou Lista de Alunos&#x27; AND d.tipo_de_entrada = &#x27;self service&#x27;))
     AND d.segmentacao_atendimento IN (&#x27;High touch&#x27;, &#x27;Medium touch&#x27;, &#x27;Premium touch&#x27;, &#x27;Premium touch 40+&#x27;)
-    AND (data_do_evento_de_autografos IS NULL OR CAST(NULLIF(TRIM(data_do_evento_de_autografos), &#x27;&#x27;) AS DATE) &gt; CURRENT_DATE())
+    AND (d.DA IS NULL OR CAST(NULLIF(TRIM(d.DA), &#x27;&#x27;) AS DATE) &gt; CURRENT_DATE())
     AND LOWER(IFNULL(d.frente_de_relacionamento, &#x27;&#x27;)) = &#x27;receita&#x27;
 )
 SELECT seg, owner_email, nome_owner_raw, quem_vai_comprar, nome_da_rede, nome_do_grupo_rede, COUNT(*) AS n_escolas
@@ -139,16 +136,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">102</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">103</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">360</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+258</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+257</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:28.3%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:28.6%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">3 Analistas (80 esc.) · 2 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">28.3% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">28.6% utilizado</div>
     </div>
   </div>
 
@@ -309,7 +306,7 @@ ORDER BY seg, n_escolas DESC</pre>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 102, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 70, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 66, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 41, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 7, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' }, 'rd': { esc: 42, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' }, 'sd': { esc: 7, cap: 60, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 1 Estagiário (60 esc.)' } };
+const DADOS = { 'htn': { esc: 103, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 70, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 66, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 41, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 7, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' }, 'rd': { esc: 42, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' }, 'sd': { esc: 7, cap: 60, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 1 Estagiário (60 esc.)' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+'], ['rd','Redes'], ['sd','SEDUC']];
 const DONOS = [
   ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 17, 80],
@@ -324,7 +321,7 @@ const DONOS = [
   ['Renata Brandão', 'High touch - Novas', 5, null],
   ['Gabriela Ribeiro', 'High touch - Novas', 4, null],
   ['Kauã Coelho', 'High touch - Novas', 3, null],
-  ['Aíres Muniz Santos', 'High touch - Novas', 2, null],
+  ['Aíres Muniz Santos', 'High touch - Novas', 3, null],
   ['Sem B1', 'High touch - Novas', 2, null],
   ['Andreina Ferreira', 'High touch - Novas', 2, null],
   ['Viviane Gomes Luz', 'High touch - Novas', 1, null],
@@ -336,15 +333,14 @@ const DONOS = [
   ['Thayná Bastos', 'High touch - Renovação', 5, 80],
   ['Vivian Cristina', 'High touch - Renovação', 2, 60],
   ['Sarah Moura', 'High touch - Renovação', 2, 80],
+  ['Carla Ferraz Gomes', 'High touch - Renovação', 1, 80],
   ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 1, 80],
   ['Mariana Santana', 'High touch - Renovação', 1, 80],
   ['Indlayse Ferreira', 'High touch - Renovação', 1, 80],
-  ['Carla Ferraz Gomes', 'High touch - Renovação', 1, 80],
   ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 6, null],
-  ['Sem B1', 'High touch - Renovação', 3, null],
+  ['Sem B1', 'High touch - Renovação', 4, null],
   ['Carla Silva', 'High touch - Renovação', 2, null],
   ['Viviane Gomes Luz', 'High touch - Renovação', 1, null],
-  ['Admin', 'High touch - Renovação', 1, null],
   ['Shelry Solart', 'High touch - Renovação', 1, null],
   ['Mayane Oliveira', 'Medium touch', 17, 60],
   ['Pâmela Miranda', 'Medium touch', 15, 60],
@@ -360,8 +356,8 @@ const DONOS = [
   ['Talita Panassol', 'Premium touch', 10, 80],
   ['Maria Eduarda Carvalho', 'Premium touch', 7, 80],
   ['Carla Ferraz Gomes', 'Premium touch', 6, 80],
-  ['Maria Elvira Silva de Jesus', 'Premium touch', 2, 80],
   ['Sarah Moura', 'Premium touch', 2, 80],
+  ['Maria Elvira Silva de Jesus', 'Premium touch', 2, 80],
   ['LARI FREITAS MONTEIRO', 'Premium touch', 2, null],
   ['Maria Elvira Silva de Jesus', 'Premium touch 40+', 6, 80],
   ['Carla Ferraz Gomes', 'Premium touch 40+', 1, 80],
