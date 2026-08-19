@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capacidade de Carteira &mdash; 19/08/2026</title>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;--green:#008ECF;--green-lt:#e6f4fb;
+  --amber:#7668AC;--amber-lt:#f0eef8;--red:#E94B56;--red-lt:#fef0f1;
+  --yellow:#F9DC45;--purple:#7668AC;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a}
+html.dark body{background:var(--bg);color:var(--text)}
+body{transition:background-color .3s ease,color .3s ease}
+@keyframes sun-glow{0%,100%{filter:drop-shadow(0 0 3px #FFD700) drop-shadow(0 0 6px #FF9500)}50%{filter:drop-shadow(0 0 7px #FFD700) drop-shadow(0 0 12px #FF6B00)}}
+@keyframes sun-rays{0%{transform:scale(1) rotate(0deg)}100%{transform:scale(1) rotate(360deg)}}
+@keyframes moon-twinkle{0%,100%{filter:drop-shadow(0 0 2px #c4b5fd)}50%{filter:drop-shadow(0 0 6px #a78bfa)}}
+.theme-btn{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#FFD947,#FF8C00);box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2);z-index:9998;overflow:hidden;padding:0;display:flex;align-items:center;justify-content:center;transition:background .5s ease,box-shadow .5s ease,transform .2s ease}
+html.dark .theme-btn{background:linear-gradient(135deg,#2d1b69,#0f0c29);box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4)}
+.theme-btn:hover{transform:scale(1.13)}
+.theme-icon-sun,.theme-icon-moon{position:absolute;font-size:22px;line-height:1;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease}
+.theme-icon-sun{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:sun-glow 2.5s ease-in-out infinite,sun-rays 12s linear infinite}
+.theme-icon-moon{opacity:0;transform:scale(0) rotate(-40deg) translateY(10px)}
+html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px);animation:none}
+html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0);animation:moon-twinkle 3s ease-in-out infinite}
+
+.back{position:fixed;top:14px;left:14px;display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);z-index:9999;transition:opacity .15s}
+body{padding:56px 20px 48px;background:linear-gradient(160deg,#f5f3ff 0%,#fdfcff 60%,#f0f4ff 100%)}
+html.dark body{background:#18181b!important}
+.container{width:100%;max-width:720px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#7668AC 0%,#9b8fd4 100%);border-radius:20px;padding:28px 28px 24px;margin-bottom:22px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(118,104,172,.30)}
+.hero::before{content:'★';position:absolute;top:16px;right:28px;font-size:40px;color:rgba(249,220,69,.25);line-height:1}
+.hero-title{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:2px}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.75);font-weight:600;margin-bottom:6px}
+.sec-label{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:12px}
+.btn-card{background:var(--surface);border:none;border-radius:14px;padding:24px 18px;text-decoration:none;color:var(--text);box-shadow:0 2px 8px rgba(89,89,89,.08);display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:all .2s;position:relative;overflow:hidden}
+.btn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:#7668AC;border-radius:14px 14px 0 0}
+.btn-card.retencao::before{background:#1A9957}
+.btn-card.receita::before{background:#7668AC}
+.btn-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(118,104,172,.22)}
+.btn-card .title{font-size:15px;font-weight:800;color:var(--text)}
+.btn-card .sub{font-size:11px;color:var(--muted);line-height:1.6;font-weight:500}
+html.dark .btn-card{box-shadow:0 2px 8px rgba(0,0,0,.3)}
+@media(max-width:640px){.btn-grid{grid-template-columns:1fr}}
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button><script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
+<a href="index.html" class="back">&#8592; In&iacute;cio</a>
+<div class="container">
+  <div class="hero">
+    <div class="hero-title">&#128202; Capacidade de Carteira</div>
+    <div class="hero-sub">Refer&ecirc;ncia: 19/08/2026 &nbsp;&middot;&nbsp; escolha a frente de relacionamento</div>
+  </div>
+  <div class="sec-label">Selecione uma frente</div>
+  <div class="btn-grid">
+    <a href="capacidade_carteira.html" class="btn-card">
+      <div style="font-size:48px;margin-bottom:4px">&#128202;</div>
+      <div class="title">Geral</div>
+      <div class="sub">Todos os segmentos &middot; sem corte de frente</div>
+    </a>
+    <a href="capacidade_retencao.html" class="btn-card retencao">
+      <div style="font-size:48px;margin-bottom:4px">&#128274;</div>
+      <div class="title">Reten&ccedil;&atilde;o</div>
+      <div class="sub">Capacidade e distribui&ccedil;&atilde;o &middot; dono B0</div>
+    </a>
+    <a href="capacidade_receita.html" class="btn-card receita">
+      <div style="font-size:48px;margin-bottom:4px">&#128176;</div>
+      <div class="title">Receita</div>
+      <div class="sub">Capacidade e distribui&ccedil;&atilde;o &middot; dono B1</div>
+    </a>
+  </div>
+  <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px">Cada p&aacute;gina mostra escolas ativas, capacidade por segmento e distribui&ccedil;&atilde;o por consultor.</p>
+</div>
+</body></html>
