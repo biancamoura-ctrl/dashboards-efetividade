@@ -176,16 +176,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">54</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">52</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">240</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+186</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+188</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:22.5%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:21.7%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 4 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">22.5% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">21.7% utilizado</div>
     </div>
   </div>
 
@@ -270,7 +270,7 @@ ORDER BY seg, n_escolas DESC</pre>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 35, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 39, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 54, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 15, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 6, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
+const DADOS = { 'htn': { esc: 35, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 39, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 52, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 15, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 6, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+']];
 const DONOS = [
   ['Laura Pagliuzo', 'High touch - Novas', 5, 60],
@@ -295,7 +295,7 @@ const DONOS = [
   ['ludmila Souza Gonçalves', 'High touch - Renovação', 1, null],
   ['Carla Silva', 'High touch - Renovação', 1, null],
   ['Vivian Cristina', 'Medium touch', 13, 60],
-  ['Kaian Luís Silva', 'Medium touch', 8, 60],
+  ['Kaian Luís Silva', 'Medium touch', 7, 60],
   ['Mayane Oliveira', 'Medium touch', 5, 60],
   ['Pâmela Miranda', 'Medium touch', 4, 60],
   ['Dalva Paschoalini', 'Medium touch', 3, 60],
@@ -304,8 +304,8 @@ const DONOS = [
   ['Tatiana Silva de Jesus Portela', 'Medium touch', 1, 80],
   ['Stefany Soares Figueredo', 'Medium touch', 5, null],
   ['Shelry Solart', 'Medium touch', 3, null],
-  ['Sarah Moura', 'Medium touch', 2, null],
   ['Nicole Cavalcante de Oliveira', 'Medium touch', 2, null],
+  ['Sarah Moura', 'Medium touch', 1, null],
   ['LARI FREITAS MONTEIRO', 'Medium touch', 1, null],
   ['Ana Vitoria Oliveira Marques', 'Medium touch', 1, null],
   ['Jennifer Dos Anjos', 'Medium touch', 1, null],
