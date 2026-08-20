@@ -176,16 +176,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">74</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">75</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">240</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+166</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+165</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:30.8%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:31.2%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 4 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">30.8% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">31.2% utilizado</div>
     </div>
   </div>
 
@@ -270,15 +270,15 @@ ORDER BY seg, n_escolas DESC</pre>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 75, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 91, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 74, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 48, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 9, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
+const DADOS = { 'htn': { esc: 75, cap: 360, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'htr': { esc: 91, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 4 Estagiários (60 esc.)' }, 'mt': { esc: 75, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 48, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 9, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+']];
 const DONOS = [
   ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 19, 80],
   ['Indlayse Ferreira', 'High touch - Novas', 12, 80],
   ['Vivian Cristina', 'High touch - Novas', 11, 60],
   ['Thayná Bastos', 'High touch - Novas', 11, 80],
-  ['Ana Julia Martineli', 'High touch - Novas', 10, 60],
-  ['Laura Pagliuzo', 'High touch - Novas', 2, 60],
+  ['Ana Julia Martineli', 'High touch - Novas', 9, 60],
+  ['Laura Pagliuzo', 'High touch - Novas', 3, 60],
   ['Maria Eduarda Carvalho', 'High touch - Novas', 1, 80],
   ['Andreina Ferreira', 'High touch - Novas', 1, 60],
   ['Julia Cordeiro', 'High touch - Novas', 4, null],
@@ -314,7 +314,7 @@ const DONOS = [
   ['Sarah Moura', 'Medium touch', 8, null],
   ['Giovanna Munhoz', 'Medium touch', 3, null],
   ['Jennifer Dos Anjos', 'Medium touch', 3, null],
-  ['Sem B1', 'Medium touch', 1, null],
+  ['Sem B1', 'Medium touch', 2, null],
   ['Mariana Santana', 'Premium touch', 12, 80],
   ['Talita Panassol', 'Premium touch', 10, 80],
   ['Maria Eduarda Carvalho', 'Premium touch', 8, 80],
