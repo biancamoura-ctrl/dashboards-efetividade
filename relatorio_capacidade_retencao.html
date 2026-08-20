@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capacidade do Consultor &middot; Retenção</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#008ECF;--blue-soft:#E6F4FB;--blue-mid:#B3DDF2;
+  --yellow:#F9DC45;--yellow-soft:#FFFBE6;
+  --purple:#7668AC;--purple-soft:#F0EEF8;
+  --ok:#1A9957;--ok-bg:#E6F5EE;
+  --warn:#C47A00;--warn-bg:#FFF5D6;
+  --bad:#C0392B;--bad-bg:#FDECEB;
+  --bg:#F3F6F9;--card:#fff;--border:#E0E6ED;
+  --t1:#1D1C1D;--t2:#595959;--t3:#9BA8B5;
+  --r:10px;--sh:0 1px 4px rgba(0,0,0,.07)
+}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--t1);font-size:14px;line-height:1.5;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.header{background:var(--blue);color:#fff;padding:0 24px;display:flex;align-items:center;gap:14px;height:54px;flex-shrink:0;position:relative}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--yellow)}
+.header h1{font-size:16px;font-weight:700;flex:1;text-align:center}
+.header .sub{font-size:11px;opacity:.75}
+.btn-back{display:flex;align-items:center;gap:5px;color:#fff;text-decoration:none;font-size:12px;font-weight:600;opacity:.85;transition:opacity .15s;white-space:nowrap;flex-shrink:0}
+.btn-back:hover{opacity:1}
+.btn-back svg{flex-shrink:0}
+.layout{display:grid;grid-template-columns:264px 1fr;flex:1;overflow:hidden}
+.sidebar{background:var(--card);border-right:1px solid var(--border);padding:16px;overflow-y:auto}
+.main{overflow-y:auto;padding:20px 24px}
+.fl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-bottom:8px}
+.fs{margin-bottom:18px}
+.presets{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.preset-btn{padding:4px 10px;border-radius:999px;border:1.5px solid var(--border);background:var(--card);font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;transition:all .15s}
+.preset-btn:hover{border-color:var(--blue);color:var(--blue)}
+.preset-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.slider-big{font-size:26px;font-weight:700;color:var(--blue)}
+.slider-unit{font-size:12px;color:var(--t2);margin-left:3px}
+.slider-range{font-size:10px;color:var(--t3);margin:3px 0 7px}
+input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;height:4px}
+.slider-marks{display:flex;justify-content:space-between;font-size:10px;color:var(--t3);margin-top:2px}
+.disclaimer{font-size:10px;color:var(--t3);margin-top:7px;line-height:1.4;padding:6px 8px;background:var(--yellow-soft);border-radius:6px;border-left:3px solid var(--yellow)}
+.cargo-opts{display:flex;flex-direction:column;gap:8px}
+.cargo-opt{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px}
+.cargo-opt input{accent-color:var(--blue);cursor:pointer}
+.csearch{width:100%;padding:6px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;margin-bottom:6px;outline:none;font-family:Arial,sans-serif}
+.csearch:focus{border-color:var(--blue)}
+.cactions{display:flex;gap:10px;margin-bottom:8px}
+.btn-link{font-size:11px;color:var(--blue);cursor:pointer;background:none;border:none;padding:0;text-decoration:underline;font-family:Arial,sans-serif}
+.clist{display:flex;flex-direction:column;gap:3px;max-height:280px;overflow-y:auto}
+.citem{display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:6px;cursor:pointer;font-size:12px}
+.citem:hover{background:var(--bg)}
+.citem.sel{background:var(--blue-soft)}
+.cemail{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.safra-people{font-size:10px;color:var(--t3);white-space:normal;margin-top:1px}
+.safra-empty{font-size:11px;color:var(--t3);padding:8px 4px}
+.sec-sub{font-weight:400;text-transform:none;letter-spacing:0;color:var(--t3);font-size:11px;margin-left:4px}
+.badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;flex-shrink:0}
+.ba{background:var(--blue-soft);color:var(--blue)}
+.be{background:var(--purple-soft);color:var(--purple)}
+.sec{font-size:12px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;margin-top:4px;color:var(--t2);text-transform:uppercase;letter-spacing:.05em}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);margin-left:4px}
+.sec-icon{width:14px;height:14px;flex-shrink:0;color:var(--blue)}
+
+/* OVERVIEW KPIs */
+.ov-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:20px}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:11px 12px;box-shadow:var(--sh)}
+.ov-card.hl{background:var(--blue);border-color:var(--blue)}
+.ov-card.hl-y{background:var(--yellow);border-color:var(--yellow)}
+.ov-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--t3);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ov-val{font-size:22px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:2px}
+.ov-sub{font-size:10px;color:var(--t2)}
+.hl .ov-label,.hl .ov-val,.hl .ov-sub{color:#fff}
+.hl .ov-label{opacity:.72}
+.hl-y .ov-label,.hl-y .ov-sub{color:var(--t2)}
+.hl-y .ov-val{color:var(--t1)}
+
+/* CARGO COMPARISON */
+.cargo-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:20px;overflow:hidden}
+.cargo-cmp-table{width:100%;border-collapse:collapse}
+.cargo-cmp-table th{padding:12px 18px;font-size:12px;font-weight:700;text-align:center;border-bottom:2px solid var(--border)}
+.cargo-cmp-table th:first-child{text-align:left;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:10px;width:30%}
+.cargo-cmp-table th.th-a{background:var(--blue-soft);color:var(--blue);border-bottom-color:var(--blue)}
+.cargo-cmp-table th.th-e{background:var(--purple-soft);color:var(--purple);border-bottom-color:var(--purple)}
+.cargo-cmp-table th.th-r{background:var(--yellow-soft);color:var(--t2);border-bottom-color:var(--yellow)}
+.cargo-cmp-table .cv.ratio{font-size:13px;font-weight:700;color:var(--t2)}
+.cargo-cmp-table td{padding:10px 18px;font-size:13px;text-align:center;border-top:1px solid var(--border)}
+.cargo-cmp-table td:first-child{text-align:left;color:var(--t2);font-size:12px}
+.cargo-cmp-table tr:first-child td{border-top:none}
+.cargo-cmp-table .cv{font-size:17px;font-weight:700;color:var(--t1)}
+.cargo-cmp-table .cv.pct{color:var(--t1)}
+.cargo-cmp-table tr:hover td{background:var(--bg)}
+.cargo-cmp-table .act-row td{background:var(--bg)}
+.cargo-cmp-table .act-row .cv{font-size:22px}
+
+/* TOP PERFORMERS */
+.top-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.top-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;box-shadow:var(--sh);border-top:3px solid var(--blue)}
+.top-card.tc-e{border-top-color:var(--purple)}
+.top-cat{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-bottom:4px}
+.top-name{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:2px}
+.top-val{font-size:20px;font-weight:700;color:var(--blue);margin-bottom:1px}
+.top-card.tc-e .top-val{color:var(--purple)}
+.top-unit{font-size:10px;color:var(--t2)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:24px}
+table{width:100%;border-collapse:collapse;background:var(--card)}
+thead th{background:var(--bg);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--t2);padding:9px 12px;border-bottom:1px solid var(--border);text-align:right;cursor:pointer;user-select:none;white-space:nowrap}
+thead th:first-child,thead th:nth-child(2){text-align:left}
+thead th:hover{color:var(--blue)}
+thead th.sorted{color:var(--blue)}
+.sa{display:inline-block;margin-left:3px;opacity:.4;font-size:10px}
+thead th.sorted .sa{opacity:1}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--blue-soft)}
+tbody td{padding:8px 12px;font-size:13px;text-align:right}
+tbody td:first-child,tbody td:nth-child(2){text-align:left}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700}
+.pill-ok{background:var(--ok-bg);color:var(--ok)}
+.pill-warn{background:var(--warn-bg);color:var(--warn)}
+.pill-bad{background:var(--bad-bg);color:var(--bad)}
+.no-data{text-align:center;padding:40px;color:var(--t3);font-size:13px}
+html.dark{
+  --bg:#18181b;--card:#1e1e22;--border:#2d2d33;
+  --t1:#d4d4d0;--t2:#a1a1aa;--t3:#71717a;
+  --blue-soft:rgba(0,142,207,.12);--yellow-soft:rgba(249,220,69,.10);
+  --purple-soft:rgba(118,104,172,.12);
+  --ok-bg:rgba(46,125,50,.15);--warn-bg:rgba(196,122,0,.15);--bad-bg:rgba(192,57,43,.15);
+}
+html.dark body{background:var(--bg);color:var(--t1)}
+html.dark .header{background:#22225a}
+html.dark .sidebar{background:var(--card);border-right-color:var(--border)}
+html.dark .preset-btn{background:var(--card);border-color:var(--border);color:var(--t2)}
+html.dark .preset-btn:hover{border-color:var(--blue);color:var(--blue)}
+html.dark .csearch{background:var(--card);color:var(--t1);border-color:var(--border)}
+html.dark .citem:hover{background:var(--bg)}
+html.dark .citem.sel{background:var(--blue-soft)}
+html.dark .ov-card{background:var(--card);border-color:var(--border)}
+html.dark .ov-card.hl{background:var(--blue)}
+html.dark .cargo-wrap{background:var(--card);border-color:var(--border)}
+html.dark .cargo-cmp-table th{border-bottom-color:var(--border)}
+html.dark .cargo-cmp-table td{border-top-color:var(--border)}
+html.dark .cargo-cmp-table tr:hover td{background:var(--bg)}
+html.dark .cargo-cmp-table .act-row td{background:var(--bg)}
+html.dark .top-card{background:var(--card);border-color:var(--border)}
+html.dark table{background:var(--card)}
+html.dark thead th{background:var(--bg);border-bottom-color:var(--border)}
+html.dark tbody tr{border-bottom-color:var(--border)}
+html.dark tbody tr:hover{background:var(--blue-soft)}
+html.dark .disclaimer{background:rgba(249,220,69,.08)}
+body,.sidebar,.ov-card,.cargo-wrap,.top-card,table,thead th,tbody tr,input,select{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+<div class="header">
+  <a class="btn-back" href="index.html">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Início
+  </a>
+  <a class="btn-back" href="metricas_retencao.html">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Métricas
+  </a>
+  <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+    <rect width="28" height="28" rx="6" fill="white" fill-opacity="0.15"/>
+    <path d="M7 20L14 8L21 20" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10 16h8" stroke="#F9DC45" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <h1>Capacidade do Consultor &middot; Retenção</h1>
+  <span class="sub" id="hdr-range">&mdash;</span>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="fs">
+      <div class="fl">Recorte de tempo</div>
+      <div class="presets" id="presets">
+        <button class="preset-btn" data-d="1">1d</button>
+        <button class="preset-btn" data-d="3">3d</button>
+        <button class="preset-btn" data-d="7">7d</button>
+        <button class="preset-btn" data-d="14">14d</button>
+        <button class="preset-btn" data-d="21">21d</button>
+        <button class="preset-btn active" data-d="28">28d</button>
+        <button class="preset-btn" data-d="60">60d</button>
+        <button class="preset-btn" data-d="90">90d</button>
+      </div>
+      <div><span class="slider-big" id="slider-val">28</span><span class="slider-unit">dias corridos</span></div>
+      <div class="slider-range" id="slider-range">&mdash;</div>
+      <input type="range" id="slider" min="1" max="90" value="28">
+      <div class="slider-marks"><span>1d</span><span>21d</span><span>45d</span><span>68d</span><span>90d</span></div>
+      <div class="disclaimer">Dias corridos, n&atilde;o &uacute;teis. Dias com &le; 3 atividades s&atilde;o exclu&iacute;dos do c&aacute;lculo. Hist&oacute;rico dispon&iacute;vel: &uacute;ltimos 90 dias.</div>
+    </div>
+
+    <div class="fs">
+      <div class="fl">Cargo</div>
+      <div class="cargo-opts">
+        <label class="cargo-opt"><input type="checkbox" id="chk-a" checked> <span class="badge ba">Analista</span></label>
+        <label class="cargo-opt"><input type="checkbox" id="chk-e" checked> <span class="badge be">Estagi&aacute;rio</span></label>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="fl">Consultores</div>
+      <input class="csearch" type="text" id="csearch" placeholder="Buscar...">
+      <div class="cactions">
+        <button class="btn-link" id="btn-all">Todos</button>
+        <button class="btn-link" id="btn-none">Limpar</button>
+      </div>
+      <div class="clist" id="clist"></div>
+    </div>
+
+    <div class="fs">
+      <div class="fl">Janela de Safra</div>
+      <div class="presets" id="safra-presets">
+        <button class="preset-btn" data-d="7">7d</button>
+        <button class="preset-btn active" data-d="14">14d</button>
+        <button class="preset-btn" data-d="21">21d</button>
+        <button class="preset-btn" data-d="28">28d</button>
+      </div>
+      <div class="cactions" style="margin-top:8px">
+        <button class="btn-link" id="btn-safra-clear">Limpar seleção</button>
+      </div>
+      <div class="clist" id="safra-list" style="max-height:260px"></div>
+      <div class="disclaimer">Selecione uma safra (data de entrada) para comparar os números do time antes e depois da chegada.</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sec" id="safra-sec-title" style="display:none">
+      <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+      Impacto da Safra<span class="sec-sub" id="safra-sec-sub"></span>
+    </div>
+    <div id="safra-panel" style="display:none;margin-bottom:20px">
+      <div class="cargo-wrap"><table class="cargo-cmp-table" id="safra-table"></table></div>
+      <div class="disclaimer" id="safra-note" style="display:none"></div>
+    </div>
+
+    <div class="sec">
+      <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Vis&atilde;o Geral
+    </div>
+    <div class="ov-grid" id="overview"></div>
+
+    <div class="sec">
+      <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Analista vs Estagi&aacute;rio
+    </div>
+    <div class="cargo-wrap"><table class="cargo-cmp-table" id="cargo-table"></table></div>
+
+    <div class="sec">
+      <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Destaques
+    </div>
+    <div class="top-grid" id="tops"></div>
+
+    <div class="sec">
+      <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Detalhamento por Consultor
+    </div>
+    <div class="tbl-wrap">
+      <table id="detail-table">
+        <thead id="thead-row"></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const RAW_DATA = [
+  {email:"aires.muniz@estantemagica.com.br",days:[{d:"2026-06-12",a:7,e:1,s:3,se:1},{d:"2026-06-15",a:16,e:0,s:8,se:0},{d:"2026-06-16",a:18,e:0,s:12,se:0},{d:"2026-06-17",a:15,e:1,s:7,se:1},{d:"2026-06-18",a:30,e:1,s:17,se:1},{d:"2026-06-19",a:30,e:2,s:15,se:2},{d:"2026-06-22",a:17,e:2,s:10,se:2},{d:"2026-06-23",a:30,e:2,s:15,se:2},{d:"2026-06-24",a:24,e:3,s:14,se:3},{d:"2026-06-25",a:21,e:6,s:12,se:6},{d:"2026-06-26",a:10,e:2,s:6,se:2},{d:"2026-06-29",a:14,e:2,s:11,se:2},{d:"2026-06-30",a:20,e:1,s:13,se:1},{d:"2026-07-01",a:10,e:0,s:8,se:0},{d:"2026-07-02",a:8,e:1,s:4,se:1},{d:"2026-07-03",a:3,e:0,s:1,se:0},{d:"2026-07-06",a:2,e:0,s:1,se:0},{d:"2026-07-07",a:1,e:1,s:1,se:1},{d:"2026-07-08",a:16,e:2,s:7,se:2},{d:"2026-07-09",a:9,e:1,s:4,se:1},{d:"2026-07-10",a:9,e:3,s:5,se:3},{d:"2026-07-13",a:11,e:4,s:4,se:3},{d:"2026-07-14",a:7,e:2,s:3,se:2},{d:"2026-07-15",a:11,e:3,s:4,se:2},{d:"2026-07-16",a:5,e:2,s:3,se:2},{d:"2026-07-17",a:14,e:5,s:11,se:5},{d:"2026-07-20",a:8,e:1,s:5,se:1},{d:"2026-07-21",a:13,e:5,s:8,se:5},{d:"2026-07-22",a:8,e:4,s:7,se:4},{d:"2026-07-23",a:4,e:2,s:3,se:2},{d:"2026-07-24",a:13,e:6,s:6,se:5},{d:"2026-07-27",a:21,e:4,s:9,se:4},{d:"2026-07-28",a:5,e:0,s:2,se:0},{d:"2026-07-29",a:10,e:4,s:5,se:4},{d:"2026-07-30",a:11,e:2,s:6,se:2},{d:"2026-07-31",a:12,e:2,s:6,se:2},{d:"2026-08-03",a:8,e:5,s:6,se:5},{d:"2026-08-04",a:17,e:7,s:9,se:6},{d:"2026-08-05",a:31,e:9,s:14,se:9},{d:"2026-08-06",a:24,e:6,s:10,se:6},{d:"2026-08-07",a:17,e:7,s:9,se:6},{d:"2026-08-10",a:7,e:4,s:4,se:3},{d:"2026-08-11",a:14,e:3,s:5,se:3},{d:"2026-08-12",a:10,e:4,s:5,se:4},{d:"2026-08-13",a:14,e:1,s:5,se:1},{d:"2026-08-14",a:9,e:6,s:6,se:6},{d:"2026-08-17",a:48,e:5,s:13,se:4},{d:"2026-08-18",a:22,e:4,s:9,se:4},{d:"2026-08-19",a:22,e:5,s:9,se:5}]},
+  {email:"anavitoria.marques@estantemagica.com.br",days:[{d:"2026-08-03",a:59,e:6,s:13,se:6},{d:"2026-08-04",a:44,e:5,s:16,se:5},{d:"2026-08-05",a:18,e:4,s:12,se:4},{d:"2026-08-06",a:27,e:0,s:12,se:0},{d:"2026-08-07",a:20,e:2,s:10,se:2},{d:"2026-08-10",a:26,e:7,s:14,se:6},{d:"2026-08-11",a:26,e:7,s:15,se:6},{d:"2026-08-12",a:17,e:6,s:6,se:5},{d:"2026-08-13",a:23,e:3,s:9,se:2},{d:"2026-08-14",a:24,e:2,s:10,se:2},{d:"2026-08-17",a:23,e:4,s:11,se:4},{d:"2026-08-18",a:50,e:11,s:17,se:9},{d:"2026-08-19",a:57,e:5,s:19,se:4}]},
+  {email:"andreina.ferreira@estantemagica.com.br",days:[{d:"2026-05-22",a:23,e:6,s:10,se:6},{d:"2026-05-25",a:34,e:5,s:11,se:4},{d:"2026-05-26",a:38,e:3,s:13,se:3},{d:"2026-05-27",a:20,e:5,s:9,se:4},{d:"2026-05-28",a:45,e:7,s:19,se:7},{d:"2026-05-29",a:11,e:2,s:4,se:2},{d:"2026-06-01",a:37,e:8,s:11,se:7},{d:"2026-06-02",a:43,e:8,s:16,se:7},{d:"2026-06-03",a:47,e:9,s:12,se:7},{d:"2026-06-08",a:33,e:9,s:11,se:6},{d:"2026-06-09",a:40,e:3,s:11,se:3},{d:"2026-06-10",a:16,e:8,s:9,se:7},{d:"2026-06-11",a:50,e:5,s:13,se:4},{d:"2026-06-12",a:17,e:1,s:8,se:1},{d:"2026-06-15",a:32,e:5,s:10,se:4},{d:"2026-06-16",a:22,e:3,s:14,se:3},{d:"2026-06-22",a:2,e:2,s:2,se:2},{d:"2026-06-23",a:22,e:3,s:8,se:3},{d:"2026-06-24",a:41,e:6,s:15,se:6},{d:"2026-06-25",a:47,e:6,s:13,se:6},{d:"2026-06-26",a:25,e:1,s:7,se:1},{d:"2026-06-30",a:43,e:8,s:13,se:8},{d:"2026-07-01",a:50,e:7,s:14,se:7},{d:"2026-07-02",a:47,e:6,s:15,se:4},{d:"2026-07-03",a:14,e:5,s:6,se:5},{d:"2026-07-06",a:27,e:6,s:12,se:6},{d:"2026-07-07",a:22,e:9,s:10,se:9},{d:"2026-07-08",a:21,e:8,s:12,se:7},{d:"2026-07-09",a:18,e:4,s:5,se:4},{d:"2026-07-10",a:18,e:10,s:12,se:10},{d:"2026-07-13",a:22,e:7,s:10,se:5},{d:"2026-07-14",a:10,e:4,s:6,se:4},{d:"2026-07-15",a:10,e:3,s:5,se:3},{d:"2026-07-16",a:35,e:11,s:16,se:11},{d:"2026-07-17",a:20,e:2,s:7,se:2},{d:"2026-07-20",a:3,e:3,s:3,se:3},{d:"2026-07-21",a:11,e:4,s:5,se:4},{d:"2026-07-22",a:10,e:4,s:4,se:3},{d:"2026-07-23",a:31,e:17,s:20,se:16},{d:"2026-07-24",a:40,e:8,s:11,se:7},{d:"2026-07-27",a:18,e:9,s:12,se:9},{d:"2026-07-28",a:4,e:4,s:4,se:4},{d:"2026-07-29",a:25,e:10,s:12,se:10},{d:"2026-07-30",a:10,e:5,s:6,se:5},{d:"2026-07-31",a:26,e:5,s:9,se:5},{d:"2026-08-10",a:17,e:6,s:6,se:4},{d:"2026-08-11",a:20,e:3,s:6,se:3},{d:"2026-08-12",a:36,e:13,s:13,se:9},{d:"2026-08-13",a:40,e:7,s:11,se:7},{d:"2026-08-14",a:43,e:7,s:11,se:7},{d:"2026-08-18",a:5,e:2,s:5,se:2},{d:"2026-08-19",a:45,e:5,s:11,se:4}]},
+  {email:"carla.gomes@estantemagica.com.br",days:[{d:"2026-05-22",a:3,e:1,s:3,se:1},{d:"2026-05-25",a:12,e:8,s:12,se:8},{d:"2026-05-26",a:14,e:11,s:13,se:11},{d:"2026-05-27",a:7,e:6,s:7,se:6},{d:"2026-05-28",a:4,e:2,s:4,se:2},{d:"2026-05-29",a:10,e:3,s:9,se:3},{d:"2026-06-01",a:14,e:7,s:14,se:7},{d:"2026-06-02",a:23,e:7,s:20,se:7},{d:"2026-06-03",a:10,e:2,s:8,se:2},{d:"2026-06-05",a:15,e:9,s:14,se:8},{d:"2026-06-08",a:38,e:13,s:21,se:13},{d:"2026-06-09",a:14,e:5,s:7,se:5},{d:"2026-06-10",a:15,e:7,s:11,se:7},{d:"2026-06-11",a:30,e:17,s:27,se:16},{d:"2026-06-12",a:8,e:1,s:8,se:1},{d:"2026-07-06",a:24,e:10,s:19,se:10},{d:"2026-07-07",a:16,e:8,s:13,se:8},{d:"2026-07-08",a:13,e:2,s:10,se:2},{d:"2026-07-09",a:14,e:3,s:9,se:3},{d:"2026-07-10",a:27,e:4,s:14,se:4},{d:"2026-07-13",a:23,e:7,s:11,se:7},{d:"2026-07-14",a:10,e:2,s:5,se:2},{d:"2026-07-15",a:12,e:4,s:10,se:4},{d:"2026-07-16",a:5,e:2,s:2,se:2},{d:"2026-07-17",a:10,e:4,s:10,se:4},{d:"2026-07-20",a:30,e:10,s:20,se:10},{d:"2026-07-21",a:17,e:8,s:14,se:8},{d:"2026-07-22",a:17,e:5,s:9,se:5},{d:"2026-07-23",a:8,e:1,s:5,se:1},{d:"2026-07-24",a:6,e:4,s:4,se:4},{d:"2026-07-27",a:7,e:3,s:5,se:3},{d:"2026-07-28",a:12,e:8,s:10,se:7},{d:"2026-07-29",a:24,e:10,s:15,se:8},{d:"2026-07-30",a:8,e:3,s:6,se:3},{d:"2026-07-31",a:13,e:6,s:11,se:6},{d:"2026-08-03",a:19,e:12,s:17,se:12},{d:"2026-08-04",a:8,e:7,s:6,se:6},{d:"2026-08-05",a:17,e:5,s:11,se:5},{d:"2026-08-06",a:17,e:8,s:14,se:8},{d:"2026-08-07",a:4,e:4,s:4,se:4},{d:"2026-08-10",a:24,e:10,s:17,se:10},{d:"2026-08-11",a:33,e:7,s:20,se:7},{d:"2026-08-12",a:10,e:3,s:3,se:2},{d:"2026-08-14",a:14,e:11,s:12,se:11},{d:"2026-08-17",a:38,e:8,s:20,se:7}]},
+  {email:"carla.santosdasilva@estantemagica.com.br",days:[{d:"2026-05-22",a:48,e:7,s:26,se:7},{d:"2026-05-25",a:18,e:4,s:16,se:4},{d:"2026-05-26",a:30,e:4,s:10,se:4},{d:"2026-05-27",a:35,e:11,s:12,se:8},{d:"2026-05-28",a:22,e:7,s:7,se:4},{d:"2026-05-29",a:26,e:9,s:15,se:5},{d:"2026-06-01",a:15,e:7,s:7,se:4},{d:"2026-06-02",a:23,e:6,s:9,se:6},{d:"2026-06-03",a:18,e:5,s:10,se:5},{d:"2026-06-04",a:1,e:0,s:1,se:0},{d:"2026-06-05",a:19,e:12,s:15,se:12},{d:"2026-06-08",a:33,e:14,s:20,se:12},{d:"2026-06-09",a:12,e:4,s:7,se:4},{d:"2026-06-10",a:17,e:4,s:5,se:3},{d:"2026-06-11",a:46,e:8,s:16,se:8},{d:"2026-06-12",a:8,e:4,s:3,se:2},{d:"2026-06-15",a:22,e:7,s:5,se:3},{d:"2026-06-16",a:17,e:8,s:9,se:7},{d:"2026-06-17",a:44,e:11,s:16,se:7},{d:"2026-06-18",a:42,e:6,s:14,se:6},{d:"2026-06-19",a:19,e:4,s:10,se:4},{d:"2026-06-22",a:13,e:5,s:7,se:5},{d:"2026-06-23",a:26,e:11,s:11,se:7},{d:"2026-06-24",a:8,e:4,s:5,se:3},{d:"2026-06-25",a:22,e:9,s:10,se:8},{d:"2026-06-26",a:9,e:4,s:5,se:3},{d:"2026-06-29",a:33,e:3,s:14,se:3},{d:"2026-06-30",a:12,e:1,s:4,se:1},{d:"2026-07-01",a:19,e:9,s:8,se:6},{d:"2026-07-02",a:22,e:9,s:10,se:7},{d:"2026-07-03",a:9,e:2,s:4,se:2},{d:"2026-07-06",a:18,e:2,s:10,se:2},{d:"2026-07-07",a:14,e:5,s:7,se:3},{d:"2026-07-08",a:5,e:2,s:4,se:2},{d:"2026-07-09",a:8,e:2,s:4,se:2},{d:"2026-07-10",a:13,e:6,s:6,se:5},{d:"2026-07-13",a:13,e:3,s:5,se:3},{d:"2026-07-14",a:15,e:3,s:10,se:3},{d:"2026-07-15",a:28,e:11,s:14,se:9},{d:"2026-07-16",a:6,e:1,s:4,se:1},{d:"2026-07-17",a:23,e:7,s:8,se:6},{d:"2026-07-18",a:1,e:1,s:1,se:1},{d:"2026-07-20",a:33,e:2,s:11,se:1},{d:"2026-07-21",a:6,e:2,s:3,se:2},{d:"2026-07-22",a:27,e:3,s:9,se:3},{d:"2026-07-23",a:12,e:8,s:9,se:8},{d:"2026-07-24",a:30,e:5,s:16,se:5},{d:"2026-07-27",a:8,e:4,s:4,se:3},{d:"2026-07-28",a:4,e:1,s:2,se:1},{d:"2026-07-29",a:13,e:2,s:6,se:2},{d:"2026-07-30",a:18,e:3,s:7,se:3},{d:"2026-07-31",a:19,e:2,s:9,se:2},{d:"2026-08-03",a:43,e:12,s:23,se:11},{d:"2026-08-04",a:27,e:10,s:12,se:8},{d:"2026-08-05",a:9,e:3,s:6,se:3},{d:"2026-08-06",a:22,e:11,s:9,se:7},{d:"2026-08-07",a:11,e:3,s:8,se:3},{d:"2026-08-10",a:11,e:3,s:7,se:2},{d:"2026-08-11",a:6,e:3,s:4,se:2},{d:"2026-08-12",a:8,e:6,s:7,se:6},{d:"2026-08-13",a:12,e:4,s:9,se:4},{d:"2026-08-14",a:32,e:9,s:18,se:9},{d:"2026-08-17",a:17,e:4,s:12,se:4},{d:"2026-08-18",a:13,e:6,s:10,se:4},{d:"2026-08-19",a:14,e:5,s:10,se:5}]},
+  {email:"caroline.calvario@estantemagica.com.br",days:[{d:"2026-08-03",a:9,e:1,s:8,se:1},{d:"2026-08-04",a:14,e:4,s:7,se:3},{d:"2026-08-05",a:12,e:1,s:3,se:1},{d:"2026-08-06",a:22,e:1,s:6,se:1},{d:"2026-08-07",a:26,e:3,s:8,se:3},{d:"2026-08-10",a:40,e:4,s:14,se:4},{d:"2026-08-11",a:26,e:3,s:9,se:3},{d:"2026-08-12",a:17,e:3,s:6,se:3},{d:"2026-08-13",a:22,e:4,s:8,se:4},{d:"2026-08-14",a:11,e:4,s:7,se:4},{d:"2026-08-17",a:15,e:3,s:7,se:3},{d:"2026-08-18",a:16,e:4,s:8,se:3},{d:"2026-08-19",a:9,e:3,s:6,se:3}]},
+  {email:"dandara.mariano@estantemagica.com.br",days:[{d:"2026-06-12",a:2,e:0,s:1,se:0},{d:"2026-06-15",a:10,e:2,s:6,se:2},{d:"2026-06-16",a:21,e:1,s:15,se:1},{d:"2026-06-17",a:16,e:2,s:10,se:2},{d:"2026-06-18",a:18,e:1,s:15,se:1},{d:"2026-06-19",a:12,e:3,s:12,se:3},{d:"2026-06-22",a:10,e:2,s:9,se:2},{d:"2026-06-23",a:21,e:3,s:11,se:3},{d:"2026-06-24",a:19,e:3,s:13,se:3},{d:"2026-06-25",a:27,e:5,s:15,se:5},{d:"2026-06-26",a:3,e:2,s:3,se:2},{d:"2026-06-29",a:9,e:3,s:3,se:2},{d:"2026-06-30",a:17,e:4,s:9,se:2},{d:"2026-07-01",a:25,e:2,s:13,se:2},{d:"2026-07-02",a:11,e:0,s:6,se:0},{d:"2026-07-03",a:12,e:1,s:6,se:1},{d:"2026-07-06",a:17,e:3,s:11,se:3},{d:"2026-07-07",a:24,e:2,s:13,se:2},{d:"2026-07-08",a:25,e:4,s:12,se:4},{d:"2026-07-09",a:4,e:1,s:4,se:1},{d:"2026-07-10",a:9,e:4,s:9,se:4},{d:"2026-07-14",a:14,e:4,s:8,se:3},{d:"2026-07-15",a:7,e:5,s:6,se:5},{d:"2026-07-16",a:11,e:2,s:8,se:2},{d:"2026-07-17",a:17,e:4,s:10,se:3},{d:"2026-07-20",a:16,e:4,s:9,se:4},{d:"2026-07-21",a:22,e:3,s:12,se:3},{d:"2026-07-22",a:9,e:7,s:8,se:6},{d:"2026-07-23",a:17,e:3,s:12,se:3},{d:"2026-07-24",a:10,e:3,s:9,se:3},{d:"2026-07-27",a:11,e:0,s:4,se:0},{d:"2026-07-28",a:26,e:6,s:13,se:5},{d:"2026-07-29",a:16,e:3,s:12,se:3},{d:"2026-07-30",a:16,e:2,s:9,se:2},{d:"2026-07-31",a:23,e:6,s:8,se:3},{d:"2026-08-03",a:25,e:9,s:12,se:8},{d:"2026-08-04",a:20,e:10,s:13,se:9},{d:"2026-08-05",a:20,e:7,s:13,se:7},{d:"2026-08-06",a:29,e:5,s:10,se:5},{d:"2026-08-07",a:20,e:8,s:10,se:7},{d:"2026-08-10",a:26,e:6,s:12,se:6},{d:"2026-08-11",a:23,e:8,s:11,se:6},{d:"2026-08-12",a:10,e:5,s:7,se:4},{d:"2026-08-13",a:27,e:4,s:14,se:4},{d:"2026-08-14",a:34,e:5,s:12,se:5},{d:"2026-08-17",a:13,e:5,s:8,se:5},{d:"2026-08-18",a:31,e:6,s:13,se:6},{d:"2026-08-19",a:47,e:6,s:19,se:6}]},
+  {email:"gabriela.ribeiro@estantemagica.com.br",days:[{d:"2026-05-26",a:3,e:1,s:2,se:1},{d:"2026-05-28",a:12,e:4,s:6,se:4},{d:"2026-05-29",a:21,e:2,s:10,se:2},{d:"2026-06-01",a:18,e:4,s:8,se:4},{d:"2026-06-02",a:17,e:5,s:6,se:4},{d:"2026-06-03",a:22,e:7,s:10,se:5},{d:"2026-06-05",a:12,e:5,s:6,se:5},{d:"2026-06-08",a:22,e:6,s:10,se:5},{d:"2026-06-09",a:27,e:6,s:11,se:6},{d:"2026-06-10",a:21,e:4,s:8,se:3},{d:"2026-06-11",a:13,e:5,s:7,se:5},{d:"2026-06-12",a:14,e:2,s:7,se:2},{d:"2026-06-15",a:17,e:9,s:8,se:7},{d:"2026-06-16",a:17,e:7,s:6,se:6},{d:"2026-06-17",a:9,e:4,s:4,se:3},{d:"2026-06-18",a:18,e:5,s:8,se:5},{d:"2026-06-19",a:10,e:4,s:4,se:3},{d:"2026-06-22",a:17,e:6,s:5,se:4},{d:"2026-06-23",a:34,e:4,s:17,se:4},{d:"2026-06-24",a:17,e:4,s:9,se:4},{d:"2026-06-25",a:22,e:8,s:12,se:6},{d:"2026-06-26",a:21,e:8,s:13,se:8},{d:"2026-06-29",a:13,e:5,s:6,se:5},{d:"2026-06-30",a:22,e:8,s:10,se:6},{d:"2026-07-01",a:23,e:6,s:12,se:5},{d:"2026-07-02",a:6,e:1,s:4,se:1},{d:"2026-07-03",a:26,e:4,s:14,se:3},{d:"2026-07-06",a:11,e:10,s:10,se:9},{d:"2026-07-07",a:28,e:7,s:22,se:7},{d:"2026-07-08",a:14,e:5,s:7,se:3},{d:"2026-07-09",a:10,e:3,s:5,se:1},{d:"2026-07-10",a:9,e:3,s:4,se:2},{d:"2026-07-13",a:24,e:4,s:10,se:3},{d:"2026-07-14",a:21,e:3,s:8,se:3},{d:"2026-07-15",a:8,e:3,s:5,se:3},{d:"2026-07-16",a:26,e:3,s:11,se:3},{d:"2026-07-17",a:13,e:4,s:6,se:4},{d:"2026-07-20",a:24,e:3,s:10,se:3},{d:"2026-07-21",a:30,e:7,s:14,se:5},{d:"2026-07-22",a:9,e:5,s:7,se:4},{d:"2026-07-23",a:25,e:4,s:12,se:4},{d:"2026-07-24",a:30,e:6,s:13,se:5},{d:"2026-07-27",a:26,e:6,s:10,se:5},{d:"2026-07-28",a:22,e:6,s:14,se:4},{d:"2026-07-29",a:22,e:10,s:13,se:9},{d:"2026-07-30",a:30,e:4,s:16,se:4},{d:"2026-07-31",a:5,e:2,s:5,se:2},{d:"2026-08-03",a:33,e:3,s:18,se:3},{d:"2026-08-04",a:16,e:6,s:7,se:5},{d:"2026-08-05",a:19,e:7,s:9,se:5},{d:"2026-08-06",a:29,e:12,s:16,se:9},{d:"2026-08-07",a:16,e:4,s:9,se:4},{d:"2026-08-10",a:30,e:8,s:20,se:8},{d:"2026-08-11",a:19,e:12,s:11,se:9},{d:"2026-08-12",a:20,e:11,s:13,se:10},{d:"2026-08-13",a:20,e:8,s:11,se:8},{d:"2026-08-14",a:24,e:7,s:14,se:6},{d:"2026-08-17",a:36,e:8,s:16,se:7},{d:"2026-08-18",a:40,e:9,s:20,se:8},{d:"2026-08-19",a:30,e:6,s:17,se:6}]},
+  {email:"giovanna.munhoz@estantemagica.com.br",days:[{d:"2026-05-22",a:36,e:5,s:22,se:5},{d:"2026-05-25",a:30,e:2,s:15,se:2},{d:"2026-05-26",a:23,e:4,s:15,se:4},{d:"2026-05-27",a:23,e:0,s:15,se:0},{d:"2026-05-28",a:52,e:1,s:22,se:1},{d:"2026-05-29",a:43,e:2,s:23,se:2},{d:"2026-06-02",a:48,e:2,s:22,se:2},{d:"2026-06-03",a:17,e:2,s:17,se:2},{d:"2026-06-05",a:35,e:8,s:20,se:8},{d:"2026-06-08",a:19,e:4,s:19,se:4},{d:"2026-06-09",a:20,e:5,s:20,se:5},{d:"2026-06-10",a:28,e:2,s:28,se:2},{d:"2026-06-11",a:52,e:2,s:26,se:2},{d:"2026-06-12",a:14,e:5,s:13,se:5},{d:"2026-06-15",a:17,e:3,s:16,se:3},{d:"2026-06-16",a:13,e:5,s:13,se:5},{d:"2026-06-17",a:30,e:5,s:23,se:5},{d:"2026-06-18",a:31,e:4,s:16,se:3},{d:"2026-06-19",a:16,e:3,s:12,se:3},{d:"2026-06-22",a:22,e:4,s:11,se:3},{d:"2026-06-23",a:30,e:8,s:20,se:7},{d:"2026-06-24",a:33,e:4,s:15,se:3},{d:"2026-06-25",a:25,e:9,s:17,se:9},{d:"2026-06-26",a:13,e:3,s:10,se:3},{d:"2026-06-29",a:2,e:1,s:2,se:1},{d:"2026-06-30",a:33,e:3,s:16,se:3},{d:"2026-07-01",a:9,e:3,s:8,se:3},{d:"2026-07-02",a:23,e:6,s:17,se:6},{d:"2026-07-03",a:14,e:10,s:12,se:10},{d:"2026-07-06",a:21,e:1,s:11,se:1},{d:"2026-07-07",a:26,e:11,s:19,se:11},{d:"2026-07-08",a:20,e:4,s:11,se:4},{d:"2026-07-09",a:10,e:3,s:9,se:3},{d:"2026-07-10",a:23,e:4,s:14,se:4},{d:"2026-07-13",a:21,e:9,s:14,se:9},{d:"2026-07-14",a:20,e:7,s:14,se:7},{d:"2026-07-15",a:11,e:2,s:10,se:2},{d:"2026-07-16",a:23,e:0,s:12,se:0},{d:"2026-07-17",a:14,e:9,s:13,se:9},{d:"2026-07-20",a:13,e:8,s:12,se:8},{d:"2026-07-21",a:12,e:2,s:7,se:2},{d:"2026-07-22",a:16,e:4,s:8,se:4},{d:"2026-07-23",a:15,e:3,s:9,se:3},{d:"2026-07-24",a:18,e:6,s:12,se:5},{d:"2026-07-27",a:14,e:1,s:12,se:1},{d:"2026-07-28",a:11,e:4,s:11,se:4},{d:"2026-07-30",a:13,e:3,s:13,se:3},{d:"2026-07-31",a:15,e:8,s:14,se:7},{d:"2026-08-03",a:17,e:7,s:11,se:6},{d:"2026-08-04",a:7,e:0,s:7,se:0},{d:"2026-08-05",a:16,e:4,s:12,se:4},{d:"2026-08-06",a:9,e:2,s:9,se:2},{d:"2026-08-07",a:5,e:3,s:5,se:3},{d:"2026-08-10",a:6,e:2,s:6,se:2},{d:"2026-08-11",a:7,e:5,s:6,se:4},{d:"2026-08-12",a:8,e:3,s:8,se:3},{d:"2026-08-13",a:17,e:3,s:17,se:3},{d:"2026-08-17",a:19,e:3,s:11,se:3},{d:"2026-08-18",a:25,e:5,s:15,se:5},{d:"2026-08-19",a:17,e:4,s:15,se:4}]},
+  {email:"gustavo.galante@estantemagica.com.br",days:[{d:"2026-07-31",a:5,e:3,s:4,se:3},{d:"2026-08-03",a:3,e:2,s:3,se:2},{d:"2026-08-04",a:3,e:1,s:3,se:1},{d:"2026-08-05",a:15,e:1,s:8,se:1},{d:"2026-08-06",a:22,e:1,s:13,se:1},{d:"2026-08-07",a:9,e:3,s:6,se:3},{d:"2026-08-10",a:10,e:1,s:7,se:1},{d:"2026-08-11",a:10,e:3,s:7,se:3},{d:"2026-08-12",a:10,e:1,s:6,se:1},{d:"2026-08-13",a:10,e:4,s:5,se:3},{d:"2026-08-14",a:7,e:4,s:5,se:3},{d:"2026-08-17",a:19,e:5,s:12,se:5},{d:"2026-08-18",a:11,e:1,s:8,se:1},{d:"2026-08-19",a:14,e:0,s:7,se:0}]},
+  {email:"julia.cordeiro@estantemagica.com.br",days:[{d:"2026-05-22",a:27,e:9,s:22,se:6},{d:"2026-05-25",a:1,e:1,s:1,se:1},{d:"2026-05-26",a:17,e:9,s:9,se:5},{d:"2026-05-27",a:14,e:1,s:11,se:1},{d:"2026-05-28",a:22,e:7,s:14,se:6},{d:"2026-05-29",a:23,e:9,s:15,se:7},{d:"2026-06-01",a:23,e:5,s:13,se:4},{d:"2026-06-02",a:20,e:6,s:12,se:4},{d:"2026-06-03",a:28,e:0,s:17,se:0},{d:"2026-06-05",a:13,e:4,s:11,se:3},{d:"2026-06-09",a:16,e:7,s:14,se:6},{d:"2026-06-10",a:21,e:1,s:15,se:1},{d:"2026-06-11",a:16,e:9,s:9,se:6},{d:"2026-06-12",a:20,e:6,s:13,se:6},{d:"2026-06-15",a:14,e:5,s:9,se:5},{d:"2026-06-16",a:17,e:5,s:11,se:4},{d:"2026-06-17",a:19,e:5,s:11,se:4},{d:"2026-06-18",a:15,e:5,s:10,se:5},{d:"2026-06-19",a:16,e:4,s:11,se:4},{d:"2026-06-22",a:11,e:4,s:7,se:4},{d:"2026-06-23",a:18,e:6,s:5,se:3},{d:"2026-06-24",a:23,e:6,s:12,se:6},{d:"2026-06-25",a:8,e:5,s:6,se:5},{d:"2026-06-26",a:38,e:6,s:20,se:5},{d:"2026-06-30",a:13,e:7,s:10,se:6},{d:"2026-07-01",a:8,e:5,s:6,se:5},{d:"2026-07-02",a:28,e:10,s:17,se:8},{d:"2026-07-03",a:15,e:7,s:11,se:6},{d:"2026-07-06",a:9,e:2,s:6,se:2},{d:"2026-07-07",a:15,e:4,s:7,se:2},{d:"2026-07-08",a:18,e:3,s:9,se:3},{d:"2026-07-09",a:14,e:8,s:8,se:6},{d:"2026-07-10",a:9,e:6,s:5,se:5},{d:"2026-07-13",a:4,e:3,s:4,se:3},{d:"2026-07-14",a:18,e:4,s:12,se:4},{d:"2026-07-15",a:5,e:2,s:5,se:2},{d:"2026-07-16",a:13,e:4,s:6,se:2},{d:"2026-07-17",a:12,e:5,s:9,se:4},{d:"2026-07-20",a:15,e:6,s:7,se:4},{d:"2026-07-21",a:10,e:3,s:8,se:3},{d:"2026-07-22",a:23,e:15,s:15,se:10},{d:"2026-07-23",a:21,e:7,s:11,se:6},{d:"2026-07-24",a:7,e:4,s:3,se:3},{d:"2026-07-27",a:11,e:3,s:9,se:3},{d:"2026-07-28",a:15,e:10,s:9,se:9},{d:"2026-07-29",a:9,e:6,s:7,se:6},{d:"2026-08-03",a:19,e:8,s:18,se:7},{d:"2026-08-04",a:27,e:10,s:16,se:8},{d:"2026-08-05",a:19,e:8,s:12,se:7},{d:"2026-08-06",a:14,e:3,s:7,se:2},{d:"2026-08-07",a:8,e:3,s:4,se:2},{d:"2026-08-10",a:30,e:7,s:13,se:6},{d:"2026-08-11",a:37,e:11,s:13,se:7},{d:"2026-08-12",a:19,e:4,s:11,se:4},{d:"2026-08-13",a:34,e:9,s:15,se:9},{d:"2026-08-14",a:17,e:4,s:11,se:4},{d:"2026-08-17",a:15,e:3,s:9,se:3},{d:"2026-08-18",a:46,e:8,s:17,se:7},{d:"2026-08-19",a:42,e:9,s:18,se:8}]},
+  {email:"kaua.coelho@estantemagica.com.br",days:[{d:"2026-06-12",a:9,e:0,s:3,se:0},{d:"2026-06-15",a:14,e:1,s:5,se:1},{d:"2026-06-16",a:24,e:3,s:9,se:3},{d:"2026-06-17",a:7,e:7,s:3,se:3},{d:"2026-06-18",a:10,e:4,s:5,se:3},{d:"2026-06-19",a:31,e:8,s:13,se:6},{d:"2026-06-22",a:34,e:3,s:10,se:2},{d:"2026-06-23",a:14,e:5,s:7,se:4},{d:"2026-06-24",a:28,e:9,s:14,se:7},{d:"2026-06-25",a:2,e:2,s:1,se:1},{d:"2026-06-26",a:16,e:3,s:9,se:2},{d:"2026-06-29",a:14,e:2,s:7,se:1},{d:"2026-06-30",a:15,e:5,s:6,se:3},{d:"2026-07-01",a:10,e:3,s:5,se:3},{d:"2026-07-02",a:14,e:5,s:7,se:3},{d:"2026-07-03",a:23,e:6,s:20,se:5},{d:"2026-07-06",a:8,e:2,s:5,se:1},{d:"2026-07-07",a:11,e:1,s:4,se:1},{d:"2026-07-08",a:7,e:4,s:5,se:4},{d:"2026-07-09",a:35,e:8,s:23,se:7},{d:"2026-07-10",a:4,e:1,s:3,se:1},{d:"2026-07-13",a:4,e:1,s:2,se:1},{d:"2026-07-14",a:30,e:10,s:16,se:9},{d:"2026-07-15",a:14,e:8,s:8,se:6},{d:"2026-07-16",a:8,e:5,s:6,se:4},{d:"2026-07-17",a:8,e:4,s:6,se:3},{d:"2026-07-20",a:3,e:0,s:3,se:0},{d:"2026-07-21",a:7,e:0,s:5,se:0},{d:"2026-07-22",a:8,e:6,s:6,se:5},{d:"2026-07-23",a:3,e:2,s:2,se:2},{d:"2026-07-24",a:23,e:7,s:16,se:5},{d:"2026-07-27",a:6,e:1,s:6,se:1},{d:"2026-07-28",a:1,e:1,s:1,se:1},{d:"2026-07-29",a:7,e:7,s:6,se:6},{d:"2026-08-03",a:23,e:8,s:19,se:8},{d:"2026-08-04",a:35,e:7,s:23,se:7},{d:"2026-08-05",a:12,e:3,s:7,se:2},{d:"2026-08-06",a:14,e:5,s:9,se:5},{d:"2026-08-07",a:4,e:0,s:3,se:0},{d:"2026-08-10",a:1,e:1,s:1,se:1},{d:"2026-08-11",a:10,e:3,s:7,se:2},{d:"2026-08-12",a:3,e:3,s:3,se:3},{d:"2026-08-13",a:10,e:6,s:10,se:6},{d:"2026-08-14",a:9,e:3,s:3,se:3},{d:"2026-08-17",a:4,e:4,s:2,se:2},{d:"2026-08-18",a:34,e:5,s:11,se:5},{d:"2026-08-19",a:36,e:8,s:11,se:6}]},
+  {email:"larissa.freitas@estantemagica.com.br",days:[{d:"2026-05-22",a:41,e:18,s:24,se:17},{d:"2026-05-25",a:9,e:4,s:8,se:4},{d:"2026-05-26",a:5,e:4,s:3,se:3},{d:"2026-05-27",a:1,e:1,s:1,se:1},{d:"2026-05-28",a:2,e:2,s:2,se:2},{d:"2026-05-29",a:23,e:11,s:19,se:10},{d:"2026-06-01",a:35,e:9,s:15,se:9},{d:"2026-06-02",a:25,e:11,s:16,se:10},{d:"2026-06-03",a:15,e:6,s:12,se:6},{d:"2026-06-05",a:19,e:11,s:14,se:10},{d:"2026-06-08",a:18,e:6,s:16,se:6},{d:"2026-06-09",a:3,e:3,s:3,se:3},{d:"2026-06-10",a:28,e:15,s:16,se:10},{d:"2026-06-11",a:24,e:11,s:12,se:8},{d:"2026-06-12",a:10,e:3,s:7,se:3},{d:"2026-06-15",a:4,e:2,s:3,se:2},{d:"2026-06-16",a:9,e:5,s:6,se:4},{d:"2026-06-17",a:29,e:17,s:23,se:14},{d:"2026-06-18",a:17,e:11,s:15,se:10},{d:"2026-06-19",a:3,e:3,s:3,se:3},{d:"2026-06-22",a:22,e:11,s:19,se:11},{d:"2026-06-23",a:26,e:10,s:13,se:10},{d:"2026-06-24",a:4,e:4,s:3,se:3},{d:"2026-06-25",a:8,e:4,s:8,se:4},{d:"2026-06-26",a:7,e:5,s:7,se:5},{d:"2026-06-29",a:9,e:9,s:9,se:9},{d:"2026-06-30",a:4,e:2,s:4,se:2},{d:"2026-07-01",a:3,e:0,s:3,se:0},{d:"2026-07-02",a:13,e:12,s:8,se:8},{d:"2026-07-03",a:13,e:8,s:12,se:7},{d:"2026-07-06",a:6,e:4,s:6,se:4},{d:"2026-07-07",a:4,e:4,s:4,se:4},{d:"2026-07-08",a:19,e:10,s:14,se:10},{d:"2026-07-09",a:16,e:8,s:12,se:8},{d:"2026-07-10",a:8,e:6,s:4,se:4},{d:"2026-07-14",a:2,e:2,s:2,se:2},{d:"2026-07-15",a:6,e:3,s:5,se:3},{d:"2026-07-16",a:2,e:1,s:2,se:1},{d:"2026-07-17",a:9,e:3,s:9,se:3},{d:"2026-07-20",a:10,e:4,s:7,se:3},{d:"2026-07-21",a:4,e:4,s:4,se:4},{d:"2026-07-22",a:7,e:6,s:7,se:6},{d:"2026-07-23",a:6,e:3,s:5,se:3},{d:"2026-07-24",a:5,e:1,s:5,se:1},{d:"2026-07-27",a:15,e:2,s:4,se:1},{d:"2026-07-28",a:3,e:2,s:3,se:2},{d:"2026-07-29",a:6,e:5,s:5,se:4},{d:"2026-07-31",a:1,e:1,s:1,se:1},{d:"2026-08-03",a:8,e:2,s:6,se:2},{d:"2026-08-04",a:10,e:4,s:5,se:3},{d:"2026-08-05",a:3,e:3,s:3,se:3},{d:"2026-08-06",a:16,e:8,s:12,se:5},{d:"2026-08-07",a:6,e:5,s:6,se:5},{d:"2026-08-11",a:4,e:3,s:3,se:2},{d:"2026-08-13",a:6,e:5,s:4,se:4},{d:"2026-08-14",a:32,e:21,s:25,se:16},{d:"2026-08-17",a:5,e:2,s:5,se:2},{d:"2026-08-18",a:1,e:1,s:1,se:1},{d:"2026-08-19",a:10,e:6,s:10,se:6}]},
+  {email:"maria.elvira@estantemagica.com.br",days:[{d:"2026-05-22",a:15,e:4,s:10,se:4},{d:"2026-05-25",a:17,e:11,s:13,se:9},{d:"2026-05-26",a:21,e:8,s:15,se:8},{d:"2026-05-27",a:8,e:5,s:6,se:5},{d:"2026-05-28",a:13,e:7,s:11,se:7},{d:"2026-05-29",a:9,e:4,s:7,se:3},{d:"2026-06-01",a:13,e:6,s:13,se:6},{d:"2026-06-02",a:15,e:6,s:13,se:6},{d:"2026-06-03",a:14,e:4,s:13,se:3},{d:"2026-06-05",a:24,e:3,s:10,se:2},{d:"2026-06-08",a:33,e:13,s:20,se:10},{d:"2026-06-09",a:19,e:11,s:13,se:9},{d:"2026-06-10",a:11,e:4,s:8,se:4},{d:"2026-06-11",a:13,e:7,s:10,se:7},{d:"2026-06-12",a:11,e:4,s:7,se:4},{d:"2026-06-15",a:14,e:4,s:12,se:4},{d:"2026-06-16",a:17,e:6,s:12,se:6},{d:"2026-06-17",a:13,e:6,s:11,se:6},{d:"2026-06-18",a:11,e:6,s:11,se:6},{d:"2026-06-19",a:10,e:7,s:10,se:7},{d:"2026-06-22",a:4,e:3,s:3,se:2},{d:"2026-06-23",a:26,e:14,s:22,se:13},{d:"2026-06-24",a:13,e:10,s:8,se:7},{d:"2026-06-25",a:31,e:13,s:25,se:12},{d:"2026-06-26",a:6,e:5,s:5,se:4},{d:"2026-06-29",a:17,e:4,s:15,se:4},{d:"2026-06-30",a:17,e:9,s:15,se:9},{d:"2026-07-01",a:17,e:4,s:16,se:4},{d:"2026-07-02",a:5,e:2,s:5,se:2},{d:"2026-07-03",a:20,e:2,s:19,se:2},{d:"2026-07-06",a:16,e:4,s:15,se:4},{d:"2026-07-07",a:7,e:2,s:7,se:2},{d:"2026-07-08",a:10,e:3,s:7,se:2},{d:"2026-07-09",a:10,e:6,s:10,se:6},{d:"2026-07-10",a:17,e:10,s:15,se:8},{d:"2026-07-13",a:7,e:4,s:7,se:4},{d:"2026-07-14",a:9,e:0,s:9,se:0},{d:"2026-07-15",a:5,e:1,s:5,se:1},{d:"2026-07-16",a:8,e:3,s:8,se:3},{d:"2026-07-17",a:13,e:7,s:13,se:7},{d:"2026-07-20",a:2,e:2,s:2,se:2},{d:"2026-07-21",a:21,e:6,s:17,se:6},{d:"2026-07-22",a:16,e:11,s:12,se:9},{d:"2026-07-23",a:6,e:2,s:3,se:2},{d:"2026-07-24",a:6,e:1,s:5,se:1},{d:"2026-07-27",a:12,e:6,s:12,se:6},{d:"2026-07-28",a:7,e:5,s:6,se:4},{d:"2026-07-29",a:25,e:14,s:20,se:10},{d:"2026-07-30",a:12,e:6,s:11,se:6},{d:"2026-07-31",a:15,e:9,s:13,se:9},{d:"2026-08-03",a:44,e:15,s:38,se:13},{d:"2026-08-04",a:17,e:14,s:12,se:11},{d:"2026-08-05",a:9,e:7,s:8,se:6},{d:"2026-08-06",a:7,e:7,s:7,se:7},{d:"2026-08-07",a:9,e:6,s:5,se:4}]},
+  {email:"mariaeduarda.carvalho@estantemagica.com.br",days:[{d:"2026-05-22",a:21,e:5,s:11,se:5},{d:"2026-05-25",a:61,e:14,s:27,se:13},{d:"2026-05-26",a:50,e:8,s:21,se:8},{d:"2026-05-27",a:41,e:10,s:22,se:10},{d:"2026-05-28",a:22,e:6,s:11,se:6},{d:"2026-05-29",a:44,e:4,s:18,se:4},{d:"2026-06-01",a:76,e:13,s:35,se:12},{d:"2026-06-02",a:84,e:15,s:36,se:14},{d:"2026-06-03",a:96,e:8,s:27,se:8},{d:"2026-06-08",a:109,e:9,s:37,se:9},{d:"2026-06-09",a:85,e:10,s:33,se:10},{d:"2026-06-10",a:102,e:8,s:28,se:8},{d:"2026-06-11",a:51,e:9,s:26,se:9},{d:"2026-06-12",a:85,e:6,s:28,se:6},{d:"2026-06-15",a:94,e:14,s:34,se:13},{d:"2026-06-16",a:104,e:11,s:39,se:11},{d:"2026-06-17",a:95,e:6,s:36,se:6},{d:"2026-06-18",a:66,e:5,s:23,se:5},{d:"2026-06-19",a:32,e:4,s:12,se:4},{d:"2026-06-22",a:93,e:13,s:31,se:13},{d:"2026-06-23",a:86,e:7,s:28,se:7},{d:"2026-06-24",a:85,e:10,s:30,se:10},{d:"2026-06-25",a:46,e:4,s:17,se:4},{d:"2026-06-26",a:42,e:4,s:17,se:4},{d:"2026-06-29",a:38,e:4,s:13,se:4},{d:"2026-06-30",a:55,e:10,s:20,se:10},{d:"2026-07-01",a:54,e:12,s:20,se:12},{d:"2026-07-02",a:50,e:8,s:21,se:8},{d:"2026-07-03",a:31,e:6,s:15,se:6},{d:"2026-07-06",a:52,e:6,s:20,se:6},{d:"2026-07-07",a:73,e:9,s:26,se:9},{d:"2026-07-08",a:50,e:6,s:20,se:6},{d:"2026-07-09",a:62,e:9,s:25,se:9},{d:"2026-07-10",a:57,e:9,s:21,se:9},{d:"2026-07-13",a:86,e:23,s:40,se:22},{d:"2026-07-14",a:53,e:14,s:25,se:14},{d:"2026-07-15",a:48,e:7,s:19,se:7},{d:"2026-07-16",a:40,e:5,s:11,se:5},{d:"2026-07-17",a:19,e:5,s:10,se:5},{d:"2026-07-27",a:95,e:18,s:34,se:18},{d:"2026-07-28",a:71,e:9,s:27,se:9},{d:"2026-07-29",a:68,e:15,s:35,se:15},{d:"2026-07-30",a:80,e:13,s:32,se:11},{d:"2026-07-31",a:40,e:7,s:16,se:7},{d:"2026-08-03",a:91,e:19,s:36,se:18},{d:"2026-08-04",a:47,e:13,s:21,se:12},{d:"2026-08-05",a:101,e:17,s:36,se:16},{d:"2026-08-06",a:73,e:9,s:27,se:9},{d:"2026-08-07",a:41,e:3,s:13,se:3},{d:"2026-08-10",a:103,e:14,s:34,se:14},{d:"2026-08-11",a:26,e:9,s:13,se:9},{d:"2026-08-12",a:69,e:18,s:42,se:17},{d:"2026-08-13",a:74,e:13,s:25,se:13},{d:"2026-08-14",a:14,e:2,s:14,se:2},{d:"2026-08-17",a:3,e:3,s:3,se:3},{d:"2026-08-18",a:85,e:22,s:31,se:20},{d:"2026-08-19",a:54,e:6,s:19,se:5}]},
+  {email:"mariana.santana@estantemagica.com.br",days:[{d:"2026-05-22",a:15,e:5,s:8,se:5},{d:"2026-05-25",a:35,e:9,s:15,se:8},{d:"2026-05-26",a:25,e:4,s:12,se:4},{d:"2026-05-27",a:42,e:13,s:21,se:11},{d:"2026-05-28",a:36,e:12,s:17,se:12},{d:"2026-05-29",a:32,e:8,s:15,se:8},{d:"2026-06-01",a:17,e:8,s:14,se:8},{d:"2026-06-02",a:39,e:10,s:15,se:9},{d:"2026-06-03",a:27,e:7,s:13,se:7},{d:"2026-06-05",a:39,e:3,s:14,se:2},{d:"2026-06-08",a:33,e:14,s:18,se:14},{d:"2026-06-09",a:55,e:11,s:22,se:10},{d:"2026-06-10",a:35,e:12,s:17,se:12},{d:"2026-06-11",a:53,e:15,s:23,se:15},{d:"2026-06-12",a:43,e:11,s:18,se:10},{d:"2026-06-15",a:53,e:11,s:23,se:11},{d:"2026-06-16",a:40,e:17,s:22,se:16},{d:"2026-06-17",a:36,e:16,s:19,se:16},{d:"2026-06-18",a:25,e:10,s:15,se:10},{d:"2026-06-19",a:29,e:10,s:17,se:10},{d:"2026-06-22",a:25,e:6,s:11,se:6},{d:"2026-06-24",a:50,e:19,s:27,se:19},{d:"2026-06-25",a:28,e:11,s:16,se:11},{d:"2026-06-26",a:27,e:12,s:16,se:12},{d:"2026-06-29",a:20,e:9,s:11,se:7},{d:"2026-06-30",a:20,e:7,s:13,se:7},{d:"2026-07-01",a:27,e:8,s:20,se:8},{d:"2026-07-02",a:22,e:7,s:11,se:6},{d:"2026-07-03",a:20,e:6,s:19,se:6},{d:"2026-07-06",a:20,e:9,s:13,se:9},{d:"2026-07-07",a:39,e:15,s:23,se:15},{d:"2026-07-08",a:27,e:12,s:17,se:12},{d:"2026-07-09",a:18,e:11,s:12,se:9},{d:"2026-07-10",a:14,e:3,s:6,se:3},{d:"2026-07-13",a:18,e:10,s:12,se:10},{d:"2026-07-14",a:29,e:12,s:17,se:12},{d:"2026-07-15",a:32,e:11,s:18,se:11},{d:"2026-07-16",a:17,e:8,s:12,se:8},{d:"2026-07-17",a:17,e:4,s:11,se:3},{d:"2026-08-05",a:23,e:13,s:15,se:11},{d:"2026-08-06",a:42,e:16,s:32,se:16},{d:"2026-08-07",a:32,e:19,s:21,se:17},{d:"2026-08-10",a:39,e:15,s:16,se:13},{d:"2026-08-11",a:39,e:15,s:19,se:14},{d:"2026-08-12",a:41,e:17,s:22,se:16},{d:"2026-08-13",a:32,e:22,s:24,se:20},{d:"2026-08-14",a:19,e:5,s:9,se:5},{d:"2026-08-17",a:25,e:10,s:17,se:10},{d:"2026-08-18",a:29,e:12,s:16,se:10},{d:"2026-08-19",a:34,e:16,s:18,se:13}]},
+  {email:"mariana.vasconcelos@estantemagica.com.br",days:[{d:"2026-08-03",a:5,e:1,s:5,se:1},{d:"2026-08-04",a:5,e:1,s:4,se:1},{d:"2026-08-05",a:20,e:2,s:10,se:2},{d:"2026-08-06",a:26,e:4,s:11,se:3},{d:"2026-08-07",a:28,e:3,s:12,se:2},{d:"2026-08-10",a:27,e:2,s:16,se:1},{d:"2026-08-11",a:32,e:2,s:16,se:2},{d:"2026-08-12",a:42,e:8,s:23,se:8},{d:"2026-08-13",a:45,e:2,s:23,se:2},{d:"2026-08-14",a:26,e:4,s:13,se:3},{d:"2026-08-17",a:16,e:2,s:8,se:2},{d:"2026-08-18",a:53,e:5,s:28,se:5},{d:"2026-08-19",a:21,e:1,s:10,se:1}]},
+  {email:"natalia.soares@estantemagica.com.br",days:[{d:"2026-08-03",a:10,e:1,s:5,se:1},{d:"2026-08-04",a:13,e:2,s:5,se:2},{d:"2026-08-05",a:14,e:1,s:8,se:1},{d:"2026-08-06",a:54,e:6,s:19,se:6},{d:"2026-08-07",a:23,e:6,s:10,se:5},{d:"2026-08-10",a:58,e:8,s:17,se:8},{d:"2026-08-11",a:55,e:9,s:16,se:8},{d:"2026-08-12",a:46,e:8,s:15,se:6},{d:"2026-08-13",a:29,e:4,s:11,se:4},{d:"2026-08-14",a:45,e:3,s:11,se:1},{d:"2026-08-17",a:49,e:6,s:17,se:6},{d:"2026-08-18",a:42,e:4,s:11,se:4},{d:"2026-08-19",a:56,e:8,s:20,se:7}]},
+  {email:"nicole.cavalcante@estantemagica.com.br",days:[{d:"2026-05-25",a:1,e:1,s:1,se:1},{d:"2026-05-26",a:10,e:4,s:9,se:4},{d:"2026-05-27",a:15,e:5,s:10,se:5},{d:"2026-05-28",a:13,e:0,s:9,se:0},{d:"2026-05-29",a:7,e:5,s:4,se:3},{d:"2026-06-01",a:8,e:2,s:7,se:2},{d:"2026-06-02",a:5,e:0,s:5,se:0},{d:"2026-06-03",a:9,e:2,s:7,se:2},{d:"2026-06-05",a:17,e:6,s:16,se:6},{d:"2026-06-08",a:16,e:7,s:12,se:7},{d:"2026-06-09",a:15,e:3,s:10,se:2},{d:"2026-06-10",a:7,e:3,s:4,se:3},{d:"2026-06-11",a:11,e:1,s:8,se:1},{d:"2026-06-12",a:11,e:4,s:6,se:4},{d:"2026-06-15",a:2,e:2,s:1,se:1},{d:"2026-06-16",a:3,e:3,s:3,se:3},{d:"2026-06-17",a:3,e:3,s:3,se:3},{d:"2026-06-18",a:10,e:2,s:7,se:2},{d:"2026-06-19",a:17,e:2,s:11,se:2},{d:"2026-06-22",a:17,e:8,s:13,se:8},{d:"2026-06-23",a:17,e:2,s:10,se:2},{d:"2026-06-24",a:8,e:3,s:6,se:3},{d:"2026-06-25",a:4,e:4,s:4,se:4},{d:"2026-06-26",a:6,e:3,s:5,se:3},{d:"2026-06-29",a:10,e:3,s:7,se:3},{d:"2026-06-30",a:13,e:6,s:8,se:4},{d:"2026-07-01",a:3,e:1,s:3,se:1},{d:"2026-07-02",a:11,e:7,s:10,se:6},{d:"2026-07-06",a:7,e:5,s:7,se:5},{d:"2026-07-07",a:4,e:0,s:2,se:0},{d:"2026-07-08",a:4,e:2,s:4,se:2},{d:"2026-07-09",a:4,e:2,s:4,se:2},{d:"2026-07-10",a:3,e:3,s:3,se:3},{d:"2026-07-13",a:5,e:1,s:4,se:1},{d:"2026-07-14",a:6,e:2,s:6,se:2},{d:"2026-07-15",a:3,e:2,s:3,se:2},{d:"2026-07-16",a:7,e:3,s:5,se:3},{d:"2026-07-17",a:7,e:6,s:7,se:6},{d:"2026-07-20",a:7,e:5,s:7,se:5},{d:"2026-07-21",a:5,e:3,s:5,se:3},{d:"2026-07-22",a:6,e:5,s:5,se:5},{d:"2026-07-23",a:4,e:2,s:4,se:2},{d:"2026-07-24",a:6,e:2,s:5,se:2},{d:"2026-07-27",a:2,e:2,s:2,se:2},{d:"2026-07-28",a:8,e:4,s:7,se:4},{d:"2026-07-29",a:19,e:17,s:18,se:16},{d:"2026-07-30",a:3,e:1,s:2,se:1},{d:"2026-07-31",a:5,e:3,s:5,se:3},{d:"2026-08-03",a:7,e:5,s:6,se:4},{d:"2026-08-04",a:7,e:3,s:6,se:3},{d:"2026-08-05",a:9,e:4,s:6,se:4},{d:"2026-08-06",a:5,e:3,s:4,se:3},{d:"2026-08-07",a:2,e:1,s:2,se:1},{d:"2026-08-10",a:4,e:2,s:4,se:2},{d:"2026-08-11",a:9,e:4,s:6,se:4},{d:"2026-08-12",a:9,e:4,s:7,se:4},{d:"2026-08-13",a:8,e:3,s:7,se:3},{d:"2026-08-14",a:4,e:0,s:3,se:0},{d:"2026-08-17",a:29,e:9,s:18,se:8},{d:"2026-08-18",a:20,e:6,s:12,se:5},{d:"2026-08-19",a:14,e:4,s:10,se:4}]},
+  {email:"renata.brandao@estantemagica.com.br",days:[{d:"2026-05-22",a:55,e:10,s:21,se:10},{d:"2026-05-25",a:42,e:6,s:15,se:6},{d:"2026-05-26",a:44,e:11,s:20,se:10},{d:"2026-05-27",a:33,e:10,s:16,se:9},{d:"2026-05-28",a:40,e:6,s:16,se:6},{d:"2026-05-29",a:28,e:5,s:12,se:5},{d:"2026-06-01",a:10,e:4,s:6,se:4},{d:"2026-06-02",a:35,e:5,s:16,se:5},{d:"2026-06-03",a:47,e:13,s:21,se:10},{d:"2026-06-05",a:15,e:2,s:10,se:2},{d:"2026-06-08",a:22,e:4,s:10,se:4},{d:"2026-06-09",a:75,e:8,s:29,se:8},{d:"2026-06-10",a:58,e:10,s:19,se:9},{d:"2026-06-11",a:40,e:9,s:24,se:9},{d:"2026-06-15",a:66,e:13,s:27,se:13},{d:"2026-06-16",a:33,e:6,s:11,se:5},{d:"2026-06-17",a:46,e:8,s:21,se:7},{d:"2026-06-18",a:48,e:9,s:21,se:8},{d:"2026-06-19",a:55,e:6,s:23,se:5},{d:"2026-06-22",a:30,e:7,s:12,se:6},{d:"2026-06-23",a:31,e:6,s:15,se:6},{d:"2026-06-24",a:31,e:4,s:15,se:4},{d:"2026-06-25",a:31,e:8,s:13,se:8},{d:"2026-06-26",a:99,e:18,s:33,se:16},{d:"2026-06-29",a:14,e:4,s:8,se:4},{d:"2026-06-30",a:27,e:3,s:11,se:3},{d:"2026-07-01",a:23,e:8,s:12,se:7},{d:"2026-07-02",a:39,e:6,s:14,se:6},{d:"2026-07-03",a:28,e:7,s:13,se:6},{d:"2026-07-06",a:18,e:4,s:9,se:4},{d:"2026-07-07",a:31,e:8,s:15,se:8},{d:"2026-07-08",a:29,e:6,s:16,se:6},{d:"2026-07-09",a:40,e:12,s:16,se:9},{d:"2026-07-10",a:16,e:4,s:10,se:4},{d:"2026-07-13",a:30,e:5,s:12,se:5},{d:"2026-07-14",a:68,e:13,s:28,se:12},{d:"2026-07-15",a:33,e:6,s:14,se:6},{d:"2026-07-16",a:23,e:3,s:11,se:3},{d:"2026-07-20",a:15,e:4,s:9,se:4},{d:"2026-07-21",a:27,e:8,s:11,se:6},{d:"2026-07-22",a:69,e:16,s:34,se:13},{d:"2026-07-23",a:51,e:10,s:20,se:10},{d:"2026-07-24",a:11,e:1,s:9,se:1},{d:"2026-07-27",a:12,e:4,s:8,se:4},{d:"2026-07-28",a:22,e:7,s:12,se:7},{d:"2026-07-29",a:13,e:10,s:12,se:9},{d:"2026-07-30",a:19,e:9,s:10,se:9},{d:"2026-07-31",a:22,e:5,s:20,se:5},{d:"2026-08-03",a:34,e:15,s:21,se:14},{d:"2026-08-04",a:52,e:18,s:27,se:16},{d:"2026-08-05",a:26,e:10,s:16,se:9},{d:"2026-08-06",a:29,e:8,s:18,se:7},{d:"2026-08-07",a:37,e:13,s:20,se:13},{d:"2026-08-10",a:18,e:9,s:7,se:6},{d:"2026-08-11",a:28,e:11,s:16,se:11},{d:"2026-08-12",a:26,e:8,s:17,se:8},{d:"2026-08-13",a:36,e:9,s:19,se:8},{d:"2026-08-14",a:29,e:8,s:13,se:8},{d:"2026-08-17",a:23,e:3,s:9,se:3},{d:"2026-08-18",a:67,e:10,s:19,se:9},{d:"2026-08-19",a:39,e:8,s:15,se:6}]},
+  {email:"shelry.solart@estantemagica.com.br",days:[{d:"2026-05-22",a:23,e:4,s:18,se:4},{d:"2026-05-25",a:8,e:7,s:6,se:6},{d:"2026-05-26",a:5,e:5,s:5,se:5},{d:"2026-05-27",a:15,e:5,s:14,se:5},{d:"2026-05-28",a:19,e:6,s:14,se:6},{d:"2026-05-29",a:29,e:6,s:13,se:6},{d:"2026-06-01",a:16,e:3,s:8,se:3},{d:"2026-06-02",a:8,e:6,s:7,se:5},{d:"2026-06-03",a:17,e:3,s:13,se:3},{d:"2026-06-08",a:2,e:1,s:2,se:1},{d:"2026-06-09",a:48,e:4,s:16,se:4},{d:"2026-06-10",a:31,e:8,s:13,se:6},{d:"2026-06-11",a:36,e:3,s:14,se:3},{d:"2026-06-12",a:28,e:2,s:10,se:1},{d:"2026-06-15",a:30,e:4,s:9,se:3},{d:"2026-06-16",a:44,e:4,s:14,se:4},{d:"2026-06-17",a:24,e:2,s:8,se:2},{d:"2026-06-18",a:24,e:5,s:7,se:5},{d:"2026-06-19",a:19,e:7,s:9,se:7},{d:"2026-06-22",a:13,e:2,s:7,se:1},{d:"2026-06-23",a:31,e:4,s:10,se:4},{d:"2026-06-24",a:19,e:4,s:10,se:4},{d:"2026-06-25",a:17,e:3,s:6,se:3},{d:"2026-06-26",a:19,e:3,s:11,se:3},{d:"2026-06-29",a:36,e:4,s:10,se:4},{d:"2026-06-30",a:28,e:5,s:10,se:3},{d:"2026-07-01",a:16,e:5,s:8,se:4},{d:"2026-07-02",a:10,e:7,s:5,se:5},{d:"2026-07-03",a:10,e:0,s:4,se:0},{d:"2026-07-06",a:30,e:4,s:18,se:4},{d:"2026-07-07",a:15,e:2,s:9,se:2},{d:"2026-07-08",a:8,e:3,s:6,se:2},{d:"2026-07-13",a:34,e:3,s:9,se:2},{d:"2026-07-14",a:9,e:2,s:6,se:2},{d:"2026-07-15",a:31,e:4,s:7,se:4},{d:"2026-07-16",a:9,e:2,s:5,se:2},{d:"2026-07-17",a:33,e:2,s:11,se:2},{d:"2026-08-04",a:3,e:1,s:2,se:1},{d:"2026-08-05",a:8,e:0,s:5,se:0},{d:"2026-08-06",a:7,e:2,s:2,se:1},{d:"2026-08-07",a:14,e:4,s:6,se:3},{d:"2026-08-10",a:9,e:2,s:5,se:1},{d:"2026-08-11",a:9,e:3,s:4,se:3},{d:"2026-08-12",a:2,e:2,s:1,se:1},{d:"2026-08-13",a:18,e:4,s:6,se:4},{d:"2026-08-14",a:23,e:5,s:9,se:5},{d:"2026-08-18",a:55,e:8,s:25,se:7},{d:"2026-08-19",a:37,e:13,s:18,se:13}]},
+  {email:"stefany.figueredo@estantemagica.com.br",days:[{d:"2026-05-22",a:17,e:5,s:15,se:5},{d:"2026-05-25",a:3,e:1,s:3,se:1},{d:"2026-05-26",a:18,e:5,s:13,se:5},{d:"2026-05-27",a:12,e:2,s:10,se:2},{d:"2026-05-28",a:15,e:3,s:14,se:3},{d:"2026-05-29",a:20,e:6,s:14,se:6},{d:"2026-06-01",a:24,e:5,s:12,se:4},{d:"2026-06-02",a:21,e:4,s:17,se:4},{d:"2026-06-03",a:11,e:5,s:7,se:4},{d:"2026-06-05",a:16,e:6,s:11,se:5},{d:"2026-06-08",a:16,e:4,s:5,se:3},{d:"2026-06-09",a:15,e:4,s:4,se:2},{d:"2026-06-10",a:18,e:3,s:15,se:3},{d:"2026-06-11",a:20,e:2,s:13,se:2},{d:"2026-06-12",a:24,e:4,s:19,se:4},{d:"2026-06-15",a:12,e:2,s:8,se:2},{d:"2026-06-16",a:12,e:1,s:8,se:1},{d:"2026-06-17",a:18,e:9,s:14,se:7},{d:"2026-06-18",a:9,e:6,s:5,se:5},{d:"2026-06-19",a:24,e:2,s:8,se:2},{d:"2026-06-22",a:20,e:3,s:12,se:3},{d:"2026-06-23",a:19,e:6,s:11,se:5},{d:"2026-06-24",a:31,e:7,s:13,se:6},{d:"2026-06-26",a:11,e:1,s:7,se:1},{d:"2026-06-27",a:2,e:2,s:2,se:2},{d:"2026-06-29",a:7,e:1,s:5,se:1},{d:"2026-06-30",a:15,e:4,s:11,se:4},{d:"2026-07-01",a:8,e:4,s:8,se:4},{d:"2026-07-02",a:14,e:5,s:12,se:5},{d:"2026-07-03",a:1,e:0,s:1,se:0},{d:"2026-07-06",a:10,e:1,s:4,se:1},{d:"2026-07-07",a:11,e:3,s:7,se:3},{d:"2026-07-08",a:9,e:6,s:7,se:6},{d:"2026-07-09",a:14,e:6,s:8,se:5},{d:"2026-07-10",a:16,e:4,s:11,se:4},{d:"2026-07-13",a:6,e:4,s:5,se:3},{d:"2026-07-14",a:13,e:3,s:11,se:3},{d:"2026-07-15",a:7,e:1,s:4,se:1},{d:"2026-07-16",a:8,e:4,s:7,se:4},{d:"2026-07-20",a:11,e:4,s:4,se:4},{d:"2026-07-21",a:3,e:3,s:2,se:2},{d:"2026-07-22",a:8,e:4,s:7,se:3},{d:"2026-07-23",a:8,e:4,s:8,se:4},{d:"2026-07-24",a:7,e:1,s:7,se:1},{d:"2026-07-27",a:10,e:5,s:10,se:5},{d:"2026-07-28",a:6,e:3,s:5,se:3},{d:"2026-07-29",a:9,e:4,s:3,se:3},{d:"2026-07-30",a:5,e:4,s:5,se:4},{d:"2026-07-31",a:13,e:3,s:10,se:3},{d:"2026-08-03",a:5,e:5,s:5,se:5},{d:"2026-08-04",a:10,e:3,s:4,se:3},{d:"2026-08-05",a:9,e:5,s:7,se:5},{d:"2026-08-06",a:4,e:1,s:3,se:1},{d:"2026-08-07",a:7,e:4,s:5,se:4},{d:"2026-08-10",a:12,e:3,s:7,se:3},{d:"2026-08-11",a:10,e:4,s:5,se:4},{d:"2026-08-12",a:5,e:4,s:5,se:4},{d:"2026-08-13",a:12,e:5,s:7,se:5},{d:"2026-08-14",a:13,e:4,s:6,se:4},{d:"2026-08-17",a:16,e:4,s:13,se:4},{d:"2026-08-18",a:2,e:2,s:2,se:2},{d:"2026-08-19",a:5,e:2,s:5,se:2}]},
+  {email:"talita.panassol@estantemagica.com.br",days:[{d:"2026-05-22",a:8,e:5,s:8,se:5},{d:"2026-05-25",a:9,e:7,s:8,se:6},{d:"2026-05-26",a:12,e:7,s:10,se:7},{d:"2026-05-27",a:7,e:6,s:7,se:6},{d:"2026-05-28",a:13,e:8,s:11,se:8},{d:"2026-05-29",a:7,e:5,s:7,se:5},{d:"2026-06-01",a:7,e:5,s:7,se:5},{d:"2026-06-02",a:9,e:7,s:9,se:7},{d:"2026-06-03",a:2,e:2,s:2,se:2},{d:"2026-06-05",a:20,e:4,s:11,se:4},{d:"2026-06-08",a:20,e:7,s:11,se:7},{d:"2026-06-09",a:9,e:7,s:7,se:5},{d:"2026-06-10",a:20,e:15,s:14,se:14},{d:"2026-06-11",a:15,e:5,s:10,se:5},{d:"2026-06-12",a:11,e:5,s:7,se:5},{d:"2026-06-15",a:6,e:4,s:6,se:4},{d:"2026-06-16",a:8,e:5,s:5,se:5},{d:"2026-06-17",a:9,e:5,s:7,se:5},{d:"2026-06-18",a:8,e:8,s:8,se:8},{d:"2026-06-19",a:7,e:6,s:7,se:6},{d:"2026-06-22",a:15,e:8,s:10,se:7},{d:"2026-06-23",a:11,e:4,s:8,se:4},{d:"2026-06-24",a:9,e:7,s:8,se:7},{d:"2026-06-25",a:19,e:16,s:16,se:14},{d:"2026-06-26",a:4,e:2,s:4,se:2},{d:"2026-06-29",a:3,e:3,s:3,se:3},{d:"2026-06-30",a:10,e:4,s:8,se:4},{d:"2026-07-01",a:14,e:3,s:10,se:3},{d:"2026-07-02",a:8,e:6,s:8,se:6},{d:"2026-07-03",a:2,e:1,s:2,se:1},{d:"2026-07-06",a:5,e:3,s:4,se:3},{d:"2026-07-07",a:16,e:10,s:11,se:9},{d:"2026-07-08",a:9,e:3,s:4,se:3},{d:"2026-07-09",a:4,e:3,s:4,se:3},{d:"2026-07-10",a:17,e:8,s:9,se:6},{d:"2026-07-13",a:21,e:5,s:6,se:4},{d:"2026-07-14",a:6,e:4,s:4,se:4},{d:"2026-07-15",a:1,e:1,s:1,se:1},{d:"2026-07-16",a:7,e:0,s:7,se:0},{d:"2026-07-17",a:5,e:2,s:5,se:2},{d:"2026-07-20",a:7,e:4,s:6,se:4},{d:"2026-07-21",a:2,e:1,s:2,se:1},{d:"2026-07-22",a:13,e:11,s:9,se:8},{d:"2026-07-23",a:7,e:5,s:7,se:5},{d:"2026-07-24",a:15,e:8,s:10,se:8},{d:"2026-07-27",a:3,e:2,s:3,se:2},{d:"2026-07-29",a:12,e:12,s:7,se:7},{d:"2026-07-30",a:4,e:3,s:4,se:3},{d:"2026-07-31",a:3,e:1,s:3,se:1},{d:"2026-08-03",a:10,e:7,s:8,se:7},{d:"2026-08-04",a:3,e:2,s:3,se:2},{d:"2026-08-05",a:11,e:6,s:10,se:5},{d:"2026-08-06",a:5,e:4,s:5,se:4},{d:"2026-08-07",a:10,e:6,s:10,se:6},{d:"2026-08-10",a:37,e:15,s:29,se:15},{d:"2026-08-11",a:22,e:11,s:19,se:11},{d:"2026-08-12",a:7,e:6,s:6,se:6},{d:"2026-08-13",a:32,e:17,s:29,se:15},{d:"2026-08-14",a:5,e:5,s:5,se:5},{d:"2026-08-17",a:19,e:6,s:12,se:6},{d:"2026-08-18",a:12,e:7,s:10,se:6}]},
+  {email:"thais.borges@estantemagica.com.br",days:[{d:"2026-05-22",a:36,e:6,s:13,se:6},{d:"2026-05-25",a:28,e:4,s:9,se:3},{d:"2026-05-26",a:19,e:5,s:7,se:4},{d:"2026-05-27",a:14,e:4,s:8,se:4},{d:"2026-05-28",a:6,e:2,s:4,se:2},{d:"2026-05-29",a:3,e:3,s:3,se:3},{d:"2026-06-01",a:27,e:5,s:12,se:5},{d:"2026-06-02",a:38,e:6,s:13,se:6},{d:"2026-06-03",a:33,e:3,s:12,se:3},{d:"2026-06-05",a:18,e:12,s:13,se:9},{d:"2026-06-08",a:36,e:6,s:15,se:6},{d:"2026-06-09",a:20,e:5,s:8,se:5},{d:"2026-06-10",a:14,e:4,s:7,se:4},{d:"2026-06-11",a:1,e:1,s:1,se:1},{d:"2026-06-12",a:22,e:5,s:10,se:5},{d:"2026-06-15",a:5,e:1,s:3,se:1},{d:"2026-06-16",a:9,e:1,s:3,se:1},{d:"2026-06-17",a:24,e:2,s:8,se:2},{d:"2026-06-18",a:13,e:3,s:5,se:3},{d:"2026-06-19",a:18,e:5,s:8,se:5},{d:"2026-06-22",a:30,e:4,s:10,se:4},{d:"2026-06-23",a:8,e:4,s:4,se:3},{d:"2026-06-24",a:15,e:3,s:6,se:2},{d:"2026-06-25",a:8,e:4,s:5,se:4},{d:"2026-06-26",a:12,e:2,s:4,se:2},{d:"2026-06-29",a:19,e:1,s:6,se:1},{d:"2026-06-30",a:11,e:4,s:6,se:4},{d:"2026-07-01",a:5,e:1,s:2,se:1},{d:"2026-07-02",a:19,e:5,s:7,se:5},{d:"2026-07-03",a:23,e:2,s:7,se:2},{d:"2026-07-06",a:20,e:0,s:7,se:0},{d:"2026-07-07",a:21,e:8,s:10,se:8},{d:"2026-07-08",a:9,e:4,s:5,se:4},{d:"2026-07-09",a:10,e:9,s:7,se:7},{d:"2026-07-10",a:9,e:3,s:5,se:3},{d:"2026-07-13",a:4,e:0,s:2,se:0},{d:"2026-07-14",a:12,e:9,s:5,se:5},{d:"2026-07-15",a:15,e:2,s:4,se:2},{d:"2026-07-16",a:12,e:3,s:4,se:1},{d:"2026-07-17",a:15,e:2,s:5,se:1},{d:"2026-07-20",a:6,e:1,s:3,se:1},{d:"2026-07-21",a:5,e:1,s:2,se:1},{d:"2026-07-22",a:9,e:2,s:3,se:2},{d:"2026-07-23",a:10,e:3,s:3,se:2},{d:"2026-07-24",a:2,e:1,s:2,se:1},{d:"2026-07-27",a:19,e:7,s:9,se:7},{d:"2026-07-28",a:6,e:5,s:3,se:3},{d:"2026-07-29",a:14,e:12,s:9,se:8},{d:"2026-07-30",a:13,e:5,s:7,se:5},{d:"2026-07-31",a:13,e:9,s:8,se:8},{d:"2026-08-03",a:31,e:5,s:12,se:5},{d:"2026-08-04",a:20,e:5,s:7,se:4},{d:"2026-08-05",a:23,e:9,s:9,se:7},{d:"2026-08-06",a:11,e:9,s:7,se:7},{d:"2026-08-07",a:9,e:6,s:5,se:5},{d:"2026-08-10",a:13,e:4,s:6,se:3},{d:"2026-08-11",a:12,e:2,s:4,se:2},{d:"2026-08-12",a:14,e:7,s:7,se:5},{d:"2026-08-13",a:15,e:2,s:5,se:2},{d:"2026-08-14",a:12,e:9,s:8,se:6},{d:"2026-08-17",a:26,e:6,s:11,se:5},{d:"2026-08-18",a:42,e:9,s:16,se:8},{d:"2026-08-19",a:16,e:8,s:8,se:7}]},
+  {email:"viviane.luz@estantemagica.com.br",days:[{d:"2026-06-11",a:13,e:2,s:8,se:2},{d:"2026-06-12",a:11,e:3,s:9,se:2},{d:"2026-06-15",a:43,e:4,s:22,se:4},{d:"2026-06-16",a:45,e:11,s:23,se:10},{d:"2026-06-17",a:49,e:27,s:21,se:20},{d:"2026-06-18",a:31,e:9,s:14,se:9},{d:"2026-06-19",a:38,e:19,s:19,se:17},{d:"2026-06-22",a:35,e:13,s:19,se:13},{d:"2026-06-23",a:38,e:21,s:23,se:20},{d:"2026-06-24",a:30,e:20,s:16,se:16},{d:"2026-06-25",a:29,e:21,s:16,se:15},{d:"2026-06-26",a:22,e:17,s:12,se:12},{d:"2026-06-29",a:18,e:14,s:12,se:12},{d:"2026-06-30",a:19,e:15,s:12,se:11},{d:"2026-07-01",a:26,e:21,s:19,se:19},{d:"2026-07-02",a:21,e:7,s:14,se:6},{d:"2026-07-03",a:19,e:4,s:15,se:4},{d:"2026-07-06",a:30,e:12,s:20,se:12},{d:"2026-07-07",a:26,e:4,s:19,se:4},{d:"2026-07-08",a:37,e:8,s:26,se:7},{d:"2026-07-09",a:39,e:4,s:24,se:4},{d:"2026-07-10",a:44,e:11,s:32,se:10},{d:"2026-07-13",a:43,e:5,s:33,se:5},{d:"2026-07-14",a:48,e:5,s:37,se:5},{d:"2026-07-15",a:33,e:3,s:29,se:3},{d:"2026-07-16",a:35,e:12,s:32,se:11},{d:"2026-07-17",a:39,e:8,s:32,se:7},{d:"2026-07-20",a:33,e:6,s:29,se:6},{d:"2026-07-21",a:41,e:5,s:34,se:5},{d:"2026-07-22",a:39,e:8,s:35,se:8},{d:"2026-07-23",a:37,e:5,s:33,se:5},{d:"2026-07-24",a:35,e:4,s:31,se:4},{d:"2026-07-27",a:33,e:8,s:30,se:8},{d:"2026-07-28",a:32,e:5,s:29,se:5},{d:"2026-07-29",a:41,e:13,s:36,se:12},{d:"2026-07-30",a:32,e:5,s:29,se:5},{d:"2026-07-31",a:40,e:7,s:34,se:7},{d:"2026-08-03",a:38,e:11,s:32,se:11},{d:"2026-08-04",a:31,e:9,s:24,se:8},{d:"2026-08-05",a:36,e:7,s:29,se:7},{d:"2026-08-06",a:30,e:11,s:24,se:10},{d:"2026-08-07",a:32,e:13,s:24,se:13},{d:"2026-08-10",a:35,e:6,s:27,se:6},{d:"2026-08-11",a:41,e:9,s:29,se:9},{d:"2026-08-12",a:35,e:11,s:27,se:9},{d:"2026-08-13",a:36,e:14,s:29,se:14},{d:"2026-08-14",a:22,e:8,s:18,se:7},{d:"2026-08-17",a:38,e:12,s:32,se:11},{d:"2026-08-18",a:37,e:10,s:22,se:10},{d:"2026-08-19",a:48,e:12,s:35,se:11}]}
+];
+
+const ANALISTAS = new Set(["carla.gomes","larissa.freitas","maria.elvira","mariaeduarda.carvalho","mariana.santana","renata.brandao","talita.panassol"]);
+const MAX_DATE = '2026-08-19';
+const MIN_DATE = '2026-05-22';
+const SAFRAS = [{"date": "2023-04-17", "people": [{"email": "maria.elvira@estantemagica.com.br", "nome": "Maria Elvira", "cargo": "Analista"}]}, {"date": "2023-05-09", "people": [{"email": "mariana.santana@estantemagica.com.br", "nome": "Mariana Santana", "cargo": "Analista"}]}, {"date": "2023-05-22", "people": [{"email": "renata.brandao@estantemagica.com.br", "nome": "Renata Brandão", "cargo": "Analista"}]}, {"date": "2023-10-30", "people": [{"email": "mariaeduarda.carvalho@estantemagica.com.br", "nome": "Maria Eduarda Carvalho", "cargo": "Analista"}]}, {"date": "2024-05-07", "people": [{"email": "talita.panassol@estantemagica.com.br", "nome": "Talita Panassol - Sucesso", "cargo": "Analista"}]}, {"date": "2024-07-01", "people": [{"email": "larissa.freitas@estantemagica.com.br", "nome": "Larissa Freitas Monteiro", "cargo": "Analista"}]}, {"date": "2024-07-17", "people": [{"email": "carla.gomes@estantemagica.com.br", "nome": "Carla Ferraz Gomes (Sucesso)", "cargo": "Analista"}]}, {"date": "2026-02-25", "people": [{"email": "carla.santosdasilva@estantemagica.com.br", "nome": "Carla S. da Silva", "cargo": "Estagiário"}, {"email": "julia.cordeiro@estantemagica.com.br", "nome": "Julia Cordeiro Campos", "cargo": "Estagiário"}]}, {"date": "2026-04-06", "people": [{"email": "stefany.figueredo@estantemagica.com.br", "nome": "Stefany Soares Figueredo", "cargo": "Estagiário"}]}, {"date": "2026-05-19", "people": [{"email": "gabriela.ribeiro@estantemagica.com.br", "nome": "Gabriela Ribeiro", "cargo": "Estagiário"}, {"email": "nicole.cavalcante@estantemagica.com.br", "nome": "Nicole Cavalcante de Oliveira", "cargo": "Estagiário"}]}, {"date": "2026-06-03", "people": [{"email": "aires.muniz@estantemagica.com.br", "nome": "Aíres Muniz", "cargo": "Estagiário"}, {"email": "dandara.mariano@estantemagica.com.br", "nome": "Dandara Cristina Souza Mariano", "cargo": "Estagiário"}, {"email": "kaua.coelho@estantemagica.com.br", "nome": "Kauã Coelho", "cargo": "Estagiário"}, {"email": "viviane.luz@estantemagica.com.br", "nome": "Viviane Gomes Luz", "cargo": "Estagiário"}]}];
+
+function getCargo(email){ return ANALISTAS.has(email.split('@')[0]) ? 'Analista' : 'Estagiário'; }
+function firstName(email){
+  return email.split('@')[0].split('.').map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(' ');
+}
+function startDate(n){
+  const d=new Date(MAX_DATE); d.setDate(d.getDate()-n+1); return d.toISOString().slice(0,10);
+}
+function fmtDate(iso){ const [y,m,day]=iso.split('-'); return `${day}/${m}`; }
+function fmtDateFull(iso){ const [y,m,day]=iso.split('-'); return `${day}/${m}/${y}`; }
+function addDays(iso,n){ const d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+function daysBetween(startISO,endISOExclusive){ return Math.round((new Date(endISOExclusive+'T00:00:00')-new Date(startISO+'T00:00:00'))/86400000); }
+function pct(v){ return (v*100).toFixed(1)+'%'; }
+function r1(v){ return v.toFixed(1); }
+
+let windowDays=28, selectedEmails=new Set(RAW_DATA.map(r=>r.email)), showA=true, showE=true;
+let sortCol='ativDia', sortAsc=false;
+
+function calcConsultant(row, nDays){
+  const start=startDate(nDays);
+  const wd=row.days.filter(d=>d.d>=start&&d.a>3);
+  if(!wd.length) return null;
+  const tA=wd.reduce((s,d)=>s+d.a,0), tE=wd.reduce((s,d)=>s+d.e,0);
+  const tS=wd.reduce((s,d)=>s+d.s,0), tSE=wd.reduce((s,d)=>s+d.se,0);
+  const n=wd.length;
+  return {
+    email:row.email, cargo:getCargo(row.email), dias:n,
+    ativDia:tA/n, efDia:tE/n, escDia:tS/n, escEfDia:tSE/n,
+    pctEf:tA>0?tE/tA:0, pctEscEf:tS>0?tSE/tS:0,
+    tA,tE,tS,tSE
+  };
+}
+
+function aggregate(ms){
+  if(!ms.length) return null;
+  const n=ms.length;
+  const avg=fn=>ms.reduce((s,m)=>s+fn(m),0)/n;
+  const tA=ms.reduce((s,m)=>s+m.tA,0), tE=ms.reduce((s,m)=>s+m.tE,0);
+  const tS=ms.reduce((s,m)=>s+m.tS,0), tSE=ms.reduce((s,m)=>s+m.tSE,0);
+  return {
+    count:n, avgDias:avg(m=>m.dias),
+    avgAtivDia:avg(m=>m.ativDia), avgEfDia:avg(m=>m.efDia),
+    avgEscDia:avg(m=>m.escDia), avgEscEfDia:avg(m=>m.escEfDia),
+    pctEf:tA>0?tE/tA:0, pctEscEf:tS>0?tSE/tS:0
+  };
+}
+
+// ── Janela de Safra (antes/depois de uma entrada) ────────────────────────────
+let selectedSafra=null, safraWindow=14;
+
+function calcConsultantInRange(row, startISO, endISOExclusive){
+  const wd=row.days.filter(d=>d.d>=startISO&&d.d<endISOExclusive&&d.a>3);
+  if(!wd.length) return null;
+  const tA=wd.reduce((s,d)=>s+d.a,0), tE=wd.reduce((s,d)=>s+d.e,0);
+  const tS=wd.reduce((s,d)=>s+d.s,0), tSE=wd.reduce((s,d)=>s+d.se,0);
+  const n=wd.length;
+  return {
+    email:row.email, cargo:getCargo(row.email), dias:n,
+    ativDia:tA/n, efDia:tE/n, escDia:tS/n, escEfDia:tSE/n,
+    pctEf:tA>0?tE/tA:0, pctEscEf:tS>0?tSE/tS:0,
+    tA,tE,tS,tSE
+  };
+}
+
+function buildSafraList(){
+  const list=document.getElementById('safra-list');
+  if(!SAFRAS.length){
+    list.innerHTML='<div class="safra-empty">Nenhuma safra carregada.</div>';
+    return;
+  }
+  list.innerHTML=[...SAFRAS].reverse().map(s=>{
+    const names=s.people.map(p=>p.nome).join(', ');
+    const sel=selectedSafra===s.date?'sel':'';
+    return `<div class="citem safra-item ${sel}" data-date="${s.date}">
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700">${fmtDateFull(s.date)}</div>
+        <div class="safra-people">${names}</div>
+      </div>
+      <span class="badge ba">${s.people.length}</span>
+    </div>`;
+  }).join('');
+  list.querySelectorAll('.safra-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const d=el.dataset.date;
+      selectedSafra=(selectedSafra===d)?null:d;
+      buildSafraList();
+      renderSafra();
+    });
+  });
+}
+
+function renderSafra(){
+  const titleEl=document.getElementById('safra-sec-title');
+  const panel=document.getElementById('safra-panel');
+  if(!selectedSafra){
+    titleEl.style.display='none';
+    panel.style.display='none';
+    return;
+  }
+  const safra=SAFRAS.find(s=>s.date===selectedSafra);
+  if(!safra){ titleEl.style.display='none'; panel.style.display='none'; return; }
+
+  titleEl.style.display='flex';
+  panel.style.display='block';
+
+  // Dados disponíveis no dashboard vão de MIN_DATE (inclusive) até MAX_DATE (inclusive).
+  // Ambas as pontas de cada janela (antes/depois) precisam ser recortadas contra os
+  // dois limites — senão uma safra antiga (fora da janela de 90d) pareceria ter dado
+  // "depois" completo mesmo sem nenhum dia real disponível.
+  const dataLo=MIN_DATE;
+  const dataHi=addDays(MAX_DATE,1); // exclusivo
+  const clampStart=(s,lo)=>s<lo?lo:s;
+  const clampEnd=(e,hi)=>e>hi?hi:e;
+
+  const beforeStartFull=addDays(selectedSafra,-safraWindow);
+  const beforeEndFull=selectedSafra;
+  const beforeStart=clampStart(beforeStartFull,dataLo);
+  const beforeEnd=clampEnd(beforeEndFull,dataHi);
+  const beforeAvail=beforeEnd>beforeStart?daysBetween(beforeStart,beforeEnd):0;
+  const beforePartial=beforeAvail<safraWindow;
+
+  const afterStartFull=selectedSafra;
+  const afterEndFull=addDays(selectedSafra,safraWindow);
+  const afterStart=clampStart(afterStartFull,dataLo);
+  const afterEnd=clampEnd(afterEndFull,dataHi);
+  const afterAvail=afterEnd>afterStart?daysBetween(afterStart,afterEnd):0;
+  const afterPartial=afterAvail<safraWindow;
+
+  const beforeMetrics=RAW_DATA.map(r=>calcConsultantInRange(r,beforeStart,beforeEnd)).filter(Boolean);
+  const afterMetrics=RAW_DATA.map(r=>calcConsultantInRange(r,afterStart,afterEnd)).filter(Boolean);
+  const before=aggregate(beforeMetrics);
+  const after=aggregate(afterMetrics);
+
+  const names=safra.people.map(p=>`${p.nome} (${p.cargo})`).join(', ');
+  document.getElementById('safra-sec-sub').textContent=`${fmtDateFull(selectedSafra)} — ${names}`;
+
+  const metricRows=[
+    ['Consultores ativos','count',v=>String(v),true],
+    ['Atividades / dia (média/consultor)','avgAtivDia',v=>r1(v),true],
+    ['Efetivas / dia (média/consultor)','avgEfDia',v=>r1(v),true],
+    ['Escolas / dia (média/consultor)','avgEscDia',v=>r1(v),true],
+    ['% Efetividade','pctEf',v=>pct(v),true],
+    ['% Escolas efetivas','pctEscEf',v=>pct(v),true],
+  ];
+
+  let html=`<thead><tr>
+    <th></th>
+    <th class="th-a">Antes (${safraWindow}d)${beforePartial?'*':''}</th>
+    <th class="th-e">Depois (${safraWindow}d)${afterPartial?'*':''}</th>
+    <th class="th-r">Varia&ccedil;&atilde;o</th>
+  </tr></thead><tbody>`;
+
+  metricRows.forEach(([lbl,key,fmt,higherIsBetter],i)=>{
+    const vb=before?before[key]:null, va=after?after[key]:null;
+    const vbFmt=vb!=null?fmt(vb):'—';
+    const vaFmt=va!=null?fmt(va):'—';
+    let deltaHtml='<span class="cv ratio">—</span>';
+    if(vb!=null&&va!=null&&vb!==0){
+      const deltaPct=(va-vb)/Math.abs(vb)*100;
+      const improved=higherIsBetter?deltaPct>=0:deltaPct<=0;
+      const cls=Math.abs(deltaPct)<0.5?'pill-warn':(improved?'pill-ok':'pill-bad');
+      const sign=deltaPct>0?'+':'';
+      deltaHtml=`<span class="pill ${cls}">${sign}${r1(deltaPct)}%</span>`;
+    }
+    html+=`<tr class="${i===0?'act-row':''}">
+      <td>${lbl}</td>
+      <td><span class="cv">${vbFmt}</span></td>
+      <td><span class="cv">${vaFmt}</span></td>
+      <td>${deltaHtml}</td>
+    </tr>`;
+  });
+  html+='</tbody>';
+  document.getElementById('safra-table').innerHTML=html;
+
+  const noteEl=document.getElementById('safra-note');
+  const notes=[];
+  if(beforePartial){
+    if(beforeAvail<=0){
+      notes.push(`"Antes": sem dado dispon&iacute;vel (hist&oacute;rico do dashboard cobre apenas de ${fmtDate(MIN_DATE)} em diante).`);
+    } else {
+      notes.push(`"Antes": apenas ${beforeAvail} de ${safraWindow} dia(s) com dado dispon&iacute;vel (hist&oacute;rico cobre desde ${fmtDate(MIN_DATE)}).`);
+    }
+  }
+  if(afterPartial){
+    if(afterAvail<=0){
+      notes.push(`"Depois": sem dado dispon&iacute;vel ainda (hist&oacute;rico vai at&eacute; ${fmtDate(MAX_DATE)}).`);
+    } else {
+      notes.push(`"Depois": apenas ${afterAvail} de ${safraWindow} dia(s) com dado dispon&iacute;vel at&eacute; ${fmtDate(MAX_DATE)}.`);
+    }
+  }
+  if(notes.length){
+    noteEl.style.display='block';
+    noteEl.innerHTML='* '+notes.join('<br>* ');
+  } else {
+    noteEl.style.display='none';
+  }
+}
+
+function render(){
+  const start=startDate(windowDays);
+  const rows=RAW_DATA.filter(r=>{
+    if(!selectedEmails.has(r.email)) return false;
+    const c=getCargo(r.email);
+    if(c==='Analista'&&!showA) return false;
+    if(c==='Estagiário'&&!showE) return false;
+    return true;
+  });
+
+  const allMetrics=rows.map(r=>calcConsultant(r,windowDays));
+  const active=allMetrics.filter(m=>m!==null);
+  const total=aggregate(active);
+
+  // HEADER
+  document.getElementById('hdr-range').textContent=`${fmtDate(start)} – ${fmtDate(MAX_DATE)} (${windowDays}d corridos)`;
+  document.getElementById('slider-range').textContent=`${fmtDate(start)} → ${fmtDate(MAX_DATE)}`;
+
+  // OVERVIEW
+  const ov=document.getElementById('overview');
+  if(!total){
+    ov.innerHTML='<div class="no-data" style="grid-column:1/-1">Nenhum consultor ativo no período selecionado.</div>';
+  } else {
+    const card=(val,lbl,sub='',cls='')=>`<div class="ov-card ${cls}"><div class="ov-label">${lbl}</div><div class="ov-val">${val}</div>${sub?`<div class="ov-sub">${sub}</div>`:''}</div>`;
+    ov.innerHTML=
+      card(total.count,'Consultores ativos',`de ${rows.length} selecionados`,'hl-y')+
+      card(r1(total.avgDias),'Dias trab. médio','por consultor')+
+      card(r1(total.avgAtivDia),'Ativ/dia','média por consultor')+
+      card(r1(total.avgEfDia),'Efetivas/dia','média por consultor','hl')+
+      card(r1(total.avgEscDia),'Escolas/dia','média por consultor')+
+      card(pct(total.pctEf),'% Efetividade','efetivas / atividades')+
+      card(pct(total.pctEscEf),'% Esc. efetivas','esc.ef / esc. atingidas');
+  }
+
+  // CARGO COMPARISON
+  const agg_a=aggregate(active.filter(m=>m.cargo==='Analista'));
+  const agg_e=aggregate(active.filter(m=>m.cargo==='Estagiário'));
+  const ct=document.getElementById('cargo-table');
+
+  const metricRows=[
+    ['Consultores ativos','count',v=>String(v)],
+    ['Dias trab. médio','avgDias',v=>r1(v)],
+    ['Atividades / dia','avgAtivDia',v=>r1(v)],
+    ['Efetivas / dia','avgEfDia',v=>r1(v)],
+    ['Escolas / dia','avgEscDia',v=>r1(v)],
+    ['Esc. efetivas / dia','avgEscEfDia',v=>r1(v)],
+    ['% Efetividade','pctEf',v=>pct(v)],
+    ['% Escolas efetivas','pctEscEf',v=>pct(v)],
+  ];
+
+  const nA=agg_a?agg_a.count:0, nE=agg_e?agg_e.count:0;
+  let html=`<thead><tr>
+    <th></th>
+    <th class="th-a">Analista${nA?' ('+nA+')':''}</th>
+    <th class="th-e">Estagiário${nE?' ('+nE+')':''}</th>
+    <th class="th-r">Estagi&aacute;rio % Analista</th>
+  </tr></thead><tbody>`;
+
+  metricRows.forEach(([lbl,key,fmt],i)=>{
+    const va=agg_a?fmt(agg_a[key]):'—';
+    const ve=agg_e?fmt(agg_e[key]):'—';
+    const ratio=(agg_a&&agg_e&&agg_a[key])?(agg_e[key]/agg_a[key]*100):null;
+    const rv=ratio!==null?r1(ratio)+'%':'—';
+    html+=`<tr class="${i===0?'act-row':''}">
+      <td>${lbl}</td>
+      <td><span class="cv">${va}</span></td>
+      <td><span class="cv">${ve}</span></td>
+      <td><span class="cv ratio">${rv}</span></td>
+    </tr>`;
+  });
+  html+='</tbody>';
+  ct.innerHTML=html;
+
+  // TOP PERFORMERS
+  const tg=document.getElementById('tops');
+  if(active.length===0){
+    tg.innerHTML='<div class="no-data" style="grid-column:1/-1">Sem dados.</div>';
+  } else {
+    const best=(key)=>active.reduce((a,b)=>b[key]>a[key]?b:a);
+    const tops=[
+      ['Maior ativ/dia', best('ativDia'), m=>r1(m.ativDia)+' ativ/dia'],
+      ['Maior escolas/dia', best('escDia'), m=>r1(m.escDia)+' esc/dia'],
+      ['Maior % efetividade', best('pctEf'), m=>pct(m.pctEf)],
+      ['Maior % esc. efetivas', best('pctEscEf'), m=>pct(m.pctEscEf)],
+    ];
+    tg.innerHTML=tops.map(([cat,m,fmt])=>{
+      const cls=m.cargo==='Estagiário'?'tc-e':'';
+      return `<div class="top-card ${cls}">
+        <div class="top-cat">${cat}</div>
+        <div class="top-name">${firstName(m.email)}</div>
+        <div class="top-val">${fmt(m)}</div>
+        <div class="top-unit"><span class="badge ${m.cargo==='Analista'?'ba':'be'}">${m.cargo}</span> &middot; ${m.dias} dias trab.</div>
+      </div>`;
+    }).join('');
+  }
+
+  // TABLE HEADER
+  const cols=[
+    {key:'name',lbl:'Consultor',r:false},{key:'cargo',lbl:'Cargo',r:false},
+    {key:'dias',lbl:'Dias trab.'},{key:'ativDia',lbl:'Ativ/dia'},
+    {key:'efDia',lbl:'Efet/dia'},{key:'escDia',lbl:'Esc/dia'},
+    {key:'escEfDia',lbl:'Esc.ef/dia'},{key:'pctEf',lbl:'% Efet.'},
+    {key:'pctEscEf',lbl:'% Esc.ef.'},
+  ];
+  document.getElementById('thead-row').innerHTML='<tr>'+cols.map(c=>{
+    const isHeat=c.key==='escEfDia';
+    const arrow=sortCol===c.key?(sortAsc?'↑':'↓'):'↕';
+    const heatMark=isHeat?'<span style="font-size:9px;opacity:.7;margin-left:3px">▣</span>':'';
+    const style=isHeat?`style="background:rgba(0,142,207,.18);color:var(--blue)"` : '';
+    return `<th data-col="${c.key}" ${style}>${c.lbl}${heatMark} <span class="sa">${arrow}</span></th>`;
+  }).join('')+'</tr>';
+
+  // TABLE ROWS
+  const sorted=[...allMetrics].sort((a,b)=>{
+    if(a===null&&b===null) return 0;
+    if(a===null) return 1; if(b===null) return -1;
+    let av,bv;
+    if(sortCol==='name'){av=firstName(a.email);bv=firstName(b.email);}
+    else if(sortCol==='cargo'){av=a.cargo;bv=b.cargo;}
+    else{av=a[sortCol]??-1;bv=b[sortCol]??-1;}
+    return sortAsc?(av>bv?1:-1):(av<bv?1:-1);
+  });
+
+  // mapa de calor: escEfDia
+  const validEscEf = sorted.filter(m=>m).map(m=>m.escEfDia);
+  const minEscEf = Math.min(...validEscEf);
+  const maxEscEf = Math.max(...validEscEf);
+  function heatBg(val){
+    if(maxEscEf===minEscEf) return 'rgba(0,142,207,0.15)';
+    const t=(val-minEscEf)/(maxEscEf-minEscEf);
+    const r=Math.round(255-(255-0)*t);
+    const g=Math.round(255-(255-142)*t);
+    const b=Math.round(255-(255-207)*t);
+    return `rgb(${r},${g},${b})`;
+  }
+  function heatFg(val){
+    if(maxEscEf===minEscEf) return '';
+    const t=(val-minEscEf)/(maxEscEf-minEscEf);
+    return t>0.55?'color:#fff':'';
+  }
+
+  document.getElementById('tbody').innerHTML=sorted.map(m=>{
+    if(!m) return '';
+    const ep=m.pctEf>=0.30?'pill-ok':m.pctEf>=0.20?'pill-warn':'pill-bad';
+    const sp=m.pctEscEf>=0.30?'pill-ok':m.pctEscEf>=0.20?'pill-warn':'pill-bad';
+    const hBg=heatBg(m.escEfDia);
+    const hFg=heatFg(m.escEfDia);
+    return `<tr>
+      <td>${firstName(m.email)}</td>
+      <td><span class="badge ${m.cargo==='Analista'?'ba':'be'}">${m.cargo}</span></td>
+      <td>${m.dias}</td>
+      <td>${r1(m.ativDia)}</td>
+      <td>${r1(m.efDia)}</td>
+      <td>${r1(m.escDia)}</td>
+      <td style="background:${hBg};font-weight:700;${hFg}">${r1(m.escEfDia)}</td>
+      <td><span class="pill ${ep}">${pct(m.pctEf)}</span></td>
+      <td><span class="pill ${sp}">${pct(m.pctEscEf)}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// CONTROLS
+function setWindow(n){
+  windowDays=n;
+  document.getElementById('slider').value=n;
+  document.getElementById('slider-val').textContent=n;
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.toggle('active',+b.dataset.d===n));
+  render();
+}
+document.getElementById('slider').addEventListener('input',e=>{
+  windowDays=+e.target.value;
+  document.getElementById('slider-val').textContent=windowDays;
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.toggle('active',+b.dataset.d===windowDays));
+  render();
+});
+document.getElementById('presets').addEventListener('click',e=>{
+  if(e.target.classList.contains('preset-btn')) setWindow(+e.target.dataset.d);
+});
+document.getElementById('chk-a').addEventListener('change',e=>{showA=e.target.checked;render();});
+document.getElementById('chk-e').addEventListener('change',e=>{showE=e.target.checked;render();});
+
+document.getElementById('safra-presets').addEventListener('click',e=>{
+  if(!e.target.classList.contains('preset-btn')) return;
+  safraWindow=+e.target.dataset.d;
+  document.querySelectorAll('#safra-presets .preset-btn').forEach(b=>b.classList.toggle('active',+b.dataset.d===safraWindow));
+  renderSafra();
+});
+document.getElementById('btn-safra-clear').addEventListener('click',()=>{
+  selectedSafra=null;
+  buildSafraList();
+  renderSafra();
+});
+
+function buildChecklist(filter=''){
+  const fl=filter.toLowerCase();
+  const list=document.getElementById('clist');
+  list.innerHTML=RAW_DATA.filter(r=>!fl||r.email.includes(fl)).map(r=>{
+    const c=getCargo(r.email);
+    return `<label class="citem">
+      <input type="checkbox" ${selectedEmails.has(r.email)?'checked':''} data-email="${r.email}">
+      <span class="cemail">${firstName(r.email)}</span>
+      <span class="badge ${c==='Analista'?'ba':'be'}">${c[0]}</span>
+    </label>`;
+  }).join('');
+  list.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change',e=>{
+      e.target.checked?selectedEmails.add(e.target.dataset.email):selectedEmails.delete(e.target.dataset.email);
+      render();
+    });
+  });
+}
+document.getElementById('csearch').addEventListener('input',e=>buildChecklist(e.target.value));
+document.getElementById('btn-all').addEventListener('click',()=>{
+  selectedEmails=new Set(RAW_DATA.map(r=>r.email));
+  buildChecklist(document.getElementById('csearch').value);
+  render();
+});
+document.getElementById('btn-none').addEventListener('click',()=>{
+  selectedEmails=new Set();
+  buildChecklist(document.getElementById('csearch').value);
+  render();
+});
+document.getElementById('detail-table').addEventListener('click',e=>{
+  const th=e.target.closest('th');
+  if(!th||!th.dataset.col) return;
+  if(sortCol===th.dataset.col) sortAsc=!sortAsc;
+  else{sortCol=th.dataset.col;sortAsc=false;}
+  render();
+});
+
+buildChecklist();
+render();
+buildSafraList();
+renderSafra();
+</script>
+</body>
+</html>
