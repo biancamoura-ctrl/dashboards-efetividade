@@ -54,7 +54,7 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
 <div class="container">
   <div class="brand-name">Estante <span>M&aacute;gica</span></div>
   <div class="tagline">CS Ops &nbsp;&middot;&nbsp; Relacionamento</div>
-  <div class="date-line">Capacidade por Frente &middot; Retenção (B0) &nbsp;&middot;&nbsp; 19/08/2026</div>
+  <div class="date-line">Capacidade por Frente &middot; Retenção (B0) &nbsp;&middot;&nbsp; 20/08/2026</div>
 
   <div class="nav-row">
     <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
@@ -196,15 +196,15 @@ ORDER BY seg, n_escolas DESC</pre>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div><div style="font-size:22px;font-weight:900;color:#008ECF;">226</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">320</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+94</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">380</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+154</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:70.6%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:59.5%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) · 0 Estagiários</div>
-      <div style="font-size:11px;color:#9BA8B5;">70.6% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) · 1 Estagiário (60 esc.)</div>
+      <div style="font-size:11px;color:#9BA8B5;">59.5% utilizado</div>
     </div>
   </div>
 
@@ -265,12 +265,12 @@ ORDER BY seg, n_escolas DESC</pre>
     </div>
   </div>
 
-  <div class="footer">Fonte: BigQuery (ax_deals_temp_, frente_de_relacionamento) &middot; 19/08/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
+  <div class="footer">Fonte: BigQuery (ax_deals_temp_, frente_de_relacionamento) &middot; 20/08/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
 </div>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 620, cap: 620, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '1 Analista (80 esc.) · 9 Estagiários (60 esc.) · inclui 2 vagas a preencher' }, 'htr': { esc: 435, cap: 440, cor: '#C47A00', status: 'Atenção', statusCss: 'background:#FFF5D6;color:#C47A00', linha: '1 Analista (80 esc.) · 6 Estagiários (60 esc.) · inclui 1 vaga a preencher' }, 'mt': { esc: 469, cap: 400, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '0 Analistas · 5 Estagiários (80 esc.)' }, 'pt': { esc: 226, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 26, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
+const DADOS = { 'htn': { esc: 620, cap: 620, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '1 Analista (80 esc.) · 9 Estagiários (60 esc.) · inclui 2 vagas a preencher' }, 'htr': { esc: 435, cap: 440, cor: '#C47A00', status: 'Atenção', statusCss: 'background:#FFF5D6;color:#C47A00', linha: '1 Analista (80 esc.) · 6 Estagiários (60 esc.) · inclui 1 vaga a preencher' }, 'mt': { esc: 469, cap: 400, cor: '#D32F2F', status: 'Acima da capacidade', statusCss: 'background:#FFEBEE;color:#D32F2F', linha: '0 Analistas · 5 Estagiários (80 esc.)' }, 'pt': { esc: 226, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 26, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+']];
 const DONOS = [
   ['Aíres Muniz Santos', 'High touch - Novas', 61, 60],
@@ -281,13 +281,13 @@ const DONOS = [
   ['Thais Souza', 'High touch - Novas', 55, 60],
   ['Renata Brandão', 'High touch - Novas', 51, 80],
   ['Julia Cordeiro', 'High touch - Novas', 51, 60],
+  ['Andreina Ferreira', 'High touch - Novas', 15, 60],
   ['Kauã Coelho', 'High touch - Novas', 5, 80],
   ['Maria Eduarda Carvalho', 'High touch - Novas', 4, 80],
   ['Mariana Santana', 'High touch - Novas', 1, 80],
   ['Vaga a preencher', 'High touch - Novas', 0, 60],
   ['Vaga a preencher', 'High touch - Novas', 0, 60],
   ['Sem B0', 'High touch - Novas', 133, null],
-  ['Andreina Ferreira', 'High touch - Novas', 15, null],
   ['Sarah Moura', 'High touch - Novas', 13, null],
   ['Laura Pagliuzo', 'High touch - Novas', 4, null],
   ['Jennifer Dos Anjos', 'High touch - Novas', 2, null],
@@ -297,6 +297,7 @@ const DONOS = [
   ['Nicole Cavalcante de Oliveira', 'High touch - Renovação', 51, 60],
   ['Shelry Solart', 'High touch - Renovação', 49, 60],
   ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 38, 80],
+  ['Andreina Ferreira', 'High touch - Renovação', 17, 60],
   ['Thais Souza', 'High touch - Renovação', 3, 60],
   ['Carla Ferraz Gomes', 'High touch - Renovação', 2, 80],
   ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 2, 80],
@@ -305,7 +306,6 @@ const DONOS = [
   ['Sem B0', 'High touch - Renovação', 50, null],
   ['Sarah Moura', 'High touch - Renovação', 23, null],
   ['Jennifer Dos Anjos', 'High touch - Renovação', 18, null],
-  ['Andreina Ferreira', 'High touch - Renovação', 17, null],
   ['Thayná Bastos', 'High touch - Renovação', 3, null],
   ['Indlayse Ferreira', 'High touch - Renovação', 3, null],
   ['Dalva Paschoalini', 'High touch - Renovação', 1, null],
@@ -316,12 +316,12 @@ const DONOS = [
   ['Stefany Soares Figueredo', 'Medium touch', 78, 80],
   ['Giovanna Munhoz', 'Medium touch', 76, 80],
   ['Kauã Coelho', 'Medium touch', 70, 80],
+  ['Andreina Ferreira', 'Medium touch', 25, 60],
   ['LARI FREITAS MONTEIRO', 'Medium touch', 2, 80],
   ['Dandara Mariano', 'Medium touch', 2, 60],
   ['Carla Silva', 'Medium touch', 1, 60],
   ['Shelry Solart', 'Medium touch', 1, 60],
   ['Maria Elvira Silva de Jesus', 'Medium touch', 1, 80],
-  ['Andreina Ferreira', 'Medium touch', 25, null],
   ['Sarah Moura', 'Medium touch', 23, null],
   ['Jennifer Dos Anjos', 'Medium touch', 10, null],
   ['Sem B0', 'Medium touch', 7, null],
@@ -336,11 +336,11 @@ const DONOS = [
   ['Maria Eduarda Carvalho', 'Premium touch', 47, 80],
   ['Mariana Santana', 'Premium touch', 46, 80],
   ['Carla Ferraz Gomes', 'Premium touch', 45, 80],
+  ['Andreina Ferreira', 'Premium touch', 11, 60],
   ['Maria Elvira Silva de Jesus', 'Premium touch', 5, 80],
   ['Thais Souza', 'Premium touch', 4, 60],
   ['Carla Silva', 'Premium touch', 2, 60],
   ['LARI FREITAS MONTEIRO', 'Premium touch', 2, 80],
-  ['Andreina Ferreira', 'Premium touch', 11, null],
   ['Sarah Moura', 'Premium touch', 11, null],
   ['Jennifer Dos Anjos', 'Premium touch', 1, null],
   ['Laura Pagliuzo', 'Premium touch', 1, null],
