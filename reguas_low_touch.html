@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réguas Low Touch</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--border:#e8e8e4;--text:#595959;--muted:#9a9a9a;
+  --blue:#008ECF;--blue-lt:#e6f4fb;--amber:#7668AC;--amber-lt:#f0eef8;
+  --red:#E94B56;--red-lt:#fef0f1;--yellow:#F9DC45;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04)
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.page{max-width:1200px;margin:0 auto;padding:24px 20px 48px}
+.header{margin-bottom:20px;text-align:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.aviso{background:#fff8e1;border-left:4px solid var(--yellow);border-radius:10px;padding:12px 16px;font-size:12.5px;color:var(--text);font-weight:500;line-height:1.6;margin-bottom:20px}
+.date-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.date-bar label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.date-bar input[type=date]{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text)}
+.date-bar button{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer}
+.date-bar button:hover{border-color:var(--blue);color:var(--blue)}
+.date-bar button:disabled{opacity:.35;cursor:not-allowed}
+.date-info{font-size:12px;color:var(--muted)}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--yellow);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+.kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;font-weight:600}
+.kpi-val{font-size:22px;font-weight:800;line-height:1;color:var(--text)}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.filtro-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filtro-bar label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.filtro-bar select{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;min-width:260px}
+html.dark .filtro-bar select{background:#27272a;color:var(--text);border-color:var(--border)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden;border-top:3px solid var(--yellow)}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:14px;font-weight:700}
+.toggle-btn{font-family:'Montserrat',sans-serif;font-size:11.5px;font-weight:700;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;white-space:nowrap}
+.toggle-btn:hover{border-color:var(--blue);color:var(--blue)}
+.collapsible{display:none}
+.collapsible.open{display:block}
+html.dark .toggle-btn{background:#27272a;color:var(--text);border-color:var(--border)}
+.card-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+.link-ax{color:var(--blue);text-decoration:none;font-weight:700}
+.link-ax:hover{text-decoration:underline}
+html.dark .link-ax{color:#60a5fa}
+.mini-kpis{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.mini-kpis b{color:var(--text);font-size:13px}
+.card-body{padding:0}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:820px}
+thead th{background:#f8f8f6;padding:9px 12px;text-align:left;font-weight:700;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid #f0f0ec}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fdfdf9}
+tbody td{padding:8px 12px;white-space:nowrap;vertical-align:middle}
+td.nome{white-space:normal;min-width:220px;font-weight:600;font-size:12px;font-family:ui-monospace,Menlo,monospace}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td .sub{display:block;font-size:10px;color:var(--muted);font-weight:400}
+tr.sem-dado td{color:var(--muted);font-style:italic;font-weight:400}
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+.neu{background:#f3f3f0;color:var(--muted)}
+.canal-wpp{background:#dcfce7;color:#16a34a}
+.canal-email{background:var(--blue-lt);color:var(--blue)}
+.footer{font-size:11.5px;color:var(--muted);text-align:center;margin-top:24px;line-height:1.6}
+.theme-btn{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#FFD947,#FF8C00);box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2);z-index:9998;overflow:hidden;padding:0;display:flex;align-items:center;justify-content:center;transition:background .5s ease,box-shadow .5s ease,transform .2s ease}
+.theme-btn:hover{transform:scale(1.13)}
+.theme-icon-sun,.theme-icon-moon{position:absolute;font-size:22px;line-height:1;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease}
+.theme-icon-sun{opacity:1;transform:scale(1) rotate(0deg) translateY(0)}
+.theme-icon-moon{opacity:0;transform:scale(0) rotate(-40deg) translateY(10px)}
+html.dark{--bg:#18181b;--surface:#1e1e22;--border:#2d2d33;--text:#d4d4d0;--muted:#71717a}
+html.dark body{background:var(--bg);color:var(--text)}
+html.dark thead th{background:#27272a}
+html.dark tbody tr{border-bottom-color:var(--border)}
+html.dark tbody tr:hover{background:#27272a}
+html.dark .card{background:var(--surface);border-color:var(--border)}
+html.dark .kpi{background:var(--surface);border-color:var(--border)}
+html.dark .date-bar{background:var(--surface);border-color:var(--border)}
+html.dark .date-bar input[type=date]{background:#27272a;color:var(--text);border-color:var(--border)}
+html.dark .date-bar button{background:#27272a;color:var(--text);border-color:var(--border)}
+html.dark .aviso{background:#2a2510;color:var(--text)}
+html.dark .neu{background:#3f3f46;color:#a1a1aa}
+html.dark .theme-icon-sun{opacity:0;transform:scale(0) rotate(60deg) translateY(10px)}
+html.dark .theme-icon-moon{opacity:1;transform:scale(1) rotate(0deg) translateY(0)}
+body,.card,.kpi,thead th,tbody tr,.filtro-bar select,.date-bar,.date-bar input,.date-bar button{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+<div style="position:fixed;top:16px;left:16px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;"><a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Início</a><a href="low_touch.html" style="display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;background:#7668AC;border:none;border-radius:8px;padding:7px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(118,104,172,.4);transition:opacity .15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">← Low touch</a></div>
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button><script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')})})();</script>
+<div class="page">
+
+<div class="header">
+  <h1>Réguas Low Touch</h1>
+  <p>9 réguas · 44 templates · Fonte: use_cases.disparos_resultados</p>
+</div>
+
+<div class="aviso">
+  Escolas Low touch não recebem acompanhamento ativo de um B1 — em vez disso são atendidas por estas réguas
+  automáticas. Escolha uma data acima pra ver como cada régua disparou naquele dia especificamente — os
+  números não são somados no período todo. "Deveria entrar" ainda está pendente — falta o gatilho de
+  elegibilidade de cada régua (Bianca vai passar régua por régua; assim que confirmado, entra em
+  <code>GATILHOS</code> no gerador).
+</div>
+
+<div class="date-bar">
+  <label for="dataFiltro">Ver disparo do dia</label>
+  <button id="btnAnterior" type="button">◀</button>
+  <input type="date" id="dataFiltro">
+  <button id="btnProximo" type="button">▶</button>
+  <span class="date-info" id="dataInfo"></span>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi"><div class="kpi-lbl">Réguas</div><div class="kpi-val" id="kpiReguas">–</div><div class="kpi-sub" id="kpiTemplatesSub">–</div></div>
+  <div class="kpi"><div class="kpi-lbl">Enviados</div><div class="kpi-val" id="kpiEnviados">–</div><div class="kpi-sub" id="kpiEntregues">–</div></div>
+  <div class="kpi"><div class="kpi-lbl">Taxa de entrega</div><div class="kpi-val" id="kpiEntrega">–</div><div class="kpi-sub">sobre enviados</div></div>
+  <div class="kpi"><div class="kpi-lbl">Taxa de leitura</div><div class="kpi-val" id="kpiLeitura">–</div><div class="kpi-sub">sobre entregues</div></div>
+  <div class="kpi"><div class="kpi-lbl">Taxa de resposta</div><div class="kpi-val" id="kpiResposta">–</div><div class="kpi-sub" id="kpiRespostaSub">–</div></div>
+</div>
+
+<div class="filtro-bar">
+  <label for="reguaSelect">Filtrar régua</label>
+  <select id="reguaSelect"></select>
+</div>
+
+<div id="cards"></div>
+
+<p class="footer">
+  Cada dia mostra só o que disparou NAQUELE dia — template sem linha nessa data aparece como
+  "sem disparo nesta data" dentro da régua, não some da lista.
+  Um mesmo template pode pertencer a mais de uma régua (mantido igual ao CSV da Bianca).
+  Página estática — gerar de novo (gerar_reguas_low_touch.py) para trazer disparos mais recentes.
+</p>
+
+</div>
+<script>
+var REGUAS = [{"nome": "[MKT 26] Régua | LT | 30 dias para o FC", "link": "https://axcrm.ai/workflows/4ee0b323-6426-4d2e-a609-7e2443a2c4ea", "gatilho": "", "templates": ["auto_envio_material_lt_g_cad1", "regua_relacionamento_lt_materiais_pendentes_relatorio", "regua_relacionamento_lt_material_divulgacao_fc_proximo", "regua_relacionamento_lt_fc10", "auto_envio_material_lt_pg_cad7_", "regua_relacionamento_lt_fc3", "auto_envio_material_lt_pg_cad8", "regua_relacionamento_lt_fc0"]}, {"nome": "[MKT 26] Régua | LT | Engajamento durante aplicação", "link": "https://axcrm.ai/workflows/c2771225-f785-47b5-a0bd-5adf2d777a37", "gatilho": "", "templates": ["regua_relacionamento_lt_engajamento_familias_comunicado_video", "auto_aplicacao_lt_cad1_", "regua_relacionamento_lt_engajamento_familias_biografia", "Herois_LT_e_sem_segmentacao"]}, {"nome": "[MKT 26] Régua | LT | Definiu datas até Início da aplicação", "link": "https://axcrm.ai/workflows/70a0b3ed-2621-4fc3-8c92-39b194248315", "gatilho": "", "templates": ["auto_aplicacao_lt_cad1_", "regua_relacionamento_lt_definicao_datas", "regua_relacionamento_lt_engajamento_familias", "regua_relacionamento_lt_magic_land", "regua_relacionamento_lt_engajamento_familias_cad2", "regua_relacionamento_lt_magic_land_cad2"]}, {"nome": "[MKT 26] Régua | LT | Incentivo à definição de datas", "link": "https://axcrm.ai/workflows/dd786c5c-0293-4f42-83f2-4dfa276e53d3", "gatilho": "", "templates": ["regua_relacionamento_lt_definicao_datas_evento", "auto_lt_def_datas_p1", "auto_lt_def_datas_p2", "regua_relacionamento_lt_definicao_datas_cad2", "auto_lt_def_datas_pg5", "auto_lt_def_datas_pg06"]}, {"nome": "[MKT 26] Régua | LT | Cadastrar alunos | Renovação", "link": "https://axcrm.ai/workflows/384c5cc7-9da1-4403-8e8e-e7fe67a31598", "gatilho": "", "templates": ["regua_relacionamento_lt_cadastro_alunos_renovacao", "auto_renovacao_cadastro_de_alunos_2", "regua_relacionamento_lt_cadastro_alunos_renovacao_cad2", "auto_nf_cadastrar_alunos3"]}, {"nome": "[MKT 26] Régua | LT | Cadastrar alunos | Levantadas", "link": "https://axcrm.ai/workflows/09deec7e-5a97-425e-9303-429c469570e9", "gatilho": "", "templates": ["regua_relacionamento_lt_cadastro_alunos", "auto_lt_cadastro_de_alunos", "regua_relacionamento_lt_cadastro_alunos_cad2", "auto_lt_cadastro_de_alunos_2"]}, {"nome": "[MKT 26] Régua | LT | Pós reunião (Negócio Fechado)", "link": "", "gatilho": "", "templates": ["regua_relacionamento_lt_nf_cadastrar_alunos", "auto_nf_cadastrar_alunos", "regua_relacionamento_lt_nf_cadastrar_alunos_cad2", "auto_nf_cadastrar_alunos2", "regua_relacionamento_lt_nf_cadastrar_alunos_cad3", "auto_nf_cadastrar_alunos3"]}, {"nome": "[MKT 26] Régua | LT | Pós reunião (FUP)", "link": "https://axcrm.ai/workflows/2149683a-06b0-42db-bb06-d85a7f832d6e", "gatilho": "", "templates": ["regua_relacionamento_lt_pos_reuniao_fup", "auto_fup_cadastrar_alunos", "regua_relacionamento_lt_pos_reuniao_fup_cad2", "auto_fup_cadastrar_alunos2"]}, {"nome": "[MKT 26] Régua | Eventos | LT - 14 dias para o EG", "link": "https://axcrm.ai/workflows/d83dd111-40c8-4304-a4b8-b768ff0a5e91", "gatilho": "", "templates": ["auto_eventos_14dias_eg_semcompras", "auto_eventos_14dias_eg_semcompra_semmaterial"]}];
+var DISPAROS = {"regua_relacionamento_lt_definicao_datas": {"2026-05-26": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-05-27": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-05-28": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-06-02": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-09": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-11": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-12": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-18": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-19": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-22": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-23": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-25": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-26": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-01": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-03": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-08": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-09": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-10": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-15": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-17": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-21": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-22": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-27": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-28": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-29": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-31": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-03": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-04": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-05": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-06": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-07": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-11": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-14": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-18": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-19": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-20": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_aplicacao_lt_cad1_": {"2026-05-26": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-05-28": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-02": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-08": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-09": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-10": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-11": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-12": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-15": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-06-16": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-17": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-18": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-19": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-22": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-23": {"canal": "whatsapp", "enviados": 1, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-25": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-26": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-06-29": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-01": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-02": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-03": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-08": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-09": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-10": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-07-13": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-15": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-07-16": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-07-17": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-22": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-23": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-27": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-28": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-31": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-03": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-04": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-05": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-06": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-07": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-10": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-12": {"canal": "whatsapp", "enviados": 1, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-14": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-18": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-20": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-21": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_definicao_datas_evento": {"2026-05-28": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-06-02": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-03": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-05": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-06-08": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-10": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-16": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-19": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-06-23": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-25": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-29": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-30": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-08": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-09": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-10": {"canal": "e-mail", "enviados": 2, "entregues": 2, "lidos": 0, "respondidos": 0}, "2026-07-13": {"canal": "e-mail", "enviados": 1, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-22": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-23": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-27": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-04": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-05": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-06": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-07": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-12": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-18": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-21": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_envio_material_lt_g_cad1": {"2026-06-02": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-06-15": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-06-16": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-05": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}}, "regua_relacionamento_lt_cadastro_alunos_renovacao": {"2026-06-09": {"canal": "e-mail", "enviados": 2, "entregues": 2, "lidos": 2, "respondidos": 0}, "2026-06-16": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-17": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-22": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-25": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-13": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-23": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-31": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-03": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-06": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-07": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-10": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-11": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-12": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-18": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_cadastro_alunos_renovacao_cad2": {"2026-06-18": {"canal": "e-mail", "enviados": 2, "entregues": 2, "lidos": 0, "respondidos": 0}, "2026-06-22": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-09": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-27": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-30": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-06": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-10": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}}, "auto_eventos_14dias_eg_semcompras": {"2026-06-18": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_lt_def_datas_p1": {"2026-06-18": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-07-01": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-02": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-03": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-08": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-10": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-15": {"canal": "whatsapp", "enviados": 2, "entregues": 2, "lidos": 2, "respondidos": 0}, "2026-07-16": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-24": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-29": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-30": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-07-31": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-12": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-14": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-19": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-24": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_engajamento_familias": {"2026-06-19": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-03": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-10": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-17": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-23": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-29": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-30": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-31": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-05": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-06": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-07": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-19": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-20": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-21": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_lt_def_datas_p2": {"2026-06-22": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-26": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-03": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-06": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-10": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-17": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-20": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-24": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-28": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-31": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-03": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-04": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-07": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-14": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-18": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-24": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_materiais_pendentes_relatorio": {"2026-06-22": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-06-29": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-06": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-07": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-08": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-13": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-15": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-20": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-21": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-22": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-27": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-28": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-03": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-04": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-10": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-12": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-18": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-19": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 0, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_magic_land": {"2026-06-22": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-09": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-16": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-20": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-27": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-03": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-10": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-20": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_nf_cadastrar_alunos3": {"2026-06-25": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-23": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-30": {"canal": "whatsapp", "enviados": 2, "entregues": 2, "lidos": 2, "respondidos": 0}, "2026-08-06": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "whatsapp", "enviados": 3, "entregues": 3, "lidos": 3, "respondidos": 0}, "2026-08-20": {"canal": "whatsapp", "enviados": 2, "entregues": 2, "lidos": 1, "respondidos": 0}, "2026-08-24": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_definicao_datas_cad2": {"2026-06-26": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-06-30": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-21": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-07-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-04": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-07": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-18": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-21": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_engajamento_familias_cad2": {"2026-06-26": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-06": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-20": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-31": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-07": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-14": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-21": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_material_divulgacao_fc_proximo": {"2026-06-29": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-22": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-27": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-28": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-29": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-03": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-04": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-10": {"canal": "e-mail", "enviados": 1, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-11": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-19": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_magic_land_cad2": {"2026-07-01": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-07-29": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-05": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-12": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-19": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_lt_def_datas_pg5": {"2026-07-03": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-07-28": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-07-31": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-04": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-11": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-14": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-17": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-18": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}}, "regua_relacionamento_lt_fc10": {"2026-07-08": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-05": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-06": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-12": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-19": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-20": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_nf_cadastrar_alunos": {"2026-07-30": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_nf_cadastrar_alunos_cad2": {"2026-08-06": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}}, "regua_relacionamento_lt_fc3": {"2026-08-06": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-10": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-20": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_envio_material_lt_pg_cad7_": {"2026-08-06": {"canal": "whatsapp", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-20": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-24": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}}, "regua_relacionamento_lt_fc0": {"2026-08-10": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}, "2026-08-13": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-17": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-20": {"canal": "e-mail", "enviados": 0, "entregues": 0, "lidos": 0, "respondidos": 0}, "2026-08-24": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_lt_def_datas_pg06": {"2026-08-11": {"canal": "whatsapp", "enviados": 3, "entregues": 3, "lidos": 3, "respondidos": 0}, "2026-08-14": {"canal": "whatsapp", "enviados": 2, "entregues": 2, "lidos": 2, "respondidos": 0}}, "regua_relacionamento_lt_nf_cadastrar_alunos_cad3": {"2026-08-12": {"canal": "e-mail", "enviados": 1, "entregues": 1, "lidos": 0, "respondidos": 0}}, "auto_envio_material_lt_pg_cad8": {"2026-08-13": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 1}, "2026-08-20": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}, "2026-08-24": {"canal": "whatsapp", "enviados": 1, "entregues": 1, "lidos": 1, "respondidos": 0}}};
+var CANAL_POR_TEMPLATE = {"regua_relacionamento_lt_definicao_datas": "e-mail", "auto_aplicacao_lt_cad1_": "whatsapp", "regua_relacionamento_lt_definicao_datas_evento": "e-mail", "auto_envio_material_lt_g_cad1": "whatsapp", "regua_relacionamento_lt_cadastro_alunos_renovacao": "e-mail", "regua_relacionamento_lt_cadastro_alunos_renovacao_cad2": "e-mail", "auto_eventos_14dias_eg_semcompras": "whatsapp", "auto_lt_def_datas_p1": "whatsapp", "regua_relacionamento_lt_engajamento_familias": "e-mail", "auto_lt_def_datas_p2": "whatsapp", "regua_relacionamento_lt_materiais_pendentes_relatorio": "e-mail", "regua_relacionamento_lt_magic_land": "e-mail", "auto_nf_cadastrar_alunos3": "whatsapp", "regua_relacionamento_lt_definicao_datas_cad2": "e-mail", "regua_relacionamento_lt_engajamento_familias_cad2": "e-mail", "regua_relacionamento_lt_material_divulgacao_fc_proximo": "e-mail", "regua_relacionamento_lt_magic_land_cad2": "e-mail", "auto_lt_def_datas_pg5": "whatsapp", "regua_relacionamento_lt_fc10": "e-mail", "regua_relacionamento_lt_nf_cadastrar_alunos": "e-mail", "regua_relacionamento_lt_nf_cadastrar_alunos_cad2": "e-mail", "regua_relacionamento_lt_fc3": "e-mail", "auto_envio_material_lt_pg_cad7_": "whatsapp", "regua_relacionamento_lt_fc0": "e-mail", "auto_lt_def_datas_pg06": "whatsapp", "regua_relacionamento_lt_nf_cadastrar_alunos_cad3": "e-mail", "auto_envio_material_lt_pg_cad8": "whatsapp"};
+var DATAS = ["2026-05-26", "2026-05-27", "2026-05-28", "2026-06-02", "2026-06-03", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19", "2026-06-22", "2026-06-23", "2026-06-24", "2026-06-25", "2026-06-26", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-03", "2026-07-06", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-10", "2026-07-13", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21", "2026-08-24"];
+var GATILHOS = {};
+
+function fmtInt(v){ return Math.round(v||0).toLocaleString('pt-BR'); }
+function pct(num, den){ if(!den) return '—'; return (num/den*100).toFixed(1) + '%'; }
+function badgeCanal(canal){
+  if(!canal) return '<span class="badge neu">?</span>';
+  return canal.split(' + ').map(function(c){
+    if(c === 'whatsapp') return '<span class="badge canal-wpp">📱 WhatsApp</span>';
+    if(c === 'e-mail') return '<span class="badge canal-email">✉️ E-mail</span>';
+    return '<span class="badge neu">' + c + '</span>';
+  }).join(' ');
+}
+function slug(nome){
+  return nome.toLowerCase().replace('[mkt 26] régua | ', '').replace(/ \| /g,'-').replace(/ /g,'-').replace(/[()]/g,'');
+}
+
+var ABERTAS = {}; // slug -> bool, sobrevive ao re-render ao trocar de data
+function toggleCard(id){
+  ABERTAS[id] = !ABERTAS[id];
+  render(document.getElementById('dataFiltro').value);
+}
+
+var FILTRO_ATIVO = null; // slug da régua selecionada no dropdown, ou null = todas
+function setFiltro(id){
+  FILTRO_ATIVO = id || null;
+  render(document.getElementById('dataFiltro').value);
+}
+
+function linhaTemplate(templateId, row){
+  var canal = CANAL_POR_TEMPLATE[templateId] || null;
+  if(!row){
+    return '<tr class="sem-dado"><td class="nome">' + templateId + '</td>' +
+      '<td>' + badgeCanal(canal) + '</td>' +
+      '<td colspan="4">sem disparo nesta data</td></tr>';
+  }
+  return '<tr><td class="nome">' + templateId + '</td>' +
+    '<td>' + badgeCanal(row.canal || canal) + '</td>' +
+    '<td class="num">' + fmtInt(row.enviados) + '</td>' +
+    '<td class="num">' + fmtInt(row.entregues) + ' <span class="sub">' + pct(row.entregues,row.enviados) + '</span></td>' +
+    '<td class="num">' + fmtInt(row.lidos) + ' <span class="sub">' + pct(row.lidos,row.entregues) + '</span></td>' +
+    '<td class="num">' + fmtInt(row.respondidos) + ' <span class="sub">' + pct(row.respondidos,row.entregues) + '</span></td></tr>';
+}
+
+var TABLE_HEAD = '<tr><th>Template</th><th>Canal</th><th>Enviados</th><th>Entregues</th><th>Lidos</th><th>Respondidos</th></tr>';
+
+function cardRegua(regua, dataStr){
+  var linhas = regua.templates.map(function(t){
+    var porDia = DISPAROS[t] || {};
+    return linhaTemplate(t, porDia[dataStr]);
+  });
+  var achados = regua.templates.map(function(t){ return (DISPAROS[t]||{})[dataStr]; }).filter(Boolean);
+  var enviados = achados.reduce(function(s,d){ return s + (d.enviados||0); }, 0);
+  var entregues = achados.reduce(function(s,d){ return s + (d.entregues||0); }, 0);
+  var lidos = achados.reduce(function(s,d){ return s + (d.lidos||0); }, 0);
+  var respondidos = achados.reduce(function(s,d){ return s + (d.respondidos||0); }, 0);
+  var nSemDado = regua.templates.length - achados.length;
+  var deveria = GATILHOS[regua.nome] || regua.gatilho || '— (gatilho pendente)';
+  var botaoLink = regua.link
+    ? '<a class="link-ax" href="' + regua.link + '" target="_blank" rel="noopener">🔗 Ver workflow no AX</a>'
+    : '';
+  var id = slug(regua.nome);
+  var aberta = !!ABERTAS[id];
+  var botaoToggle = '<button type="button" class="toggle-btn" onclick="toggleCard(\'' + id + '\')">' +
+    (aberta ? '▾ Ocultar templates (' : '▸ Mostrar templates (') + regua.templates.length + ')</button>';
+  return '<div class="card" id="' + id + '">' +
+    '<div class="card-head"><div>' +
+      '<div class="card-title">' + regua.nome + '</div>' +
+      '<div class="card-sub">' + regua.templates.length + ' template(s)' + (nSemDado ? ' · ' + nSemDado + ' sem disparo nesta data' : '') + (botaoLink ? ' · ' + botaoLink : '') + '</div>' +
+    '</div><div class="mini-kpis">' +
+      '<span>Enviados<br><b>' + fmtInt(enviados) + '</b></span>' +
+      '<span>Entrega<br><b>' + pct(entregues, enviados) + '</b></span>' +
+      '<span>Leitura<br><b>' + pct(lidos, entregues) + '</b></span>' +
+      '<span>Resposta<br><b>' + pct(respondidos, entregues) + '</b></span>' +
+      '<span>Deveria entrar<br><b>' + deveria + '</b></span>' +
+    '</div>' + botaoToggle + '</div>' +
+    '<div class="card-body collapsible' + (aberta ? ' open' : '') + '"><div class="tbl-wrap"><table><thead>' + TABLE_HEAD + '</thead><tbody>' + linhas.join('') + '</tbody></table></div></div>' +
+  '</div>';
+}
+
+
+function render(dataStr){
+  var reguasVisiveis = REGUAS.filter(function(r){ return !FILTRO_ATIVO || slug(r.nome) === FILTRO_ATIVO; });
+  var totalEnviados = 0, totalEntregues = 0, totalLidos = 0, totalRespondidos = 0, templatesComDisparo = 0;
+  reguasVisiveis.forEach(function(r){
+    r.templates.forEach(function(t){
+      var row = (DISPAROS[t]||{})[dataStr];
+      if(row){
+        templatesComDisparo++;
+        totalEnviados += row.enviados||0;
+        totalEntregues += row.entregues||0;
+        totalLidos += row.lidos||0;
+        totalRespondidos += row.respondidos||0;
+      }
+    });
+  });
+  document.getElementById('kpiReguas').textContent = reguasVisiveis.length;
+  document.getElementById('kpiTemplatesSub').textContent = templatesComDisparo + ' templates dispararam nesta data';
+  document.getElementById('kpiEnviados').textContent = fmtInt(totalEnviados);
+  document.getElementById('kpiEntregues').textContent = fmtInt(totalEntregues) + ' entregues';
+  document.getElementById('kpiEntrega').textContent = pct(totalEntregues, totalEnviados);
+  document.getElementById('kpiLeitura').textContent = pct(totalLidos, totalEntregues);
+  document.getElementById('kpiResposta').textContent = pct(totalRespondidos, totalEntregues);
+  document.getElementById('kpiRespostaSub').textContent = fmtInt(totalRespondidos) + ' respostas';
+  document.getElementById('cards').innerHTML = reguasVisiveis.map(function(r){ return cardRegua(r, dataStr); }).join('');
+
+  var idx = DATAS.indexOf(dataStr);
+  document.getElementById('btnAnterior').disabled = !(idx > 0);
+  document.getElementById('btnProximo').disabled = !(idx >= 0 && idx < DATAS.length - 1);
+  document.getElementById('dataInfo').textContent = idx === -1
+    ? 'sem nenhum disparo registrado nesta data'
+    : ('dia ' + (idx+1) + ' de ' + DATAS.length + ' com disparo registrado no período');
+}
+
+var reguaSelect = document.getElementById('reguaSelect');
+reguaSelect.innerHTML = '<option value="">Todas as réguas</option>' + REGUAS.map(function(r){
+  var id = slug(r.nome);
+  var label = r.nome.replace('[MKT 26] Régua | ', '');
+  return '<option value="' + id + '">' + label + '</option>';
+}).join('');
+reguaSelect.addEventListener('change', function(){ setFiltro(reguaSelect.value); });
+
+var input = document.getElementById('dataFiltro');
+input.min = DATAS[0];
+input.max = DATAS[DATAS.length - 1];
+input.value = DATAS[DATAS.length - 1];
+
+input.addEventListener('change', function(){ render(input.value); });
+document.getElementById('btnAnterior').addEventListener('click', function(){
+  var idx = DATAS.indexOf(input.value);
+  if(idx > 0){ input.value = DATAS[idx-1]; render(input.value); }
+});
+document.getElementById('btnProximo').addEventListener('click', function(){
+  var idx = DATAS.indexOf(input.value);
+  if(idx >= 0 && idx < DATAS.length - 1){ input.value = DATAS[idx+1]; render(input.value); }
+});
+
+render(input.value);
+
+</script>
+</body>
+</html>
