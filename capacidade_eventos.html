@@ -54,7 +54,7 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
 <div class="container">
   <div class="brand-name">Estante <span>M&aacute;gica</span></div>
   <div class="tagline">CS Ops &nbsp;&middot;&nbsp; Relacionamento</div>
-  <div class="date-line">Capacidade por Frente &middot; Eventos (B1) &nbsp;&middot;&nbsp; 25/08/2026</div>
+  <div class="date-line">Capacidade por Frente &middot; Eventos (B1) &nbsp;&middot;&nbsp; 27/08/2026</div>
 
   <div class="nav-row">
     <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
@@ -105,6 +105,10 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
     AND (d.deal_stage IN (&#x27;Ciclo de Vendas&#x27;, &#x27;Ciclo de Eventos&#x27;, &#x27;Onboarding &amp; Boas vindas&#x27;, &#x27;Em Aplicação&#x27;, &#x27;Projeto Concluído&#x27;)
        OR (d.deal_stage = &#x27;Enviou Lista de Alunos&#x27; AND d.tipo_de_entrada = &#x27;Self service&#x27;))
     AND LOWER(IFNULL(d.frente_de_relacionamento, &#x27;&#x27;)) = &#x27;eventos&#x27;
+    -- Pedido da Bianca (27/08/2026): mesma regra de &quot;carteira ativa&quot; da página Geral
+    -- (gerar_capacidade_carteira.py) — ver [[project_capacidade_por_frente]].
+    AND (d.data_da_reuniao_bv_concluida IS NOT NULL OR d.baldinho = &#x27;Renovação&#x27;)
+    AND (d.DA IS NULL OR CAST(NULLIF(TRIM(d.DA), &#x27;&#x27;) AS DATE) &gt;= CURRENT_DATE(&#x27;America/Sao_Paulo&#x27;))
 )
 SELECT seg, owner_email, nome_owner_raw, COUNT(*) AS n_escolas
 FROM ativas
@@ -127,6 +131,8 @@ ORDER BY seg, n_escolas DESC</pre>
     
     <br><br>
     <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos (Self service), Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas, Ciclo de Eventos e Projeto Conclu&iacute;do &middot; qualquer segmenta&ccedil;&atilde;o exceto Low touch.
+    <br><br>
+    <strong>Sa&uacute;de da carteira:</strong> BV conclu&iacute;da (<em>data_da_reuniao_bv_concluida</em> preenchida) OU escola de <strong>Renova&ccedil;&atilde;o</strong> (<em>baldinho = 'Renova&ccedil;&atilde;o'</em>, mesmo sem BV) &middot; e o <strong>EA</strong> (evento de aut&oacute;grafos) precisa estar hoje ou no futuro &mdash; ou ainda sem data marcada.
   </div>
 
   <div class="section-title">Resumo por Segmento</div>
@@ -138,9 +144,9 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">49</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">37</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">0</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−49</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−37</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
       <div style="height:100%;width:0.0%;background:#1A9957;border-radius:4px;"></div>
@@ -157,9 +163,9 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">47</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">35</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">0</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−47</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−35</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
       <div style="height:100%;width:0.0%;background:#1A9957;border-radius:4px;"></div>
@@ -176,9 +182,9 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">63</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">58</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">0</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−63</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−58</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
       <div style="height:100%;width:0.0%;background:#1A9957;border-radius:4px;"></div>
@@ -195,16 +201,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">23</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">24</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">380</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+357</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+356</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:6.1%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:6.3%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) · 1 Estagiário (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">6.1% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">6.3% utilizado</div>
     </div>
   </div>
 
@@ -214,16 +220,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">6</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">3</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">80</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+74</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+77</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:7.5%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:3.8%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) · 0 Estagiários</div>
-      <div style="font-size:11px;color:#9BA8B5;">7.5% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">3.8% utilizado</div>
     </div>
   </div>
   </div>
@@ -265,63 +271,59 @@ ORDER BY seg, n_escolas DESC</pre>
     </div>
   </div>
 
-  <div class="footer">Fonte: BigQuery (ax_deals_temp_, frente_de_relacionamento) &middot; 25/08/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
+  <div class="footer">Fonte: BigQuery (ax_deals_temp_, frente_de_relacionamento) &middot; 27/08/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
 </div>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 49, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'htr': { esc: 47, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'mt': { esc: 63, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'pt': { esc: 23, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 6, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
+const DADOS = { 'htn': { esc: 37, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'htr': { esc: 35, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'mt': { esc: 58, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'pt': { esc: 24, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 3, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+']];
 const DONOS = [
-  ['Maria Eduarda Carvalho', 'High touch - Novas', 3, 80],
-  ['Sem B1', 'High touch - Novas', 8, null],
-  ['Renata Brandão', 'High touch - Novas', 7, null],
-  ['Julia Cordeiro', 'High touch - Novas', 6, null],
-  ['Laura Pagliuzo', 'High touch - Novas', 5, null],
-  ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 4, null],
-  ['Sarah Moura', 'High touch - Novas', 4, null],
-  ['Indlayse Ferreira', 'High touch - Novas', 4, null],
-  ['Thayná Bastos', 'High touch - Novas', 4, null],
-  ['Vivian Cristina', 'High touch - Novas', 2, null],
-  ['Kauã Coelho', 'High touch - Novas', 1, null],
-  ['Aíres Muniz Santos', 'High touch - Novas', 1, null],
+  ['Maria Eduarda Carvalho', 'High touch - Novas', 2, 80],
+  ['Renata Brandão', 'High touch - Novas', 5, null],
+  ['Thayná Bastos', 'High touch - Novas', 5, null],
+  ['Indlayse Ferreira', 'High touch - Novas', 5, null],
+  ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 5, null],
+  ['Vivian Cristina', 'High touch - Novas', 4, null],
+  ['Sarah Moura', 'High touch - Novas', 3, null],
+  ['Julia Cordeiro', 'High touch - Novas', 3, null],
+  ['Laura Pagliuzo', 'High touch - Novas', 3, null],
+  ['Sem B1', 'High touch - Novas', 2, null],
   ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 1, 80],
   ['Erick Andrade', 'High touch - Renovação', 7, null],
-  ['Nicole Cavalcante de Oliveira', 'High touch - Renovação', 6, null],
-  ['Indlayse Ferreira', 'High touch - Renovação', 5, null],
   ['Sarah Moura', 'High touch - Renovação', 5, null],
-  ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 4, null],
-  ['Thais Souza', 'High touch - Renovação', 4, null],
-  ['Sem B1', 'High touch - Renovação', 3, null],
-  ['Thayná Bastos', 'High touch - Renovação', 3, null],
-  ['Shelry Solart', 'High touch - Renovação', 2, null],
+  ['Nicole Cavalcante de Oliveira', 'High touch - Renovação', 3, null],
+  ['Thais Souza', 'High touch - Renovação', 3, null],
+  ['Laura Pagliuzo', 'High touch - Renovação', 3, null],
+  ['Sem B1', 'High touch - Renovação', 2, null],
+  ['Jennifer Dos Anjos', 'High touch - Renovação', 2, null],
+  ['Indlayse Ferreira', 'High touch - Renovação', 2, null],
+  ['Viviane Gomes Luz', 'High touch - Renovação', 1, null],
+  ['Thayná Bastos', 'High touch - Renovação', 1, null],
   ['ludmila Souza Gonçalves', 'High touch - Renovação', 1, null],
-  ['Tatiana Silva de Jesus Portela', 'High touch - Renovação', 1, null],
-  ['Jennifer Dos Anjos', 'High touch - Renovação', 1, null],
-  ['Laura Pagliuzo', 'High touch - Renovação', 1, null],
+  ['Junior Gomes', 'High touch - Renovação', 1, null],
   ['Maria Eduarda Carriello dos Santos', 'High touch - Renovação', 1, null],
   ['Kaian Luís Silva', 'High touch - Renovação', 1, null],
-  ['Viviane Gomes Luz', 'High touch - Renovação', 1, null],
-  ['Vivian Cristina', 'Medium touch', 12, null],
+  ['Shelry Solart', 'High touch - Renovação', 1, null],
   ['Mayane Oliveira', 'Medium touch', 10, null],
-  ['Kaian Luís Silva', 'Medium touch', 9, null],
+  ['Pâmela Miranda', 'Medium touch', 8, null],
+  ['Vivian Cristina', 'Medium touch', 8, null],
   ['Sarah Moura', 'Medium touch', 6, null],
-  ['Pâmela Miranda', 'Medium touch', 5, null],
+  ['Kaian Luís Silva', 'Medium touch', 6, null],
   ['Stefany Soares Figueredo', 'Medium touch', 5, null],
-  ['Dalva Paschoalini', 'Medium touch', 5, null],
-  ['Stefany de Brito', 'Medium touch', 3, null],
+  ['Stefany de Brito', 'Medium touch', 4, null],
+  ['Dalva Paschoalini', 'Medium touch', 4, null],
   ['Jennifer Dos Anjos', 'Medium touch', 3, null],
   ['Nicole Cavalcante de Oliveira', 'Medium touch', 2, null],
-  ['Julia Cordeiro', 'Medium touch', 1, null],
-  ['Tatiana Silva de Jesus Portela', 'Medium touch', 1, null],
   ['Sem B1', 'Medium touch', 1, null],
-  ['Talita Panassol', 'Premium touch', 10, 80],
-  ['Mariana Santana', 'Premium touch', 5, 80],
+  ['Tatiana Silva de Jesus Portela', 'Medium touch', 1, null],
+  ['Talita Panassol', 'Premium touch', 7, 80],
+  ['Mariana Santana', 'Premium touch', 7, 80],
   ['Carla Ferraz Gomes', 'Premium touch', 4, 80],
-  ['Sarah Moura', 'Premium touch', 4, null],
-  ['Maria Elvira Silva de Jesus', 'Premium touch 40+', 3, 80],
+  ['Maria Eduarda Carvalho', 'Premium touch', 1, 80],
+  ['Sarah Moura', 'Premium touch', 5, null],
   ['Carla Ferraz Gomes', 'Premium touch 40+', 2, 80],
-  ['Indlayse Ferreira', 'Premium touch 40+', 1, null]
+  ['Maria Elvira Silva de Jesus', 'Premium touch 40+', 1, 80]
 ];
 
 function isDarkMode() { return document.documentElement.classList.contains('dark'); }
