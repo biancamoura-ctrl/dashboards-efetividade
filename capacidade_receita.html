@@ -220,16 +220,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">7</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">6</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">80</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+73</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+74</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:8.8%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:7.5%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) · 0 Estagiários</div>
-      <div style="font-size:11px;color:#9BA8B5;">8.8% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">7.5% utilizado</div>
     </div>
   </div>
   </div>
@@ -276,7 +276,7 @@ ORDER BY seg, n_escolas DESC</pre>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 84, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'htr': { esc: 132, cap: 280, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '2 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'mt': { esc: 89, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 5 Estagiários (60 esc.)' }, 'pt': { esc: 61, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 7, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
+const DADOS = { 'htn': { esc: 84, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'htr': { esc: 132, cap: 280, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '2 Analistas (80 esc.) · 2 Estagiários (60 esc.)' }, 'mt': { esc: 89, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 5 Estagiários (60 esc.)' }, 'pt': { esc: 61, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 6, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+']];
 const DONOS = [
   ['Vivian Cristina', 'High touch - Novas', 23, 60],
@@ -284,8 +284,8 @@ const DONOS = [
   ['Indlayse Ferreira', 'High touch - Novas', 17, 80],
   ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 16, 80],
   ['Maria Eduarda Carvalho', 'High touch - Novas', 2, 80],
-  ['Mariana Santana', 'High touch - Novas', 1, 80],
   ['Laura Pagliuzo', 'High touch - Novas', 1, 60],
+  ['Mariana Santana', 'High touch - Novas', 1, 80],
   ['Sarah Moura', 'High touch - Novas', 3, null],
   ['Kauã Coelho', 'High touch - Novas', 1, null],
   ['Renata Brandão', 'High touch - Novas', 1, null],
@@ -325,8 +325,7 @@ const DONOS = [
   ['Maria Elvira Silva de Jesus', 'Premium touch', 2, 80],
   ['Sarah Moura', 'Premium touch', 6, null],
   ['Andreina Ferreira', 'Premium touch', 2, null],
-  ['Maria Elvira Silva de Jesus', 'Premium touch 40+', 6, 80],
-  ['Carla Ferraz Gomes', 'Premium touch 40+', 1, 80]
+  ['Maria Elvira Silva de Jesus', 'Premium touch 40+', 6, 80]
 ];
 
 function isDarkMode() { return document.documentElement.classList.contains('dark'); }
