@@ -54,7 +54,7 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
 <div class="container">
   <div class="brand-name">Estante <span>M&aacute;gica</span></div>
   <div class="tagline">CS Ops &nbsp;&middot;&nbsp; Relacionamento</div>
-  <div class="date-line">Capacidade por Frente &middot; Receita (B1) &nbsp;&middot;&nbsp; 25/08/2026</div>
+  <div class="date-line">Capacidade por Frente &middot; Receita (B1) &nbsp;&middot;&nbsp; 27/08/2026</div>
 
   <div class="nav-row">
     <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
@@ -105,6 +105,10 @@ body,.table-wrap,table,th,td,tr{transition:background-color .3s ease,color .3s e
     AND (d.deal_stage IN (&#x27;Ciclo de Vendas&#x27;, &#x27;Ciclo de Eventos&#x27;, &#x27;Onboarding &amp; Boas vindas&#x27;, &#x27;Em Aplicação&#x27;, &#x27;Projeto Concluído&#x27;)
        OR (d.deal_stage = &#x27;Enviou Lista de Alunos&#x27; AND d.tipo_de_entrada = &#x27;Self service&#x27;))
     AND LOWER(IFNULL(d.frente_de_relacionamento, &#x27;&#x27;)) = &#x27;receita&#x27;
+    -- Pedido da Bianca (27/08/2026): mesma regra de &quot;carteira ativa&quot; da página Geral
+    -- (gerar_capacidade_carteira.py) — ver [[project_capacidade_por_frente]].
+    AND (d.data_da_reuniao_bv_concluida IS NOT NULL OR d.baldinho = &#x27;Renovação&#x27;)
+    AND (d.DA IS NULL OR CAST(NULLIF(TRIM(d.DA), &#x27;&#x27;) AS DATE) &gt;= CURRENT_DATE(&#x27;America/Sao_Paulo&#x27;))
 )
 SELECT seg, owner_email, nome_owner_raw, COUNT(*) AS n_escolas
 FROM ativas
@@ -127,6 +131,8 @@ ORDER BY seg, n_escolas DESC</pre>
     
     <br><br>
     <strong>Escolas ativas:</strong> Brasil &middot; 2026 &middot; etapas Enviou Lista de Alunos (Self service), Onboarding &amp; Boas vindas, Em Aplica&ccedil;&atilde;o, Ciclo de Vendas, Ciclo de Eventos e Projeto Conclu&iacute;do &middot; qualquer segmenta&ccedil;&atilde;o exceto Low touch.
+    <br><br>
+    <strong>Sa&uacute;de da carteira:</strong> BV conclu&iacute;da (<em>data_da_reuniao_bv_concluida</em> preenchida) OU escola de <strong>Renova&ccedil;&atilde;o</strong> (<em>baldinho = 'Renova&ccedil;&atilde;o'</em>, mesmo sem BV) &middot; e o <strong>EA</strong> (evento de aut&oacute;grafos) precisa estar hoje ou no futuro &mdash; ou ainda sem data marcada.
   </div>
 
   <div class="section-title">Resumo por Segmento</div>
@@ -138,9 +144,9 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">81</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">83</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">0</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−81</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−83</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
       <div style="height:100%;width:0.0%;background:#1A9957;border-radius:4px;"></div>
@@ -157,9 +163,9 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">109</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">132</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">0</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−109</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−132</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
       <div style="height:100%;width:0.0%;background:#1A9957;border-radius:4px;"></div>
@@ -176,9 +182,9 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">79</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">94</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">0</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−79</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#D32F2F;">−94</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
       <div style="height:100%;width:0.0%;background:#1A9957;border-radius:4px;"></div>
@@ -195,16 +201,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">54</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">61</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">380</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+326</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+319</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:14.2%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:16.1%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">4 Analistas (80 esc.) · 1 Estagiário (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">14.2% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">16.1% utilizado</div>
     </div>
   </div>
 
@@ -265,54 +271,60 @@ ORDER BY seg, n_escolas DESC</pre>
     </div>
   </div>
 
-  <div class="footer">Fonte: BigQuery (ax_deals_temp_, frente_de_relacionamento) &middot; 25/08/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
+  <div class="footer">Fonte: BigQuery (ax_deals_temp_, frente_de_relacionamento) &middot; 27/08/2026 &middot; biancamoura-ctrl.github.io/dashboards-efetividade</div>
 </div>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 81, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'htr': { esc: 109, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'mt': { esc: 79, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'pt': { esc: 54, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 8, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
+const DADOS = { 'htn': { esc: 83, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'htr': { esc: 132, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'mt': { esc: 94, cap: 0, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 0 Estagiários' }, 'pt': { esc: 61, cap: 380, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'pt40': { esc: 8, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+']];
 const DONOS = [
+  ['Mariana Santana', 'High touch - Novas', 1, 80],
   ['Maria Eduarda Carvalho', 'High touch - Novas', 1, 80],
-  ['Sem B1', 'High touch - Novas', 31, null],
-  ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 12, null],
-  ['Thayná Bastos', 'High touch - Novas', 11, null],
-  ['Vivian Cristina', 'High touch - Novas', 10, null],
-  ['Indlayse Ferreira', 'High touch - Novas', 9, null],
-  ['Sarah Moura', 'High touch - Novas', 4, null],
-  ['Laura Pagliuzo', 'High touch - Novas', 2, null],
+  ['Vivian Cristina', 'High touch - Novas', 23, null],
+  ['Thayná Bastos', 'High touch - Novas', 18, null],
+  ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 16, null],
+  ['Indlayse Ferreira', 'High touch - Novas', 15, null],
+  ['Sarah Moura', 'High touch - Novas', 3, null],
+  ['Julia Cordeiro', 'High touch - Novas', 2, null],
+  ['Sem B1', 'High touch - Novas', 2, null],
   ['Kauã Coelho', 'High touch - Novas', 1, null],
+  ['Laura Pagliuzo', 'High touch - Novas', 1, null],
   ['Carla Ferraz Gomes', 'High touch - Renovação', 2, 80],
+  ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 1, 80],
   ['Mariana Santana', 'High touch - Renovação', 1, 80],
-  ['Sem B1', 'High touch - Renovação', 21, null],
-  ['Laura Pagliuzo', 'High touch - Renovação', 20, null],
-  ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 17, null],
-  ['Kaian Luís Silva', 'High touch - Renovação', 16, null],
-  ['Sarah Moura', 'High touch - Renovação', 10, null],
-  ['Jennifer Dos Anjos', 'High touch - Renovação', 9, null],
-  ['Erick Andrade', 'High touch - Renovação', 6, null],
+  ['Erick Andrade', 'High touch - Renovação', 25, null],
+  ['Kaian Luís Silva', 'High touch - Renovação', 25, null],
+  ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 23, null],
+  ['Laura Pagliuzo', 'High touch - Renovação', 19, null],
+  ['Sarah Moura', 'High touch - Renovação', 17, null],
+  ['Jennifer Dos Anjos', 'High touch - Renovação', 8, null],
   ['Thayná Bastos', 'High touch - Renovação', 3, null],
   ['Vivian Cristina', 'High touch - Renovação', 2, null],
-  ['Tatiana Silva de Jesus Portela', 'High touch - Renovação', 1, null],
+  ['Tatiana Silva de Jesus Portela', 'High touch - Renovação', 2, null],
+  ['Sem B1', 'High touch - Renovação', 1, null],
   ['Viviane Gomes Luz', 'High touch - Renovação', 1, null],
-  ['Sem B1', 'Medium touch', 34, null],
-  ['Pâmela Miranda', 'Medium touch', 11, null],
-  ['Stefany de Brito', 'Medium touch', 10, null],
-  ['Mayane Oliveira', 'Medium touch', 8, null],
-  ['Dalva Paschoalini', 'Medium touch', 7, null],
-  ['Sarah Moura', 'Medium touch', 3, null],
-  ['Jennifer Dos Anjos', 'Medium touch', 2, null],
+  ['Thais Souza', 'High touch - Renovação', 1, null],
+  ['Indlayse Ferreira', 'High touch - Renovação', 1, null],
+  ['Dalva Paschoalini', 'Medium touch', 19, null],
+  ['Pâmela Miranda', 'Medium touch', 19, null],
+  ['Stefany de Brito', 'Medium touch', 14, null],
+  ['Mayane Oliveira', 'Medium touch', 14, null],
+  ['Ana Beatriz Gonçalves Santana', 'Medium touch', 12, null],
+  ['Sarah Moura', 'Medium touch', 8, null],
+  ['Jennifer Dos Anjos', 'Medium touch', 3, null],
   ['Giovanna Munhoz', 'Medium touch', 2, null],
   ['Kaian Luís Silva', 'Medium touch', 1, null],
   ['Tatiana Silva de Jesus Portela', 'Medium touch', 1, null],
-  ['Mariana Santana', 'Premium touch', 14, 80],
-  ['Maria Eduarda Carvalho', 'Premium touch', 11, 80],
-  ['Talita Panassol', 'Premium touch', 10, 80],
-  ['Carla Ferraz Gomes', 'Premium touch', 7, 80],
+  ['Stefany Soares Figueredo', 'Medium touch', 1, null],
+  ['Talita Panassol', 'Premium touch', 14, 80],
+  ['Maria Eduarda Carvalho', 'Premium touch', 13, 80],
+  ['Mariana Santana', 'Premium touch', 12, 80],
+  ['Carla Ferraz Gomes', 'Premium touch', 9, 80],
+  ['Maria Elvira Silva de Jesus', 'Premium touch', 2, 80],
   ['Andreina Ferreira', 'Premium touch', 2, 60],
-  ['Maria Elvira Silva de Jesus', 'Premium touch', 1, 80],
-  ['Sarah Moura', 'Premium touch', 7, null],
-  ['LARI FREITAS MONTEIRO', 'Premium touch', 2, null],
+  ['Sarah Moura', 'Premium touch', 6, null],
+  ['LARI FREITAS MONTEIRO', 'Premium touch', 3, null],
   ['Maria Elvira Silva de Jesus', 'Premium touch 40+', 7, 80],
   ['Carla Ferraz Gomes', 'Premium touch 40+', 1, 80]
 ];
