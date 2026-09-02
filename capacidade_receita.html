@@ -163,16 +163,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#FFF5D6;color:#C47A00;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Atenção</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">173</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">172</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
       <div><div style="font-size:22px;font-weight:900;color:#7668AC;">200</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+27</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+28</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:86.5%;background:#C47A00;border-radius:4px;"></div>
+      <div style="height:100%;width:86.0%;background:#C47A00;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
       <div style="font-size:11px;color:#9BA8B5;">1 Analista (80 esc.) · 2 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">86.5% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">86.0% utilizado</div>
     </div>
   </div>
 
@@ -182,16 +182,16 @@ ORDER BY seg, n_escolas DESC</pre>
       <span style="background:#E6F5EE;color:#1A9957;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;">Saudável</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">134</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">300</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+166</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#008ECF;">135</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">240</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+105</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:44.7%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:56.2%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 5 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">44.7% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 4 Estagiários (60 esc.)</div>
+      <div style="font-size:11px;color:#9BA8B5;">56.2% utilizado</div>
     </div>
   </div>
 
@@ -276,59 +276,62 @@ ORDER BY seg, n_escolas DESC</pre>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 133, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'htr': { esc: 173, cap: 200, cor: '#C47A00', status: 'Atenção', statusCss: 'background:#FFF5D6;color:#C47A00', linha: '1 Analista (80 esc.) · 2 Estagiários (60 esc.)' }, 'mt': { esc: 134, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 5 Estagiários (60 esc.)' }, 'pt': { esc: 84, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 8, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
+const DADOS = { 'htn': { esc: 133, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'htr': { esc: 172, cap: 200, cor: '#C47A00', status: 'Atenção', statusCss: 'background:#FFF5D6;color:#C47A00', linha: '1 Analista (80 esc.) · 2 Estagiários (60 esc.)' }, 'mt': { esc: 135, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 84, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 8, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+']];
 const DONOS = [
+  ['Indlayse Ferreira', 'High touch - Novas', 28, 80],
   ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 28, 80],
-  ['Vivian Cristina', 'High touch - Novas', 27, 60],
-  ['Indlayse Ferreira', 'High touch - Novas', 27, 80],
+  ['Vivian Cristina', 'High touch - Novas', 28, 60],
   ['Thayná Bastos', 'High touch - Novas', 27, 80],
   ['Maria Eduarda Carvalho', 'High touch - Novas', 4, 80],
   ['Laura Pagliuzo', 'High touch - Novas', 1, 60],
   ['Mariana Santana', 'High touch - Novas', 1, 80],
-  ['Sarah Moura', 'High touch - Novas', 11, null],
+  ['Sarah Moura', 'High touch - Novas', 7, null],
   ['Kauã Coelho', 'High touch - Novas', 2, null],
+  ['Bianca Moura', 'High touch - Novas', 2, null],
   ['Gustavo Galante', 'High touch - Novas', 1, null],
-  ['Thais Souza', 'High touch - Novas', 1, null],
   ['Julia Cordeiro', 'High touch - Novas', 1, null],
   ['Renata Brandão', 'High touch - Novas', 1, null],
   ['Aíres Muniz Santos', 'High touch - Novas', 1, null],
-  ['Kaian Luís Silva', 'High touch - Renovação', 35, 60],
-  ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 34, 80],
-  ['Laura Pagliuzo', 'High touch - Renovação', 31, 60],
+  ['Thais Souza', 'High touch - Novas', 1, null],
+  ['Kaian Luís Silva', 'High touch - Renovação', 38, 60],
+  ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 36, 80],
+  ['Laura Pagliuzo', 'High touch - Renovação', 33, 60],
   ['Thayná Bastos', 'High touch - Renovação', 4, 80],
-  ['Vivian Cristina', 'High touch - Renovação', 2, 60],
   ['Tatiana Silva de Jesus Portela', 'High touch - Renovação', 2, 80],
+  ['Vivian Cristina', 'High touch - Renovação', 2, 60],
   ['Carla Ferraz Gomes', 'High touch - Renovação', 2, 80],
-  ['Indlayse Ferreira', 'High touch - Renovação', 1, 80],
-  ['Mariana Santana', 'High touch - Renovação', 1, 80],
   ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 1, 80],
+  ['Mariana Santana', 'High touch - Renovação', 1, 80],
+  ['Indlayse Ferreira', 'High touch - Renovação', 1, 80],
   ['Erick Andrade', 'High touch - Renovação', 25, null],
-  ['Sarah Moura', 'High touch - Renovação', 23, null],
+  ['Sarah Moura', 'High touch - Renovação', 15, null],
   ['Jennifer Dos Anjos', 'High touch - Renovação', 7, null],
-  ['Thais Souza', 'High touch - Renovação', 2, null],
   ['Nicole Cavalcante de Oliveira', 'High touch - Renovação', 2, null],
+  ['Thais Souza', 'High touch - Renovação', 2, null],
   ['Viviane Gomes Luz', 'High touch - Renovação', 1, null],
   ['Stefany de Brito', 'Medium touch', 24, 60],
+  ['Dalva Paschoalini', 'Medium touch', 23, 60],
   ['Mayane Oliveira', 'Medium touch', 23, 60],
-  ['Dalva Paschoalini', 'Medium touch', 22, 60],
-  ['Pâmela Miranda', 'Medium touch', 20, 60],
-  ['Ana Beatriz Gonçalves Santana', 'Medium touch', 18, 60],
+  ['Pâmela Miranda', 'Medium touch', 21, 60],
   ['Tatiana Silva de Jesus Portela', 'Medium touch', 2, 80],
-  ['Kaian Luís Silva', 'Medium touch', 1, 60],
   ['Vivian Cristina', 'Medium touch', 1, 60],
-  ['Sarah Moura', 'Medium touch', 11, null],
+  ['Kaian Luís Silva', 'Medium touch', 1, 60],
+  ['Laura Pagliuzo', 'Medium touch', 1, 60],
+  ['Ana Beatriz Gonçalves Santana', 'Medium touch', 20, null],
   ['Jennifer Dos Anjos', 'Medium touch', 8, null],
-  ['Julia Bravo Barbosa', 'Medium touch', 1, null],
+  ['Sarah Moura', 'Medium touch', 6, null],
   ['Giovanna Munhoz', 'Medium touch', 1, null],
   ['Dandara Mariano', 'Medium touch', 1, null],
   ['Stefany Soares Figueredo', 'Medium touch', 1, null],
+  ['Bianca Moura', 'Medium touch', 1, null],
+  ['Julia Bravo Barbosa', 'Medium touch', 1, null],
   ['Talita Panassol', 'Premium touch', 20, 80],
   ['Maria Eduarda Carvalho', 'Premium touch', 17, 80],
   ['Mariana Santana', 'Premium touch', 14, 80],
-  ['Carla Ferraz Gomes', 'Premium touch', 13, 80],
+  ['Carla Ferraz Gomes', 'Premium touch', 12, 80],
   ['LARI FREITAS MONTEIRO', 'Premium touch', 3, 80],
-  ['Maria Elvira Silva de Jesus', 'Premium touch', 2, 80],
+  ['Maria Elvira Silva de Jesus', 'Premium touch', 3, 80],
   ['Indlayse Ferreira', 'Premium touch', 1, 80],
   ['Sarah Moura', 'Premium touch', 9, null],
   ['Andreina Ferreira', 'Premium touch', 3, null],
