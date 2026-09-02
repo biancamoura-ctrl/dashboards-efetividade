@@ -183,15 +183,15 @@ ORDER BY seg, n_escolas DESC</pre>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
       <div><div style="font-size:22px;font-weight:900;color:#008ECF;">64</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Escolas ativas</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">300</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
-      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+236</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#7668AC;">240</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Capacidade</div></div>
+      <div><div style="font-size:22px;font-weight:900;color:#1A9957;">+176</div><div style="font-size:10px;color:#9BA8B5;font-weight:600;">Saldo</div></div>
     </div>
     <div style="margin-top:12px;height:8px;background:#E0E6ED;border-radius:4px;overflow:hidden;">
-      <div style="height:100%;width:21.3%;background:#1A9957;border-radius:4px;"></div>
+      <div style="height:100%;width:26.7%;background:#1A9957;border-radius:4px;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:5px;">
-      <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 5 Estagiários (60 esc.)</div>
-      <div style="font-size:11px;color:#9BA8B5;">21.3% utilizado</div>
+      <div style="font-size:11px;color:#9BA8B5;">0 Analistas · 4 Estagiários (60 esc.)</div>
+      <div style="font-size:11px;color:#9BA8B5;">26.7% utilizado</div>
     </div>
   </div>
 
@@ -276,13 +276,13 @@ ORDER BY seg, n_escolas DESC</pre>
 </div>
 
 <script>
-const DADOS = { 'htn': { esc: 36, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'htr': { esc: 51, cap: 200, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 2 Estagiários (60 esc.)' }, 'mt': { esc: 64, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 5 Estagiários (60 esc.)' }, 'pt': { esc: 23, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 3, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
+const DADOS = { 'htn': { esc: 36, cap: 300, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '3 Analistas (80 esc.) · 1 Estagiário (60 esc.)' }, 'htr': { esc: 51, cap: 200, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 2 Estagiários (60 esc.)' }, 'mt': { esc: 64, cap: 240, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '0 Analistas · 4 Estagiários (60 esc.)' }, 'pt': { esc: 23, cap: 320, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '4 Analistas (80 esc.) · 0 Estagiários' }, 'pt40': { esc: 3, cap: 80, cor: '#1A9957', status: 'Saudável', statusCss: 'background:#E6F5EE;color:#1A9957', linha: '1 Analista (80 esc.) · 0 Estagiários' } };
 const SEGS_LABEL = [['htn','High touch - Novas'], ['htr','High touch - Renovação'], ['mt','Medium touch'], ['pt','Premium touch'], ['pt40','Premium touch 40+']];
 const DONOS = [
   ['Tatiana Silva de Jesus Portela', 'High touch - Novas', 8, 80],
   ['Vivian Cristina', 'High touch - Novas', 6, 60],
-  ['Thayná Bastos', 'High touch - Novas', 5, 80],
   ['Indlayse Ferreira', 'High touch - Novas', 5, 80],
+  ['Thayná Bastos', 'High touch - Novas', 5, 80],
   ['Laura Pagliuzo', 'High touch - Novas', 2, 60],
   ['Sarah Moura', 'High touch - Novas', 3, null],
   ['Renata Brandão', 'High touch - Novas', 3, null],
@@ -291,19 +291,19 @@ const DONOS = [
   ['Laura Pagliuzo', 'High touch - Renovação', 8, 60],
   ['LARI FREITAS MONTEIRO', 'High touch - Renovação', 7, 80],
   ['Kaian Luís Silva', 'High touch - Renovação', 4, 60],
-  ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 1, 80],
-  ['Indlayse Ferreira', 'High touch - Renovação', 1, 80],
   ['Thayná Bastos', 'High touch - Renovação', 1, 80],
+  ['Indlayse Ferreira', 'High touch - Renovação', 1, 80],
+  ['Maria Elvira Silva de Jesus', 'High touch - Renovação', 1, 80],
   ['Erick Andrade', 'High touch - Renovação', 7, null],
   ['Sarah Moura', 'High touch - Renovação', 5, null],
-  ['Nicole Cavalcante de Oliveira', 'High touch - Renovação', 4, null],
   ['Jennifer Dos Anjos', 'High touch - Renovação', 4, null],
+  ['Nicole Cavalcante de Oliveira', 'High touch - Renovação', 4, null],
   ['Thais Souza', 'High touch - Renovação', 3, null],
   ['Sem B1', 'High touch - Renovação', 2, null],
-  ['Maria Eduarda Carriello dos Santos', 'High touch - Renovação', 1, null],
-  ['Junior Gomes', 'High touch - Renovação', 1, null],
-  ['Vitoria Borges', 'High touch - Renovação', 1, null],
   ['Shelry Solart', 'High touch - Renovação', 1, null],
+  ['Vitoria Borges', 'High touch - Renovação', 1, null],
+  ['Junior Gomes', 'High touch - Renovação', 1, null],
+  ['Maria Eduarda Carriello dos Santos', 'High touch - Renovação', 1, null],
   ['Mayane Oliveira', 'Medium touch', 13, 60],
   ['Pâmela Miranda', 'Medium touch', 12, 60],
   ['Vivian Cristina', 'Medium touch', 6, 60],
