@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
+<title>RV de Retenção &middot; Regras e Apuração &middot; Estante Mágica</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple:      #7668AC;
+  --purple-dark: #5A4E8E;
+  --purple-bg:   #F0EEF8;
+  --yellow:      #F9DC45;
+  --yellow-dark: #C9AC00;
+  --blue:        #008ECF;
+  --blue-bg:     #E0F3FC;
+  --red:         #E94B56;
+  --red-bg:      #FEE8EA;
+  --green:       #2E7D32;
+  --green-bg:    #E8F5E9;
+  --orange:      #E65100;
+  --orange-bg:   #FFF3E0;
+  --gray:        #595959;
+  --gray-light:  #F5F4F9;
+  --border:      #E2DEEF;
+  --shadow:      0 2px 8px rgba(118,104,172,0.10);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', sans-serif;
+  background: var(--gray-light);
+  color: var(--gray);
+  line-height: 1.5;
+}
+.btn-back {
+  position: fixed; top: 48px; left: 14px;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--purple); color: white;
+  text-decoration: none; padding: 7px 14px;
+  border-radius: 8px; font-size: 11px; font-weight: 700;
+  box-shadow: 0 2px 6px rgba(118,104,172,.4); z-index: 9999;
+  transition: opacity .15s;
+}
+.btn-back:hover { opacity: .85; }
+.container { max-width: 1280px; margin: 0 auto; padding: 20px 16px 60px; }
+header {
+  background: var(--purple); color: white;
+  padding: 20px 28px; border-radius: 12px;
+  margin-bottom: 16px; margin-top: 52px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow);
+}
+header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+header .sub { font-size: 11px; opacity: .75; margin-top: 3px; font-weight: 400; }
+.foto-banner {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: #fff9e0; border: 1.5px solid var(--yellow-dark);
+  border-radius: 10px; padding: 14px 18px; margin-bottom: 16px;
+  font-size: 12px; line-height: 1.6; color: #7a5800;
+}
+.foto-banner .icon { font-size: 22px; line-height: 1; flex-shrink: 0; }
+.foto-banner b { color: #7a5800; }
+.foto-banner.info { background: var(--blue-bg); border-color: var(--blue); color: #0a5a80; }
+.foto-banner.info b { color: #0a5a80; }
+.regras-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.regra-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 20px; padding: 4px 12px;
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+  color: #aaa; cursor: pointer; transition: all .15s;
+}
+.regra-chip:hover { border-color: var(--purple); color: var(--purple); }
+.regra-chip.open  { border-color: var(--purple); color: var(--purple); background: var(--purple-bg); }
+.regra-chip .arrow { font-size: 8px; transition: transform .2s; }
+.regra-chip.open .arrow { transform: rotate(180deg); }
+.regra-body {
+  display: none; background: var(--purple-bg);
+  border-radius: 8px; padding: 12px 16px;
+  font-size: 11px; line-height: 1.8; margin-bottom: 12px; color: var(--gray);
+}
+.regra-body.open { display: block; }
+.regra-body b { color: var(--purple); }
+.regra-body table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
+.regra-body th { background: white; color: var(--purple); padding: 5px 10px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 2px solid var(--border); }
+.regra-body td { padding: 5px 10px; border-bottom: 1px solid rgba(118,104,172,.12); text-align: left; }
+.regra-body tr:last-child td { border-bottom: none; }
+.regra-body .aviso {
+  background: var(--red-bg); border-left: 3px solid var(--red); color: var(--red);
+  padding: 8px 12px; border-radius: 6px; margin-top: 10px; font-weight: 600;
+}
+.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.stat-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: var(--shadow); }
+.stat-card .s-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #aaa; }
+.stat-card .s-val { font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--purple); }
+.stat-card .s-sub { font-size: 10px; color: #bbb; margin-top: 2px; }
+.stat-card.green .s-val { color: var(--green); }
+.stat-card.orange .s-val { color: var(--orange); }
+.stat-card.blue .s-val { color: var(--blue); }
+.cat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.cat-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+.cat-head { padding: 10px 14px; color: white; display: flex; justify-content: space-between; align-items: baseline; }
+.cat-head .c-lbl { font-size: 13px; font-weight: 800; letter-spacing: -.3px; }
+.cat-head .c-cond { font-size: 10px; opacity: .85; font-weight: 400; }
+.cat-body { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+.cat-body .c-count { font-size: 18px; font-weight: 800; }
+.cat-card.obj1 .cat-head { background: var(--blue); } .cat-card.obj1 .c-count { color: var(--blue); }
+.cat-card.obj2 .cat-head { background: var(--orange); } .cat-card.obj2 .c-count { color: var(--orange); }
+.cat-card.obj3 .cat-head { background: var(--green); } .cat-card.obj3 .c-count { color: var(--green); }
+.section-title { font-size: 14px; font-weight: 800; color: var(--purple-dark); margin: 22px 0 10px; }
+.sub-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.sub-tab {
+  padding: 7px 18px; border: 1.5px solid var(--border); border-radius: 20px;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+  color: var(--gray); background: white; cursor: pointer;
+  transition: all .15s;
+}
+.sub-tab:hover { border-color: var(--purple); color: var(--purple); }
+.sub-tab.active { background: var(--purple); color: white; border-color: var(--purple); }
+.sub-panel { display: none; }
+.sub-panel.active { display: block; }
+.table-wrap { background: white; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 16px; overflow-x: auto; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 760px; }
+.table-wrap thead { background: var(--purple); color: white; }
+.table-wrap th { padding: 10px 11px; text-align: center; font-weight: 700; font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase; white-space: nowrap; }
+.table-wrap td { padding: 8px 11px; border-bottom: 1px solid var(--purple-bg); text-align: center; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tr:hover td { background: #FAF9FE; }
+.num { text-align: center; font-variant-numeric: tabular-nums; }
+.pill { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.pill-ok  { background: var(--green-bg); color: var(--green); }
+.pill-nao { background: var(--red-bg); color: var(--red); }
+.vazio { padding: 24px; text-align: center; color: #bbb; font-size: 12px; }
+.footer { text-align: center; font-size: 10px; color: #ccc; margin-top: 32px; }
+@media (max-width: 600px) { .btn-back { top: 42px; } }
+html.dark { --purple-bg:#2a2440; --border:#2d2d33; --gray-light:#18181b; --shadow:0 2px 8px rgba(0,0,0,.35); }
+html.dark body { background:#18181b; color:#d4d4d0; }
+html.dark .stat-card, html.dark .cat-card { background: #1e1e22; }
+html.dark .stat-card .s-sub { color:#71717a; }
+html.dark .regra-chip { background:#1e1e22; border-color:#2d2d33; color:#71717a; }
+html.dark .regra-chip:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .regra-chip.open { background:#2a2440; border-color:#7668AC; color:#c4b5fd; }
+html.dark .regra-body { background:#2a2440; color:#d4d4d0; }
+html.dark .regra-body th { background:#1e1e22; border-color:#2d2d33; }
+html.dark .regra-body td { border-color:#2d2d33; }
+html.dark .regra-body .aviso { background: rgba(233,75,86,.15); }
+html.dark .foto-banner { background:#2a2200; border-color:var(--yellow-dark); color:#f0d060; }
+html.dark .foto-banner b { color:#f0d060; }
+html.dark .foto-banner.info { background:#0a2c3d; border-color:var(--blue); color:#7dd3fc; }
+html.dark .foto-banner.info b { color:#7dd3fc; }
+html.dark .table-wrap { background:#1e1e22; }
+html.dark .table-wrap thead, html.dark .table-wrap th { background:#27272a; }
+html.dark .table-wrap td { border-color:#2d2d33; color:#d4d4d0; }
+html.dark .table-wrap tr:hover td { background:#27272a; }
+html.dark .footer { color:#3f3f46; }
+html.dark .pill-nao { background: rgba(233,75,86,.15); color: #f87171; }
+html.dark .pill-ok  { background: rgba(46,125,50,.15); color: #4ade80; }
+html.dark .section-title { color:#c4b5fd; }
+html.dark .vazio { color:#52525b; }
+html.dark .sub-tab { background:#1e1e22; border-color:#2d2d33; color:#a1a1aa; }
+html.dark .sub-tab:hover { border-color:#7668AC; color:#c4b5fd; }
+html.dark .sub-tab.active { background: var(--purple); color: white; }
+body,thead th,.table-wrap td,.regra-chip,.regra-body { transition: background-color .3s ease, color .3s ease, border-color .3s ease; }
+.theme-btn { position:fixed; top:16px; right:16px; width:42px; height:42px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg,#FFD947,#FF8C00); box-shadow:0 0 14px rgba(255,180,0,.5),0 2px 8px rgba(0,0,0,.2); z-index:9998; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center; }
+html.dark .theme-btn { background:linear-gradient(135deg,#2d1b69,#0f0c29); box-shadow:0 0 14px rgba(118,104,172,.7),0 2px 8px rgba(0,0,0,.4); }
+.theme-btn:hover { transform:scale(1.13); }
+.theme-icon-sun,.theme-icon-moon { position:absolute; font-size:22px; line-height:1; transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s ease; }
+.theme-icon-sun  { opacity:1; transform:scale(1) rotate(0deg) translateY(0); }
+.theme-icon-moon { opacity:0; transform:scale(0) rotate(-40deg) translateY(10px); }
+html.dark .theme-icon-sun  { opacity:0; transform:scale(0) rotate(60deg) translateY(10px); }
+html.dark .theme-icon-moon { opacity:1; transform:scale(1) rotate(0deg) translateY(0); }
+</style>
+<script>(function(){var t=localStorage.getItem('cs_ops_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script></head>
+<body>
+  <a href="index.html" class="btn-back">&#8592; Início</a>
+
+<div class="container">
+
+  <header>
+    <div>
+      <h1>RV de Retenção</h1>
+      <div class="sub">3 objetivos + contramétrica &nbsp;&#183;&nbsp; Frente Retenção (B0) &nbsp;&#183;&nbsp; CS Ops</div>
+    </div>
+  </header>
+
+  <div class="regras-row">
+    <button class="regra-chip" data-regra="regras" onclick="toggleRegra('regras')">
+      &#128203; Como funcionam os objetivos <span class="arrow">&#9662;</span>
+    </button>
+  </div>
+
+  <div id="regra-regras" class="regra-body">
+    Acompanhamento <b>contínuo, ao vivo</b> (atualiza a cada ciclo do site, não é uma foto
+    semanal). O "início da semana" de cada escola é travado toda <b>segunda-feira</b> — os
+    Objetivos 1 e 2 comparam o valor atual contra essa foto de segunda.
+    <table>
+      <tr><th>Objetivo</th><th>Regra</th><th>Prêmio</th></tr>
+      <tr><td>1 &#8212; Responsáveis cadastrados</td>
+          <td>Escola estava <b>&lt;20%</b> de responsáveis cadastrados no início da semana e passa a <b>&#8805;50%</b> na semana</td>
+          <td><b>R$ 25/escola</b></td></tr>
+      <tr><td>2 &#8212; Materiais prontos</td>
+          <td>Escola estava <b>sem materiais (0%)</b> no início da semana e consegue <b>&#8805;20%</b> na semana</td>
+          <td><b>R$ 25/escola</b></td></tr>
+      <tr><td>3 &#8212; Antecipação de compras</td>
+          <td>Escolas com Fecha-Compras (FC) a <b>mais de 30 dias</b> no futuro que atingem o <b>5&#170; aluno</b> com pedido feito <b>&#8805;40 dias antes do FC</b> (marco único, sem retroativo)</td>
+          <td><b>R$ 50/escola</b></td></tr>
+    </table>
+    <div class="aviso">
+      &#9888; <b>Objetivo 1 e 2 não somam</b> &#8212; uma escola ganha o que ela bater PRIMEIRO
+      entre os dois na mesma semana, nunca os dois juntos. Objetivo 3 é independente, pode
+      somar com qualquer um dos outros dois.<br>
+      &#9888; <b>Contramétrica:</b> só recebe o prêmio o CS com <b>efetividade &#8805; 75%</b>
+      no momento exato em que a escola bateu a meta (foto travada pra sempre naquele
+      instante, igual ao RV FC — não é reavaliada depois).
+    </div>
+  </div>
+
+  <div class="foto-banner info">
+    <div class="icon">&#128260;</div>
+    <div>
+      <b>Dado ao vivo</b> &#8212; atualizado a cada ciclo do site (não é uma foto semanal).
+      Semana corrente: <b>31/08/2026 a 04/09/2026</b>.
+      Última consulta: <b>03/09/2026 às 15:03</b>.
+    </div>
+  </div>
+
+  <div class="stat-cards">
+    <div class="stat-card">
+      <div class="s-lbl">Escolas na frente Retenção</div>
+      <div class="s-val">1265</div>
+      <div class="s-sub">pool elegível aos 3 objetivos</div>
+    </div>
+    <div class="stat-card green">
+      <div class="s-lbl">Conquistas nesta semana</div>
+      <div class="s-val">0</div>
+      <div class="s-sub">Objetivo 1 + Objetivo 2</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="s-lbl">Marcos Objetivo 3 (total)</div>
+      <div class="s-val">0</div>
+      <div class="s-sub">688 ainda no pool, buscando o 5&#170;</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="s-lbl">Valor a pagar nesta semana</div>
+      <div class="s-val" style="font-size:18px;">R$ 0</div>
+      <div class="s-sub">total histórico: R$ 0</div>
+    </div>
+  </div>
+
+  <div class="sub-tabs">
+    <button class="sub-tab active" data-sub="obj12" onclick="switchSub(this)">Objetivo 1 e 2</button>
+    <button class="sub-tab" data-sub="obj3" onclick="switchSub(this)">Objetivo 3</button>
+    <button class="sub-tab" data-sub="porcs" onclick="switchSub(this)">Por CS</button>
+  </div>
+
+  <div class="sub-panel active" data-sub="obj12">
+    <div class="cat-cards">
+      <div class="cat-card obj1">
+        <div class="cat-head"><span class="c-lbl">Objetivo 1</span><span class="c-cond">R$ 25/escola</span></div>
+        <div class="cat-body"><span>Bateram nesta semana</span><span class="c-count">0</span></div>
+      </div>
+      <div class="cat-card obj2">
+        <div class="cat-head"><span class="c-lbl">Objetivo 2</span><span class="c-cond">R$ 25/escola</span></div>
+        <div class="cat-body"><span>Bateram nesta semana</span><span class="c-count">0</span></div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Escola</th><th>Objetivo</th><th>CS</th><th>De &rarr; Para</th>
+          <th>Efetividade CS</th><th>Elegível?</th><th>Valor</th>
+        </tr></thead>
+        <tbody><tr><td colspan="7" class="vazio">Nenhuma escola bateu o Objetivo 1 ou 2 ainda nesta semana.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub-panel" data-sub="obj3">
+    <div class="cat-cards">
+      <div class="cat-card obj3">
+        <div class="cat-head"><span class="c-lbl">Objetivo 3</span><span class="c-cond">R$ 50/escola</span></div>
+        <div class="cat-body"><span>Marcos nesta semana</span><span class="c-count">0</span></div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Escola</th><th>CS</th><th>Data FC</th><th>Alunos (baseline &rarr; no momento)</th>
+          <th>Atingiu em</th><th>Efetividade CS</th><th>Elegível?</th><th>Valor</th>
+        </tr></thead>
+        <tbody><tr><td colspan="8" class="vazio">Nenhuma escola bateu o 5º aluno antecipado ainda.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub-panel" data-sub="porcs">
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>CS</th><th>Efetividade atual</th><th>Elegível agora?</th>
+          <th>Objetivo 1</th><th>Objetivo 2</th><th>Objetivo 3</th>
+          <th>Total desta semana</th><th>Total geral (todas as semanas)</th>
+        </tr></thead>
+        <tbody><tr>
+      <td>Ágatha Cruz</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Aíres Muniz Santos</td>
+      <td class="num">46.4%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Amanda Carvalho</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Ana Julia Martineli</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Ana Sofia Castro</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Ana Vitoria Oliveira Marques</td>
+      <td class="num">70.7%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Andreina Ferreira</td>
+      <td class="num">88.9%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Beatriz Barbosa Duarte de Souza</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Bred Richard Fernandes</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Carine Leite</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Carla Ferraz Gomes</td>
+      <td class="num">97.2%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Carla Silva</td>
+      <td class="num">64.2%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Caroline Ferreira Calvario</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Dalva Paschoalini</td>
+      <td class="num">50.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Dandara Mariano</td>
+      <td class="num">61.5%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Daniela Cardoso Colombo</td>
+      <td class="num">69.5%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Daniela Rojas</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Evelyn Arruda</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Gabriela Ribeiro</td>
+      <td class="num">92.5%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Giovanna Munhoz</td>
+      <td class="num">52.9%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Gustavo Galante</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Indlayse Ferreira</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Isabela Camara</td>
+      <td class="num">80.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Jennifer Dos Anjos</td>
+      <td class="num">38.7%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Julia Bravo Barbosa</td>
+      <td class="num">63.9%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Julia Cordeiro</td>
+      <td class="num">64.6%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Kaian Luís Silva</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Kauã Coelho</td>
+      <td class="num">50.9%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Kelvelin de Jesus Santos</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>LARI FREITAS MONTEIRO</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Laura Oliveira Nascimento</td>
+      <td class="num">61.5%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Letícia Montemor</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Lucas Tombini</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>ludmila Souza Gonçalves</td>
+      <td class="num">80.8%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Maria Elvira Silva de Jesus</td>
+      <td class="num">86.2%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Maria Eduarda Carriello dos Santos</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Maria Eduarda Carvalho</td>
+      <td class="num">93.9%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Mariana Mazzero</td>
+      <td class="num">41.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Mariana Santana</td>
+      <td class="num">92.5%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Mariana Vasconcelos De Menezes</td>
+      <td class="num">34.5%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Mayane Oliveira</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Moreno Loss</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Natalia Costa Soares</td>
+      <td class="num">70.8%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Nerbis Carrero</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Nicole Cavalcante de Oliveira</td>
+      <td class="num">48.8%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Pâmela Miranda</td>
+      <td class="num">0.0%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Quézia do Nascimento Caires</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Rayane Barroso Santana</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Rayssa Vitória Amaral Pereira</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Renata Brandão</td>
+      <td class="num">78.8%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Sarah Moura</td>
+      <td class="num">83.7%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Shelry Solart</td>
+      <td class="num">76.3%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Stefany Soares Figueredo</td>
+      <td class="num">38.1%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Talita Panassol</td>
+      <td class="num">72.7%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Thais Souza</td>
+      <td class="num">46.2%</td>
+      <td><span class="pill pill-nao">Não</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Thayná Bastos</td>
+      <td class="num">100.0%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr><tr>
+      <td>Viviane Gomes Luz</td>
+      <td class="num">87.2%</td>
+      <td><span class="pill pill-ok">Sim</span></td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num">R$ 0</td>
+      <td class="num"><b>R$ 0</b></td>
+      <td class="num">R$ 0</td>
+    </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">RV de Retenção &#8212; CS Ops &#183; Estante Mágica</div>
+</div>
+
+<button class="theme-btn" id="theme-btn" aria-label="Alternar tema"><span class="theme-icon-sun">&#x2600;&#xFE0F;</span><span class="theme-icon-moon">&#x1F319;</span></button>
+<script>(function(){document.getElementById('theme-btn').addEventListener('click',function(){var d=document.documentElement.classList.toggle('dark');localStorage.setItem('cs_ops_theme',d?'dark':'light')});})();</script>
+<script>
+function toggleRegra(id) {
+  var btn  = document.querySelector('.regra-chip[data-regra="' + id + '"]');
+  var body = document.getElementById('regra-' + id);
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  btn.classList.toggle('open', !open);
+}
+function switchSub(btn) {
+  var sub = btn.dataset.sub;
+  document.querySelectorAll('.sub-tab').forEach(function(b) { b.classList.toggle('active', b === btn); });
+  document.querySelectorAll('.sub-panel').forEach(function(p) { p.classList.toggle('active', p.dataset.sub === sub); });
+}
+</script>
+</body>
+</html>
